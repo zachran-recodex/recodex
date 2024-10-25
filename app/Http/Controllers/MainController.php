@@ -14,9 +14,29 @@ class MainController extends Controller
         return view ('index');
     }
 
+    public function menu()
+    {
+        return view ('main.menu');
+    }
+
+    public function about()
+    {
+        return view ('main.about');
+    }
+
+    public function service()
+    {
+        return view ('main.service');
+    }
+
     public function portfolio()
     {
         return view ('main.portfolio');
+    }
+
+    public function contact()
+    {
+        return view ('main.contact');
     }
 
     /**

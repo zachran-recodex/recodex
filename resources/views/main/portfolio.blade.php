@@ -15,17 +15,17 @@
 @endsection
 
 @section('content')
-    <div class="container-main flex gap-8 pt-[125px]">
+    <div class="container-main flex gap-8 pt-[200px] text-black-recodex">
 
         <!-- Sidebar -->
-        <aside class="bg-white-recodex rounded-3xl p-8 w-[500px] h-[600px]">
+        <aside class="bg-white-recodex rounded-3xl p-8 w-[700px] h-fit">
             <div class="flex flex-col justify-center items-center gap-3">
-                <figure class="flex h-[100px] w-[100px] items-center border rounded-3xl overflow-hidden">
-                    <img class="object-cover" src="{{ asset('images/about-home.jpg') }}" alt="">
+                <figure class="flex h-[150px] w-[150px] items-center border rounded-3xl overflow-hidden">
+                    <img class="object-cover h-full w-full" src="{{ asset('images/team/orang.jpg') }}" alt="">
                 </figure>
-                <div class="flex flex-col justify-center space-y-4 items-center">
-                    <h1 class="">Zachran Razendra</h1>
+                <div class="flex flex-col justify-center space-y-2 items-center">
                     <p class="px-4 py-1 border rounded">Direktur</p>
+                    <h2 class="text-2xl font-bold">Zachran Razendra</h2>
                 </div>
             </div>
 
@@ -35,38 +35,38 @@
                 <ul class="grid grid-cols-1 gap-4">
                     <li class="flex items-center gap-4">
                         <div class="border p-2">
-                            <i class="fa-regular fa-envelope"></i>
+                            <i class="fa-solid fa-envelope"></i>
                         </div>
                         <div class="w-full">
                             <p class="mb-1">Email</p>
-                            <a href="">zachranraze@recode.id</a>
+                            <a href="">zachranraze@recodex.id</a>
                         </div>
                     </li>
                     <li class="flex items-center gap-4">
                         <div class="border p-2">
-                            <i class="fa-regular fa-envelope"></i>
+                            <i class="fa-solid fa-phone"></i>
                         </div>
                         <div class="w-full">
                             <p class="mb-1">Phone</p>
-                            <a href="">zachranraze@recode.id</a>
+                            <a href="">+62 822 9814 1940</a>
                         </div>
                     </li>
                     <li class="flex items-center gap-4">
                         <div class="border p-2">
-                            <i class="fa-regular fa-envelope"></i>
+                            <i class="fa-solid fa-calendar-days"></i>
                         </div>
                         <div class="w-full">
-                            <p class="mb-1">Birthday</p>
-                            <a href="">zachranraze@recode.id</a>
+                            <p class="mb-1">Birthdate</p>
+                            <a href="">15 Oktober 2001</a>
                         </div>
                     </li>
                     <li class="flex items-center gap-4">
                         <div class="border p-2">
-                            <i class="fa-regular fa-envelope"></i>
+                            <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div class="w-full">
                             <p class="mb-1">Location</p>
-                            <a href="">zachranraze@recode.id</a>
+                            <a href="">Jakarta Selatan, Indonesia</a>
                         </div>
                     </li>
                 </ul>
@@ -112,7 +112,7 @@
                             sed labore.</p>
                     </section>
                     <section>
-                        <h3>What I'm Doing</h3>
+                        <h3 class="text-2xl mb-4">What I'm Doing</h3>
                         <ul class="grid grid-cols-2 gap-5">
                             <li class="relative p-5 rounded-lg shadow z-[1]">
                                 <div><img src="" alt=""></div>
@@ -142,15 +142,6 @@
                                     <p>The most modern and high-quality design made at a professional level.</p>
                                 </div>
                             </li>
-                        </ul>
-                    </section>
-                    <section>
-                        <h3>Clients</h3>
-                        <ul class="flex justify-start items-start gap-4 p-6 pb-6 overflow-x-auto">
-                            <li><a href=""><img src="" alt=""></a></li>
-                            <li><a href=""><img src="" alt=""></a></li>
-                            <li><a href=""><img src="" alt=""></a></li>
-                            <li><a href=""><img src="" alt=""></a></li>
                         </ul>
                     </section>
                 </div>

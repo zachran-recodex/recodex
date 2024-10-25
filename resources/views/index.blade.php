@@ -25,7 +25,7 @@
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="alfa5aviation.com">
+    <meta property="twitter:domain" content="recodex.id">
     <meta property="twitter:url" content="{{ url()->current() }}">
     <meta name="twitter:title" content="Recodex">
     <meta name="twitter:description" content="Multimedia Company">
@@ -53,172 +53,195 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="h-[95vh] bg-white-recodex rounded-b-[10rem]">
+    <section class="h-screen pt-[100px]">
         <div class="container-main flex items-center justify-center h-full">
-
-            <img class="absolute bottom-[39.5px] h-full z-10" src="{{ asset('images/orang.png') }}" alt="">
-            <div class="absolute bottom-[39.5px] bg-recodex h-[375px] w-[750px] rounded-t-full z-0"></div>
-
-            <div class="grid grid-cols-2 z-10">
-                <div class="w-full">
-                    <h2>AWOKOAKW</h2>
+            <div class="grid grid-cols-2 items-center">
+                <div class="flex flex-col space-y-2">
+                    <span class="text-xl font-semibold">Jasa Multimedia Terbaik</span>
+                    <h2 class="text-7xl font-bold leading-tight uppercase">Solusi <span
+                            class="text-recodex underline">Multimedia</span> untuk Inovasi Tanpa Batas</h2>
+                    <a class="border border-recodex px-4 py-1 text-recodex rounded-lg text-lg w-[200px] text-center"
+                        href="#">
+                        Tentang Kami
+                    </a>
                 </div>
-                <div class="w-full">
-                    <h2>MOMOK</h2>
-                </div>
+                <img src="{{ asset('images/illustration.png') }}" alt="" class="h-full w-auto">
             </div>
-
         </div>
     </section>
 
-    <!-- Service Section -->
-    <section class="bg-white-recodex py-main mx-8 mt-[100px] rounded-[5rem]">
-        <div class="container-main flex flex-col space-y-8 items-center justify-center">
-            <!-- Title and Description -->
-            <div class="flex items-center justify-between">
-                <h2 class="text-4xl font-bold text-white-recodex bg-recodex px-4 py-1">
-                    Layanan Kami
-                </h2>
-                <p class="text-lg text-black-recodex w-1/2 text-justify">
-                    Kami siap menjadi partner terpercaya dalam mewujudkan transformasi digital bisnis Anda. Dengan solusi
-                    yang inovatif, tim kami berkomitmen untuk menghadirkan layanan digital terbaik yang disesuaikan dengan
-                    kebutuhan bisnis Anda.
+    <!-- Point Section -->
+    <div class="container-main">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-recodex">
+
+            <!-- Harga Terjangkau -->
+            <div
+                class="bg-white-recodex h-auto rounded-lg flex flex-col justify-center items-center text-center p-8 space-y-4">
+                <i class="text-6xl fa-solid fa-coins"></i>
+                <h3 class="text-2xl font-semibold">Harga Terjangkau</h3>
+                <p class="text-lg text-shark-500">
+                    Kami menawarkan layanan berkualitas tinggi dengan harga yang sangat terjangkau.
                 </p>
             </div>
 
-            <div class="border-2 border-recodex h-1 w-full"></div>
+            <!-- Proses Cepat -->
+            <div
+                class="bg-white-recodex h-auto rounded-lg flex flex-col justify-center items-center text-center p-8 space-y-4">
+                <i class="text-6xl fa-solid fa-gauge-high"></i>
+                <h3 class="text-2xl font-semibold">Proses Cepat</h3>
+                <p class="text-lg text-shark-500">
+                    Proses pengerjaan yang efisien, menjamin proyek selesai tepat waktu.
+                </p>
+            </div>
+
+            <!-- Tim Profesional -->
+            <div
+                class="bg-white-recodex h-auto rounded-lg flex flex-col justify-center items-center text-center p-8 space-y-4">
+                <i class="text-6xl fa-solid fa-people-group"></i>
+                <h3 class="text-2xl font-semibold">Tim Profesional</h3>
+                <p class="text-lg text-shark-500">
+                    Tim profesional kami memiliki pengalaman luas dalam berbagai bidang multimedia.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Service Section -->
+    <section class="py-main">
+        <div class="container-main flex flex-col space-y-8 items-center justify-center">
+            <!-- Title -->
+            <div class="flex self-start">
+                <h2 class="text-4xl font-bold bg-recodex px-4 py-1">
+                    LAYANAN KAMI
+                </h2>
+            </div>
 
             <!-- Service Cards -->
-            <div id="serviceCards" class="flex flex-row gap-8 overflow-x-auto w-full">
+            <div id="serviceCards" class="flex gap-8 overflow-x-auto w-full">
                 <!-- Card 1: Pembuatan Website -->
-                <a href=""
-                    class="flex flex-col justify-between h-[500px] min-w-[384px] p-8 bg-black-recodex border border-gray-200 rounded-lg shadow">
+                <a href="#"
+                    class="flex flex-col space-y-4 justify-between h-auto min-w-[426.67px] p-8 bg-shark-900 rounded-lg shadow">
                     <div class="flex justify-between items-center">
                         <h5 class="mb-2 text-4xl font-bold tracking-tight text-recodex">
                             Pembuatan<br>Website
                         </h5>
                         <div class="h-12 w-12 p-2 rounded-full bg-recodex text-center flex items-center justify-center">
-                            <i class="text-white fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
-                    <hr class="my-4">
-                    <p class="mb-3 font-normal text-recodex">
-                        Bangun kehadiran digital yang mengesankan dengan desain website profesional yang user-friendly dan
-                        fungsional.
+                    <hr>
+                    <p class="text-lg">
+                        Pembuatan website responsif dan modern, disesuaikan dengan kebutuhan bisnis Anda.
                     </p>
-                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/about-home.jpg') }}"
+                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/service/web.jpg') }}"
                         alt="Pembuatan Website">
                 </a>
 
-                <!-- Add more cards here -->
-                <a href=""
-                    class="flex flex-col justify-between h-[500px] min-w-[384px] p-8 bg-black-recodex border border-gray-200 rounded-lg shadow">
+                <a href="#"
+                    class="flex flex-col space-y-4 justify-between h-auto min-w-[426.67px] p-8 bg-shark-900 rounded-lg shadow">
                     <div class="flex justify-between items-center">
-                        <h5 class="mb-2 text-4xl font-bold tracking-tight text-recodex">
-                            Pembuatan<br>Website
+                        <h5 class="text-4xl font-bold tracking-tight text-recodex">
+                            Desain<br>Grafis
                         </h5>
                         <div class="h-12 w-12 p-2 rounded-full bg-recodex text-center flex items-center justify-center">
-                            <i class="text-white fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
-                    <hr class="my-4">
-                    <p class="mb-3 font-normal text-recodex">
-                        Bangun kehadiran digital yang mengesankan dengan desain website profesional yang user-friendly dan
-                        fungsional.
+                    <hr>
+                    <p class="text-lg">
+                        Desain elemen visual untuk menciptakan branding yang kuat dan menarik.
                     </p>
-                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/about-home.jpg') }}"
+                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/service/graphic.jpg') }}"
                         alt="Pembuatan Website">
                 </a>
 
-                <a href=""
-                    class="flex flex-col justify-between h-[500px] min-w-[384px] p-8 bg-black-recodex border border-gray-200 rounded-lg shadow">
+                <a href="#"
+                    class="flex flex-col space-y-4 justify-between h-auto min-w-[426.67px] p-8 bg-shark-900 rounded-lg shadow">
                     <div class="flex justify-between items-center">
                         <h5 class="mb-2 text-4xl font-bold tracking-tight text-recodex">
-                            Pembuatan<br>Website
+                            Desain<br>UI/UX
                         </h5>
                         <div class="h-12 w-12 p-2 rounded-full bg-recodex text-center flex items-center justify-center">
-                            <i class="text-white fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
-                    <hr class="my-4">
-                    <p class="mb-3 font-normal text-recodex">
-                        Bangun kehadiran digital yang mengesankan dengan desain website profesional yang user-friendly dan
-                        fungsional.
+                    <hr>
+                    <p class="text-lg">
+                        Antarmuka pengguna dan pengalaman pengguna yang intuitif dan menarik untuk digunakan.
                     </p>
-                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/about-home.jpg') }}"
+                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/service/ui_ux.jpg') }}"
                         alt="Pembuatan Website">
                 </a>
 
-                <a href=""
-                    class="flex flex-col justify-between h-[500px] min-w-[384px] p-8 bg-black-recodex border border-gray-200 rounded-lg shadow">
+                <a href="#"
+                    class="flex flex-col space-y-4 justify-between h-auto min-w-[426.67px] p-8 bg-shark-900 rounded-lg shadow">
                     <div class="flex justify-between items-center">
                         <h5 class="mb-2 text-4xl font-bold tracking-tight text-recodex">
-                            Pembuatan<br>Website
+                            Pengembangan<br>Game
                         </h5>
                         <div class="h-12 w-12 p-2 rounded-full bg-recodex text-center flex items-center justify-center">
-                            <i class="text-white fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
-                    <hr class="my-4">
-                    <p class="mb-3 font-normal text-recodex">
-                        Bangun kehadiran digital yang mengesankan dengan desain website profesional yang user-friendly dan
-                        fungsional.
+                    <hr>
+                    <p class="text-lg">
+                        Pengembangan game interaktif dengan grafis memukau dan gameplay yang sangat seru.
                     </p>
-                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/about-home.jpg') }}"
+                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/service/game.jpg') }}"
                         alt="Pembuatan Website">
                 </a>
 
-                <a href=""
-                    class="flex flex-col justify-between h-[500px] min-w-[384px] p-8 bg-black-recodex border border-gray-200 rounded-lg shadow">
+                <a href="#"
+                    class="flex flex-col space-y-4 justify-between h-auto min-w-[426.67px] p-8 bg-shark-900 rounded-lg shadow">
                     <div class="flex justify-between items-center">
                         <h5 class="mb-2 text-4xl font-bold tracking-tight text-recodex">
-                            Pembuatan<br>Website
+                            Pembuatan<br>Aplikasi
                         </h5>
                         <div class="h-12 w-12 p-2 rounded-full bg-recodex text-center flex items-center justify-center">
-                            <i class="text-white fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
-                    <hr class="my-4">
-                    <p class="mb-3 font-normal text-recodex">
-                        Bangun kehadiran digital yang mengesankan dengan desain website profesional yang user-friendly dan
-                        fungsional.
+                    <hr>
+                    <p class="text-lg">
+                        Aplikasi mobile dan desktop yang inovatif serta fungsional untuk kebutuhan Anda.
                     </p>
-                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/about-home.jpg') }}"
+                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/service/app.jpg') }}"
                         alt="Pembuatan Website">
                 </a>
 
-                <a href=""
-                    class="flex flex-col justify-between h-[500px] min-w-[384px] p-8 bg-black-recodex border border-gray-200 rounded-lg shadow">
+                <a href="#"
+                    class="flex flex-col space-y-4 justify-between h-auto min-w-[426.67px] p-8 bg-shark-900 rounded-lg shadow">
                     <div class="flex justify-between items-center">
                         <h5 class="mb-2 text-4xl font-bold tracking-tight text-recodex">
-                            Pembuatan<br>Website
+                            Fotografi &<br>Videografi
                         </h5>
                         <div class="h-12 w-12 p-2 rounded-full bg-recodex text-center flex items-center justify-center">
-                            <i class="text-white fa-solid fa-arrow-right"></i>
+                            <i class="fa-solid fa-arrow-right"></i>
                         </div>
                     </div>
-                    <hr class="my-4">
-                    <p class="mb-3 font-normal text-recodex">
-                        Bangun kehadiran digital yang mengesankan dengan desain website profesional yang user-friendly dan
-                        fungsional.
+                    <hr>
+                    <p class="text-lg">
+                        Fotografi dan videografi berkualitas tinggi untuk berbagai acara dan kebutuhan bisnis.
                     </p>
-                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/about-home.jpg') }}"
+                    <img class="rounded-lg object-cover w-full h-[200px]" src="{{ asset('images/service/photo.jpg') }}"
                         alt="Pembuatan Website">
                 </a>
             </div>
 
             <!-- Arrow Service Cards -->
-            <div class="flex flex-row justify-between w-full mt-4">
+            <div class="flex items-center justify-between w-full mt-4">
                 <div class="w-1/2">
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi excepturi ad, id repudiandae animi
-                        perferendis magni facere unde esse, suscipit amet facilis dolorum fugiat alias dolor nisi hic labore
-                        tempore!</p>
+                    <p>
+                        Di Recodex, berbagai layanan multimedia profesional ditawarkan untuk memenuhi kebutuhan bisnis dan
+                        kreatif Anda, memastikan solusi inovatif dan berkualitas tinggi.
+                    </p>
                 </div>
-                <div class="flex flex-row gap-10">
-                    <button id="prevButton" class="h-14 w-14 border border-recodex text-recodex">
+                <div class="flex gap-10">
+                    <button id="prevButton" class="h-14 w-14 border border-recodex text-recodex rounded-lg">
                         <i class="fa-solid fa-arrow-left"></i>
                     </button>
-                    <button id="nextButton" class="h-14 w-14 border border-recodex text-recodex">
+                    <button id="nextButton" class="h-14 w-14 border border-recodex text-recodex rounded-lg">
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
@@ -226,21 +249,22 @@
 
             <div class="border-2 border-recodex h-1 w-full"></div>
 
-            <div class="grid grid-cols-2 items-center gap-8">
+            <div class="grid grid-cols-2 items-center gap-20">
                 <!-- Kolom Kiri -->
-                <h4 class="text-6xl font-bold">
-                    WE CREATE IMPACTFUL EXPERIENCES FOR OUR CLIENTS' CUSTOMERS EVERY TIME THEY ENGAGE WITH A BRAND
+                <h4 class="text-6xl uppercase font-bold">
+                    Fokus Kami Adalah Menghasilkan Karya <span class="text-recodex underline">Berkualitas</span> Tinggi
+                    yang Mendorong <span class="text-recodex underline">Pertumbuhan</span> dan Kesuksesan Bisnis
+                    Klien
                 </h4>
 
                 <!-- Kolom Kanan -->
                 <div class="flex flex-col justify-between h-full">
                     <div class="flex flex-col text-end">
                         <p class="flex flex-col text-2xl font-semibold mb-2">
-                            <span class="text-recodex text-6xl">127+</span> Project Completed
+                            <span class="text-recodex text-6xl">127+</span> Proyek Selesai
                         </p>
-                        <p class="text-lg text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, maiores voluptas. In
-                            consequatur, quas.
+                        <p class="text-lg text-shark-200">
+                            Setiap proyek yang kami kerjakan selesai tepat waktu dan sesuai spesifikasi yang ditentukan.
                         </p>
                     </div>
 
@@ -248,11 +272,10 @@
 
                     <div class="flex flex-col">
                         <p class="flex flex-col text-2xl font-semibold mb-2">
-                            <span class="text-recodex text-6xl">74+</span> Client Completed
+                            <span class="text-recodex text-6xl">74+</span> Klien Puas
                         </p>
-                        <p class="text-lg text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, maiores voluptas. In
-                            consequatur, quas.
+                        <p class="text-lg text-shark-200">
+                            Kepuasan klien adalah prioritas utama kami, dan kami berusaha memenuhi harapan mereka.
                         </p>
                     </div>
 
@@ -260,11 +283,11 @@
 
                     <div class="flex flex-col text-end">
                         <p class="flex flex-col text-2xl font-semibold mb-2">
-                            <span class="text-recodex text-6xl">127+</span> Project Completed
+                            <span class="text-recodex text-6xl">127+</span> Pengalaman
                         </p>
-                        <p class="text-lg text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, maiores voluptas. In
-                            consequatur, quas.
+                        <p class="text-lg text-shark-200">
+                            Dengan pengalaman bertahun-tahun, kami memahami kebutuhan klien dan memberikan solusi yang
+                            tepat.
                         </p>
                     </div>
                 </div>
@@ -275,7 +298,7 @@
     <!-- About Section -->
     <section class="py-main">
         <div class="container-main flex flex-col items-center justify-center gap-8">
-            <div class="grid grid-cols-2 gap-8">
+            <div class="grid grid-cols-2 gap-20">
                 <!-- Left Content -->
                 <div class="flex items-center justify-center">
                     <img src="{{ asset('images/about-home.jpg') }}" alt="About Image" class="w-full h-auto rounded-lg">
@@ -283,114 +306,186 @@
 
                 <!-- Right Content -->
                 <div class="flex flex-col justify-center space-y-4">
-                    <h3 class="text-white-recodex text-xl font-semibold">Tentang Kami</h3>
-                    <h2 class="text-recodex text-6xl font-bold">Mitra Anda Dalam Inovasi Digital</h2>
-                    <p class="text-white-recodex text-justify">
-                        Recodex.id lahir dari semangat untuk menggabungkan seni dan teknologi. Kami adalah tim kreatif yang
-                        berdedikasi memberikan solusi multimedia terdepan, mulai dari desain website, UI/UX, fotografi,
-                        videografi, hingga pengembangan game dan aplikasi. Dengan pengalaman dan passion kami, kami membawa
-                        ide-ide besar Anda menjadi kenyataan.
+                    <h3 class="text-xl font-semibold bg-recodex px-4 py-1 w-fit">TENTANG KAMI</h3>
+                    <h2 class="text-6xl font-bold leading-tight uppercase">
+                        Mitra Anda Dalam <span class="text-recodex underline">Inovasi</span> Digital
+                    </h2>
+                    <p class="text-md text-justify">
+                        Recodex adalah perusahaan jasa multimedia yang berdedikasi untuk memberikan solusi inovatif di era
+                        digital. Dengan pengalaman dan keahlian di berbagai bidang, kami siap membantu klien mencapai tujuan
+                        bisnis mereka melalui pembuatan website, desain grafis, aplikasi mobile, dan banyak lagi. Kami
+                        percaya bahwa setiap proyek adalah kesempatan untuk menciptakan dampak positif dan meningkatkan
+                        pengalaman pengguna.
                     </p>
+                    <p class="text-md text-justify">
+                        Tim profesional kami bekerja sama dengan klien untuk memahami kebutuhan unik mereka dan menghadirkan
+                        hasil yang memuaskan. Di Recodex, kami berkomitmen untuk selalu berinovasi, sehingga klien kami
+                        tetap kompetitif di pasar yang terus berkembang. Mari bersama-sama menciptakan masa depan digital
+                        yang lebih baik!
+                    </p>
+                    <!-- Call to Action Button -->
+                    <div>
+                        <a href="#services"
+                            class="inline-block border text-recodex border-recodex px-6 py-3 rounded-lg font-semibold">
+                            Lihat Layanan Kami
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="py-main">
+        <div class="container-main flex flex-col space-y-8 items-center justify-center">
+            <!-- Title -->
+            <div class="flex self-start">
+                <h2 class="text-4xl font-bold bg-recodex px-4 py-1">
+                    PORTFOLIO
+                </h2>
+            </div>
+
+            <!-- Portfolio Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+                <!-- Card 1 -->
+                <div class="relative group h-80 rounded-lg overflow-hidden bg-gray-200">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style="background-image: url('{{ asset('images/service/web.jpg') }}');"></div>
+                    <a href=""
+                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-semibold">Pembuatan Website</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="relative group h-80 rounded-lg overflow-hidden bg-gray-200">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style="background-image: url('{{ asset('images/service/graphic.jpg') }}');"></div>
+                    <a href=""
+                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-semibold">Desain Grafis</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="relative group h-80 rounded-lg overflow-hidden bg-gray-200">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style="background-image: url('{{ asset('images/service/ui_ux.jpg') }}');"></div>
+                    <a href=""
+                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-semibold">Desain UI/UX</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="relative group h-80 rounded-lg overflow-hidden bg-gray-200">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style="background-image: url('{{ asset('images/service/game.jpg') }}');"></div>
+                    <a href="{{ route('about') }}"
+                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-semibold">Pengembangan Game</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="relative group h-80 rounded-lg overflow-hidden bg-gray-200">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style="background-image: url('{{ asset('images/service/app.jpg') }}');"></div>
+                    <a href=""
+                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-semibold">Pembuatan Aplikasi</h3>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="relative group h-80 rounded-lg overflow-hidden bg-gray-200">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                        style="background-image: url('{{ asset('images/service/photo.jpg') }}');"></div>
+                    <a href=""
+                        class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div class="text-center">
+                            <h3 class="text-4xl font-semibold">Fotografi & Videografi</h3>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Porto Section -->
-    <section class="bg-white-recodex py-main mx-8 rounded-t-[5rem]">
-        <div class="container-main flex flex-col space-y-8 items-center justify-center">
-            <h2 class="text-black-recodex text-4xl font-bold text-center">
-                Karya Terbaik <span class="text-white-recodex bg-recodex px-2">Portofolio</span> Kami
-            </h2>
+    <!-- Contact Section -->
+    <section class="py-main">
+        <div class="container-main">
 
-            <div class="border-2 border-recodex h-1 w-full"></div>
+            <!-- Grid for Contact Form and Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
 
-            <!-- Pembuatan Website -->
-            <div class="w-full">
-                <h3 class="text-2xl font-semibold mb-4">Pembuatan Website</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="https://alfa5aviation.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/alfa5.png') }}" alt="Alfa 5 Aviation">
-                    </a>
-                    <a href="https://privatejetcharter.id/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/pjci.png') }}" alt="Private Jet Charter">
-                    </a>
-                    <a href="https://sagalapro.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/sagala.png') }}" alt="Sagala Pro">
-                    </a>
-                    <a href="https://berlianflightsupport.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/bgs.png') }}" alt="Berlian Flight Support">
-                    </a>
-                    <a href="https://desamarongge.id/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/marongge.png') }}" alt="Desa Marongge">
-                    </a>
-                    <a href="https://www.pt-narazelberkahselamat.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/narazel.png') }}" alt="Narazel Berkah Selamat">
-                    </a>
+                <!-- Contact Information -->
+                <div class="flex flex-col justify-center text-white-recodex p-8">
+                    <h3 class="text-2xl font-semibold text-recodex mb-4">Hubungi Kami</h3>
+                    <p class="mb-8">Ingin tahu lebih lanjut tentang layanan kami? Jangan ragu untuk
+                        menghubungi tim Recodex. Kami siap membantu mewujudkan ide dan kebutuhan digital Anda!</p>
+
+                    <ul class="space-y-4">
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-phone text-recodex text-xl mr-4"></i>
+                            <span class="text-lg">+62 822 9814 1490</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-envelope text-recodex text-xl mr-4"></i>
+                            <span class="text-lg">info@recodex.id</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-location-dot text-recodex text-xl mr-4"></i>
+                            <span class="text-lg">Jakarta Selatan, Indonesia</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa-solid fa-clock text-recodex text-xl mr-4"></i>
+                            <span class="text-lg">Senin - Jum'at, 09.00 - 17.00</span>
+                        </li>
+                    </ul>
                 </div>
-                <a href="#"
-                    class="mt-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-recodex rounded-lg focus:ring-4 focus:outline-none">
-                    Lainnya
-                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
-                    </svg>
-                </a>
-            </div>
 
-            <div class="border-2 border-recodex h-1 w-full"></div>
-
-            <!-- Desain UI/UX -->
-            <div class="w-full">
-                <h3 class="text-2xl font-semibold mb-4">Desain UI/UX</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <a href="https://alfa5aviation.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/alfa5.png') }}" alt="Alfa 5 Aviation">
-                    </a>
-                    <a href="https://privatejetcharter.id/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/pjci.png') }}" alt="Private Jet Charter">
-                    </a>
-                    <a href="https://sagalapro.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/sagala.png') }}" alt="Sagala Pro">
-                    </a>
-                    <a href="https://berlianflightsupport.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/bgs.png') }}" alt="Berlian Flight Support">
-                    </a>
-                    <a href="https://desamarongge.id/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/marongge.png') }}" alt="Desa Marongge">
-                    </a>
-                    <a href="https://www.pt-narazelberkahselamat.com/">
-                        <img class="rounded-lg overflow-hidden shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl"
-                            src="{{ asset('images/porto/narazel.png') }}" alt="Narazel Berkah Selamat">
-                    </a>
+                <!-- Contact Form -->
+                <div class="p-8 text-black-recodex rounded-lg shadow-lg bg-cover bg-center"
+                    style="background-image: url({{ asset('images/bg-joss.png') }})">
+                    <form action="#" method="POST">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <input type="text" id="name" name="name"
+                                    class="w-full p-4 border border-gray-300 rounded-lg" placeholder="Nama Lengkap"
+                                    required>
+                            </div>
+                            <div>
+                                <input type="email" id="email" name="email"
+                                    class="w-full p-4 border border-gray-300 rounded-lg" placeholder="Alamat Email"
+                                    required>
+                            </div>
+                            <div>
+                                <textarea id="message" name="message" rows="6" class="w-full p-4 border border-gray-300 rounded-lg"
+                                    placeholder="Tulis pesan anda" required></textarea>
+                            </div>
+                            <div>
+                                <button type="submit"
+                                    class="w-full py-3 shadow text-recodex border border-recodex  font-bold rounded-lg bg-black-recodex">Send
+                                    Message</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <a href="#"
-                    class="mt-4 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-recodex rounded-lg focus:ring-4 focus:outline-none">
-                    Lainnya
-                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9" />
-                    </svg>
-                </a>
+
             </div>
         </div>
     </section>
 
     @stack('before-scripts')
-
     <script>
         // Select the container and buttons
         const serviceCards = document.getElementById('serviceCards');
@@ -398,7 +493,7 @@
         const nextButton = document.getElementById('nextButton');
 
         // Define the scroll amount
-        const scrollAmount = 416;
+        const scrollAmount = 458.67;
 
         // Add event listener for the next button
         nextButton.addEventListener('click', () => {
