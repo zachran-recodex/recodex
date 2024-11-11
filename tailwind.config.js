@@ -8,9 +8,8 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './node_modules/flowbite/**/*.js',
+        'node_modules/flowbite/**/*.js'
     ],
-
     theme: {
         extend: {
             fontFamily: {
@@ -73,6 +72,24 @@ export default {
                     },
                     '@screen lg': {
                         paddingTop: '4rem',
+                        paddingBottom: '4rem',
+                    }
+                },
+                '.pt-main': {
+                        paddingTop: '2rem',
+                    '@screen sm': {
+                        paddingTop: '3rem',
+                    },
+                    '@screen lg': {
+                        paddingTop: '4rem',
+                    }
+                },
+                '.pb-main': {
+                        paddingBottom: '2rem',
+                    '@screen sm': {
+                        paddingBottom: '3rem',
+                    },
+                    '@screen lg': {
                         paddingBottom: '4rem',
                     }
                 },
