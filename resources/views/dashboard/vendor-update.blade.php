@@ -10,8 +10,8 @@
                 </form>
             </div>
 
-            <div class="bg-black p-4">
-                <div id="terminal" class="h-96"></div> <!-- Terminal Container -->
+            <div class="bg-black text-green-500 p-4 font-mono text-sm h-96 overflow-auto">
+                <div id="terminal" class="h-full"></div> <!-- Container untuk xterm.js -->
             </div>
         </div>
     </div>
@@ -50,8 +50,7 @@
                         const { value, done } = await reader.read();
                         if (done) break;
 
-                        const text = decoder.decode(value, { stream: true });
-                        term.write(text.replace(/\n/g, "\r\n")); // Output ke terminal
+                        term.write(decoder.decode(value, { stream: true })); // Menulis output ke xterm.js
                     }
                 } catch (error) {
                     term.writeln("\r\nError: " + error.message);

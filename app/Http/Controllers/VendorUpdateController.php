@@ -15,24 +15,35 @@ class VendorUpdateController extends Controller
 
     public function update()
     {
-        $phpPath = '/usr/local/bin/php'; // Path PHP dari cPanel
-        $composerPath = base_path('composer.phar'); // Gunakan composer.phar lokal jika tidak bisa pakai global
+        $phpPath = '/usr/local/bin/php'; // Path PHP di cPanel
+        $composerPath = base_path('composer.phar'); // Gunakan composer lokal
 
-        $command = escapeshellcmd("$phpPath $composerPath update 2>&1");
+        $command = "$phpPath $composerPath update";
 
-        return response()->stream(function () use ($command) {
-            $process = popen($command, 'r'); // Buka proses shell
-            if ($process) {
-                while (!feof($process)) {
-                    echo fread($process, 4096);
+        $descriptors = [
+            1 => ['pipe', 'w'], // stdout
+            2 => ['pipe', 'w'], // stderr
+        ];
+
+        $process = proc_open($command, $descriptors, $pipes, base_path(), []);
+
+        if (is_resource($process)) {
+            return response()->stream(function () use ($process, $pipes) {
+                while (!feof($pipes[1])) {
+                    echo fread($pipes[1], 4096); // Membaca output
                     ob_flush();
                     flush();
                 }
-                pclose($process);
-            }
-        }, 200, [
-            'Cache-Control' => 'no-cache',
-            'Content-Type'  => 'text/plain',
-        ]);
+                fclose($pipes[1]);
+                fclose($pipes[2]);
+                proc_close($process);
+            }, 200, [
+                'Cache-Control' => 'no-cache',
+                'X-Accel-Buffering' => 'no',
+                'Content-Type' => 'text/plain',
+            ]);
+        }
+
+        return response()->json(['error' => 'Gagal menjalankan proses'], 500);
     }
 }
