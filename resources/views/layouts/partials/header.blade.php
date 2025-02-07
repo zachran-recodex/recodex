@@ -8,7 +8,11 @@
     <!-- Separator -->
     <div class="w-px h-6 bg-shark-950 lg:hidden" aria-hidden="true"></div>
 
-    <livewire:run-optimize-command />
+    <div class="flex items-center gap-x-4 lg:gap-x-6">
+        <livewire:run-optimize-command />
+
+        <livewire:run-clear-command />
+    </div>
 
     <div class="flex justify-end flex-1 gap-x-4 self-stretch lg:gap-x-6">
         <div class="flex items-center gap-x-4 lg:gap-x-6">
