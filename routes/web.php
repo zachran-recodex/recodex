@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\VendorUpdateController;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\Process\Process;
 
 Route::get('/', function () {
     return view('main.index');
@@ -16,7 +16,9 @@ Route::middleware([
         return view('dashboard.index');
     })->name('dashboard');
 
-    Route::get('/vendor-update', function () {
-        return view('dashboard.vendor-update');
-    })->name('vendor.update');
+    Route::get('/vendor-update', [VendorUpdateController::class, 'index'])
+        ->name('vendor.update');
+
+    Route::post('/vendor-update', [VendorUpdateController::class, 'update'])
+        ->name('vendor.update.execute');
 });
