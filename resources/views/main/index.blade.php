@@ -24,10 +24,6 @@
                       text-lg font-semibold transition transform hover:scale-105">
                     Start Your Project
                 </a>
-
-                <livewire:run-optimize-command />
-
-                <livewire:run-clear-command />
             </div>
         </div>
     </section>

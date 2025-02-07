@@ -6,7 +6,7 @@
                 <!-- Static Navigation Links -->
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
                             class="flex items-center p-2 rounded-md gap-x-3">
-                    <x-fas-home class="w-5 h-5 shrink-0 @if(request()->routeIs('dashboard')) text-primary-500 @else text-shark-400 @endif" />
+                    <x-fas-home class="w-5 h-5 shrink-0 @if(request()->routeIs('dashboard')) text-primary-500 @else text-shark-950 @endif" />
                     Dashboard
                 </x-nav-link>
 

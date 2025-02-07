@@ -143,6 +143,12 @@
                     </div>
                 </div>
             </footer>
+
+            <!-- Button Container -->
+            <div class="fixed bottom-4 right-4 space-y-2">
+                <livewire:run-optimize-command />
+                <livewire:run-clear-command />
+            </div>
         </div>
 
         @livewireScripts
