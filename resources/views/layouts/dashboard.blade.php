@@ -12,9 +12,6 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -41,10 +38,7 @@
                     <div class="absolute top-0 flex justify-center w-16 pt-5 left-full">
                         <button type="button" class="-m-2.5 p-2.5" @click="sidebarOpen = false">
                             <span class="sr-only">Close sidebar</span>
-                            <svg class="w-6 h-6 text-shark-50" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <x-fas-circle-xmark class="w-6 h-6 text-shark-50" />
                         </button>
                     </div>
 
@@ -65,12 +59,7 @@
                                         <!-- Dashboard Link -->
                                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
                                             class="flex items-center p-2 rounded-md gap-x-3">
-                                            <svg
-                                                class="w-6 h-6 shrink-0 {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-400' }}" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                                stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                      d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                                            </svg>
+                                            <x-fas-home class="w-6 h-6 shrink-0 {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-400' }}" />
                                             Dashboard
                                         </x-nav-link>
                                     </ul>
@@ -99,12 +88,7 @@
                                 <!-- Dashboard Link -->
                                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
                                     class="flex items-center p-2 rounded-md gap-x-3">
-                                    <svg
-                                        class="w-6 h-6 shrink-0 {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-400' }}" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                                    </svg>
+                                    <x-fas-home class="w-6 h-6 shrink-0 {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-400' }}" />
                                     Dashboard
                                 </x-nav-link>
                             </ul>
@@ -120,11 +104,7 @@
                 class="sticky top-0 z-40 flex items-center h-16 px-4 bg-white border-b border-shark-200 shadow-sm shrink-0 gap-x-4 sm:gap-x-6 sm:px-6 lg:px-8">
                 <button type="button" class="-m-2.5 p-2.5 text-shark-950 lg:hidden" @click="sidebarOpen = true">
                     <span class="sr-only">Open sidebar</span>
-                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
+                    <x-fas-bars class="w-6 h-6" />
                 </button>
 
                 <!-- Separator -->
@@ -134,20 +114,33 @@
                     <div class="flex items-center gap-x-4 lg:gap-x-6">
                         <!-- Notification dropdown -->
                         <div x-data="{ open: false }" class="relative">
-                            <button @click="open = !open" class="p-2 text-shark-500 hover:text-shark-700">
+                            <button @click="open = !open" class="p-2 bg-shark-100 rounded-full text-shark-500 hover:text-shark-700">
                                 <span class="sr-only">View notifications</span>
-                                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                                </svg>
+                                <x-fas-bell class="w-4 h-4" />
                             </button>
 
                             <div x-show="open" @click.away="open = false"
-                                class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                 class="absolute right-0 z-10 w-64 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                 tabindex="-1">
+                                <div class="border-b px-4 py-2 text-sm">Notification</div>
+                                <div class="px-4 py-2 text-sm text-shark-700">No new notifications</div>
+                            </div>
+                        </div>
+
+                        <!-- Message dropdown -->
+                        <div x-data="{ open: false }" class="relative">
+                            <button @click="open = !open" class="p-2 bg-shark-100 rounded-full text-shark-500 hover:text-shark-700">
+                                <span class="sr-only">View messages</span>
+                                <x-fas-message class="w-4 h-4" />
+                            </button>
+
+                            <div x-show="open" @click.away="open = false"
+                                class="absolute right-0 z-10 w-64 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
-                                <div class="px-4 py-2 text-sm text-shark-700">No new notifications</div>
+                                <div class="border-b px-4 py-2 text-sm">Message</div>
+                                <div class="px-4 py-2 text-sm text-shark-700">No new messages</div>
                             </div>
                         </div>
 
@@ -167,12 +160,6 @@
                                     <h3 class="ml-4 text-sm font-semibold leading-6 text-shark-900"
                                         aria-hidden="true">{{ Auth::user()->name }}
                                     </h3>
-                                    <svg class="w-5 h-5 ml-2 text-shark-400" viewBox="0 0 20 20" fill="currentColor"
-                                        aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                            clip-rule="evenodd" />
-                                    </svg>
                                 </div>
                             </button>
 
@@ -180,16 +167,20 @@
                                 class="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
                                 tabindex="-1">
-                                <a href="{{ route('profile.show') }}"
-                                    class="block px-4 py-2 text-sm text-shark-700 hover:bg-shark-100" role="menuitem"
-                                    tabindex="-1">Your Profile</a>
-                                <a href="" class="block px-4 py-2 text-sm text-shark-700 hover:bg-shark-100"
-                                    role="menuitem" tabindex="-1">Settings</a>
-                                <form method="POST" action="{{ route('logout') }}">
+                                <a href="{{ route('profile.show') }}" class="flex px-4 py-2 text-sm text-shark-700 hover:bg-shark-100" role="menuitem" tabindex="-1">
+                                    <x-fas-user class="w-4 h-4 mr-2" />
+                                    My Profile
+                                </a>
+                                <a href="" class="flex px-4 py-2 text-sm text-shark-700 hover:bg-shark-100" role="menuitem" tabindex="-1">
+                                    <x-fas-cog class="w-4 h-4 mr-2" />
+                                    Settings
+                                </a>
+                                <form method="POST" action="{{ route('logout') }}" class="border-t">
                                     @csrf
-                                    <button type="submit"
-                                        class="block w-full px-4 py-2 text-left text-sm text-shark-700 hover:bg-shark-100"
-                                        role="menuitem" tabindex="-1">Sign out</button>
+                                    <button type="submit" class="flex w-full px-4 py-2 text-left text-sm text-shark-700 hover:bg-shark-100" role="menuitem" tabindex="-1">
+                                        <x-fas-sign-out-alt class="w-4 h-4 mr-2" />
+                                        Sign Out
+                                    </button>
                                 </form>
                             </div>
                         </div>
