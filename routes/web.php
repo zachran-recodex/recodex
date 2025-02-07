@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\VendorUpdateController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,10 +14,4 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard');
-
-    Route::get('/vendor-update', [VendorUpdateController::class, 'index'])
-        ->name('vendor.update');
-
-    Route::post('/vendor-update', [VendorUpdateController::class, 'update'])
-        ->name('vendor.update.execute');
 });
