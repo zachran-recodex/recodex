@@ -45,27 +45,12 @@
                     <!-- Sidebar component for mobile -->
                     <div
                         class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-shark-200 grow gap-y-5">
-                        <div class="flex items-center h-16 shrink-0">
+                        <div class="flex items-center h-16 shrink-0 border-b border-shark-200">
                             <h3 class="text-2xl font-bold tracking-tight text-primary-500">
                                 Recodex ID
                             </h3>
                         </div>
-                        <nav class="flex flex-col flex-1">
-                            <ul role="list" class="flex flex-col flex-1 gap-y-6">
-                                <li>
-                                    <h2 class="text-xs font-semibold leading-6 text-shark-400 uppercase">PAGES</h2>
-
-                                    <ul role="list" class="-mx-2 space-y-1">
-                                        <!-- Dashboard Link -->
-                                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
-                                            class="flex items-center p-2 rounded-md gap-x-3">
-                                            <x-fas-home class="w-6 h-6 shrink-0 {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-400' }}" />
-                                            Dashboard
-                                        </x-nav-link>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav>
+                        @include('layouts.partials.navigation-menu')
                     </div>
                 </div>
             </div>
@@ -74,27 +59,12 @@
         <!-- Static sidebar for desktop -->
         <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col">
             <div class="flex flex-col px-6 pb-4 overflow-y-auto bg-white border-r border-shark-200 grow gap-y-5">
-                <div class="flex items-center h-16 shrink-0">
+                <div class="flex items-center h-16 shrink-0 border-b border-shark-200">
                     <a href="" class="text-2xl font-bold tracking-tight text-primary-500">
                         Recodex ID
                     </a>
                 </div>
-                <nav class="flex flex-col flex-1">
-                    <ul role="list" class="flex flex-col flex-1 gap-y-6">
-                        <li>
-                            <h2 class="text-xs font-semibold leading-6 text-shark-400 uppercase">PAGES</h2>
-
-                            <ul role="list" class="-mx-2 space-y-1">
-                                <!-- Dashboard Link -->
-                                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
-                                    class="flex items-center p-2 rounded-md gap-x-3">
-                                    <x-fas-home class="w-6 h-6 shrink-0 {{ request()->routeIs('dashboard') ? 'text-primary-500' : 'text-shark-400' }}" />
-                                    Dashboard
-                                </x-nav-link>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
+                @include('layouts.partials.navigation-menu')
             </div>
         </div>
 
