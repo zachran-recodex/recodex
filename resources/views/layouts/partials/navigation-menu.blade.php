@@ -10,8 +10,9 @@
                     Dashboard
                 </x-nav-link>
 
-                <x-nav-link class="flex items-center p-2 rounded-md gap-x-3">
-                    <x-fas-calendar-days class="w-5 h-5 shrink-0" />
+                <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')"
+                            class="flex items-center p-2 rounded-md gap-x-3">
+                    <x-fas-calendar-days class="w-5 h-5 shrink-0 @if(request()->routeIs('calendar')) text-primary-500 @else text-shark-950 @endif" />
                     Calendar
                 </x-nav-link>
 
