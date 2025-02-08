@@ -16,8 +16,9 @@
                     Calendar
                 </x-nav-link>
 
-                <x-nav-link class="flex items-center p-2 rounded-md gap-x-3">
-                    <x-fas-user class="w-5 h-5 shrink-0" />
+                <x-nav-link :href="route('profile.show')" :active="request()->routeIs('profile.show')"
+                            class="flex items-center p-2 rounded-md gap-x-3">
+                    <x-fas-user class="w-5 h-5 shrink-0 @if(request()->routeIs('profile.show')) text-primary-500 @else text-shark-950 @endif" />
                     Profile
                 </x-nav-link>
 
