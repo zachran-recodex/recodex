@@ -45,14 +45,14 @@ class UsersRolesAndPermissionsSeeder extends Seeder
         // Create users by role
         $superAdminUser = User::create([
             'name' => 'Super Admin',
-            'email' => 'superadmin@mail.com',
+            'email' => 'superadmin@recodex.id',
             'password' => bcrypt('admin123'),
         ]);
         $superAdminUser->assignRole($superAdminRole);
 
         $adminUser = User::create([
             'name' => 'Admin',
-            'email' => 'admin@mail.com',
+            'email' => 'admin@recodex.id',
             'password' => bcrypt('admin123'),
         ]);
         $adminUser->assignRole($adminRole);
@@ -60,7 +60,7 @@ class UsersRolesAndPermissionsSeeder extends Seeder
         // Create a regular user without any role
         User::create([
             'name' => 'Regular User',
-            'email' => 'user@mail.com',
+            'email' => 'user@recodex.id',
             'password' => bcrypt('user123'),
         ]);
     }
