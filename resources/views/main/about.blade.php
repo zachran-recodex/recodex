@@ -123,19 +123,11 @@
                 <!-- Section Block -->
                 <div class="section-block mb-10 md:mb-[60px] xl:mb-20">
                     <h2 class="jos mx-auto max-w-[966px] text-center">
-                        We think our story is
-                        <span>
-                            <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                                alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                        </span>worth sharing with you
+                        {{ $about->title }}
                     </h2>
                     <div class="mx-auto mt-6 max-w-[813px] text-center">
                         <p class="jos section-para">
-                            Established in 2008, we began as a small but ambitious team.
-                            We understood the importance of creative and tech-savvy
-                            solutions to help businesses succeed in the ever-changing
-                            digital landscape.
+                            {{ $about->description }}
                         </p>
                     </div>
                 </div>
@@ -182,32 +174,16 @@
                     <div class="rich-text">
                         <h4 class="mb-4">Our core vision</h4>
                         <p>
-                            Empowering businesses to create impactful and visually
-                            stunning brand experiences that captivate audiences and
-                            drive success in the digital age.
-                        </p>
-
-                        <p>
-                            Our team consists of experienced designers, developers. We
-                            have a wide variety of skills and backgrounds, allowing us
-                            to tackle projects of all sizes and complexities. We believe
-                            in the power of imagination and innovation.
+                            {{ $about->vision }}
                         </p>
                     </div>
                     <div class="rich-text">
                         <h4 class="mb-4">Our main mission</h4>
-                        <p>
-                            Our mission is to collaborate with businesses of all sizes,
-                            from startups to established brands, to provide innovative
-                            and creative design solutions.
-                        </p>
-
-                        <p>
-                            We are committed to creating designs that inspire, connect &
-                            our clients in the marketplace. Our focus is on
-                            understanding. Our clients' unique needs and delivery
-                            designs that not only meet but exceed their expectations.
-                        </p>
+                        <ul>
+                            @foreach ($about->mission as $item)
+                                <li>{{ $item }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
