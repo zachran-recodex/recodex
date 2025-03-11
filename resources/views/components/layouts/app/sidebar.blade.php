@@ -133,6 +133,8 @@
 
         {{ $slot }}
 
+        <livewire:notification />
+
         @fluxScripts
     </body>
 </html>
