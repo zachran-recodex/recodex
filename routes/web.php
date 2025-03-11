@@ -3,9 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::view('/', 'main.index')->name('home');
+Route::view('about', 'main.about')->name('about');
+Route::view('blog', 'main.blog')->name('blog');
+Route::view('service', 'main.service')->name('service');
+Route::view('contact', 'main.contact')->name('contact');
+Route::view('faq', 'main.faq')->name('faq');
+Route::view('portfolio', 'main.portfolio')->name('portfolio');
+Route::view('pricing', 'main.pricing')->name('pricing');
+Route::view('team', 'main.team')->name('team');
+Route::view('testimonial', 'main.testimonial')->name('testimonial');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
