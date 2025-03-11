@@ -14,11 +14,16 @@ Route::view('pricing', 'main.pricing')->name('pricing');
 Route::view('team', 'main.team')->name('team');
 Route::view('testimonial', 'main.testimonial')->name('testimonial');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
+
+    Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function (){
+
+        Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
+
+    });
+
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
