@@ -1,4 +1,4 @@
-<div class="fixed bottom-0 right-0 p-4 space-y-4 z-50">
+<div class="fixed top-0 right-0 p-4 space-y-4 z-50">
     @foreach ($messages as $message)
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => { show = false;
             $wire.remove('{{ $message['id'] }}') }, 3000)"
