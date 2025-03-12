@@ -1,24 +1,33 @@
 <?php
 
+use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::view('/', 'main.index')->name('home');
-Route::view('about', 'main.about')->name('about');
-Route::view('blog', 'main.blog')->name('blog');
-Route::view('service', 'main.service')->name('service');
-Route::view('contact', 'main.contact')->name('contact');
-Route::view('faq', 'main.faq')->name('faq');
-Route::view('portfolio', 'main.portfolio')->name('portfolio');
-Route::view('pricing', 'main.pricing')->name('pricing');
-Route::view('team', 'main.team')->name('team');
-Route::view('testimonial', 'main.testimonial')->name('testimonial');
+Route::controller(MainController::class)->group(function () {
+
+    Route::get('/', 'index')->name('home');
+    Route::get('about', 'about')->name('about');
+    Route::get('blog', 'blog')->name('blog');
+    Route::get('service', 'service')->name('service');
+    Route::get('contact', 'contact')->name('contact');
+    Route::get('faq', 'faq')->name('faq');
+    Route::get('portfolio', 'portfolio')->name('portfolio');
+    Route::get('pricing', 'pricing')->name('pricing');
+    Route::get('team', 'team')->name('team');
+    Route::get('testimonial', 'testimonial')->name('testimonial');
+
+});
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
     Route::view('/dashboard', 'dashboard.index')->name('dashboard');
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
+
+        Route::view('/about', 'dashboard.about')->name('about');
+
+        Route::view('/hero-section', 'dashboard.hero-section')->name('hero-section');
 
         Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
 
