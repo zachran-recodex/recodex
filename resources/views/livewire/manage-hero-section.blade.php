@@ -1,55 +1,62 @@
 <div class="grid auto-rows-min gap-6 lg:grid-cols-3">
-    <div class="lg:col-span-2 bg-zinc-50 sm:rounded-lg relative rounded-xl border border-neutral-200 dark:border-neutral-700">
-        <div class="py-3 px-6 border-b border-neutral-200">
-            <flux:heading size="lg" class="font-semibold">Input Form</flux:heading>
-        </div>
+    <flux:card class="col-span-2">
+        <flux:card.header>
+            <flux:heading size="lg" class="font-semibold">Input Data</flux:heading>
+        </flux:card.header>
 
-        <form wire:submit.prevent="save" class="p-6 flex flex-col space-y-6">
-            <flux:fieldset>
-                <div class="space-y-6">
+        <flux:card.body>
+            <form wire:submit.prevent="save" class="flex flex-col space-y-6">
+                <flux:fieldset>
+                    <div class="space-y-6">
 
-                    {{-- Title --}}
-                    <flux:input label="Title" wire:model="title" />
+                        {{-- Title --}}
+                        <flux:input label="Title" wire:model="title" />
 
-                    {{-- Subtitle --}}
-                    <flux:textarea
-                        label="Subtitle"
-                        wire:model="subtitle"
-                        rows="3"
-                    />
+                        {{-- Subtitle --}}
+                        <flux:textarea
+                            label="Subtitle"
+                            wire:model="subtitle"
+                            rows="3"
+                        />
 
-                    <div class="grid gap-6 sm:grid-cols-2">
-                        {{-- Motto --}}
-                        <flux:input label="Motto" wire:model="motto" />
+                        <div class="grid gap-6 sm:grid-cols-2">
+                            {{-- Motto --}}
+                            <flux:input label="Motto" wire:model="motto" />
 
-                        {{-- Button Text --}}
-                        <flux:input label="Button Text" wire:model="button_text" />
+                            {{-- Button Text --}}
+                            <flux:input label="Button Text" wire:model="button_text" />
+                        </div>
+
+                        {{-- Image Upload --}}
+                        <flux:field>
+                            <flux:label>Image</flux:label>
+
+                            <flux:input type="file" wire:model="temp_image" />
+
+                            <flux:description>*recommended size: 485x540</flux:description>
+
+                            <flux:error name="temp_image" />
+                        </flux:field>
+
                     </div>
+                </flux:fieldset>
 
-                    {{-- Image Upload --}}
-                    <flux:field>
-                        <flux:label>Image</flux:label>
-
-                        <flux:input type="file" wire:model="temp_image" />
-
-                        <flux:description>*recommended size: 485x540</flux:description>
-
-                        <flux:error name="temp_image" />
-                    </flux:field>
+                <div class="flex justify-end">
+                    {{-- Submit Button --}}
+                    <flux:button type="submit" variant="primary" class="cursor-pointer w-fit">Update</flux:button>
                 </div>
-            </flux:fieldset>
+            </form>
+        </flux:card.body>
 
-            {{-- Submit Button --}}
-            <flux:button type="submit" variant="primary" class="cursor-pointer w-fit">Update</flux:button>
-        </form>
-    </div>
+    </flux:card>
 
-    <div class="bg-zinc-50 sm:rounded-lg relative rounded-xl border border-neutral-200 dark:border-neutral-700 h-fit sticky top-4">
-        <div class="py-3 px-6 border-b border-neutral-200">
+    <flux:card>
+        <flux:card.header>
             <flux:heading size="lg" class="font-semibold">Preview</flux:heading>
-        </div>
+        </flux:card.header>
 
-        <div class="p-6 flex flex-col space-y-6">
+        <flux:card.body>
+            <div class="space-y-6">
                 <div>
                     <flux:heading>Image</flux:heading>
                     @if ($temp_image)
@@ -82,6 +89,7 @@
                     <flux:heading>Button Text</flux:heading>
                     <flux:subheading>{{ $button_text ?: 'Not set' }}</flux:subheading>
                 </div>
-        </div>
-    </div>
+            </div>
+        </flux:card.body>
+    </flux:card>
 </div>

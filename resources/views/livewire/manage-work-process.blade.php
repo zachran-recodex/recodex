@@ -43,7 +43,7 @@
                         <flux:table.row>
                             <flux:table.cell colspan="3" class="text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <flux:icon.cog class="size-12" />
+                                    <flux:icon.cog-6-tooth class="size-12" />
                                     <h3 class="mt-2 text-sm font-medium text-gray-900">
                                         No work processes found
                                     </h3>

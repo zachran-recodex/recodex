@@ -57,10 +57,9 @@
                         </flux:table.row>
                     @empty
                         <flux:table.row>
-                            <flux:table.cell colspan="4" class="text-center">
+                            <flux:table.cell colspan="5" class="text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <flux:icon.wrench class="size-12" />
-                                    <i class="fa-solid fa-newspaper text-4xl text-gray-300"></i>
+                                    <flux:icon.wrench-screwdriver class="size-12" />
                                     <h3 class="mt-2 text-sm font-medium text-gray-900">
                                         No services found
                                     </h3>

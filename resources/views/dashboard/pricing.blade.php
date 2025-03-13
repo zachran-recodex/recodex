@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 space-y-6">
+    <flux:container class="space-y-6">
         <!-- Page Header -->
         <div class="sm:flex sm:items-center sm:justify-between">
             <flux:heading size="xl" class="font-bold!">Manage Pricing</flux:heading>
@@ -7,10 +7,10 @@
             <flux:breadcrumbs>
                 <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
                 <flux:breadcrumbs.item separator="slash">Pricing</flux:breadcrumbs.item>
-            </flux:breadcrumbs>>
+            </flux:breadcrumbs>
             </nav>
         </div>
 
         <!-- Component Livewire -->
-    </div>
+    </flux:container>
 </x-layouts.app>

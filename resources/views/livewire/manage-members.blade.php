@@ -27,8 +27,8 @@
                         <flux:table.row>
                             <flux:table.cell>
                                 <img src="{{ $member->photo ? Storage::url($member->photo) : asset('images/placeholder.png') }}"
-                                     alt="{{ $member->name }}"
-                                     class="h-10 w-10 object-cover rounded-full">
+                                    alt="{{ $member->name }}"
+                                    class="h-10 w-10 object-cover rounded-full">
                             </flux:table.cell>
 
                             <flux:table.cell>
@@ -65,7 +65,7 @@
                         <flux:table.row>
                             <flux:table.cell colspan="7" class="text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <flux:icon.users class="size-12" />
+                                    <flux:icon.user-group class="size-12" />
                                     <h3 class="mt-2 text-sm font-medium text-gray-900">
                                         No members found
                                     </h3>

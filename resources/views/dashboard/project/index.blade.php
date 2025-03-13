@@ -2,11 +2,17 @@
     <flux:container class="space-y-6">
         <!-- Page Header -->
         <div class="sm:flex sm:items-center sm:justify-between">
-            <flux:heading size="xl" class="font-bold!">Project</flux:heading>
+            <div>
+                <flux:heading size="xl" class="font-bold!">Hello Zachran! 🙌🏻</flux:heading>
 
-            <flux:breadcrumbs>
-                <flux:breadcrumbs.item href="{{ route('dashboard.project') }}" separator="slash">Project</flux:breadcrumbs.item>
-            </flux:breadcrumbs>
+                <flux:subheading class="mt-2">
+                    We hope you having a best day!
+                </flux:subheading>
+            </div>
+
+            <flux:button type="button" variant="primary" class="w-fit" icon="plus">
+                New Project
+            </flux:button>
         </div>
 
         <!-- Overview -->
