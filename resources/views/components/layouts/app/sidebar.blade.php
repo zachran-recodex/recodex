@@ -12,6 +12,13 @@
             </a>
 
             <flux:navlist variant="outline">
+                <!-- Theme Switcher -->
+                <flux:radio.group variant="segmented" x-model="$flux.appearance" class="mx-4 mb-4">
+                    <flux:radio value="light" icon="sun" />
+                    <flux:radio value="dark" icon="moon" />
+                    <flux:radio value="system" icon="computer-desktop" />
+                </flux:radio.group>
+
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
 
                 <flux:navlist.group expandable heading="CMS" class="hidden lg:grid">
@@ -82,18 +89,6 @@
                     </flux:navlist.item>
                 </flux:navlist.group>
 
-            </flux:navlist>
-
-            <flux:spacer />
-
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    Repository
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits" target="_blank">
-                    Documentation
-                </flux:navlist.item>
             </flux:navlist>
 
             <!-- Desktop User Menu -->
@@ -185,7 +180,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
+                            Log Out
                         </flux:menu.item>
                     </form>
                 </flux:menu>
