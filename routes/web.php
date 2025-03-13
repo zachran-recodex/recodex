@@ -51,6 +51,8 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/work-process', 'dashboard.work-process')->name('work-process');
 
+        Route::view('/project', 'dashboard.project.index')->name('project');
+
         Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
 
     });
