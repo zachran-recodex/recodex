@@ -2,9 +2,8 @@
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 space-y-6">
         <!-- Page Header -->
         <div class="sm:flex sm:items-center sm:justify-between">
-            <div>
-                <h1 class="text-2xl font-semibold text-gray-950">Project</h1>
-            </div>
+            <flux:heading size="xl" class="font-bold!">Project</flux:heading>
+
             <flux:breadcrumbs>
                 <flux:breadcrumbs.item href="{{ route('dashboard.project') }}" separator="slash">Project</flux:breadcrumbs.item>
             </flux:breadcrumbs>
