@@ -63,13 +63,11 @@
                         <flux:table.row>
                             <flux:table.cell colspan="7" class="text-center">
                                 <div class="flex flex-col items-center justify-center">
-                                    <flux:icon.folder class="size-12" />
-                                    <h3 class="mt-2 text-sm font-medium text-gray-900">
-                                        No portfolios found
-                                    </h3>
-                                    <p class="mt-1 text-sm text-gray-500">
+                                    <flux:icon.folder class="size-12 mb-2" />
+                                    <flux:heading size="lg">No portfolios found</flux:heading>
+                                    <flux:subheading>
                                         Start by creating a new portfolio.
-                                    </p>
+                                    </flux:subheading>
                                 </div>
                             </flux:table.cell>
                         </flux:table.row>
