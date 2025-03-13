@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 space-y-6">
+    <flux:container class="space-y-6">
         <!-- Page Header -->
         <div class="sm:flex sm:items-center sm:justify-between">
             <flux:heading size="xl" class="font-bold!">Project</flux:heading>
@@ -21,9 +21,9 @@
 
                         <flux:button icon-trailing="chevron-down" size="xs">This Month</flux:button>
                     </div>
-                    <div class="mt-8 space-y-2">
-                        <p class="text-3xl font-semibold text-gray-900">Rp 7.000.000,-</p>
-                        <p class="text-sm text-gray-500">Total Revenue <span class="ms-4 text-green-500">+8%</span></p>
+                    <div class="mt-8">
+                        <flux:heading size="xl">Rp 7.000.000,-</flux:heading>
+                        <flux:subheading>Total Revenue <span class="ms-4 text-green-500">+8%</span></flux:sheading>
                     </div>
                 </flux:card.body>
             </flux:card>
@@ -38,9 +38,9 @@
 
                         <flux:button icon-trailing="chevron-down" size="xs">This Month</flux:button>
                     </div>
-                    <div class="mt-8 space-y-2">
-                        <p class="text-3xl font-semibold text-gray-900">10</p>
-                        <p class="text-sm text-gray-500">Total Project <span class="ms-4 text-green-500">+2%</span></p>
+                    <div class="mt-8">
+                        <flux:heading size="xl">10</flux:heading>
+                        <flux:subheading>Total Project <span class="ms-4 text-green-500">+2%</span></flux:sheading>
                     </div>
                 </flux:card.body>
             </flux:card>
@@ -55,9 +55,9 @@
 
                         <flux:button icon-trailing="chevron-down" size="xs">This Month</flux:button>
                     </div>
-                    <div class="mt-8 space-y-2">
-                        <p class="text-3xl font-semibold text-gray-900">5</p>
-                        <p class="text-sm text-gray-500">Ongoing Project <span class="ms-4 text-green-500">+2%</span></p>
+                    <div class="mt-8">
+                        <flux:heading size="xl">5</flux:heading>
+                        <flux:subheading>Ongoing Project <span class="ms-4 text-green-500">+2%</span></flux:sheading>
                     </div>
                 </flux:card.body>
             </flux:card>
@@ -72,9 +72,9 @@
 
                         <flux:button icon-trailing="chevron-down" size="xs">This Month</flux:button>
                     </div>
-                    <div class="mt-8 space-y-2">
-                        <p class="text-3xl font-semibold text-gray-900">2</p>
-                        <p class="text-sm text-gray-500">Pending Project <span class="ms-4 text-green-500">+2%</span></p>
+                    <div class="mt-8">
+                        <flux:heading size="xl">2</flux:heading>
+                        <flux:subheading>Pending Project <span class="ms-4 text-green-500">+2%</span></flux:sheading>
                     </div>
                 </flux:card.body>
             </flux:card>
@@ -114,13 +114,11 @@
                                 <flux:table.row>
                                     <flux:table.cell colspan="3" class="text-center">
                                         <div class="flex flex-col items-center justify-center">
-                                            <flux:icon.briefcase class="size-12" />
-                                            <h3 class="mt-2 text-sm font-medium text-gray-900">
-                                                No portfolios found
-                                            </h3>
-                                            <p class="mt-1 text-sm text-gray-500">
-                                                Start by creating a new portfolio.
-                                            </p>
+                                            <flux:icon.briefcase class="size-12 mb-2" />
+                                            <flux:heading size="lg">No projects found</flux:heading>
+                                            <flux:subheading>
+                                                Start by creating a new project.
+                                            </flux:subheading>
                                         </div>
                                     </flux:table.cell>
                                 </flux:table.row>
@@ -146,6 +144,6 @@
                 </flux:card.body>
             </flux:card>
 
-        </div>
-    </div>
+        </di>
+    </flux:container>
 </x-layouts.app>
