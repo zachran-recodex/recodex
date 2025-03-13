@@ -1,4 +1,4 @@
-<div class="flex aspect-square size-8 items-center justify-center rounded-md bg-accent-content text-accent-foreground">
+<div class="flex aspect-square size-8 items-center justify-center rounded-md bg-zinc-50 dark:bg-zinc-900 border border-zinc-200">
     <x-app-logo-icon class="size-6" />
 </div>
 <div class="ml-1 grid flex-1 text-left text-sm">

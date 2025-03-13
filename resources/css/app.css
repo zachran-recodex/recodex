@@ -35,16 +35,16 @@
     --color-primary-900: #344b1c;
     --color-primary-950: #19290a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
-    --color-accent-foreground: var(--color-white);
+    --color-accent: var(--color-primary-500);
+    --color-accent-content: var(--color-primary-700);
+    --color-accent-foreground: var(--color-primary-900);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: var(--color-primary-500);
+        --color-accent-content: var(--color-primary-500);
+        --color-accent-foreground: var(--color-primary-950);
     }
 }
 
