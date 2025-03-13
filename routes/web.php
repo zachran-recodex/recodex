@@ -27,11 +27,29 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/about', 'dashboard.about')->name('about');
 
+        Route::view('/blog', 'dashboard.blog')->name('blog');
+
+        Route::view('/client', 'dashboard.client')->name('client');
+
+        Route::view('/counter', 'dashboard.counter')->name('counter');
+
+        Route::view('/faq', 'dashboard.faq')->name('faq');
+
         Route::view('/hero-section', 'dashboard.hero-section')->name('hero-section');
+
+        Route::view('/member', 'dashboard.member')->name('member');
+
+        Route::view('/portfolio', 'dashboard.portfolio')->name('portfolio');
+
+        Route::view('/pricing', 'dashboard.pricing')->name('pricing');
 
         Route::view('/service', 'dashboard.service')->name('service');
 
-        Route::view('/portfolio', 'dashboard.portfolio')->name('portfolio');
+        Route::view('/testimonial', 'dashboard.testimonial')->name('testimonial');
+
+        Route::view('/video', 'dashboard.video')->name('video');
+
+        Route::view('/work-process', 'dashboard.work-process')->name('work-process');
 
         Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
 
