@@ -29,6 +29,10 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/hero-section', 'dashboard.hero-section')->name('hero-section');
 
+        Route::view('/service', 'dashboard.service')->name('service');
+
+        Route::view('/portfolio', 'dashboard.portfolio')->name('portfolio');
+
         Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
 
     });

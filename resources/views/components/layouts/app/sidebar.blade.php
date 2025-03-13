@@ -12,7 +12,24 @@
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
+            </flux:navlist>
+
+            <flux:navlist variant="outline">
+                <flux:navlist.group heading="Content Management System" class="grid">
+                    <flux:navlist.item icon="home" :href="route('dashboard.about')" :current="request()->routeIs('dashboard.about')" wire:navigate>
+                        About
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('dashboard.hero-section')" :current="request()->routeIs('dashboard.hero-section')" wire:navigate>
+                        Hero Section
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="wrench" :href="route('dashboard.service')" :current="request()->routeIs('dashboard.service')" wire:navigate>
+                        Services
+                    </flux:navlist.item>
+                    <flux:navlist.item icon="briefcase" :href="route('dashboard.portfolio')" :current="request()->routeIs('dashboard.portfolio')" wire:navigate>
+                        Portfolios
+                    </flux:navlist.item>
+                </flux:navlist.group>
             </flux:navlist>
 
             <flux:navlist variant="outline">
@@ -27,11 +44,11 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
+                    Repository
                 </flux:navlist.item>
 
                 <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits" target="_blank">
-                {{ __('Documentation') }}
+                    Documentation
                 </flux:navlist.item>
             </flux:navlist>
 
@@ -66,7 +83,7 @@
                     <flux:menu.separator />
 
                     <flux:menu.radio.group>
-                        <flux:menu.item href="/settings/profile" icon="cog" wire:navigate>{{ __('Settings') }}</flux:menu.item>
+                        <flux:menu.item href="/settings/profile" icon="cog" wire:navigate>Settings</flux:menu.item>
                     </flux:menu.radio.group>
 
                     <flux:menu.separator />
@@ -74,7 +91,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="w-full">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full">
-                            {{ __('Log Out') }}
+                            Log Out
                         </flux:menu.item>
                     </form>
                 </flux:menu>

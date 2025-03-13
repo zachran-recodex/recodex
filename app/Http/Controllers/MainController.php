@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
-use Illuminate\Http\Request;
+use App\Models\Service;
+use App\Models\HeroSection;
 
 class MainController extends Controller
 {
     public function index()
     {
-        return view('main.coming-soon');
+        $hero = HeroSection::first();
+        $services = Service::all();
+
+        return view('main.index', compact('hero', 'services'));
     }
 
     public function about()

@@ -4,7 +4,7 @@
 
 @php
     $classes = Flux::classes([
-        'p-0' => $padding,
+        'p-4' => $padding,
     ]);
 @endphp
 

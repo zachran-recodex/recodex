@@ -27,8 +27,15 @@
                     </div>
 
                     {{-- Image Upload --}}
-                    <flux:input type="file" wire:model="temp_image" label="Image"/>
+                    <flux:field>
+                        <flux:label>Image</flux:label>
 
+                        <flux:input type="file" wire:model="temp_image" />
+
+                        <flux:description>*recommended size: 485x540</flux:description>
+
+                        <flux:error name="temp_image" />
+                    </flux:field>
                 </div>
             </flux:fieldset>
 

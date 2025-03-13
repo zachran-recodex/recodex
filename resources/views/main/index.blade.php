@@ -12,53 +12,45 @@
                         <!-- Hero Left Block -->
                         <div class="text-center text-colorButteryWhite lg:text-start">
                             <h1>
-                                A
-                                <span class="inline-flex items-center gap-5">creative
-                                    <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                        alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                        class="w-12 md:w-14 lg:w-auto h-auto" /></span>
-                                design studio
+                                {{ $hero->title }}
                             </h1>
                             <p class="mb-10 mt-6 text-lg leading-[1.4] md:mb-14 lg:text-[21px]">
-                                We're a creative design studio specializing in meeting the
-                                needs of the new generation. We offer innovative and
-                                cutting-edge design solutions to help our clients stand
-                                out in today's fast-paced.
+                                {{ $hero->subtitle }}
                             </p>
 
                             <div class="mb-[50px] flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                                 <div class="flex -space-x-3">
-                                    <img src="{{ asset('') }}img/images/th-1/hero-user-1.png" alt="hero-user-1"
+                                    <img src="{{ asset('img/images/th-1/hero-user-1.png') }}" alt="hero-user-1"
                                         width="60" height="60"
                                         class="z-0 h-[66px] w-[66px] rounded-[50%] border-[6px] border-black" />
-                                    <img src="{{ asset('') }}img/images/th-1/hero-user-2.png" alt="hero-user-2"
+                                    <img src="{{ asset('img/images/th-1/hero-user-2.png') }}" alt="hero-user-2"
                                         width="60" height="60"
                                         class="z-[2] h-[66px] w-[66px] rounded-[50%] border-[6px] border-black" />
-                                    <img src="{{ asset('') }}img/images/th-1/hero-user-3.png" alt="hero-user-3"
+                                    <img src="{{ asset('img/images/th-1/hero-user-3.png') }}" alt="hero-user-3"
                                         width="60" height="60"
                                         class="z-[3] h-[66px] w-[66px] rounded-[50%] border-[6px] border-black" />
                                 </div>
-                                <span class="text-base font-semibold">Believed by more than a thousand people</span>
+                                <span class="text-base font-semibold">{{ $hero->motto }}</span>
                             </div>
 
-                            <a href="contact.html" class="btn-primary relative pr-20 md:pr-[118px]">Book a free
-                                consultation
-                                <span
-                                    class="absolute right-[5px] inline-flex h-[50px] w-[50px] items-center justify-center rounded-[50%] bg-black"><img
-                                        src="{{ asset('') }}img/icons/icon-buttery-white-phone.svg"
-                                        alt="icon-buttery-white-phone" width="30" height="30" /></span></a>
+                            <a href="{{ route('contact') }}" class="btn-primary relative pr-20 md:pr-[118px]">
+                                {{ $hero->button_text }}
+                                <span class="absolute right-[5px] inline-flex h-[50px] w-[50px] items-center justify-center rounded-[50%] bg-black">
+                                    <img src="{{ asset('img/icons/icon-buttery-white-phone.svg') }}" alt="icon-buttery-white-phone" width="30" height="30" />
+                                </span>
+                            </a>
                         </div>
                         <!-- Hero Left Block -->
                         <!-- Hero Right Block -->
                         <div
                             class="mx-auto inline-block max-w-[495px] overflow-hidden rounded-[25px] bg-colorButteryWhite p-[5px] lg:mx-0">
-                            <img src="{{ asset('') }}img/images/th-1/hero-img.jpg" alt="hero-img" width="485"
+                            <img src="{{ Storage::url($hero->image) }}" alt="hero-img" width="485"
                                 height="540" class="h-full w-full rounded-[20px] object-cover" />
                         </div>
                         <!-- Hero Right Block -->
 
                         <!-- Hero Elements -->
-                        <img src="{{ asset('') }}img/elemnts/element-light-lime-curve-arrow.svg"
+                        <img src="{{ asset('img/elemnts/element-light-lime-curve-arrow.svg') }}"
                             alt="element-light-lime-curve-arrow" width="284" height="153"
                             class="absolute bottom-0 left-1/2 -z-10 hidden h-auto max-w-52 -translate-x-1/2 lg:inline-block xl:max-w-full" />
                         <!-- Hero Elements -->
@@ -87,7 +79,7 @@
                             We provide effective design
                             <span>
                                 solutions
-                                <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
+                                <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
                                     alt="shape-light-lime-5-arms-star" width="74" height="70"
                                     class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
                             </span>
@@ -97,98 +89,44 @@
 
                     <!-- Service List -->
                     <ul class="grid grid-cols-1 gap-[30px] lg:grid-cols-2">
-                        <!-- Service Item -->
-                        <li class="jos group/team-item" data-jos_delay="0">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-1.svg"
-                                        alt="th-1-service-icon-1" width="64" height="70"
-                                        class="h-[70px] w-auto" />
+                        @forelse ($services as $service)
+                            <!-- Service Item -->
+                            <li class="jos" data-jos_delay="0.9">
+                                <div class="shadow-bg group h-full">
+                                    <div
+                                        class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
+                                        <flux:icon :icon="$service->icon" class="h-[70px] w-auto" />
 
-                                    <h4 class="mb-[15px] mt-[30px]">UI/UX Design</h4>
-                                    <p class="mb-7">
-                                        Focusing on user interface (UI) and user experience
-                                        (UX) design to enhance the usability and accessibility
-                                        of digital products & app.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
+                                        <h4 class="mb-[15px] mt-[30px]">{{ $service->title }}</h4>
+                                        <p class="mb-7">
+                                            {{ $service->description }}
+                                        </p>
+                                        <a href="service-details.html" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
+                                            <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="0.3">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-2.svg"
-                                        alt="th-1-service-icon-2" width="77" height="70"
-                                        class="h-[70px] w-auto" />
+                            </li>
+                            <!-- Service Item -->
+                        @empty
+                            <!-- Service Item -->
+                            <li class="jos" data-jos_delay="0.3">
+                                <div class="shadow-bg group h-full">
+                                    <div class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
+                                        <img src="{{ asset('img/icons/th-1-service-icon-2.svg') }}" alt="th-1-service-icon-2" width="77" height="70" class="h-[70px] w-auto" />
 
-                                    <h4 class="mb-[15px] mt-[30px]">Graphic Design</h4>
-                                    <p class="mb-7">
-                                        Creating visual elements such as logos, branding
-                                        materials, page layout techniques, brochures, & other
-                                        marketing collateral.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
+                                        <h4 class="mb-[15px] mt-[30px]">No Data</h4>
+                                        <p class="mb-7">
+                                            No Data Available
+                                        </p>
+                                        <a href="/login" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
+                                            <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="0.6">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-3.svg"
-                                        alt="th-1-service-icon-3" width="75" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Web Design</h4>
-                                    <p class="mb-7">
-                                        Designing and developing websites to ensure they are
-                                        visually look and appealing, user-friendly, and
-                                        functional your website.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="0.9">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-4.svg"
-                                        alt="th-1-service-icon-4" width="55" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Motion Graphics</h4>
-                                    <p class="mb-7">
-                                        Creating animated graphics, videos for various
-                                        purposes, including marketing and entertainment. To
-                                        help sell a product or service.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
+                            </li>
+                            <!-- Service Item -->
+                        @endforelse
                     </ul>
                     <!-- Service List -->
                 </div>
