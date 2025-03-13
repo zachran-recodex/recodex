@@ -13,10 +13,8 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
-            </flux:navlist>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group heading="Content Management System" class="grid">
+                <flux:navlist.group expandable heading="CMS" class="hidden lg:grid">
 
                     <flux:navlist.item icon="information-circle" :href="route('dashboard.about')" :current="request()->routeIs('dashboard.about')" wire:navigate>
                         About
@@ -70,14 +68,20 @@
                         Work Process
                     </flux:navlist.item>
                 </flux:navlist.group>
-            </flux:navlist>
 
-            <flux:navlist variant="outline">
+                <flux:navlist.group expandable heading="Projects" class="hidden lg:grid">
+                    <flux:navlist.item icon="home" :href="route('dashboard.project')" :current="request()->routeIs('dashboard.project')" wire:navigate>Overview</flux:navlist.item>
+                    <flux:navlist.item href="#">Total Project</flux:navlist.item>
+                    <flux:navlist.item href="#">Running Project</flux:navlist.item>
+                    <flux:navlist.item href="#">Income Project</flux:navlist.item>
+                </flux:navlist.group>
+
                 <flux:navlist.group heading="Platform" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard.erd')" :current="request()->routeIs('dashboard.erd')" wire:navigate>
                         Entity Relationship Diagram
                     </flux:navlist.item>
                 </flux:navlist.group>
+
             </flux:navlist>
 
             <flux:spacer />
