@@ -31,4 +31,43 @@ class MainController extends Controller
         return view('main.about', compact('about'));
     }
 
+    public function blog()
+    {
+        return view('main.blog');
+    }
+
+    public function service()
+    {
+        return view('main.service');
+    }
+
+    public function contact()
+    {
+        return view('main.contact');
+    }
+
+    public function faq()
+    {
+        return view('main.faq');
+    }
+
+    public function project()
+    {
+        return view('main.project');
+    }
+
+    public function pricing()
+    {
+        return view('main.pricing');
+    }
+
+    public function team()
+    {
+        return view('main.team');
+    }
+
+    public function testimonial()
+    {
+        return view('main.testimonial');
+    }
 }
