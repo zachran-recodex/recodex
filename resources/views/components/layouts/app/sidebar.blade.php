@@ -35,7 +35,7 @@
                         Client
                     </flux:navlist.item>
 
-                    <flux:navlist.item icon="chart-bar" :href="route('dashboard.counter')" :current="request()->routeIs('dashboard.counter')" wire:navigate>
+                    <flux:navlist.item icon="calculator" :href="route('dashboard.counter')" :current="request()->routeIs('dashboard.counter')" wire:navigate>
                         Counter
                     </flux:navlist.item>
 
@@ -53,10 +53,6 @@
 
                     <flux:navlist.item icon="folder" :href="route('dashboard.project')" :current="request()->routeIs('dashboard.project')" wire:navigate>
                         Project
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="currency-dollar" :href="route('dashboard.pricing')" :current="request()->routeIs('dashboard.pricing')" wire:navigate>
-                        Pricing
                     </flux:navlist.item>
 
                     <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.service')" :current="request()->routeIs('dashboard.service')" wire:navigate>
@@ -77,7 +73,6 @@
                 </flux:navlist.group>
 
                 <flux:navlist.group expandable heading="Projects">
-                    <flux:navlist.item icon="home" :href="route('dashboard.project')" :current="request()->routeIs('dashboard.project')" wire:navigate>Overview</flux:navlist.item>
                     <flux:navlist.item href="#">Total Project</flux:navlist.item>
                     <flux:navlist.item href="#">Running Project</flux:navlist.item>
                     <flux:navlist.item href="#">Income Project</flux:navlist.item>

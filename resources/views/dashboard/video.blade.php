@@ -11,5 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
+        <livewire:manage-videos />
     </flux:container>
 </x-layouts.app>

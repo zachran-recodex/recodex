@@ -11,5 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
+        <livewire:manage-clients />
     </flux:container>
 </x-layouts.app>

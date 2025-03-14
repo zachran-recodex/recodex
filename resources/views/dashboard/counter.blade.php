@@ -11,5 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
+        <livewire:manage-counters />
     </flux:container>
 </x-layouts.app>

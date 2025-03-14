@@ -11,5 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
+        <livewire:manage-testimonials />
     </flux:container>
 </x-layouts.app>

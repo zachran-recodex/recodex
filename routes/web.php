@@ -41,8 +41,6 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/project', 'dashboard.project')->name('project');
 
-        Route::view('/pricing', 'dashboard.pricing')->name('pricing');
-
         Route::view('/service', 'dashboard.service')->name('service');
 
         Route::view('/testimonial', 'dashboard.testimonial')->name('testimonial');
@@ -50,8 +48,6 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
         Route::view('/video', 'dashboard.video')->name('video');
 
         Route::view('/work-process', 'dashboard.work-process')->name('work-process');
-
-        Route::view('/project', 'dashboard.project.index')->name('project');
 
         Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
 
