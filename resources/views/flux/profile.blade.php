@@ -5,6 +5,7 @@
     'chevron' => true,
     'avatar' => null,
     'name' => null,
+    'role' => null,
 ])
 
 @php
@@ -40,9 +41,16 @@ $classes = Flux::classes()
     </div>
 
     <?php if ($name): ?>
-        <span class="ml-2 text-sm text-zinc-500 dark:text-white/80 group-hover:text-zinc-800 dark:group-hover:text-white font-medium truncate">
-            {{ $name }}
-        </span>
+        <div class="ml-2 flex flex-col items-start">
+            <span class="text-sm text-zinc-500 dark:text-white/80 group-hover:text-zinc-800 dark:group-hover:text-white font-medium truncate">
+                {{ $name }}
+            </span>
+            <?php if ($role):?>
+                <span class="text-xs text-zinc-400 dark:text-white/60 group-hover:text-zinc-600 dark:group-hover:text-white/80 truncate">
+                    {{ $role }}
+                </span>
+            <?php endif;?>
+        </div>
     <?php endif; ?>
 
     <?php if (is_string($iconTrailing) && $iconTrailing !== ''): ?>

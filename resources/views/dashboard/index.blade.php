@@ -1,18 +1,70 @@
 <x-layouts.app>
-    <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+    <flux:container class="space-y-6">
+        <!-- Page Header -->
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <div>
+                <flux:heading size="xl" class="font-bold!">Hello {{ auth()->user()->name }}! 🙌🏻</flux:heading>
+
+                <flux:subheading class="mt-2">
+                    We hope you having a best day!
+                </flux:subheading>
             </div>
         </div>
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-            <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
+
+        <!-- Overview -->
+        <div class="grid auto-rows-min gap-4 md:grid-cols-4">
+            <!-- Content Management System -->
+            <a href="">
+                <flux:card>
+                    <flux:card.body class="p-4! gap-2 flex justify-center items-center">
+                        <flux:badge color="fuchsia" size="lg" class="w-10 h-10 flex items-center justify-center rounded-full!">
+                            <flux:icon.currency-dollar />
+                        </flux:badge>
+
+                        <flux:heading>Content Management System</flux:heading>
+                    </flux:card.body>
+                </flux:card>
+            </a>
+
+            <!-- Project Management -->
+            <a href="">
+                <flux:card>
+                    <flux:card.body class="p-4! gap-2 flex justify-center items-center">
+                        <flux:badge color="blue" size="lg" class="w-10 h-10 flex items-center justify-center rounded-full!">
+                            <flux:icon.currency-dollar />
+                        </flux:badge>
+
+                        <flux:heading>Project Management</flux:heading>
+                    </flux:card.body>
+                </flux:card>
+            </a>
+
+            <!-- Invoice -->
+            <a href="">
+                <flux:card>
+                    <flux:card.body class="p-4! gap-2 flex justify-center items-center">
+                        <flux:badge color="blue" size="lg" class="w-10 h-10 flex items-center justify-center rounded-full!">
+                            <flux:icon.currency-dollar />
+                        </flux:badge>
+
+                        <flux:heading>Generate Invoice</flux:heading>
+                    </flux:card.body>
+                </flux:card>
+            </a>
+
+            <!-- Work Contract Aggrement -->
+            <a href="">
+                <flux:card>
+                    <flux:card.body class="p-4! gap-2 flex justify-center items-center">
+                        <flux:badge color="blue" size="lg" class="w-10 h-10 flex items-center justify-center rounded-full!">
+                            <flux:icon.currency-dollar />
+                        </flux:badge>
+
+                        <flux:heading>Work Contract Aggrement</flux:heading>
+                    </flux:card.body>
+                </flux:card>
+            </a>
+
         </div>
-    </div>
+    </flux:container>
 </x-layouts.app>

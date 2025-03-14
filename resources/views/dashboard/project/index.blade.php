@@ -3,7 +3,7 @@
         <!-- Page Header -->
         <div class="sm:flex sm:items-center sm:justify-between">
             <div>
-                <flux:heading size="xl" class="font-bold!">Hello Zachran! 🙌🏻</flux:heading>
+                <flux:heading size="xl" class="font-bold!">Hello {{ auth()->user()->name }}! 🙌🏻</flux:heading>
 
                 <flux:subheading class="mt-2">
                     We hope you having a best day!
@@ -16,7 +16,7 @@
         </div>
 
         <!-- Overview -->
-        <flux class="grid auto-rows-min gap-4 md:grid-cols-4">
+        <div class="grid auto-rows-min gap-4 md:grid-cols-4">
             <!-- Total Projects -->
             <flux:card>
                 <flux:card.body class="flex flex-col justify-between">
@@ -150,6 +150,6 @@
                 </flux:card.body>
             </flux:card>
 
-        </di>
+        </div>
     </flux:container>
 </x-layouts.app>
