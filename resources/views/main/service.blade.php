@@ -592,9 +592,9 @@
                             <!-- FAQ Body -->
                             <div class="ml-10 text-[#0C0C0C]">
                                 <p>
-                                    Yes, we're proud to showcase a portfolio of our previous
+                                    Yes, we're proud to showcase a project of our previous
                                     projects. You can find examples of our work on our
-                                    website or view our portfolio.
+                                    website or view our project.
                                 </p>
                             </div>
                             <!-- FAQ Body -->

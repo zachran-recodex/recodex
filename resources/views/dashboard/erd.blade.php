@@ -92,9 +92,9 @@
                 </x-mermaid>
             </div>
 
-            <!-- Portfolio & Klien -->
+            <!-- Project & Klien -->
             <div class="bg-zinc-50 rounded-xl border border-neutral-200 dark:border-neutral-700 p-6 my-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Portfolio & Klien</h2>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Project & Klien</h2>
                 <p class="text-gray-600 mb-4">Data ini digunakan untuk mengelola portolio dan klien.</p>
 
                 <x-mermaid>
@@ -116,7 +116,7 @@
                     int rating
                     }
 
-                    Portfolio {
+                    Project {
                     int id PK
                     int client_id FK
                     string image
@@ -127,7 +127,7 @@
                     decimal cost
                     }
 
-                    Client ||--o{ Portfolio : has
+                    Client ||--o{ Project : has
                     Client ||--o{ Testimonial : has
                 </x-mermaid>
 

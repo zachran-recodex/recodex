@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Portfolio;
+use App\Models\Project;
 use Illuminate\Support\Facades\Storage;
 use App\WithNotification;
 use Livewire\Component;
@@ -10,12 +10,12 @@ use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
 
-class ManagePortfolios extends Component
+class ManageProjects extends Component
 {
     use WithNotification, WithFileUploads, WithPagination;
 
     // Form Properties
-    public $portfolio_id;
+    public $project_id;
     public $title;
     public $description;
     public $project_date;
@@ -54,17 +54,17 @@ class ManagePortfolios extends Component
 
     public function edit($id)
     {
-        $portfolio = Portfolio::findOrFail($id);
+        $project = Project::findOrFail($id);
 
-        if ($portfolio) {
+        if ($project) {
             $this->isEditing = true;
-            $this->portfolio_id = $id;
-            $this->title = $portfolio->title;
-            $this->description = $portfolio->description;
-            $this->project_date = $portfolio->project_date->format('Y-m-d');
-            $this->duration = $portfolio->duration;
-            $this->cost = $portfolio->cost;
-            $this->image = $portfolio->image;
+            $this->project_id = $id;
+            $this->title = $project->title;
+            $this->description = $project->description;
+            $this->project_date = $project->project_date->format('Y-m-d');
+            $this->duration = $project->duration;
+            $this->cost = $project->cost;
+            $this->image = $project->image;
 
             $this->modal('form')->show();
         }
@@ -72,21 +72,21 @@ class ManagePortfolios extends Component
 
     public function confirmDelete($id)
     {
-        $this->portfolio_id = $id;
+        $this->project_id = $id;
         $this->modal('delete')->show();
     }
 
     public function delete()
     {
-        $portfolio = Portfolio::findOrFail($this->portfolio_id);
+        $project = Project::findOrFail($this->project_id);
 
-        if ($portfolio) {
-            if ($portfolio->image && Storage::disk('public')->exists($portfolio->image)) {
-                Storage::disk('public')->delete($portfolio->image);
+        if ($project) {
+            if ($project->image && Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
             }
 
-            $portfolio->delete();
-            $this->notifySuccess('Portfolio deleted successfully');
+            $project->delete();
+            $this->notifySuccess('Project deleted successfully');
 
             $this->modal('delete')->close();
         }
@@ -105,7 +105,7 @@ class ManagePortfolios extends Component
 
     public function resetForm()
     {
-        $this->reset(['portfolio_id', 'title', 'description', 'project_date', 'duration', 'cost', 'temp_image', 'imagePreview']);
+        $this->reset(['project_id', 'title', 'description', 'project_date', 'duration', 'cost', 'temp_image', 'imagePreview']);
         $this->resetValidation();
     }
 
@@ -115,13 +115,13 @@ class ManagePortfolios extends Component
             return null;
         }
 
-        return $this->temp_image->store('portfolios', 'public');
+        return $this->temp_image->store('projects', 'public');
     }
 
-    private function deleteOldImage($portfolio)
+    private function deleteOldImage($project)
     {
-        if ($portfolio->image && Storage::disk('public')->exists($portfolio->image)) {
-            Storage::disk('public')->delete($portfolio->image);
+        if ($project->image && Storage::disk('public')->exists($project->image)) {
+            Storage::disk('public')->delete($project->image);
         }
     }
 
@@ -135,13 +135,13 @@ class ManagePortfolios extends Component
             $imagePath = $this->handleImageUpload();
 
             if ($this->isEditing) {
-                $portfolio = Portfolio::findOrFail($this->portfolio_id);
+                $project = Project::findOrFail($this->project_id);
 
                 if ($this->temp_image) {
-                    $this->deleteOldImage($portfolio);
+                    $this->deleteOldImage($project);
                 }
 
-                $portfolio->update([
+                $project->update([
                     'title' => $this->title,
                     'description' => $this->description,
                     'project_date' => $this->project_date,
@@ -149,9 +149,9 @@ class ManagePortfolios extends Component
                     'cost' => $this->cost,
                     'image' => $imagePath ?? $this->image,
                 ]);
-                $this->notifySuccess('Portfolio updated successfully');
+                $this->notifySuccess('Project updated successfully');
             } else {
-                Portfolio::create([
+                Project::create([
                     'title' => $this->title,
                     'description' => $this->description,
                     'project_date' => $this->project_date,
@@ -159,7 +159,7 @@ class ManagePortfolios extends Component
                     'cost' => $this->cost,
                     'image' => $imagePath,
                 ]);
-                $this->notifySuccess('Portfolio created successfully');
+                $this->notifySuccess('Project created successfully');
             }
 
             DB::commit();
@@ -177,11 +177,11 @@ class ManagePortfolios extends Component
 
     public function render()
     {
-        $portfolios = Portfolio::orderBy('created_at', 'desc')
+        $projects = Project::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-portfolios', [
-            'portfolios' => $portfolios
+        return view('livewire.manage-projects', [
+            'projects' => $projects
         ]);
     }
 }

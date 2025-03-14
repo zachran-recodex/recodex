@@ -12,7 +12,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('service', 'service')->name('service');
     Route::get('contact', 'contact')->name('contact');
     Route::get('faq', 'faq')->name('faq');
-    Route::get('portfolio', 'portfolio')->name('portfolio');
+    Route::get('project', 'project')->name('project');
     Route::get('pricing', 'pricing')->name('pricing');
     Route::get('team', 'team')->name('team');
     Route::get('testimonial', 'testimonial')->name('testimonial');
@@ -39,7 +39,7 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/member', 'dashboard.member')->name('member');
 
-        Route::view('/portfolio', 'dashboard.portfolio')->name('portfolio');
+        Route::view('/project', 'dashboard.project')->name('project');
 
         Route::view('/pricing', 'dashboard.pricing')->name('pricing');
 

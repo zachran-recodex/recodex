@@ -80,7 +80,7 @@
                                     </li>
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('portfolio') }}" class="nav-link-item">Portfolio</a>
+                                        <a href="{{ route('project') }}" class="nav-link-item">Project</a>
                                     </li>
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">

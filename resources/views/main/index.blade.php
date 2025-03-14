@@ -228,8 +228,8 @@
     </section>
     <!-- ...::: About Section End :::... -->
 
-    <!-- ...::: Portfolio Section Start :::... -->
-    <section class="section-portfolio">
+    <!-- ...::: Project Section Start :::... -->
+    <section class="section-project">
         <!-- Section Background -->
         <div class="bg-black">
             <!-- Section Space -->
@@ -267,7 +267,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Product
                                                 Design</a>
                                             <p class="line-clamp-2">
@@ -275,7 +275,7 @@
                                                 aesthetics, and functionality.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -299,7 +299,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Logo
                                                 and Branding</a>
                                             <p class="line-clamp-2">
@@ -307,7 +307,7 @@
                                                 developing a cohesive visual identity.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -331,7 +331,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">App
                                                 UI/UX Design</a>
                                             <p class="line-clamp-2">
@@ -339,7 +339,7 @@
                                                 applications to ensure usability & engagement.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -363,7 +363,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Packaging
                                                 Design</a>
                                             <p class="line-clamp-2">
@@ -371,7 +371,7 @@
                                                 only protect attract customers on store.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -395,7 +395,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Product
                                                 Design</a>
                                             <p class="line-clamp-2">
@@ -403,7 +403,7 @@
                                                 aesthetics, and functionality.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -427,7 +427,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Logo
                                                 and Branding</a>
                                             <p class="line-clamp-2">
@@ -435,7 +435,7 @@
                                                 developing a cohesive visual identity.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -459,7 +459,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">App
                                                 UI/UX Design</a>
                                             <p class="line-clamp-2">
@@ -467,7 +467,7 @@
                                                 applications to ensure usability & engagement.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -491,7 +491,7 @@
                                     <div
                                         class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                         <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                            <a href="portfolio-details.html"
+                                            <a href="project-details.html"
                                                 class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">Packaging
                                                 Design</a>
                                             <p class="line-clamp-2">
@@ -499,7 +499,7 @@
                                                 only protect attract customers on store.
                                             </p>
                                         </div>
-                                        <a href="portfolio-details.html"
+                                        <a href="project-details.html"
                                             class="relative inline-flex items-start justify-center overflow-hidden">
                                             <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                                 alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -540,7 +540,7 @@
         </div>
         <!-- Section Background -->
     </section>
-    <!-- ...::: Portfolio Section End :::... -->
+    <!-- ...::: Project Section End :::... -->
 
     <!-- ...::: Process Section Start :::... -->
     <section class="section-process">

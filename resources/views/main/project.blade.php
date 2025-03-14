@@ -8,13 +8,13 @@
                 <!-- Section Container -->
                 <div class="container">
                     <div class="breadcrumb-block">
-                        <h1>Our Portfolio</h1>
+                        <h1>Our Project</h1>
                         <!-- Breadcrumb Nav -->
                         <ul class="breadcrumb-nav">
                             <li>
                                 <a href="index.html">Home</a>
                             </li>
-                            <li>Portfolio</li>
+                            <li>Project</li>
                         </ul>
                         <!-- Breadcrumb Nav -->
                     </div>
@@ -27,8 +27,8 @@
     </section>
     <!-- ...::: Breadcrumb Section End :::... -->
 
-    <!-- ...::: Portfolio Section Start :::... -->
-    <section class="section-portfolio">
+    <!-- ...::: Project Section Start :::... -->
+    <section class="section-project">
         <!-- Section Space -->
         <div class="section-space">
             <!-- Section Container -->
@@ -47,9 +47,9 @@
                 </div>
                 <!-- Section Block -->
 
-                <!-- Portfolio List -->
+                <!-- Project List -->
                 <ul class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -63,7 +63,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Product
                                         Design</a>
                                     <p class="line-clamp-2">
@@ -71,7 +71,7 @@
                                         aesthetics, and functionality.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -90,8 +90,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -105,7 +105,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Logo
                                         and Branding</a>
                                     <p class="line-clamp-2">
@@ -113,7 +113,7 @@
                                         a cohesive visual identity.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -132,8 +132,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -147,7 +147,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">App
                                         UI/UX Design</a>
                                     <p class="line-clamp-2">
@@ -155,7 +155,7 @@
                                         applications to ensure usability & engagement.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -174,8 +174,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -189,7 +189,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Packaging
                                         Design</a>
                                     <p class="line-clamp-2">
@@ -197,7 +197,7 @@
                                         only protect attract customers on store.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -216,8 +216,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -231,7 +231,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Product
                                         Design</a>
                                     <p class="line-clamp-2">
@@ -239,7 +239,7 @@
                                         considering ergonomics, aesthetics, and functionality.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -258,8 +258,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -273,7 +273,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Environmental
                                         Design</a>
                                     <p class="line-clamp-2">
@@ -281,7 +281,7 @@
                                         immersive installations for events and conferences.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -300,8 +300,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -315,7 +315,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Advertising
                                         Campaigns</a>
                                     <p class="line-clamp-2">
@@ -324,7 +324,7 @@
                                         copywriting.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -343,8 +343,8 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
+                    <!-- Project Item -->
                     <li class="jos">
                         <div
                             class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
@@ -358,7 +358,7 @@
                             <div
                                 class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                 <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                    <a href="portfolio-details.html"
+                                    <a href="project-details.html"
                                         class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">Website
                                         Design & Development</a>
                                     <p class="line-clamp-2">
@@ -367,7 +367,7 @@
                                         devices.
                                     </p>
                                 </div>
-                                <a href="portfolio-details.html"
+                                <a href="project-details.html"
                                     class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                     <img src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
                                         alt="icon-buttery-white-arrow-right" width="34" height="28"
@@ -386,13 +386,13 @@
                             <!-- Overlay -->
                         </div>
                     </li>
-                    <!-- Portfolio Item -->
+                    <!-- Project Item -->
                 </ul>
-                <!-- Portfolio List -->
+                <!-- Project List -->
             </div>
             <!-- Section Container -->
         </div>
         <!-- Section Space -->
     </section>
-    <!-- ...::: Portfolio Section End :::... -->
+    <!-- ...::: Project Section End :::... -->
 </x-layouts.main>

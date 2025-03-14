@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">List Portfolios</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Projects</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -23,39 +23,39 @@
                 </flux:table.columns>
 
                 <flux:table.rows>
-                    @forelse ($portfolios as $portfolio)
+                    @forelse ($projects as $project)
                         <flux:table.row>
                             <flux:table.cell>
-                                <img src="{{ Storage::url($portfolio->image) }}" alt="{{ $portfolio->title }}" class="h-10 w-auto object-cover rounded">
+                                <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" class="h-10 w-auto object-cover rounded">
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                {{ $portfolio->title }}
+                                {{ $project->title }}
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                {{ $portfolio->description }}
+                                {{ $project->description }}
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                {{ $portfolio->project_date->format('d M Y') }}
+                                {{ $project->project_date->format('d M Y') }}
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                {{ $portfolio->duration }}
+                                {{ $project->duration }}
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                ${{ number_format($portfolio->cost, 2) }}
+                                ${{ number_format($project->cost, 2) }}
                             </flux:table.cell>
 
                             <flux:table.cell>
                                 <flux:modal.trigger name="form">
-                                    <flux:button variant="warning" wire:click="edit({{ $portfolio->id }})" icon="pencil"></flux:button>
+                                    <flux:button variant="warning" wire:click="edit({{ $project->id }})" icon="pencil"></flux:button>
                                 </flux:modal.trigger>
 
                                 <flux:modal.trigger name="delete">
-                                    <flux:button variant="danger" wire:click="confirmDelete({{ $portfolio->id }})" icon="trash"></flux:button>
+                                    <flux:button variant="danger" wire:click="confirmDelete({{ $project->id }})" icon="trash"></flux:button>
                                 </flux:modal.trigger>
                             </flux:table.cell>
                         </flux:table.row>
@@ -64,9 +64,9 @@
                             <flux:table.cell colspan="7" class="text-center">
                                 <div class="flex flex-col items-center justify-center">
                                     <flux:icon.folder class="size-12 mb-2" />
-                                    <flux:heading size="lg">No portfolios found</flux:heading>
+                                    <flux:heading size="lg">No projects found</flux:heading>
                                     <flux:subheading>
-                                        Start by creating a new portfolio.
+                                        Start by creating a new project.
                                     </flux:subheading>
                                 </div>
                             </flux:table.cell>
@@ -78,14 +78,14 @@
     </flux:card.body>
 
     <flux:card.footer>
-        {{ $portfolios->links() }}
+        {{ $projects->links() }}
     </flux:card.footer>
 
     {{-- Form Modal --}}
     <flux:modal name="form" class="w-7xl">
         <div class="space-y-6">
             <flux:heading size="lg" class="font-semibold mb-6">
-                {{ $isEditing ? 'Edit Portfolio' : 'Add New Portfolio' }}
+                {{ $isEditing ? 'Edit Project' : 'Add New Project' }}
             </flux:heading>
 
             <form wire:submit.prevent="save" class="flex flex-col space-y-6">
@@ -143,10 +143,10 @@
     <flux:modal name="delete" class="min-w-[22rem]">
         <div class="space-y-6">
             <div>
-                <flux:heading size="lg">Delete portfolio?</flux:heading>
+                <flux:heading size="lg">Delete project?</flux:heading>
 
                 <flux:subheading>
-                    <p>Are you sure you want to delete this portfolio?</p>
+                    <p>Are you sure you want to delete this project?</p>
                     <p>This action cannot be undone.</p>
                 </flux:subheading>
             </div>

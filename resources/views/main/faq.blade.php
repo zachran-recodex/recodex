@@ -111,7 +111,7 @@
                         <div
                             class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
                             <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                Can you provide examples of your previous work/portfolio?
+                                Can you provide examples of your previous work/project?
                             </button>
                             <div class="accordion-icon">
                                 <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
