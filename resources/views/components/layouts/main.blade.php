@@ -43,9 +43,9 @@
                     <!-- Header Left Block -->
                     <div class="flex items-center gap-x-10">
                         <!-- Header Logo -->
-                        <a href="index.html" class="h-auto w-auto">
-                            <img src="{{ asset('img/logo-buttery-white.svg') }}" alt="logo-buttery-white"
-                                width="121" height="24" />
+                        <a href="{{ route('home') }}" class="h-auto w-auto flex gap-4 items-center">
+                            <img class="h-14 w-auto" src="{{ asset('images/small-logo.png') }}" alt="logo-buttery-white" width="121" height="24" />
+                            <p class="text-2xl font-semibold" style="color:#86c332">RECODEX ID</p>
                         </a>
                         <!-- Header Logo -->
 
@@ -167,17 +167,17 @@
                                                 <span
                                                     class="block font-syne text-[21px] font-bold leading-[1.42] text-colorLightLime">Give
                                                     us a call:</span>
-                                                <a href="tel:+1234567890"
-                                                    class="text-[21px] leading-[1.42] text-colorButteryWhite">(123)
-                                                    456-7890</a>
+                                                <a href="tel:+6282298141940"
+                                                    class="text-[21px] leading-[1.42] text-colorButteryWhite">(62)
+                                                    822 9814 1940</a>
                                             </li>
                                             <li>
                                                 <span
                                                     class="block font-syne text-[21px] font-bold leading-[1.42] text-colorLightLime">Send
                                                     us an email:
                                                 </span>
-                                                <a href="mailto:yourmail@email.com"
-                                                    class="text-[21px] leading-[1.42] text-colorButteryWhite">yourmail@email.com</a>
+                                                <a href="mailto:info@recodex.id"
+                                                    class="text-[21px] leading-[1.42] text-colorButteryWhite">info@recodex.id</a>
                                             </li>
                                         </ul>
                                         <!-- Footer Info -->
@@ -198,33 +198,33 @@
                                             <a href="http://www.facebook.com" target="_blank"
                                                 rel="noopener noreferrer"
                                                 class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                                <img src="{{ asset('') }}img/icons/icon-logo-buttery-white-facebook.svg"
+                                                <img src="{{ asset('img/icons/icon-logo-buttery-white-facebook.svg') }}"
                                                     alt="icon-logo-buttery-white-facebook" width="10"
                                                     height="17"
                                                     class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                                <img src="{{ asset('') }}img/icons/icon-logo-black-facebook.svg"
+                                                <img src="{{ asset('img/icons/icon-logo-black-facebook.svg') }}"
                                                     alt="icon-logo-black-facebook" width="10" height="17"
                                                     class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
                                             </a>
                                             <a href="http://www.instagram.com" target="_blank"
                                                 rel="noopener noreferrer"
                                                 class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                                <img src="{{ asset('') }}img/icons/icon-logo-buttery-white-instagram.svg"
+                                                <img src="{{ asset('img/icons/icon-logo-buttery-white-instagram.svg') }}"
                                                     alt="icon-logo-buttery-white-instagram" width="17"
                                                     height="18"
                                                     class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                                <img src="{{ asset('') }}img/icons/icon-logo-black-instagram.svg"
+                                                <img src="{{ asset('img/icons/icon-logo-black-instagram.svg') }}"
                                                     alt="icon-logo-black-instagram" width="17" height="18"
                                                     class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
                                             </a>
                                             <a href="http://www.linkedin.com" target="_blank"
                                                 rel="noopener noreferrer"
                                                 class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                                <img src="{{ asset('') }}img/icons/icon-logo-buttery-white-linkedin.svg"
+                                                <img src="{{ asset('img/icons/icon-logo-buttery-white-linkedin.svg') }}"
                                                     alt="icon-logo-buttery-white-linkedin" width="17"
                                                     height="18"
                                                     class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                                <img src="{{ asset('') }}img/icons/icon-logo-black-linkedin.svg"
+                                                <img src="{{ asset('img/icons/icon-logo-black-linkedin.svg') }}"
                                                     alt="icon-logo-black-linkedin" width="17" height="18"
                                                     class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
                                             </a>
@@ -264,7 +264,7 @@
                                         Send message
                                         <span
                                             class="absolute right-[5px] inline-flex h-[50px] w-[50px] items-center justify-center rounded-[50%] bg-black"><img
-                                                src="{{ asset('') }}img/icons/icon-buttery-white-arrow-right.svg"
+                                                src="{{ asset('img/icons/icon-buttery-white-arrow-right.svg') }}"
                                                 alt="icon-buttery-white-arrow-right" width="34"
                                                 height="28" /></span>
                                     </button>
@@ -287,14 +287,14 @@
                     <!-- Section Container -->
                     <div class="container">
                         <div class="flex flex-wrap justify-center gap-x-[30px] gap-y-4 lg:justify-between">
-                            <a href="index.html">
-                                <img src="{{ asset('') }}img/logo-buttery-white.svg" alt="logo-buttery-white"
-                                    width="121" height="24" />
+                            <a href="{{ route('home') }}" class="h-auto w-auto flex gap-4 items-center">
+                                <img class="h-14 w-auto" src="{{ asset('images/small-logo.png') }}" alt="logo-buttery-white" width="121" height="24" />
+                                <p class="text-2xl font-semibold" style="color:#86c332">RECODEX ID</p>
                             </a>
 
                             <!-- Copyright Text -->
                             <div class="text-colorButteryWhite">
-                                &copy; Copyright 2024, All Rights Reserved by Mthemeus
+                                &copy; Copyright 2025, All Rights Reserved by Recodex ID
                             </div>
                             <!-- Copyright Text -->
                         </div>
