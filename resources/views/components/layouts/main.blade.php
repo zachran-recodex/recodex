@@ -2,10 +2,14 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
 
 <head>
+    @yield('meta_tag')
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>{{ $title ?? 'Laravel' }}</title>
+    <meta name="theme-color" class="bg-background-primary border-b bg-white/20" content="#171717">
+
+    <title>{{ config('app.name') }}</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon" />
