@@ -46,7 +46,7 @@ new class extends Component {
         ]);
 
         if ($this->photo) {
-            $validated['photo'] = $this->photo->store('photos', 'public');
+            $validated['photo'] = Storage::disk('public')->put('photos', $this->photo);
         }
 
         $user->fill($validated);

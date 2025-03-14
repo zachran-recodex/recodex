@@ -145,7 +145,7 @@
 
                 <flux:dropdown position="bottom" align="end">
                     <flux:profile
-                        :avatar="auth()->user()->name"
+                        :avatar="Storage::url(auth()->user()->photo)"
                         :name="auth()->user()->name"
                         :role="Str::title(str_replace('-', ' ', auth()->user()->roles->first()?->name))"
                         icon-trailing="chevron-down"
