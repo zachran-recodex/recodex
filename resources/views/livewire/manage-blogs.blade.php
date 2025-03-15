@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Blog Posts</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Blog</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -15,7 +15,7 @@
                 <flux:table.columns>
                     <flux:table.column>Title</flux:table.column>
                     <flux:table.column>Description</flux:table.column>
-                    <flux:table.column>Author</flux:table.column>
+                    <flux:table.column>Image</flux:table.column>
                     <flux:table.column>Created At</flux:table.column>
                     <flux:table.column>Action</flux:table.column>
                 </flux:table.columns>
@@ -32,7 +32,9 @@
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                {{ $blog->author }}
+                                <img src="{{ $blog->image ? Storage::url($blog->image) : asset('images/placeholder.png') }}"
+                                    alt="{{ $blog->name }}"
+                                    class="h-10 w-10 object-cover">
                             </flux:table.cell>
 
                             <flux:table.cell>
@@ -91,8 +93,21 @@
                             rows="5"
                         />
 
-                        {{-- Author --}}
-                        <flux:input label="Author" wire:model="author" />
+                        {{-- Image --}}
+                        <flux:field>
+                            <flux:label>Image</flux:label>
+                            <flux:input type="file" wire:model="temp_image" accept="image/*" />
+                            <flux:error name="temp_image" />
+
+                            {{-- Image Preview --}}
+                            <div class="mt-2">
+                                @if ($temp_image)
+                                    <img src="{{ $imagePreview }}" alt="Preview" class="h-32 w-32 object-cover">
+                                @elseif ($isEditing && $image)
+                                    <img src="{{ Storage::url($image) }}" alt="Current Image" class="h-32 w-32 object-cover">
+                                @endif
+                            </div>
+                        </flux:field>
                     </div>
                 </flux:fieldset>
 

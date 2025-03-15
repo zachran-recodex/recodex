@@ -3,20 +3,24 @@
 namespace App\Livewire;
 
 use App\Models\Blog;
-use App\WithNotification;
 use Livewire\Component;
+use App\WithNotification;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ManageBlogs extends Component
 {
-    use WithNotification, WithPagination;
+    use WithNotification, WithFileUploads, WithPagination;
 
     // Form Properties
     public $blog_id;
     public $title;
     public $description;
-    public $author;
+    public $image;
+    public $temp_image;
+    public $imagePreview;
 
     // UI State Properties
     public $isEditing = false;
@@ -26,7 +30,7 @@ class ManageBlogs extends Component
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'author' => 'required|string|max:255',
+            'temp_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024|dimensions:min_width=100,min_height=100',
         ];
     }
 
@@ -51,7 +55,7 @@ class ManageBlogs extends Component
             $this->blog_id = $id;
             $this->title = $blog->title;
             $this->description = $blog->description;
-            $this->author = $blog->author;
+            $this->image = $blog->image;
 
             $this->modal('form')->show();
         }
@@ -68,16 +72,47 @@ class ManageBlogs extends Component
         $blog = Blog::findOrFail($this->blog_id);
 
         if ($blog) {
+            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+                Storage::disk('public')->delete($blog->image);
+            }
+
             $blog->delete();
             $this->notifySuccess('Blog deleted successfully');
             $this->modal('delete')->close();
         }
     }
 
+    public function updatedTempImage()
+    {
+        try {
+            if ($this->temp_image) {
+                $this->imagePreview = $this->temp_image->temporaryUrl();
+            }
+        } catch (\Exception $e) {
+            // Handle the error if needed
+        }
+    }
+
     public function resetForm()
     {
-        $this->reset(['blog_id', 'title', 'description', 'author']);
+        $this->reset(['blog_id', 'title', 'description', 'temp_image', 'imagePreview']);
         $this->resetValidation();
+    }
+
+    private function handleImageUpload()
+    {
+        if (!$this->temp_image) {
+            return null;
+        }
+
+        return $this->temp_image->store('blogs', 'public');
+    }
+
+    private function deleteOldImage($blog)
+    {
+        if ($blog->image && Storage::disk('public')->exists($blog->image)) {
+            Storage::disk('public')->delete($blog->image);
+        }
     }
 
     public function save()
@@ -87,20 +122,26 @@ class ManageBlogs extends Component
         try {
             DB::beginTransaction();
 
+            $imagePath = $this->handleImageUpload();
+
             if ($this->isEditing) {
                 $blog = Blog::findOrFail($this->blog_id);
+
+                if ($this->temp_image) {
+                    $this->deleteOldImage($blog);
+                }
 
                 $blog->update([
                     'title' => $this->title,
                     'description' => $this->description,
-                    'author' => $this->author,
+                    'image' => $imagePath ?? $this->image,
                 ]);
                 $this->notifySuccess('Blog updated successfully');
             } else {
                 Blog::create([
                     'title' => $this->title,
                     'description' => $this->description,
-                    'author' => $this->author,
+                    'image' => $imagePath,
                 ]);
                 $this->notifySuccess('Blog created successfully');
             }
