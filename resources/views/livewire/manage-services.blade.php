@@ -29,7 +29,7 @@
                         <flux:table.row>
 
                             <flux:table.cell>
-                                <flux:icon :icon="$service->icon" />
+                                <flux:icon :icon="$getSafeIcon($service->icon)" />
                             </flux:table.cell>
 
                             <flux:table.cell>

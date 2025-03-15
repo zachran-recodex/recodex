@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Service;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use App\WithNotification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -126,6 +127,13 @@ class ManageServices extends Component
     {
         $this->validate();
 
+        // Validasi tambahan untuk icon
+        $iconOptions = $this->getIconOptions();
+        if (!$this->isValidIcon($this->icon, $iconOptions)) {
+            $this->addError('icon', 'Please select a valid icon');
+            return;
+        }
+
         try {
             DB::beginTransaction();
 
@@ -170,12 +178,44 @@ class ManageServices extends Component
 
     public function getIconOptions()
     {
-        $iconFiles = glob(resource_path('views/flux/icon/*.blade.php'));
-        return collect($iconFiles)->map(function ($file) {
-            return basename($file, '.blade.php');
-        })->filter(function ($icon) {
-            return $icon !== 'index';
-        })->values()->all();
+        try {
+            $iconPath = resource_path('views/flux/icon/*.blade.php');
+            $iconFiles = glob($iconPath);
+
+            // Jika direktori tidak ditemukan atau tidak bisa diakses
+            if ($iconFiles === false) {
+                return [
+                    'user', 'home', 'settings', 'mail', 'bell',
+                    'calendar', 'chart', 'document', 'folder', 'image'
+                ]; // Default icons sebagai fallback
+            }
+
+            return collect($iconFiles)->map(function ($file) {
+                return basename($file, '.blade.php');
+            })->filter(function ($icon) {
+                return $icon !== 'index';
+            })->values()->all();
+        } catch (\Exception $e) {
+            // Log error untuk debugging
+            Log::error('Error loading icon options: ' . $e->getMessage());
+
+            // Return default icons sebagai fallback
+            return [
+                'user', 'home', 'settings', 'mail', 'bell',
+                'calendar', 'chart', 'document', 'folder', 'image'
+            ];
+        }
+    }
+
+    // Fungsi untuk memvalidasi icon
+    private function isValidIcon($icon, $validIcons)
+    {
+        // Cek apakah icon adalah string valid dan bukan path file
+        if (!is_string($icon) || strpos($icon, '/') !== false || strpos($icon, '.') !== false) {
+            return false;
+        }
+
+        return in_array($icon, $validIcons);
     }
 
     public function render()
@@ -185,7 +225,16 @@ class ManageServices extends Component
 
         return view('livewire.manage-services', [
             'services' => $services,
-            'iconOptions' => $this->getIconOptions()
+            'iconOptions' => $this->getIconOptions(),
+            'getSafeIcon' => function($iconName) {
+                // Validasi dan sanitasi nama icon
+                $validIcons = $this->getIconOptions();
+                if (!is_string($iconName) || strpos($iconName, '/') !== false ||
+                    strpos($iconName, '.') !== false || !in_array($iconName, $validIcons)) {
+                    return 'document'; // Icon fallback
+                }
+                return $iconName;
+            }
         ]);
     }
 }
