@@ -32,10 +32,10 @@
                                 <div class="mb-2 flex gap-4">
                                     <flux:input wire:model.defer="missions.{{ $index }}" />
 
-                                    <flux:button variant="danger" icon="trash" wire:click="removeMission({{ $index }})" class="cursor-pointer"></flux:button>
+                                    <flux:button variant="danger" icon="trash" wire:click="removeMission({{ $index }})"></flux:button>
                                 </div>
                             @endforeach
-                            <flux:button icon="plus" wire:click="addMission" class="cursor-pointer text-white! bg-primary-500! hover:bg-primary-600!">Add Mission</flux:button>
+                            <flux:button icon="plus" wire:click="addMission">Add Mission</flux:button>
                         </div>
 
                     </div>
@@ -43,7 +43,7 @@
 
                 <div class="flex justify-end">
                     {{-- Submit Button --}}
-                    <flux:button type="submit" variant="primary" class="cursor-pointer w-fit">Update</flux:button>
+                    <flux:button type="submit" variant="primary" class="w-fit">Update</flux:button>
                 </div>
             </form>
 
