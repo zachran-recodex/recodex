@@ -78,11 +78,11 @@
                 <div>
                     <flux:heading>Mission</flux:heading>
                     @if(count($missions) > 0)
-                        <ul class="list-decimal list-inside text-sm text-zinc-500 dark:text-white/70 space-y-2">
+                        <ol class="list-decimal list-inside text-sm text-zinc-500 dark:text-white/70 space-y-2">
                             @foreach($missions as $mission)
                                 <li>{{ $mission }}</li>
                             @endforeach
-                        </ul>
+                        </ol>
                     @else
                         <flux:subheading>No missions available</flux:subheading>
                     @endif
