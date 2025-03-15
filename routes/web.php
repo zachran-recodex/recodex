@@ -35,7 +35,7 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::view('/faq', 'dashboard.faq')->name('faq');
 
-        Route::view('/hero-section', 'dashboard.hero-section')->name('hero-section');
+        Route::view('/hero', 'dashboard.hero')->name('hero');
 
         Route::view('/member', 'dashboard.member')->name('member');
 

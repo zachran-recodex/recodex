@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Clients</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Client</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -26,8 +26,7 @@
                         <flux:table.row>
                             <flux:table.cell>
                                 <img src="{{ $client->photo ? Storage::url($client->photo) : asset('images/placeholder.png') }}"
-                                    alt="{{ $client->name }}"
-                                    class="h-10 w-10 object-cover rounded-full">
+                                    alt="{{ $client->name }}" class="h-10 w-10 object-cover rounded-full">
                             </flux:table.cell>
 
                             <flux:table.cell>
@@ -48,11 +47,13 @@
 
                             <flux:table.cell>
                                 <flux:modal.trigger name="form">
-                                    <flux:button variant="warning" wire:click="edit({{ $client->id }})" icon="pencil"></flux:button>
+                                    <flux:button variant="warning" wire:click="edit({{ $client->id }})"
+                                        icon="pencil"></flux:button>
                                 </flux:modal.trigger>
 
                                 <flux:modal.trigger name="delete">
-                                    <flux:button variant="danger" wire:click="confirmDelete({{ $client->id }})" icon="trash"></flux:button>
+                                    <flux:button variant="danger" wire:click="confirmDelete({{ $client->id }})"
+                                        icon="trash"></flux:button>
                                 </flux:modal.trigger>
                             </flux:table.cell>
                         </flux:table.row>
@@ -109,9 +110,11 @@
                             {{-- Photo Preview --}}
                             <div class="mt-2">
                                 @if ($temp_photo)
-                                    <img src="{{ $photoPreview }}" alt="Preview" class="h-32 w-32 object-cover rounded-full">
+                                    <img src="{{ $photoPreview }}" alt="Preview"
+                                        class="h-32 w-32 object-cover rounded-full">
                                 @elseif ($isEditing && $photo)
-                                    <img src="{{ Storage::url($photo) }}" alt="Current Photo" class="h-32 w-32 object-cover rounded-full">
+                                    <img src="{{ Storage::url($photo) }}" alt="Current Photo"
+                                        class="h-32 w-32 object-cover rounded-full">
                                 @endif
                             </div>
                         </flux:field>

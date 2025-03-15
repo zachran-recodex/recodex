@@ -13,11 +13,7 @@
                         <flux:input label="Title" wire:model="title" />
 
                         {{-- Subtitle --}}
-                        <flux:textarea
-                            label="Subtitle"
-                            wire:model="subtitle"
-                            rows="3"
-                        />
+                        <flux:textarea label="Subtitle" wire:model="subtitle" rows="3" />
 
                         <div class="grid gap-6 sm:grid-cols-2">
                             {{-- Motto --}}
@@ -27,15 +23,14 @@
                             <flux:input label="Button Text" wire:model="button_text" />
                         </div>
 
-                        {{-- Image Upload --}}
+                        {{-- Image --}}
                         <flux:field>
                             <flux:label>Image</flux:label>
-
-                            <flux:input type="file" wire:model="temp_image" />
+                            <flux:input type="file" wire:model="temp_image" accept="image/*" />
+                            <flux:error name="temp_image" />
 
                             <flux:description>*recommended size: 485x540</flux:description>
 
-                            <flux:error name="temp_image" />
                         </flux:field>
 
                     </div>
@@ -60,11 +55,14 @@
                 <div>
                     <flux:heading>Image</flux:heading>
                     @if ($temp_image)
-                        <img src="{{ $temp_image->temporaryUrl() }}" alt="Hero image preview" class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
+                        <img src="{{ $imagePreview }}" alt="Hero image preview"
+                            class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
                     @elseif ($image)
-                        <img src="{{ Storage::url($image) }}" alt="Hero image preview" class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
+                        <img src="{{ Storage::url($image) }}" alt="Hero image preview"
+                            class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
                     @else
-                        <div class="w-full h-32 bg-gray-100 flex items-center justify-center rounded-lg border border-neutral-200">
+                        <div
+                            class="w-full h-32 bg-gray-100 flex items-center justify-center rounded-lg border border-neutral-200">
                             <span class="text-gray-400">No image uploaded</span>
                         </div>
                     @endif

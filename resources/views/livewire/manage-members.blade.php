@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Team Members</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Member</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">

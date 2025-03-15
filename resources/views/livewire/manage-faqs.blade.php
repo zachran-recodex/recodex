@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Frequently Asked Questions</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List FAQ</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -31,11 +31,13 @@
 
                             <flux:table.cell>
                                 <flux:modal.trigger name="form">
-                                    <flux:button variant="warning" wire:click="edit({{ $faq->id }})" icon="pencil"></flux:button>
+                                    <flux:button variant="warning" wire:click="edit({{ $faq->id }})"
+                                        icon="pencil"></flux:button>
                                 </flux:modal.trigger>
 
                                 <flux:modal.trigger name="delete">
-                                    <flux:button variant="danger" wire:click="confirmDelete({{ $faq->id }})" icon="trash"></flux:button>
+                                    <flux:button variant="danger" wire:click="confirmDelete({{ $faq->id }})"
+                                        icon="trash"></flux:button>
                                 </flux:modal.trigger>
                             </flux:table.cell>
                         </flux:table.row>
@@ -72,18 +74,10 @@
                 <flux:fieldset>
                     <div class="space-y-6">
                         {{-- Question --}}
-                        <flux:textarea
-                            label="Question"
-                            wire:model="question"
-                            rows="3"
-                        />
+                        <flux:textarea label="Question" wire:model="question" rows="3" />
 
                         {{-- Answer --}}
-                        <flux:textarea
-                            label="Answer"
-                            wire:model="answer"
-                            rows="5"
-                        />
+                        <flux:textarea label="Answer" wire:model="answer" rows="5" />
                     </div>
                 </flux:fieldset>
 

@@ -43,8 +43,8 @@
                         FAQ
                     </flux:navlist.item>
 
-                    <flux:navlist.item icon="presentation-chart-bar" :href="route('dashboard.hero-section')" :current="request()->routeIs('dashboard.hero-section')" wire:navigate>
-                        Hero Section
+                    <flux:navlist.item icon="presentation-chart-bar" :href="route('dashboard.hero')" :current="request()->routeIs('dashboard.hero')" wire:navigate>
+                        Hero
                     </flux:navlist.item>
 
                     <flux:navlist.item icon="user-group" :href="route('dashboard.member')" :current="request()->routeIs('dashboard.member')" wire:navigate>
@@ -56,7 +56,7 @@
                     </flux:navlist.item>
 
                     <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.service')" :current="request()->routeIs('dashboard.service')" wire:navigate>
-                        Services
+                        Service
                     </flux:navlist.item>
 
                     <flux:navlist.item icon="chat-bubble-left-right" :href="route('dashboard.testimonial')" :current="request()->routeIs('dashboard.testimonial')" wire:navigate>

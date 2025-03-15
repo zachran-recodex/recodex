@@ -22,7 +22,11 @@ class ManageVideos extends Component
     protected function rules()
     {
         return [
-            'youtube_link' => 'required|url|regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/',
+            'youtube_link' => [
+                'required',
+                'url',
+                'regex:/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/i'
+            ],
         ];
     }
 

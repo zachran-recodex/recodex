@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Testimonials</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Testimonial</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -16,7 +16,6 @@
                     <flux:table.column>Title</flux:table.column>
                     <flux:table.column>Description</flux:table.column>
                     <flux:table.column>Rating</flux:table.column>
-                    <flux:table.column>Created At</flux:table.column>
                     <flux:table.column>Action</flux:table.column>
                 </flux:table.columns>
 
@@ -36,10 +35,6 @@
                                     <flux:icon.star class="size-4 text-yellow-400" />
                                     <span>{{ $testimonial->rating }}/10</span>
                                 </div>
-                            </flux:table.cell>
-
-                            <flux:table.cell>
-                                {{ $testimonial->created_at->format('M d, Y') }}
                             </flux:table.cell>
 
                             <flux:table.cell>

@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Counters</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Counter</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -15,7 +15,6 @@
                 <flux:table.columns>
                     <flux:table.column>Title</flux:table.column>
                     <flux:table.column>Number</flux:table.column>
-                    <flux:table.column>Created At</flux:table.column>
                     <flux:table.column>Action</flux:table.column>
                 </flux:table.columns>
 
@@ -31,16 +30,14 @@
                             </flux:table.cell>
 
                             <flux:table.cell>
-                                {{ $counter->created_at->format('M d, Y') }}
-                            </flux:table.cell>
-
-                            <flux:table.cell>
                                 <flux:modal.trigger name="form">
-                                    <flux:button variant="warning" wire:click="edit({{ $counter->id }})" icon="pencil"></flux:button>
+                                    <flux:button variant="warning" wire:click="edit({{ $counter->id }})"
+                                        icon="pencil"></flux:button>
                                 </flux:modal.trigger>
 
                                 <flux:modal.trigger name="delete">
-                                    <flux:button variant="danger" wire:click="confirmDelete({{ $counter->id }})" icon="trash"></flux:button>
+                                    <flux:button variant="danger" wire:click="confirmDelete({{ $counter->id }})"
+                                        icon="trash"></flux:button>
                                 </flux:modal.trigger>
                             </flux:table.cell>
                         </flux:table.row>

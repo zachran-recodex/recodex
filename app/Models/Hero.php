@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HeroSection extends Model
+class Hero extends Model
 {
     protected $fillable = [
         'title',

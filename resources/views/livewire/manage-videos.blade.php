@@ -1,6 +1,6 @@
 <flux:card>
     <flux:card.header class="flex justify-between items-center">
-        <flux:heading size="lg" class="font-semibold">Videos</flux:heading>
+        <flux:heading size="lg" class="font-semibold">List Video</flux:heading>
 
         <flux:modal.trigger name="form">
             <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -15,7 +15,6 @@
                 <flux:table.columns>
                     <flux:table.column>Preview</flux:table.column>
                     <flux:table.column>YouTube Link</flux:table.column>
-                    <flux:table.column>Created At</flux:table.column>
                     <flux:table.column>Action</flux:table.column>
                 </flux:table.columns>
 
@@ -42,10 +41,6 @@
                                 <a href="{{ $video->youtube_link }}" target="_blank" class="text-primary-600 hover:underline">
                                     {{ $video->youtube_link }}
                                 </a>
-                            </flux:table.cell>
-
-                            <flux:table.cell>
-                                {{ $video->created_at->format('M d, Y') }}
                             </flux:table.cell>
 
                             <flux:table.cell>
