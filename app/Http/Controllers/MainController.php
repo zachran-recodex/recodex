@@ -7,14 +7,14 @@ use App\Models\Member;
 use App\Models\Counter;
 use App\Models\Project;
 use App\Models\Service;
-use App\Models\HeroSection;
+use App\Models\Hero;
 use App\Models\WorkProcess;
 
 class MainController extends Controller
 {
     public function index()
     {
-        $hero = HeroSection::first();
+        $hero = Hero::first();
         $services = Service::all();
         $counters = Counter::all();
         $projects = Project::all();
