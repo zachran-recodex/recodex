@@ -23,53 +23,6 @@
 
                 <flux:navlist.group expandable heading="CMS">
 
-                    <flux:navlist.item icon="information-circle" :href="route('dashboard.about')" :current="request()->routeIs('dashboard.about')" wire:navigate>
-                        About
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="document-text" :href="route('dashboard.blog')" :current="request()->routeIs('dashboard.blog')" wire:navigate>
-                        Blog
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="users" :href="route('dashboard.client')" :current="request()->routeIs('dashboard.client')" wire:navigate>
-                        Client
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="calculator" :href="route('dashboard.counter')" :current="request()->routeIs('dashboard.counter')" wire:navigate>
-                        Counter
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="question-mark-circle" :href="route('dashboard.faq')" :current="request()->routeIs('dashboard.faq')" wire:navigate>
-                        FAQ
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="presentation-chart-bar" :href="route('dashboard.hero')" :current="request()->routeIs('dashboard.hero')" wire:navigate>
-                        Hero
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="user-group" :href="route('dashboard.member')" :current="request()->routeIs('dashboard.member')" wire:navigate>
-                        Member
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="folder" :href="route('dashboard.project')" :current="request()->routeIs('dashboard.project')" wire:navigate>
-                        Project
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.service')" :current="request()->routeIs('dashboard.service')" wire:navigate>
-                        Service
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="chat-bubble-left-right" :href="route('dashboard.testimonial')" :current="request()->routeIs('dashboard.testimonial')" wire:navigate>
-                        Testimonial
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="play-circle" :href="route('dashboard.video')" :current="request()->routeIs('dashboard.video')" wire:navigate>
-                        Video
-                    </flux:navlist.item>
-
-                    <flux:navlist.item icon="cog-6-tooth" :href="route('dashboard.work-process')" :current="request()->routeIs('dashboard.work-process')" wire:navigate>
-                        Work Process
-                    </flux:navlist.item>
                 </flux:navlist.group>
 
                 <flux:navlist.group expandable heading="Projects">
