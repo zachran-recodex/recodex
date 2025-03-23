@@ -13,10 +13,10 @@ class HeroSeeder extends Seeder
     public function run(): void
     {
         DB::table('heroes')->insert([
-            'title'       => 'Selamat Datang di Website Kami',
-            'subtitle'    => 'Solusi Digital Terbaik untuk Anda',
-            'motto'       => 'Kami hadir untuk memberikan layanan terbaik bagi bisnis Anda.',
-            'button_text' => 'Pelajari Lebih Lanjut',
+            'title'       => 'Solusi Digital Terbaik untuk Anda',
+            'subtitle'    => 'Di Recodex ID, setiap proyek adalah wujud komitmen kami dalam menghadirkan solusi website yang inovatif, fungsional, dan sesuai kebutuhan klien.',
+            'motto'       => 'Recode - Innovate - Transform',
+            'button_text' => 'Konsultasi Sekarang',
             'image'       => 'images/hero/banner.jpg',
             'created_at'  => now(),
             'updated_at'  => now(),

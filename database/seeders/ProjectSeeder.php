@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Faker\Factory as Faker;
 
 class ProjectSeeder extends Seeder
 {
@@ -14,19 +12,38 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $projects = [
+            [
+                'image' => 'images/projects/web_development.jpg',
+                'title' => 'Web Development',
+                'description' => 'PT Triwalana Sagala Pro',
+                'project_date' => '2023-01-15',
+                'duration' => '3 months',
+                'cost' => 25000000,
+            ],
+            [
+                'image' => 'images/projects/mobile_development.jpg',
+                'title' => 'Web Development',
+                'description' => 'PT Alfalima Cakrawala Indonesia',
+                'project_date' => '2023-04-01',
+                'duration' => '4 months',
+                'cost' => 35000000,
+            ],
+            [
+                'image' => 'images/projects/seo.jpg',
+                'title' => 'Web Development',
+                'description' => 'Indonesian Conference on Religion and Peace',
+                'project_date' => '2023-08-20',
+                'duration' => '2 months',
+                'cost' => 15000000,
+            ],
+        ];
 
-        for ($i = 1; $i <= 20; $i++) {
-            DB::table('projects')->insert([
-                'image'        => 'images/projects/project_' . $i . '.jpg',
-                'title'        => $faker->sentence(3),
-                'description'  => $faker->paragraph(4),
-                'project_date' => $faker->date(),
-                'duration'     => $faker->numberBetween(1, 12) . ' bulan',
-                'cost'         => $faker->randomFloat(2, 5000, 500000),
-                'created_at'   => now(),
-                'updated_at'   => now(),
-            ]);
+        foreach ($projects as $project) {
+            DB::table('projects')->insert(array_merge($project, [
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]));
         }
     }
 }

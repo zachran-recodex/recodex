@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('heroes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('subtitle');
-            $table->text('motto');
+            $table->text('subtitle');
+            $table->string('motto');
             $table->string('button_text');
             $table->string('image');
             $table->timestamps();

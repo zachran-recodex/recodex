@@ -14,11 +14,11 @@ class WorkProcessSeeder extends Seeder
     public function run(): void
     {
         $workProcesses = [
-            ['title' => 'Analisis Kebutuhan', 'description' => 'Memahami kebutuhan klien dan merancang solusi yang tepat.'],
-            ['title' => 'Perencanaan', 'description' => 'Membuat blueprint dan menetapkan timeline untuk proyek.'],
-            ['title' => 'Pengembangan', 'description' => 'Melakukan coding dan pengembangan fitur sesuai rencana.'],
-            ['title' => 'Pengujian', 'description' => 'Melakukan testing untuk memastikan kualitas dan performa.'],
-            ['title' => 'Deployment & Maintenance', 'description' => 'Menyebarkan proyek ke server dan melakukan pemeliharaan berkala.'],
+            ['title' => 'Konsultasi & Perencanaan', 'description' => 'Memahami kebutuhan dan tujuan bisnis anda.'],
+            ['title' => 'Desain & Pengembangan', 'description' => 'Menciptakan website yang fungsional dan menarik.'],
+            ['title' => 'Pengujian & Optimas', 'description' => 'Memastikan performa terbaik di semua perangkat.'],
+            ['title' => 'Peluncuran', 'description' => 'Menerapkan website anda secara profesional.'],
+            ['title' => 'Dukungan Berkelanjutan', 'description' => 'Mendampingi pertumbuhan digital anda.'],
         ];
 
         foreach ($workProcesses as $process) {
