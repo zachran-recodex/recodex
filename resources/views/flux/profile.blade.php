@@ -30,7 +30,7 @@ $classes = Flux::classes()
 <button type="button" {{ $attributes->class($classes) }} data-flux-profile>
     <div class="shrink-0 size-8 bg-zinc-200 rounded-sm overflow-hidden dark:bg-zinc-700">
         <?php if (is_string($avatar)): ?>
-            <img src="{{ $avatar }}" />
+            <img src="{{ $avatar }}" class="h-full w-full object-cover" />
         <?php elseif ($avatar): ?>
             {{ $avatar }}
         <?php else: ?>

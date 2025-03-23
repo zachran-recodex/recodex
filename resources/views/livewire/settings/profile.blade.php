@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 new class extends Component {
     use WithFileUploads;
 
     public string $name = '';
     public string $email = '';
+    public $photo;
 
     /**
      * Mount the component.
@@ -40,7 +42,16 @@ new class extends Component {
                 'max:255',
                 Rule::unique(User::class)->ignore($user->id)
             ],
+            'photo' => ['nullable', 'image', 'max:1024'],
         ]);
+
+        if ($this->photo) {
+            $path = $this->photo->store('profile-photos', 'public');
+            if ($user->photo) {
+                Storage::disk('public')->delete($user->photo);
+            }
+            $validated['photo'] = $path;
+        }
 
         $user->fill($validated);
 
@@ -75,13 +86,21 @@ new class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <x-settings.layout :heading="__('Profile')" :subheading="__('Update your name and email address')">
+    <x-settings.layout heading="Profile" subheading="Update your name and email address">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
+            <flux:field>
+                <flux:label>Profile Photo</flux:label>
+                @if(Auth::user()->photo)
+                    <flux:avatar size="xl" src="{{ Storage::url(Auth::user()->photo) }}" />
+                @endif
+                <flux:input type="file" wire:model="photo" accept="image/*" />
+                <flux:error name="photo" />
+            </flux:field>
 
-            <flux:input wire:model="name" :label="__('Name')" type="text" name="name" required autofocus autocomplete="name" />
+            <flux:input wire:model="name" label="Name" type="text" name="name" required autofocus autocomplete="name" />
 
             <div>
-                <flux:input wire:model="email" :label="__('Email')" type="email" name="email" required autocomplete="email" />
+                <flux:input wire:model="email" label="Email" type="email" name="email" required autocomplete="email" />
 
                 @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
                     <div>
