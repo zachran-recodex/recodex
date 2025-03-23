@@ -33,9 +33,11 @@
                     </flux:navlist.group>
                 @endif
 
-                <flux:navlist.group expandable heading="CMS">
-
-                </flux:navlist.group>
+                @can('manage cms')
+                    <flux:navlist.group expandable heading="CMS">
+                        <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.cms.services')" :current="request()->routeIs('dashboard.cms.services')" wire:navigate>Manage Services</flux:navlist.item>
+                    </flux:navlist.group>
+                @endcan
 
                 <flux:navlist.group expandable heading="Projects">
                     <flux:navlist.item href="#">Total Project</flux:navlist.item>

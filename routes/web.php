@@ -36,6 +36,16 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 ->middleware('can:manage roles');
         });
 
+        Route::middleware(['can:manage cms'])->group(function (){
+
+            Route::prefix('cms')->name('cms.')->group(function (){
+
+                Route::get('manage-services', App\Livewire\CMS\ManageServices::class)
+                    ->name('services');
+
+            });
+        });
+
     });
 
     Route::redirect('settings', 'settings/profile');
