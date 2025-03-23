@@ -43,6 +43,9 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 Route::get('manage-services', App\Livewire\CMS\ManageServices::class)
                     ->name('services');
 
+                Route::get('manage-projects', App\Livewire\CMS\ManageProjects::class)
+                    ->name('projects');
+
             });
         });
 
