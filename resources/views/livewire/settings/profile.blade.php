@@ -91,7 +91,7 @@ new class extends Component {
             <flux:field>
                 <flux:label>Profile Photo</flux:label>
                 @if(Auth::user()->photo)
-                    <flux:avatar size="xl" src="{{ Storage::url(Auth::user()->photo) }}" />
+                    <img src="{{ Storage::url(Auth::user()->photo) }}" alt="Photo Profile" class="w-42 h-42 rounded-lg object-cover" />
                 @endif
                 <flux:input type="file" wire:model="photo" accept="image/*" />
                 <flux:error name="photo" />
