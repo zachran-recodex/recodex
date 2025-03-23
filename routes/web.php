@@ -25,31 +25,31 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
-        Route::view('/about', 'dashboard.about')->name('about');
+        Route::view('/about', 'dashboard.cms.about')->name('about');
 
-        Route::view('/blog', 'dashboard.blog')->name('blog');
+        Route::view('/blog', 'dashboard.cms.blog')->name('blog');
 
-        Route::view('/client', 'dashboard.client')->name('client');
+        Route::view('/client', 'dashboard.cms.client')->name('client');
 
-        Route::view('/counter', 'dashboard.counter')->name('counter');
+        Route::view('/counter', 'dashboard.cms.counter')->name('counter');
 
-        Route::view('/faq', 'dashboard.faq')->name('faq');
+        Route::view('/faq', 'dashboard.cms.faq')->name('faq');
 
-        Route::view('/hero', 'dashboard.hero')->name('hero');
+        Route::view('/hero', 'dashboard.cms.hero')->name('hero');
 
-        Route::view('/member', 'dashboard.member')->name('member');
+        Route::view('/member', 'dashboard.cms.member')->name('member');
 
-        Route::view('/project', 'dashboard.project')->name('project');
+        Route::view('/project', 'dashboard.cms.project')->name('project');
 
-        Route::view('/service', 'dashboard.service')->name('service');
+        Route::view('/service', 'dashboard.cms.service')->name('service');
 
-        Route::view('/testimonial', 'dashboard.testimonial')->name('testimonial');
+        Route::view('/testimonial', 'dashboard.cms.testimonial')->name('testimonial');
 
-        Route::view('/video', 'dashboard.video')->name('video');
+        Route::view('/video', 'dashboard.cms.video')->name('video');
 
-        Route::view('/work-process', 'dashboard.work-process')->name('work-process');
+        Route::view('/work-process', 'dashboard.cms.work-process')->name('work-process');
 
-        Route::view('/entity-relationship-diagram', 'dashboard.erd')->name('erd');
+        Route::view('/entity-relationship-diagram', 'dashboard.cms.erd')->name('erd');
 
     });
 

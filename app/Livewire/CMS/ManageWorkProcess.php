@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
 use App\Models\WorkProcess;
 use App\WithNotification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class ManageWorkProcess extends Component
 {
@@ -117,7 +117,7 @@ class ManageWorkProcess extends Component
         $processes = WorkProcess::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-work-process', [
+        return view('livewire.cms.manage-work-process', [
             'processes' => $processes
         ]);
     }

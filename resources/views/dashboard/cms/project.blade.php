@@ -11,6 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
-        <livewire:manage-projects />
+        <livewire:cms.manage-projects />
     </flux:container>
 </x-layouts.app>

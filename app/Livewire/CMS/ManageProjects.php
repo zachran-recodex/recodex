@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
-use App\Models\Blog;
-use Livewire\Component;
+use App\Models\Project;
 use App\WithNotification;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
-class ManageBlogs extends Component
+class ManageProjects extends Component
 {
     use WithNotification, WithFileUploads, WithPagination;
 
     // Form Properties
-    public $blog_id;
+    public $project_id;
     public $title;
     public $description;
+    public $project_date;
+    public $duration;
+    public $cost;
     public $image;
     public $temp_image;
     public $imagePreview;
@@ -30,6 +33,9 @@ class ManageBlogs extends Component
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'project_date' => 'required|date',
+            'duration' => 'required|string|max:255',
+            'cost' => 'required|numeric|min:0',
             'temp_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024|dimensions:min_width=100,min_height=100',
         ];
     }
@@ -48,14 +54,17 @@ class ManageBlogs extends Component
 
     public function edit($id)
     {
-        $blog = Blog::findOrFail($id);
+        $project = Project::findOrFail($id);
 
-        if ($blog) {
+        if ($project) {
             $this->isEditing = true;
-            $this->blog_id = $id;
-            $this->title = $blog->title;
-            $this->description = $blog->description;
-            $this->image = $blog->image;
+            $this->project_id = $id;
+            $this->title = $project->title;
+            $this->description = $project->description;
+            $this->project_date = $project->project_date->format('Y-m-d');
+            $this->duration = $project->duration;
+            $this->cost = $project->cost;
+            $this->image = $project->image;
 
             $this->modal('form')->show();
         }
@@ -63,21 +72,22 @@ class ManageBlogs extends Component
 
     public function confirmDelete($id)
     {
-        $this->blog_id = $id;
+        $this->project_id = $id;
         $this->modal('delete')->show();
     }
 
     public function delete()
     {
-        $blog = Blog::findOrFail($this->blog_id);
+        $project = Project::findOrFail($this->project_id);
 
-        if ($blog) {
-            if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-                Storage::disk('public')->delete($blog->image);
+        if ($project) {
+            if ($project->image && Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
             }
 
-            $blog->delete();
-            $this->notifySuccess('Blog deleted successfully');
+            $project->delete();
+            $this->notifySuccess('Project deleted successfully');
+
             $this->modal('delete')->close();
         }
     }
@@ -95,7 +105,7 @@ class ManageBlogs extends Component
 
     public function resetForm()
     {
-        $this->reset(['blog_id', 'title', 'description', 'temp_image', 'imagePreview']);
+        $this->reset(['project_id', 'title', 'description', 'project_date', 'duration', 'cost', 'temp_image', 'imagePreview']);
         $this->resetValidation();
     }
 
@@ -105,13 +115,13 @@ class ManageBlogs extends Component
             return null;
         }
 
-        return $this->temp_image->store('blogs', 'public');
+        return $this->temp_image->store('projects', 'public');
     }
 
-    private function deleteOldImage($blog)
+    private function deleteOldImage($project)
     {
-        if ($blog->image && Storage::disk('public')->exists($blog->image)) {
-            Storage::disk('public')->delete($blog->image);
+        if ($project->image && Storage::disk('public')->exists($project->image)) {
+            Storage::disk('public')->delete($project->image);
         }
     }
 
@@ -125,25 +135,31 @@ class ManageBlogs extends Component
             $imagePath = $this->handleImageUpload();
 
             if ($this->isEditing) {
-                $blog = Blog::findOrFail($this->blog_id);
+                $project = Project::findOrFail($this->project_id);
 
                 if ($this->temp_image) {
-                    $this->deleteOldImage($blog);
+                    $this->deleteOldImage($project);
                 }
 
-                $blog->update([
+                $project->update([
                     'title' => $this->title,
                     'description' => $this->description,
+                    'project_date' => $this->project_date,
+                    'duration' => $this->duration,
+                    'cost' => $this->cost,
                     'image' => $imagePath ?? $this->image,
                 ]);
-                $this->notifySuccess('Blog updated successfully');
+                $this->notifySuccess('Project updated successfully');
             } else {
-                Blog::create([
+                Project::create([
                     'title' => $this->title,
                     'description' => $this->description,
+                    'project_date' => $this->project_date,
+                    'duration' => $this->duration,
+                    'cost' => $this->cost,
                     'image' => $imagePath,
                 ]);
-                $this->notifySuccess('Blog created successfully');
+                $this->notifySuccess('Project created successfully');
             }
 
             DB::commit();
@@ -161,11 +177,11 @@ class ManageBlogs extends Component
 
     public function render()
     {
-        $blogs = Blog::orderBy('created_at', 'desc')
+        $projects = Project::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-blogs', [
-            'blogs' => $blogs
+        return view('livewire.cms.manage-projects', [
+            'projects' => $projects
         ]);
     }
 }

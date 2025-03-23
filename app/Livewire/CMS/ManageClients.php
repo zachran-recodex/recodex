@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
 use App\Models\Client;
-use Illuminate\Support\Facades\Storage;
 use App\WithNotification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class ManageClients extends Component
 {
@@ -174,7 +174,7 @@ class ManageClients extends Component
         $clients = Client::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-clients', [
+        return view('livewire.cms.manage-clients', [
             'clients' => $clients
         ]);
     }

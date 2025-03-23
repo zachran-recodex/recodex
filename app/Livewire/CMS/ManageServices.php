@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
 use App\Models\Service;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 use App\WithNotification;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class ManageServices extends Component
 {
@@ -223,7 +223,7 @@ class ManageServices extends Component
         $services = Service::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-services', [
+        return view('livewire.cms.manage-services', [
             'services' => $services,
             'iconOptions' => $this->getIconOptions(),
             'getSafeIcon' => function($iconName) {

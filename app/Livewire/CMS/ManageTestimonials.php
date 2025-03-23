@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
 use App\Models\Testimonial;
 use App\WithNotification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class ManageTestimonials extends Component
 {
@@ -123,7 +123,7 @@ class ManageTestimonials extends Component
         $testimonials = Testimonial::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-testimonials', [
+        return view('livewire.cms.manage-testimonials', [
             'testimonials' => $testimonials
         ]);
     }

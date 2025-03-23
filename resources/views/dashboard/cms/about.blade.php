@@ -2,15 +2,15 @@
     <flux:container class="space-y-6">
         <!-- Page Header -->
         <div class="sm:flex sm:items-center sm:justify-between">
-            <flux:heading size="xl" class="font-bold!">Manage Counter</flux:heading>
+            <flux:heading size="xl" class="font-bold!">Manage About</flux:heading>
 
             <flux:breadcrumbs>
                 <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
-                <flux:breadcrumbs.item separator="slash">Counter</flux:breadcrumbs.item>
+                <flux:breadcrumbs.item separator="slash">About</flux:breadcrumbs.item>
             </flux:breadcrumbs>
         </div>
 
         <!-- Component Livewire -->
-        <livewire:manage-counters />
+        <livewire:cms.manage-about />
     </flux:container>
 </x-layouts.app>

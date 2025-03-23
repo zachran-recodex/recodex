@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
 use App\Models\Video;
 use App\WithNotification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class ManageVideos extends Component
 {
@@ -134,7 +134,7 @@ class ManageVideos extends Component
         $videos = Video::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-videos', [
+        return view('livewire.cms.manage-videos', [
             'videos' => $videos,
             'getYoutubeEmbedUrl' => function($url) {
                 return $this->getYoutubeEmbedUrl($url);

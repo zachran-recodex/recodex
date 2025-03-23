@@ -5,7 +5,7 @@
         </flux:card.header>
         <flux:card.body>
 
-            <form wire:submit.prevent="save" class="flex flex-col space-y-6">
+            <form wire:submit="save" class="flex flex-col space-y-6">
                 <flux:fieldset>
                     <div class="space-y-6">
 

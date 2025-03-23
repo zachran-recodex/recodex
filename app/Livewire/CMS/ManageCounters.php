@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
-use App\Models\Faq;
+use App\Models\Counter;
 use App\WithNotification;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
-class ManageFaqs extends Component
+class ManageCounters extends Component
 {
     use WithNotification, WithPagination;
 
     // Form Properties
-    public $faq_id;
-    public $question;
-    public $answer;
+    public $counter_id;
+    public $title;
+    public $number;
 
     // UI State Properties
     public $isEditing = false;
@@ -23,8 +23,8 @@ class ManageFaqs extends Component
     protected function rules()
     {
         return [
-            'question' => 'required|string',
-            'answer' => 'required|string',
+            'title' => 'required|string|max:255',
+            'number' => 'required|integer|min:0',
         ];
     }
 
@@ -42,13 +42,13 @@ class ManageFaqs extends Component
 
     public function edit($id)
     {
-        $faq = Faq::findOrFail($id);
+        $counter = Counter::findOrFail($id);
 
-        if ($faq) {
+        if ($counter) {
             $this->isEditing = true;
-            $this->faq_id = $id;
-            $this->question = $faq->question;
-            $this->answer = $faq->answer;
+            $this->counter_id = $id;
+            $this->title = $counter->title;
+            $this->number = $counter->number;
 
             $this->modal('form')->show();
         }
@@ -56,24 +56,24 @@ class ManageFaqs extends Component
 
     public function confirmDelete($id)
     {
-        $this->faq_id = $id;
+        $this->counter_id = $id;
         $this->modal('delete')->show();
     }
 
     public function delete()
     {
-        $faq = Faq::findOrFail($this->faq_id);
+        $counter = Counter::findOrFail($this->counter_id);
 
-        if ($faq) {
-            $faq->delete();
-            $this->notifySuccess('FAQ deleted successfully');
+        if ($counter) {
+            $counter->delete();
+            $this->notifySuccess('Counter deleted successfully');
             $this->modal('delete')->close();
         }
     }
 
     public function resetForm()
     {
-        $this->reset(['faq_id', 'question', 'answer']);
+        $this->reset(['counter_id', 'title', 'number']);
         $this->resetValidation();
     }
 
@@ -85,18 +85,19 @@ class ManageFaqs extends Component
             DB::beginTransaction();
 
             if ($this->isEditing) {
-                $faq = Faq::findOrFail($this->faq_id);
-                $faq->update([
-                    'question' => $this->question,
-                    'answer' => $this->answer,
+                $counter = Counter::findOrFail($this->counter_id);
+
+                $counter->update([
+                    'title' => $this->title,
+                    'number' => $this->number,
                 ]);
-                $this->notifySuccess('FAQ updated successfully');
+                $this->notifySuccess('Counter updated successfully');
             } else {
-                Faq::create([
-                    'question' => $this->question,
-                    'answer' => $this->answer,
+                Counter::create([
+                    'title' => $this->title,
+                    'number' => $this->number,
                 ]);
-                $this->notifySuccess('FAQ created successfully');
+                $this->notifySuccess('Counter created successfully');
             }
 
             DB::commit();
@@ -114,11 +115,11 @@ class ManageFaqs extends Component
 
     public function render()
     {
-        $faqs = Faq::orderBy('created_at', 'desc')
+        $counters = Counter::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.manage-faqs', [
-            'faqs' => $faqs
+        return view('livewire.cms.manage-counters', [
+            'counters' => $counters
         ]);
     }
 }

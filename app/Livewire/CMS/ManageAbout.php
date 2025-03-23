@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\CMS;
 
+use App\Models\About;
 use App\WithNotification;
 use Livewire\Component;
-use App\Models\About;
 
 class ManageAbout extends Component
 {
@@ -87,6 +87,6 @@ class ManageAbout extends Component
 
     public function render()
     {
-        return view('livewire.manage-about');
+        return view('livewire.cms.manage-about');
     }
 }

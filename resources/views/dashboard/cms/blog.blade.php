@@ -11,6 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
-        <livewire:manage-blogs />
+        <livewire:cms.manage-blogs />
     </flux:container>
 </x-layouts.app>
