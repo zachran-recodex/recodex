@@ -23,6 +23,7 @@ class ManageHero extends Component
     public function mount()
     {
         $this->hero = Hero::first();
+        $this->image = null; // Initialize $image property
         if ($this->hero) {
             $this->heroId = $this->hero->id;
             $this->title = $this->hero->title;
