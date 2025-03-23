@@ -16,6 +16,9 @@
             <flux:table hover striped>
 
                 <flux:table.columns>
+                    <flux:table.column>
+                        Photo
+                    </flux:table.column>
                     <flux:table.column sortable wire:click="sortBy('name')" :direction="$sortField === 'name' ? $sortDirection : null">
                         Name
                     </flux:table.column>
@@ -32,6 +35,16 @@
                 <flux:table.rows>
                     @forelse ($users as $user)
                         <flux:table.row>
+
+                            <flux:table.cell>
+                                @if ($user->photo)
+                                    <img src="{{ Storage::url($user->photo) }}" alt="Photo Profile" class="w-20 h-20 rounded-lg object-cover" />
+                                @else
+                                    <div class="w-20 h-20 rounded-lg bg-zinc-200 flex items-center justify-center text-zinc-600 font-semibold text-xl">
+                                        {{ $user->initials() }}
+                                    </div>
+                                @endif
+                            </flux:table.cell>
 
                             <flux:table.cell>
                                 {{ $user->name }}
