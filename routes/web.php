@@ -55,6 +55,9 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 Route::get('manage-counters', App\Livewire\CMS\ManageCounters::class)
                     ->name('counters');
 
+                Route::get('manage-faqs', App\Livewire\CMS\ManageFaqs::class)
+                    ->name('faqs');
+
             });
         });
 
