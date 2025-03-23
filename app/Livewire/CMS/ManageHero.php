@@ -29,7 +29,6 @@ class ManageHero extends Component
             $this->subtitle = $this->hero->subtitle;
             $this->motto = $this->hero->motto;
             $this->button_text = $this->hero->button_text;
-            $this->image = null; // Initialize after setting other properties
         }
     }
 
@@ -51,11 +50,6 @@ class ManageHero extends Component
 
             $path = $this->image->store('images/hero', 'public');
             $validated['image'] = $path;
-        } else {
-            // Preserve existing image if no new image is uploaded
-            if ($this->hero) {
-                $validated['image'] = $this->hero->image;
-            }
         }
 
         Hero::updateOrCreate(
