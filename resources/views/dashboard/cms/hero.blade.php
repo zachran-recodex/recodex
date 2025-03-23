@@ -11,6 +11,6 @@
         </div>
 
         <!-- Component Livewire -->
-        <livewire:manage-hero />
+        <livewire:cms.manage-hero />
     </flux:container>
 </x-layouts.app>

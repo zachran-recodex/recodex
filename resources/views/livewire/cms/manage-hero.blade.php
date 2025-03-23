@@ -5,7 +5,7 @@
         </flux:card.header>
 
         <flux:card.body>
-            <form wire:submit.prevent="save" class="flex flex-col space-y-6">
+            <form wire:submit="save" class="flex flex-col space-y-6">
                 <flux:fieldset>
                     <div class="space-y-6">
 
@@ -26,8 +26,8 @@
                         {{-- Image --}}
                         <flux:field>
                             <flux:label>Image</flux:label>
-                            <flux:input type="file" wire:model="temp_image" accept="image/*" />
-                            <flux:error name="temp_image" />
+                            <flux:input type="file" wire:model="image" accept="image/*" />
+                            <flux:error name="image" />
 
                             <flux:description>*recommended size: 485x540</flux:description>
 
@@ -54,11 +54,11 @@
             <div class="space-y-6">
                 <div>
                     <flux:heading>Image</flux:heading>
-                    @if ($temp_image)
-                        <img src="{{ $imagePreview }}" alt="Hero image preview"
+                    @if ($image && is_object($image))
+                        <img src="{{ $image->temporaryUrl() }}" alt="Hero image preview"
                             class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
-                    @elseif ($image)
-                        <img src="{{ Storage::url($image) }}" alt="Hero image preview"
+                    @elseif ($heroId)
+                        <img src="{{ Storage::url($hero->image) }}" alt="Hero image"
                             class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
                     @else
                         <div
