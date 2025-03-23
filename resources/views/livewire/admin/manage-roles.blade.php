@@ -18,6 +18,7 @@
 
                 <flux:table.columns>
                     <flux:table.column>Name</flux:table.column>
+                    <flux:table.column>Permissions</flux:table.column>
                     <flux:table.column>Actions</flux:table.column>
                 </flux:table.columns>
 
@@ -26,7 +27,17 @@
                         <flux:table.row>
 
                             <flux:table.cell>
-                                {{ $role->name }}
+                                {{ Str::title(str_replace('-', ' ', $role->name)) }}
+                            </flux:table.cell>
+
+                            <flux:table.cell>
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach($role->permissions as $permission)
+                                        <flux:badge>
+                                            {{ Str::title(str_replace('-', ' ', $permission->name)) }}
+                                        </flux:badge>
+                                    @endforeach
+                                </div>
                             </flux:table.cell>
 
                             <flux:table.cell>

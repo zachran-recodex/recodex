@@ -50,21 +50,18 @@
                                 {{ $user->name }}
                             </flux:table.cell>
 
-
                             <flux:table.cell>
                                 {{ $user->email }}
                             </flux:table.cell>
 
-
                             <flux:table.cell>
                                 @foreach ($user->roles as $role)
-
                                     <flux:badge color="{{ match($role->name) {
                                         'super-admin' => 'blue',
                                         'admin' => 'green',
                                         default => 'zinc'
                                     } }}" class="mr-1">
-                                        {{ $role->name }}
+                                        {{ Str::title(str_replace('-', ' ', $role->name)) }}
                                     </flux:badge>
                                 @endforeach
                             </flux:table.cell>
