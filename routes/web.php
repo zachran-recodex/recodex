@@ -25,7 +25,16 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
+        Route::prefix('admin')->name('admin.')->group(function (){
 
+            Route::view('manage-user', 'dashboard.admin.user')
+                ->name('user')
+                ->middleware('can:manage users');
+
+            Route::view('manage-role', 'dashboard.admin.role')
+                ->name('role')
+                ->middleware('can:manage roles');
+        });
 
     });
 

@@ -21,6 +21,18 @@
 
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
 
+                @if(auth()->user()->hasRole(['admin', 'super-admin']))
+                    <flux:navlist.group expandable heading="Admin">
+                        @can('manage users')
+                            <flux:navlist.item icon="users" :href="route('dashboard.admin.user')" :current="request()->routeIs('dashboard.admin.user')" wire:navigate>Manage User</flux:navlist.item>
+                        @endcan
+
+                        @can('manage roles')
+                            <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.role')" :current="request()->routeIs('dashboard.admin.role')" wire:navigate>Manage Role</flux:navlist.item>
+                        @endcan
+                    </flux:navlist.group>
+                @endif
+
                 <flux:navlist.group expandable heading="CMS">
 
                 </flux:navlist.group>
@@ -29,12 +41,6 @@
                     <flux:navlist.item href="#">Total Project</flux:navlist.item>
                     <flux:navlist.item href="#">Running Project</flux:navlist.item>
                     <flux:navlist.item href="#">Income Project</flux:navlist.item>
-                </flux:navlist.group>
-
-                <flux:navlist.group heading="Platform" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard.erd')" :current="request()->routeIs('dashboard.erd')" wire:navigate>
-                        Entity Relationship Diagram
-                    </flux:navlist.item>
                 </flux:navlist.group>
 
             </flux:navlist>
