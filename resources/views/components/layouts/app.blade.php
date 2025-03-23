@@ -42,6 +42,8 @@
                         <flux:navlist.item icon="newspaper" :href="route('dashboard.cms.blogs')" :current="request()->routeIs('dashboard.cms.blogs')" wire:navigate>Manage Blogs</flux:navlist.item>
 
                         <flux:navlist.item icon="users" :href="route('dashboard.cms.clients')" :current="request()->routeIs('dashboard.cms.clients')" wire:navigate>Manage Clients</flux:navlist.item>
+
+                        <flux:navlist.item icon="calculator" :href="route('dashboard.cms.counters')" :current="request()->routeIs('dashboard.cms.counters')" wire:navigate>Manage Counters</flux:navlist.item>
                     </flux:navlist.group>
                 @endcan
 
