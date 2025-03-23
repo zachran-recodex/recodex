@@ -58,6 +58,9 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 Route::get('manage-faqs', App\Livewire\CMS\ManageFaqs::class)
                     ->name('faqs');
 
+                Route::get('manage-work-processes', App\Livewire\CMS\ManageWorkProcesses::class)
+                    ->name('work-processes');
+
             });
         });
 
