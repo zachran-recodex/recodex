@@ -25,11 +25,14 @@
                     {{-- Image --}}
                     <flux:field>
                         <flux:label>Image</flux:label>
+                        @if($currentImage)
+                            <div class="mb-3">
+                                <img src="{{ Storage::url($currentImage) }}" alt="Current Hero Image" class="w-48 h-auto">
+                            </div>
+                        @endif
                         <flux:input type="file" wire:model="image" accept="image/*" />
                         <flux:error name="image" />
-
                         <flux:description>*recommended size: 485x540</flux:description>
-
                     </flux:field>
 
                 </div>
