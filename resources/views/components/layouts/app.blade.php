@@ -38,6 +38,8 @@
                         <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.cms.services')" :current="request()->routeIs('dashboard.cms.services')" wire:navigate>Manage Services</flux:navlist.item>
 
                         <flux:navlist.item icon="folder" :href="route('dashboard.cms.projects')" :current="request()->routeIs('dashboard.cms.projects')" wire:navigate>Manage Projects</flux:navlist.item>
+
+                        <flux:navlist.item icon="newspaper" :href="route('dashboard.cms.blogs')" :current="request()->routeIs('dashboard.cms.blogs')" wire:navigate>Manage Blogs</flux:navlist.item>
                     </flux:navlist.group>
                 @endcan
 
