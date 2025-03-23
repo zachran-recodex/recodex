@@ -57,12 +57,11 @@
                     @if ($image && is_object($image))
                         <img src="{{ $image->temporaryUrl() }}" alt="Hero image preview"
                             class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
-                    @elseif ($heroId)
+                    @elseif ($hero && $hero->image)
                         <img src="{{ Storage::url($hero->image) }}" alt="Hero image"
                             class="w-full h-auto mt-2 rounded-lg object-cover border border-neutral-200">
                     @else
-                        <div
-                            class="w-full h-32 bg-gray-100 flex items-center justify-center rounded-lg border border-neutral-200">
+                        <div class="w-full h-32 bg-gray-100 flex items-center justify-center rounded-lg border border-neutral-200">
                             <span class="text-gray-400">No image uploaded</span>
                         </div>
                     @endif
