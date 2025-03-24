@@ -3,7 +3,7 @@
         Please enter your new password to complete the password reset process.
     </div>
 
-    <form method="POST" action="{{ route('email.update-password', $token) }}" class="flex flex-col gap-6">
+    <form method="POST" action="{{ route('hosting.update-password', $token) }}" class="flex flex-col gap-6">
         @csrf
 
         <!-- Password -->
