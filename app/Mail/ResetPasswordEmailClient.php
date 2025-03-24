@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Webmail;
+namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -9,20 +9,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ResetPassword extends Mailable
+class ResetPasswordEmailClient extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $emailClient;
-    public $resetToken;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($emailClient)
+    public function __construct(protected string $url)
     {
-        $this->emailClient = $emailClient;
-        $this->resetToken = md5(uniqid() . time());
+        //
     }
 
     /**
@@ -31,7 +27,7 @@ class ResetPassword extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Your Email Password',
+            subject: 'Reset Your Email Client Password',
         );
     }
 
@@ -41,10 +37,10 @@ class ResetPassword extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.webmail.reset-password',
+            markdown: 'mail.reset-password-email-client',
             with: [
-                'resetToken' => $this->resetToken
-            ]
+                'url' => $this->url,
+            ],
         );
     }
 

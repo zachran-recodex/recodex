@@ -4,13 +4,13 @@ namespace App\Livewire\Webmail;
 
 use Livewire\Component;
 use App\WithNotification;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
-use App\Mail\Webmail\ResetPassword;
 use App\Models\Webmail\EmailClient;
 use App\Models\Webmail\DomainClient;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Webmail\EmailClientPasswordReset;
+use App\Mail\ResetPasswordEmailClient;
 
 class ManageEmailClients extends Component
 {
@@ -126,43 +126,22 @@ class ManageEmailClients extends Component
         }
     }
 
-    public function confirmSendResetPassword($id)
+    public function sendResetPasswordLink($id)
     {
-        $this->clientId = $id;
-        $this->modal('sendResetPassword')->show();
-    }
+        $client = EmailClient::findOrFail($id);
 
-    public function sendResetPassword()
-    {
-        try {
-            DB::beginTransaction();
+        $token = Str::random(64);
 
-            $client = EmailClient::findOrFail($this->clientId);
+        $client->update([
+            'reset_token' => $token,
+            'reset_token_expires_at' => now()->addHour(),
+        ]);
 
-            // Delete any existing reset tokens for this client
-            EmailClientPasswordReset::where('email_client_id', $client->id)->delete();
+        $resetUrl = route('webmail.reset-password', $token);
 
-            // Create and send the reset password email
-            $mail = new ResetPassword($client);
+        Mail::to($client->email)->send(new ResetPasswordEmailClient($resetUrl));
 
-            Mail::send($mail);
-
-            // Save the reset token
-            EmailClientPasswordReset::create([
-                'email_client_id' => $client->id,
-                'token' => $mail->resetToken,
-                'expires_at' => now()->addHours(24),
-            ]);
-
-            DB::commit();
-            $this->notifySuccess('Password reset email sent successfully to ' . $client->email);
-            $this->modal('sendResetPassword')->close();
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            report($e); // Log the error
-            $this->notifyError('Failed to send reset password email. Please try again later.');
-        }
+        $this->notifySuccess('Password reset link has been sent to the email client.');
     }
 
     public function render()

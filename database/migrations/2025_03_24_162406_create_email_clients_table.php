@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('domain_client_id')->constrained('domain_clients')->cascadeOnDelete();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('reset_token')->nullable();
+            $table->timestamp('reset_token_expires_at')->nullable();
             $table->timestamps();
         });
     }
