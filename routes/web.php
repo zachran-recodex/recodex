@@ -17,11 +17,10 @@ Route::controller(MainController::class)->group(function () {
 
 });
 
-
 Route::get('reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
-    ->name('webmail.reset-password');
+    ->name('email.reset-password');
 Route::post('reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
-    ->name('webmail.update-password');
+    ->name('email.update-password');
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 

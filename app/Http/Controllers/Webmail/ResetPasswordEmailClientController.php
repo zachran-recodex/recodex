@@ -14,7 +14,7 @@ class ResetPasswordEmailClientController extends Controller
             ->where('reset_token_expires_at', '>', now())
             ->firstOrFail();
 
-        return view('webmail.reset-password', compact('token'));
+        return view('email.reset-password', compact('token'));
     }
 
     public function update(Request $request, string $token)

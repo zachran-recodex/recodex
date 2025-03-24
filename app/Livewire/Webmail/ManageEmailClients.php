@@ -137,7 +137,7 @@ class ManageEmailClients extends Component
             'reset_token_expires_at' => now()->addHour(),
         ]);
 
-        $resetUrl = route('webmail.reset-password', $token);
+        $resetUrl = route('email.reset-password', $token);
 
         Mail::to($client->email)->send(new ResetPasswordEmailClient($resetUrl));
 
