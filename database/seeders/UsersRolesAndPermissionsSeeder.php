@@ -23,6 +23,7 @@ class UsersRolesAndPermissionsSeeder extends Seeder
             'access dashboard',
             'manage users',
             'manage roles',
+            'manage cms'
         ];
 
         // Create permissions in the database
@@ -40,7 +41,7 @@ class UsersRolesAndPermissionsSeeder extends Seeder
         // Assign a subset of permissions to admin
         $adminPermissions = [
             'access dashboard',
-            'manage users',
+            'manage cms'
         ];
         $adminRole->givePermissionTo($adminPermissions);
 
