@@ -33,6 +33,6 @@ class ResetPasswordEmailClientController extends Controller
             'reset_token_expires_at' => null,
         ]);
 
-        return redirect()->route('login')->with('status', 'Password has been reset successfully.');
+        return redirect()->route('home')->with('status', 'Password has been reset successfully.');
     }
 }
