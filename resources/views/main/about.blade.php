@@ -78,7 +78,7 @@
                     <!-- About Left Block - Video -->
                     <div
                         class="jos relative flex items-center justify-center overflow-hidden rounded-[25px] border-[5px] border-black">
-                        <img src="{{ asset('img/images/th-1/about-img.jpg') }}" alt="about-img" width="846"
+                        <img src="{{ asset('images/about.jpg') }}" alt="about-img" width="846"
                             height="476" loading="lazy" class="h-full w-full object-cover" />
                     </div>
                     <!-- About Left Block - Video -->
