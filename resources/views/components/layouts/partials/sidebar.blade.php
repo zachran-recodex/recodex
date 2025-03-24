@@ -42,6 +42,10 @@
                 <flux:navlist.item icon="question-mark-circle" :href="route('dashboard.cms.faqs')" :current="request()->routeIs('dashboard.cms.faqs')" wire:navigate>Manage FAQs</flux:navlist.item>
 
                 <flux:navlist.item icon="cog" :href="route('dashboard.cms.work-processes')" :current="request()->routeIs('dashboard.cms.work-processes')" wire:navigate>Manage Work Processes</flux:navlist.item>
+
+                <flux:navlist.item icon="cog" :href="route('dashboard.cms.about')" :current="request()->routeIs('dashboard.cms.about')" wire:navigate>Manage About</flux:navlist.item>
+
+                <flux:navlist.item icon="cog" :href="route('dashboard.cms.hero')" :current="request()->routeIs('dashboard.cms.hero')" wire:navigate>Manage Hero</flux:navlist.item>
             </flux:navlist.group>
         @endcan
 

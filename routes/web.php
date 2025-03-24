@@ -58,6 +58,12 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 Route::get('manage-work-processes', App\Livewire\CMS\ManageWorkProcesses::class)
                     ->name('work-processes');
 
+                Route::get('manage-about', App\Livewire\CMS\ManageAbout::class)
+                    ->name('about');
+
+                Route::get('manage-hero', App\Livewire\CMS\ManageHero::class)
+                    ->name('hero');
+
             });
         });
 
