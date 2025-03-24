@@ -62,203 +62,51 @@
                     <div
                         class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                         <h2 class="jos">
-                            We provide effective design
-                            <span>
-                                solutions
-                                <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                                    alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                    class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                            </span>
+                            We provide effective business solutions
                         </h2>
                     </div>
                     <!-- Section Block -->
 
                     <!-- Service List -->
                     <ul class="grid grid-cols-1 gap-[30px] lg:grid-cols-2">
-                        <!-- Service Item -->
-                        <li class="jos group/team-item" data-jos_delay="0">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-1.svg"
-                                        alt="th-1-service-icon-1" width="64" height="70"
-                                        class="h-[70px] w-auto" />
+                        @forelse ($services as $service)
+                            <!-- Service Item -->
+                            <li class="jos" data-jos_delay="0.9">
+                                <div class="shadow-bg group h-full">
+                                    <div
+                                        class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
+                                        <flux:icon :icon="$service->icon" class="h-[70px] w-auto" />
 
-                                    <h4 class="mb-[15px] mt-[30px]">UI/UX Design</h4>
-                                    <p class="mb-7">
-                                        Focusing on user interface (UI) and user experience
-                                        (UX) design to enhance the usability and accessibility
-                                        of digital products & app.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
+                                        <h4 class="mb-[15px] mt-[30px]">{{ $service->title }}</h4>
+                                        <p class="mb-7">
+                                            {{ $service->description }}
+                                        </p>
+                                        <a href=" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
+                                            <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="0.3">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-2.svg"
-                                        alt="th-1-service-icon-2" width="77" height="70"
-                                        class="h-[70px] w-auto" />
+                            </li>
+                            <!-- Service Item -->
+                        @empty
+                            <!-- Service Item -->
+                            <li class="jos" data-jos_delay="0.3">
+                                <div class="shadow-bg group h-full">
+                                    <div class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
+                                        <img src="{{ asset('img/icons/th-1-service-icon-2.svg') }}" alt="th-1-service-icon-2" width="77" height="70" class="h-[70px] w-auto" />
 
-                                    <h4 class="mb-[15px] mt-[30px]">Graphic Design</h4>
-                                    <p class="mb-7">
-                                        Creating visual elements such as logos, branding
-                                        materials, page layout techniques, brochures, & other
-                                        marketing collateral.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
+                                        <h4 class="mb-[15px] mt-[30px]">No Data</h4>
+                                        <p class="mb-7">
+                                            No Data Available
+                                        </p>
+                                        <a href="/login" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
+                                            <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="0.6">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-3.svg"
-                                        alt="th-1-service-icon-3" width="75" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Web Design</h4>
-                                    <p class="mb-7">
-                                        Designing and developing websites to ensure they are
-                                        visually look and appealing, user-friendly, and
-                                        functional your website.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="0.9">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-4.svg"
-                                        alt="th-1-service-icon-4" width="55" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Motion Graphics</h4>
-                                    <p class="mb-7">
-                                        Creating animated graphics, videos for various
-                                        purposes, including marketing and entertainment. To
-                                        help sell a product or service.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="1.2">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-5.svg"
-                                        alt="th-1-service-icon-5" width="72" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Packaging Design</h4>
-                                    <p class="mb-7">
-                                        Creating packaging solutions for products that not
-                                        only protect them but also attract customers on store
-                                        shelves.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="1.5">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-6.svg"
-                                        alt="th-1-service-icon-6" width="72" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Logo and Branding</h4>
-                                    <p class="mb-7">
-                                        Creating or refreshing a company's logo and developing
-                                        a cohesive visual identity, business cards,
-                                        letterheads, & style guides.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="1.8">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-6.svg"
-                                        alt="th-1-service-icon-6" width="72" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Logo and Branding</h4>
-                                    <p class="mb-7">
-                                        Creating or refreshing a company's logo and developing
-                                        a cohesive visual identity, business cards,
-                                        letterheads, & style guides.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
-                        <!-- Service Item -->
-                        <li class="jos" data-jos_delay="2.1">
-                            <div class="shadow-bg group h-full">
-                                <div
-                                    class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                    <img src="{{ asset('') }}img/icons/th-1-service-icon-7.svg"
-                                        alt="th-1-service-icon-7" width="72" height="70"
-                                        class="h-[70px] w-auto" />
-
-                                    <h4 class="mb-[15px] mt-[30px]">Illustration</h4>
-                                    <p class="mb-7">
-                                        Producing custom illustrations for editorial content,
-                                        books, websites, marketing materials, magazines and
-                                        more.
-                                    </p>
-                                    <a href="service-details.html"
-                                        class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5"><img
-                                            src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
-                                            alt="icon-black-arrow-right" width="34" height="28" /></a>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- Service Item -->
+                            </li>
+                            <!-- Service Item -->
+                        @endforelse
                     </ul>
                     <!-- Service List -->
                 </div>
@@ -271,84 +119,7 @@
     <!-- ...::: Service Section end :::... -->
 
     <!-- ...::: Text Slider Section Start :::... -->
-    <div class="section-text-slider">
-        <div class="bg-black py-5">
-            <div class="horizontal-slide-from-right-to-left flex items-center gap-x-6">
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-            </div>
-        </div>
-    </div>
+    <x-text-slider />
     <!-- ...::: Text Slider Section End :::... -->
 
     <!-- ...::: Process Section Start :::... -->
@@ -358,19 +129,11 @@
             <!-- Section Container -->
             <div class="container">
                 <!-- Process Area -->
-                <div
-                    class="grid grid-cols-1 items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-[1fr_minmax(0,0.67fr)] xxl:gap-x-[72px]">
+                <div class="grid grid-cols-1 items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-[1fr_minmax(0,0.67fr)] xxl:gap-x-[72px]">
                     <!-- Process Area Left Block - Section Block -->
                     <div class="section-block text-center lg:text-start">
                         <h2 class="jos">
-                            Our
-                            <span>
-                                high-quality
-                                <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                                    alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                    class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                            </span>
-                            working processes
+                            Our high-quality working processes
                         </h2>
                         <div class="jos mt-6">
                             <p class="section-para">
@@ -392,81 +155,56 @@
                     <!-- Process Area Right Block - Accordion -->
                     <!-- Accordion List -->
                     <ul class="jos flex flex-col gap-y-6">
-                        <!-- Accordion Item -->
-                        <li class="accordion-item-style-1 accordion-item active">
-                            <!-- Accordion Header -->
-                            <div
-                                class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                                <button
-                                    class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                    01/ Project idea
-                                </button>
-                                <div class="accordion-icon">
-                                    <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                        alt="icon-black-arrow-less-down" />
+                        @forelse ($workProcesses as $workProcess)
+                            <!-- Accordion Item -->
+                            <li class="accordion-item-style-1 accordion-item {{ $loop->first ? 'active' : '' }}">                                <!-- Accordion Header -->
+                                <div
+                                    class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
+                                    <button
+                                        class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
+                                        0{{ $loop->iteration }}/ {{ $workProcess->title }}
+                                    </button>
+                                    <div class="accordion-icon">
+                                        <img src="{{ asset('img/icons/icon-black-arrow-less-down.svg') }}"
+                                            alt="icon-black-arrow-less-down" />
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Accordion Header -->
-                            <!-- Accordion Body -->
-                            <div class="accordion-body max-w-[826px] opacity-80">
-                                <p class="pt-5">
-                                    The process starts with a detailed discussion with the
-                                    client to understand their idea & goals.
-                                </p>
-                            </div>
-                            <!-- Accordion Body -->
-                        </li>
-                        <!-- Accordion Item -->
-                        <!-- Accordion Item -->
-                        <li class="accordion-item-style-1 accordion-item">
-                            <!-- Accordion Header -->
-                            <div
-                                class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                                <button
-                                    class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                    02/ Brainstorming
-                                </button>
-                                <div class="accordion-icon">
-                                    <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                        alt="icon-black-arrow-less-down" />
+                                <!-- Accordion Header -->
+                                <!-- Accordion Body -->
+                                <div class="accordion-body max-w-[826px] opacity-80">
+                                    <p class="pt-5">
+                                        {{ $workProcess->description  }}
+                                    </p>
                                 </div>
-                            </div>
-                            <!-- Accordion Header -->
-                            <!-- Accordion Body -->
-                            <div class="accordion-body max-w-[826px] opacity-80">
-                                <p class="pt-5">
-                                    The process starts with a detailed discussion with the
-                                    client to understand their idea & goals.
-                                </p>
-                            </div>
-                            <!-- Accordion Body -->
-                        </li>
-                        <!-- Accordion Item -->
-                        <!-- Accordion Item -->
-                        <li class="accordion-item-style-1 accordion-item">
-                            <!-- Accordion Header -->
-                            <div
-                                class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                                <button
-                                    class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                    03/ Launch
-                                </button>
-                                <div class="accordion-icon">
-                                    <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                        alt="icon-black-arrow-less-down" />
+                                <!-- Accordion Body -->
+                            </li>
+                            <!-- Accordion Item -->
+                        @empty
+                            <!-- Accordion Item -->
+                            <li class="accordion-item-style-1 accordion-item active">
+                                <!-- Accordion Header -->
+                                <div
+                                    class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
+                                    <button
+                                        class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
+                                        00/ No Data
+                                    </button>
+                                    <div class="accordion-icon">
+                                        <img src="{{ asset('img/icons/icon-black-arrow-less-down.svg') }}"
+                                            alt="icon-black-arrow-less-down" />
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Accordion Header -->
-                            <!-- Accordion Body -->
-                            <div class="accordion-body max-w-[826px] opacity-80">
-                                <p class="pt-5">
-                                    The process starts with a detailed discussion with the
-                                    client to understand their idea & goals.
-                                </p>
-                            </div>
-                            <!-- Accordion Body -->
-                        </li>
-                        <!-- Accordion Item -->
+                                <!-- Accordion Header -->
+                                <!-- Accordion Body -->
+                                <div class="accordion-body max-w-[826px] opacity-80">
+                                    <p class="pt-5">
+                                        No Data
+                                    </p>
+                                </div>
+                                <!-- Accordion Body -->
+                            </li>
+                            <!-- Accordion Item -->
+                        @endforelse
                     </ul>
                     <!-- Accordion List -->
                     <!-- Process Area Right Block - Accordion -->
@@ -489,13 +227,7 @@
                 <div
                     class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                     <h2 class="jos">
-                        These FAQs help
-                        <span>
-                            <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                                alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                        </span>
-                        clients learn about us
+                        These FAQs help clients learn about us
                     </h2>
                 </div>
                 <!-- Section Block -->
@@ -504,125 +236,66 @@
                 <div class="grid grid-cols-1 gap-x-6 gap-y-10 lg:grid-cols-2">
                     <!-- FAQ List -->
                     <ul class="flex flex-col gap-y-10">
-                        <!-- FAQ Item -->
-                        <li class="jos flex flex-col gap-y-4">
-                            <!-- FAQ Header Block -->
-                            <h4
-                                class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
-                                What services does agency offer?
-                            </h4>
-                            <!-- FAQ Header Block -->
-                            <!-- FAQ Body -->
-                            <div class="ml-10 text-[#0C0C0C]">
-                                <p>
-                                    Clients often seek to understand the range of design
-                                    services an agency provides, such as graphic design, web
-                                    design, branding.
-                                </p>
-                            </div>
-                            <!-- FAQ Body -->
-                        </li>
-                        <!-- FAQ Item -->
-                        <!-- FAQ Item -->
-                        <li class="jos flex flex-col gap-y-4">
-                            <!-- FAQ Header Block -->
-                            <h4
-                                class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
-                                What is your design process like?
-                            </h4>
-                            <!-- FAQ Header Block -->
-                            <!-- FAQ Body -->
-                            <div class="ml-10 text-[#0C0C0C]">
-                                <p>
-                                    Explaining the design agency's process from initial
-                                    concept to final delivery helps clients understand what
-                                    to expect.
-                                </p>
-                            </div>
-                            <!-- FAQ Body -->
-                        </li>
-                        <!-- FAQ Item -->
-                        <!-- FAQ Item -->
-                        <li class="jos flex flex-col gap-y-4">
-                            <!-- FAQ Header Block -->
-                            <h4
-                                class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
-                                How much does design work cost?
-                            </h4>
-                            <!-- FAQ Header Block -->
-                            <!-- FAQ Body -->
-                            <div class="ml-10 text-[#0C0C0C]">
-                                <p>
-                                    The cost of our design services varies depending on the
-                                    scope of the project. We provide customized quotes after
-                                    discussing requirements.
-                                </p>
-                            </div>
-                            <!-- FAQ Body -->
-                        </li>
-                        <!-- FAQ Item -->
+                        @forelse ($faqs->take(3) as $faq)
+                            <!-- FAQ Item -->
+                            <li class="jos flex flex-col gap-y-4">
+                                <!-- FAQ Header Block -->
+                                <h4 class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
+                                    {{ $faq->question }}
+                                </h4>
+                                <!-- FAQ Header Block -->
+                                <!-- FAQ Body -->
+                                <div class="ml-10 text-[#0C0C0C]">
+                                    <p>
+                                        {{ $faq->answer }}
+                                    </p>
+                                </div>
+                                <!-- FAQ Body -->
+                            </li>
+                            <!-- FAQ Item -->
+                        @empty
+                            <!-- FAQ Item -->
+                            <li class="jos flex flex-col gap-y-4">
+                                <!-- FAQ Header Block -->
+                                <h4 class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
+                                    No FAQ Available
+                                </h4>
+                                <!-- FAQ Header Block -->
+                                <!-- FAQ Body -->
+                                <div class="ml-10 text-[#0C0C0C]">
+                                    <p>
+                                        Currently, there are no FAQs available.
+                                    </p>
+                                </div>
+                                <!-- FAQ Body -->
+                            </li>
+                            <!-- FAQ Item -->
+                        @endforelse
                     </ul>
                     <!-- FAQ List -->
 
                     <!-- FAQ List -->
                     <ul class="flex flex-col gap-y-10">
-                        <!-- FAQ Item -->
-                        <li class="jos flex flex-col gap-y-4">
-                            <!-- FAQ Header Block -->
-                            <h4
-                                class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
-                                What's your design process like?
-                            </h4>
-                            <!-- FAQ Header Block -->
-                            <!-- FAQ Body -->
-                            <div class="ml-10 text-[#0C0C0C]">
-                                <p>
-                                    Our design process typically involves discovery, concept
-                                    development, design, revisions based on feedback, and
-                                    finalization.
-                                </p>
-                            </div>
-                            <!-- FAQ Body -->
-                        </li>
-                        <!-- FAQ Item -->
-                        <!-- FAQ Item -->
-                        <li class="jos flex flex-col gap-y-4">
-                            <!-- FAQ Header Block -->
-                            <h4
-                                class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
-                                How do you handle user feedback?
-                            </h4>
-                            <!-- FAQ Header Block -->
-                            <!-- FAQ Body -->
-                            <div class="ml-10 text-[#0C0C0C]">
-                                <p>
-                                    We value client feedback and work closely with you to
-                                    make sure user happy with the final design. We offer a
-                                    specific number of revisions.
-                                </p>
-                            </div>
-                            <!-- FAQ Body -->
-                        </li>
-                        <!-- FAQ Item -->
-                        <!-- FAQ Item -->
-                        <li class="jos flex flex-col gap-y-4">
-                            <!-- FAQ Header Block -->
-                            <h4
-                                class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
-                                Can we see samples of your work?
-                            </h4>
-                            <!-- FAQ Header Block -->
-                            <!-- FAQ Body -->
-                            <div class="ml-10 text-[#0C0C0C]">
-                                <p>
-                                    Yes, we're proud to showcase a project of our previous
-                                    projects. You can find examples of our work on our
-                                    website or view our project.
-                                </p>
-                            </div>
-                            <!-- FAQ Body -->
-                        </li>
-                        <!-- FAQ Item -->
+                        @forelse ($faqs->skip(3)->take(3) as $faq)
+                            <!-- FAQ Item -->
+                            <li class="jos flex flex-col gap-y-4">
+                                <!-- FAQ Header Block -->
+                                <h4 class="relative pl-10 before:absolute before:left-0 before:top-1 before:h-[30px] before:w-[30px] before:bg-[url(../img/icons/icon-lightlime-question.svg)]">
+                                    {{ $faq->question }}
+                                </h4>
+                                <!-- FAQ Header Block -->
+                                <!-- FAQ Body -->
+                                <div class="ml-10 text-[#0C0C0C]">
+                                    <p>
+                                        {{ $faq->answer }}
+                                    </p>
+                                </div>
+                                <!-- FAQ Body -->
+                            </li>
+                            <!-- FAQ Item -->
+                        @empty
+                            <!-- No empty state needed for the second column -->
+                        @endforelse
                     </ul>
                     <!-- FAQ List -->
                 </div>

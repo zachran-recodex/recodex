@@ -99,13 +99,7 @@
                     <div
                         class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                         <h2 class="jos">
-                            We provide effective business
-                            <span>
-                                solutions
-                                <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                    alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                    class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                            </span>
+                            We provide effective business solutions
                         </h2>
                     </div>
                     <!-- Section Block -->
@@ -176,14 +170,7 @@
                     <div
                         class="grid items-center gap-x-6 gap-y-10 text-center lg:grid-cols-[1fr_minmax(0,0.55fr)] lg:text-start xl:gap-x-[134px]">
                         <h2 class="jos">
-                            We make
-                            <span>
-                                your
-                                <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                    alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                    class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                            </span>
-                            business stand out
+                            We make your business stand out
                         </h2>
                         <p class="jos section-para">
                             We work closely with our clients to know their objectives,
@@ -201,17 +188,6 @@
                         class="jos relative flex items-center justify-center overflow-hidden rounded-[25px] border-[5px] border-black">
                         <img src="{{ asset('img/images/th-1/about-img.jpg') }}" alt="about-img" width="846"
                             height="476" loading="lazy" class="h-full w-full object-cover" />
-
-                        <div class="absolute inline-block">
-                            <a data-fslightbox="gallery" href="https://www.youtube.com/watch?v=3nQNiWdeH2Q"
-                                class="btn-primary relative pr-16" aria-label="video-play">
-                                Play
-                                <span
-                                    class="rounded-[50% absolute right-[0px] inline-flex items-center justify-center"><img
-                                        src="{{ asset('img/icons/icon-buttery-white-black-play.svg') }}"
-                                        alt="icon-buttery-white-black-play" width="50" height="50" /></span>
-                            </a>
-                        </div>
                     </div>
                     <!-- About Left Block - Video -->
 
@@ -259,13 +235,7 @@
                     <div
                         class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                         <h2 class="jos text-colorButteryWhite">
-                            Have a wide range of creative
-                            <span>
-                                projects
-                                <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                    alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                    class="inline-block h-auto w-8 md:w-10 lg:w-[57px]" />
-                            </span>
+                            Have a wide range of creative projects
                         </h2>
                     </div>
                     <!-- Section Block -->
@@ -377,19 +347,11 @@
             <!-- Section Container -->
             <div class="container">
                 <!-- Process Area -->
-                <div
-                    class="grid grid-cols-1 items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-[1fr_minmax(0,0.67fr)] xxl:gap-x-[72px]">
+                <div class="grid grid-cols-1 items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-[1fr_minmax(0,0.67fr)] xxl:gap-x-[72px]">
                     <!-- Process Area Left Block - Section Block -->
                     <div class="section-block text-center lg:text-start">
                         <h2 class="jos">
-                            Our
-                            <span>
-                                high-quality
-                                <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                    alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                    class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                            </span>
-                            working processes
+                            Our high-quality working processes
                         </h2>
                         <div class="jos mt-6">
                             <p class="section-para">
@@ -413,8 +375,7 @@
                     <ul class="jos flex flex-col gap-y-6">
                         @forelse ($workProcesses as $workProcess)
                             <!-- Accordion Item -->
-                            <li class="accordion-item-style-1 accordion-item active">
-                                <!-- Accordion Header -->
+                            <li class="accordion-item-style-1 accordion-item {{ $loop->first ? 'active' : '' }}">                                <!-- Accordion Header -->
                                 <div
                                     class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
                                     <button
@@ -479,232 +440,6 @@
     <!-- Horizontal Line -->
 
     <!-- ...::: Text Slider Section Start :::... -->
-    <div class="section-text-slider">
-        <div class="bg-black py-5">
-            <div class="horizontal-slide-from-right-to-left flex items-center gap-x-6">
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-                <!-- Text Slider Item Text-->
-                <div
-                    class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                    Let's create new experiences
-                </div>
-                <!-- Text Slider Item Text -->
-                <!-- Text Slider Separator Icon -->
-                <div class="h-10 min-w-[42px]">
-                    <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                        alt="shape-light-lime-5-arms-star" width="74" height="70" class="h-10 w-auto" />
-                </div>
-                <!-- Text Slider Separator Icon -->
-            </div>
-        </div>
-    </div>
+    <x-text-slider />
     <!-- ...::: Text Slider Section End :::... -->
-
-    <!-- ...::: Team Section Start :::... -->
-    <section class="section-team">
-        <!-- Section Space -->
-        <div class="section-space">
-            <!-- Section Container -->
-            <div class="container">
-                <!-- Section Block -->
-                <div
-                    class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
-                    <h2 class="jos">
-                        We have a team of creative
-                        <span>
-                            people
-                            <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                        </span>
-                    </h2>
-                </div>
-                <!-- Section Block -->
-
-                <!-- Team List -->
-                <ul class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @forelse ($members as $member)
-                        <!-- Team  Item -->
-                        <li class="jos group/team-item" data-jos_delay="0" data-jos_animation="flip-left">
-                            <div class="relative overflow-hidden rounded-[20px] border-[5px] border-black">
-                                <img src="{{ Storage::url( $member->photo ) }}" alt="team-img-1"
-                                    width="296" height="300" loading="lazy"
-                                    class="h-full w-full object-cover transition-all duration-300 group-hover/team-item:scale-110" />
-                                <!-- Social Link -->
-                                <div
-                                    class="absolute top-full flex w-full justify-center gap-3 transition-all duration-300 group-hover/team-item:-translate-y-14">
-                                    <a href="http://www.twitter.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-twitter.svg') }}"
-                                            alt="icon-logo-buttery-white-twitter" width="19" height="16"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-twitter.svg') }}"
-                                            alt="icon-logo-black-twitter" width="19" height="16"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                    <a href="http://www.facebook.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-facebook.svg') }}"
-                                            alt="icon-logo-buttery-white-facebook" width="10" height="17"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-facebook.svg') }}"
-                                            alt="icon-logo-black-facebook" width="10" height="17"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                    <a href="http://www.instagram.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-instagram.svg') }}"
-                                            alt="icon-logo-buttery-white-instagram" width="17" height="18"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-instagram.svg') }}"
-                                            alt="icon-logo-black-instagram" width="17" height="18"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                    <a href="http://www.linkedin.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-linkedin.svg') }}"
-                                            alt="icon-logo-buttery-white-linkedin" width="17" height="18"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-linkedin.svg') }}"
-                                            alt="icon-logo-black-linkedin" width="17" height="18"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                </div>
-                                <!-- Social Link -->
-                            </div>
-
-                            <div class="mt-5 text-center">
-                                <a href="" class="display-heading display-heading-4 mb-4 block">
-                                    {{ $member->name }}
-                                </a>
-                                <span class="text-lg md:text-[21px]">{{ $member->position }}</span>
-                            </div>
-                        </li>
-                        <!-- Team  Item -->
-                    @empty
-                        <!-- Team  Item -->
-                        <li class="jos group/team-item" data-jos_delay="0" data-jos_animation="flip-left">
-                            <div class="relative overflow-hidden rounded-[20px] border-[5px] border-black">
-                                <img src="{{ asset('img/images/th-1/team-img-1.jpg') }}" alt="team-img-1"
-                                    width="296" height="300" loading="lazy"
-                                    class="h-full w-full object-cover transition-all duration-300 group-hover/team-item:scale-110" />
-                                <!-- Social Link -->
-                                <div
-                                    class="absolute top-full flex w-full justify-center gap-3 transition-all duration-300 group-hover/team-item:-translate-y-14">
-                                    <a href="http://www.twitter.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-twitter.svg') }}"
-                                            alt="icon-logo-buttery-white-twitter" width="19" height="16"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-twitter.svg') }}"
-                                            alt="icon-logo-black-twitter" width="19" height="16"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                    <a href="http://www.facebook.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-facebook.svg') }}"
-                                            alt="icon-logo-buttery-white-facebook" width="10" height="17"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-facebook.svg') }}"
-                                            alt="icon-logo-black-facebook" width="10" height="17"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                    <a href="http://www.instagram.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-instagram.svg') }}"
-                                            alt="icon-logo-buttery-white-instagram" width="17" height="18"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-instagram.svg') }}"
-                                            alt="icon-logo-black-instagram" width="17" height="18"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                    <a href="http://www.linkedin.com" target="_blank" rel="noopener noreferrer"
-                                        class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                        <img src="{{ asset('img/icons/icon-logo-buttery-white-linkedin.svg') }}"
-                                            alt="icon-logo-buttery-white-linkedin" width="17" height="18"
-                                            class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                        <img src="{{ asset('img/icons/icon-logo-black-linkedin.svg') }}"
-                                            alt="icon-logo-black-linkedin" width="17" height="18"
-                                            class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                    </a>
-                                </div>
-                                <!-- Social Link -->
-                            </div>
-
-                            <div class="mt-5 text-center">
-                                <a href="" class="display-heading display-heading-4 mb-4 block">
-                                    No Data
-                                </a>
-                                <span class="text-lg md:text-[21px]">No Data</span>
-                            </div>
-                        </li>
-                        <!-- Team  Item -->
-                    @endforelse
-                </ul>
-                <!-- Team List -->
-            </div>
-            <!-- Section Container -->
-        </div>
-        <!-- Section Space -->
-    </section>
-    <!-- ...::: Team Section End :::... -->
 </x-layouts.main>

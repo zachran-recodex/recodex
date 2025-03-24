@@ -60,182 +60,60 @@
                 <div
                     class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                     <h2 class="jos">
-                        These FAQs help
-                        <span>
-                            <img src="{{ asset('') }}img/elemnts/shape-light-lime-5-arms-star.svg"
-                                alt="shape-light-lime-5-arms-star" width="74" height="70"
-                                class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                        </span>
-                        clients learn about us
+                        These FAQs help clients learn about us
                     </h2>
                 </div>
                 <!-- Section Block -->
 
                 <!-- Accordion List -->
                 <ul class="jos flex flex-col gap-y-6">
-                    <!-- Accordion Item -->
-                    <li class="accordion-item-style-1 accordion-item active">
-                        <!-- Accordion Header -->
-                        <div
-                            class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                            <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                What services does your design agency offer?
-                            </button>
-                            <div class="accordion-icon">
-                                <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                    alt="icon-black-arrow-less-down" />
+                    @forelse ($faqs as $faq)
+                        <!-- Accordion Item -->
+                        <li class="accordion-item-style-1 accordion-item {{ $loop->first ? 'active' : '' }}">
+                            <!-- Accordion Header -->
+                            <div class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
+                                <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
+                                    {{ $faq->question }}
+                                </button>
+                                <div class="accordion-icon">
+                                    <img src="{{ asset('img/icons/icon-black-arrow-less-down.svg') }}"
+                                        alt="icon-black-arrow-less-down" />
+                                </div>
                             </div>
-                        </div>
-                        <!-- Accordion Header -->
-                        <!-- Accordion Body -->
-                        <div class="accordion-body max-w-[1162px] opacity-80">
-                            <p class="pt-5">
-                                Clients often seek to understand the range of design
-                                services an agency provides, such as graphic design, web
-                                design, branding, and more. We offer a wide range of
-                                design services, including graphic design, web design,
-                                branding, UI/UX design, and more.
-                            </p>
-                        </div>
-                        <!-- Accordion Body -->
-                    </li>
-                    <!-- Accordion Item -->
-                    <!-- Accordion Item -->
-                    <li class="accordion-item-style-1 accordion-item">
-                        <!-- Accordion Header -->
-                        <div
-                            class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                            <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                What industries or types of clients do you typically work
-                                with?
-                            </button>
-                            <div class="accordion-icon">
-                                <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                    alt="icon-black-arrow-less-down" />
+                            <!-- Accordion Header -->
+                            <!-- Accordion Body -->
+                            <div class="accordion-body max-w-[1162px] opacity-80">
+                                <p class="pt-5">
+                                    {{ $faq->answer }}
+                                </p>
                             </div>
-                        </div>
-                        <!-- Accordion Header -->
-                        <!-- Accordion Body -->
-                        <div class="accordion-body max-w-[1162px] opacity-80">
-                            <p class="pt-5">
-                                Clients often seek to understand the range of design
-                                services an agency provides, such as graphic design, web
-                                design, branding, and more. We offer a wide range of
-                                design services, including graphic design, web design,
-                                branding, UI/UX design, and more.
-                            </p>
-                        </div>
-                        <!-- Accordion Body -->
-                    </li>
-                    <!-- Accordion Item -->
-                    <!-- Accordion Item -->
-                    <li class="accordion-item-style-1 accordion-item">
-                        <!-- Accordion Header -->
-                        <div
-                            class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                            <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                Can you provide examples of your previous work/project?
-                            </button>
-                            <div class="accordion-icon">
-                                <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                    alt="icon-black-arrow-less-down" />
+                            <!-- Accordion Body -->
+                        </li>
+                        <!-- Accordion Item -->
+                    @empty
+                        <!-- Accordion Item -->
+                        <li class="accordion-item-style-1 accordion-item active">
+                            <!-- Accordion Header -->
+                            <div class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
+                                <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
+                                    No FAQs Available
+                                </button>
+                                <div class="accordion-icon">
+                                    <img src="{{ asset('img/icons/icon-black-arrow-less-down.svg') }}"
+                                        alt="icon-black-arrow-less-down" />
+                                </div>
                             </div>
-                        </div>
-                        <!-- Accordion Header -->
-                        <!-- Accordion Body -->
-                        <div class="accordion-body max-w-[1162px] opacity-80">
-                            <p class="pt-5">
-                                Clients often seek to understand the range of design
-                                services an agency provides, such as graphic design, web
-                                design, branding, and more. We offer a wide range of
-                                design services, including graphic design, web design,
-                                branding, UI/UX design, and more.
-                            </p>
-                        </div>
-                        <!-- Accordion Body -->
-                    </li>
-                    <!-- Accordion Item -->
-                    <!-- Accordion Item -->
-                    <li class="accordion-item-style-1 accordion-item">
-                        <!-- Accordion Header -->
-                        <div
-                            class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                            <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                What is your design process like?
-                            </button>
-                            <div class="accordion-icon">
-                                <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                    alt="icon-black-arrow-less-down" />
+                            <!-- Accordion Header -->
+                            <!-- Accordion Body -->
+                            <div class="accordion-body max-w-[1162px] opacity-80">
+                                <p class="pt-5">
+                                    Currently, there are no FAQs available.
+                                </p>
                             </div>
-                        </div>
-                        <!-- Accordion Header -->
-                        <!-- Accordion Body -->
-                        <div class="accordion-body max-w-[1162px] opacity-80">
-                            <p class="pt-5">
-                                Clients often seek to understand the range of design
-                                services an agency provides, such as graphic design, web
-                                design, branding, and more. We offer a wide range of
-                                design services, including graphic design, web design,
-                                branding, UI/UX design, and more.
-                            </p>
-                        </div>
-                        <!-- Accordion Body -->
-                    </li>
-                    <!-- Accordion Item -->
-                    <!-- Accordion Item -->
-                    <li class="accordion-item-style-1 accordion-item">
-                        <!-- Accordion Header -->
-                        <div
-                            class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                            <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                How do you handle revisions and feedback during a project?
-                            </button>
-                            <div class="accordion-icon">
-                                <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                    alt="icon-black-arrow-less-down" />
-                            </div>
-                        </div>
-                        <!-- Accordion Header -->
-                        <!-- Accordion Body -->
-                        <div class="accordion-body max-w-[1162px] opacity-80">
-                            <p class="pt-5">
-                                Clients often seek to understand the range of design
-                                services an agency provides, such as graphic design, web
-                                design, branding, and more. We offer a wide range of
-                                design services, including graphic design, web design,
-                                branding, UI/UX design, and more.
-                            </p>
-                        </div>
-                        <!-- Accordion Body -->
-                    </li>
-                    <!-- Accordion Item -->
-                    <!-- Accordion Item -->
-                    <li class="accordion-item-style-1 accordion-item">
-                        <!-- Accordion Header -->
-                        <div
-                            class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                            <button class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                Do you offer ongoing support after project completion?
-                            </button>
-                            <div class="accordion-icon">
-                                <img src="{{ asset('') }}img/icons/icon-black-arrow-less-down.svg"
-                                    alt="icon-black-arrow-less-down" />
-                            </div>
-                        </div>
-                        <!-- Accordion Header -->
-                        <!-- Accordion Body -->
-                        <div class="accordion-body max-w-[1162px] opacity-80">
-                            <p class="pt-5">
-                                Clients often seek to understand the range of design
-                                services an agency provides, such as graphic design, web
-                                design, branding, and more. We offer a wide range of
-                                design services, including graphic design, web design,
-                                branding, UI/UX design, and more.
-                            </p>
-                        </div>
-                        <!-- Accordion Body -->
-                    </li>
-                    <!-- Accordion Item -->
+                            <!-- Accordion Body -->
+                        </li>
+                        <!-- Accordion Item -->
+                    @endforelse
                 </ul>
                 <!-- Accordion List -->
 
