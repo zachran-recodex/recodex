@@ -17,9 +17,9 @@ Route::controller(MainController::class)->group(function () {
 
 });
 
-Route::get('reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
+Route::get('email/reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
     ->name('email.reset-password');
-Route::post('reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
+Route::post('email/reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
     ->name('email.update-password');
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
