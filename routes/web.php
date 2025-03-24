@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\MainController;
-use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\Webmail\ResetPasswordController;
 
 Route::controller(MainController::class)->group(function () {
 
@@ -15,6 +16,9 @@ Route::controller(MainController::class)->group(function () {
     Route::get('contact', 'contact')->name('contact');
 
 });
+
+Route::get('/webmail/reset-password/{token}', ResetPasswordController::class)
+    ->name('webmail.reset-password');
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 

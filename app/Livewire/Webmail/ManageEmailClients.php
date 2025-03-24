@@ -6,8 +6,11 @@ use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use App\Mail\Webmail\ResetPassword;
 use App\Models\Webmail\EmailClient;
 use App\Models\Webmail\DomainClient;
+use Illuminate\Support\Facades\Mail;
+use App\Models\Webmail\EmailClientPasswordReset;
 
 class ManageEmailClients extends Component
 {
@@ -122,6 +125,39 @@ class ManageEmailClients extends Component
             $this->notifyError('Something went wrong: ' . $e->getMessage());
         }
     }
+
+    public function confirmSendResetPassword($id)
+    {
+        $this->clientId = $id;
+        $this->modal('sendResetPassword')->show();
+    }
+
+    public function sendResetPassword()
+{
+    try {
+        $client = EmailClient::findOrFail($this->clientId);
+        
+        // Delete any existing reset tokens for this client
+        EmailClientPasswordReset::where('email_client_id', $client->id)->delete();
+        
+        // Send the reset password email
+        $mail = new ResetPassword($client);
+        Mail::to($client->email)->send($mail);
+        
+        // Save the reset token
+        EmailClientPasswordReset::create([
+            'email_client_id' => $client->id,
+            'token' => $mail->resetToken,
+            'expires_at' => now()->addHours(24),
+        ]);
+
+        $this->notifySuccess('Password reset email sent successfully to ' . $client->email);
+        $this->modal('sendResetPassword')->close();
+
+    } catch (\Exception $e) {
+        $this->notifyError('Failed to send reset password email: ' . $e->getMessage());
+    }
+}
 
     public function render()
     {

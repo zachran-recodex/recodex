@@ -52,6 +52,11 @@
                                         <flux:button variant="danger" wire:click="confirmDelete({{ $client->id }})"
                                             icon="trash"></flux:button>
                                     </flux:modal.trigger>
+
+                                    <flux:modal.trigger name="sendResetPassword">
+                                        <flux:button variant="outline" wire:click="confirmSendResetPassword({{ $client->id }})"
+                                            icon="key"></flux:button>
+                                    </flux:modal.trigger>
                                 </flux:table.cell>
                             </flux:table.row>
                         @empty
@@ -143,6 +148,23 @@
                 <div class="flex gap-2">
                     <flux:spacer />
                     <flux:button variant="danger" wire:click="delete">Delete</flux:button>
+                </div>
+            </div>
+        </flux:modal>
+
+        <flux:modal name="sendResetPassword" class="min-w-[22rem]">
+            <div class="space-y-6">
+                <div>
+                    <flux:heading size="lg">Send Password Reset Email?</flux:heading>
+
+                    <flux:subheading>
+                        <p>Are you sure you want to send a password reset email to this client?</p>
+                    </flux:subheading>
+                </div>
+
+                <div class="flex gap-2">
+                    <flux:spacer />
+                    <flux:button variant="primary" wire:click="sendResetPassword">Send Reset Email</flux:button>
                 </div>
             </div>
         </flux:modal>
