@@ -67,6 +67,15 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
             });
         });
 
+        Route::prefix('webmail')->name('webmail.')->group(function (){
+
+            Route::get('domain-clients', App\Livewire\Webmail\ManageDomainClients::class)
+                ->name('domain-clients');
+
+            Route::get('email-clients', App\Livewire\Webmail\ManageEmailClients::class)
+                ->name('email-clients');
+        });
+
     });
 
     Route::redirect('settings', 'settings/profile');
