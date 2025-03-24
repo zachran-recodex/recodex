@@ -18,9 +18,9 @@ Route::controller(MainController::class)->group(function () {
 });
 
 
-Route::get('webmail/reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
+Route::get('reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
     ->name('webmail.reset-password');
-Route::post('webmail/reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
+Route::post('reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
     ->name('webmail.update-password');
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
