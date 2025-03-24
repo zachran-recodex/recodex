@@ -8,14 +8,11 @@ Route::controller(MainController::class)->group(function () {
 
     Route::get('/', 'index')->name('home');
     Route::get('about', 'about')->name('about');
-    Route::get('blog', 'blog')->name('blog');
     Route::get('service', 'service')->name('service');
-    Route::get('contact', 'contact')->name('contact');
     Route::get('faq', 'faq')->name('faq');
     Route::get('project', 'project')->name('project');
-    Route::get('pricing', 'pricing')->name('pricing');
-    Route::get('team', 'team')->name('team');
     Route::get('testimonial', 'testimonial')->name('testimonial');
+    Route::get('contact', 'contact')->name('contact');
 
 });
 

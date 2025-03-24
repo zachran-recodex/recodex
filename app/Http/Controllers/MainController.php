@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
+use App\Models\Hero;
 use App\Models\About;
 use App\Models\Member;
 use App\Models\Counter;
 use App\Models\Project;
 use App\Models\Service;
-use App\Models\Hero;
 use App\Models\WorkProcess;
 
 class MainController extends Controller
@@ -19,7 +20,6 @@ class MainController extends Controller
         $counters = Counter::all();
         $projects = Project::all();
         $workProcesses = WorkProcess::all();
-        $members = Member::all();
 
         return view('main.index', compact('hero', 'services', 'counters', 'projects', 'workProcesses', 'members'));
     }
@@ -27,47 +27,37 @@ class MainController extends Controller
     public function about()
     {
         $about = About::first();
+        $counters = Counter::all();
 
-        return view('main.about', compact('about'));
+        return view('main.about', compact('about', 'counters'));
     }
-
-    public function blog()
-    {
-        return view('main.blog');
-    }
-
     public function service()
     {
-        return view('main.service');
-    }
+        $services = Service::all();
+        $workProcesses = WorkProcess::all();
+        $faqs = Faq::all();
 
-    public function contact()
-    {
-        return view('main.contact');
+        return view('main.service', compact('services', 'workProcesses', 'faqs'));
     }
 
     public function faq()
     {
-        return view('main.faq');
+        $faqs = Faq::all();
+
+        return view('main.faq', compact('faqs'));
     }
 
     public function project()
     {
-        return view('main.project');
+        $projects = Project::all();
+
+        return view('main.project', compact('projects'));
     }
 
-    public function pricing()
+    public function contact()
     {
-        return view('main.pricing');
-    }
+        $faqs = Faq::all();
 
-    public function team()
-    {
-        return view('main.team');
-    }
-
-    public function testimonial()
-    {
-        return view('main.testimonial');
+        return view('main.contact', compact('faqs'));
     }
 }

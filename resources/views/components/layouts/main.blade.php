@@ -72,10 +72,6 @@
                                     </li>
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('blog') }}" class="nav-link-item">Blog</a>
-                                    </li>
-                                    <li
-                                        class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
                                         <a href="{{ route('service') }}" class="nav-link-item">Service</a>
                                     </li>
                                     <li
@@ -85,18 +81,6 @@
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
                                         <a href="{{ route('project') }}" class="nav-link-item">Project</a>
-                                    </li>
-                                    <li
-                                        class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('pricing') }}" class="nav-link-item">Pricing</a>
-                                    </li>
-                                    <li
-                                        class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('team') }}" class="nav-link-item">Team</a>
-                                    </li>
-                                    <li
-                                        class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('testimonial') }}" class="nav-link-item">Testimonial</a>
                                     </li>
                                 </ul>
                             </nav>
