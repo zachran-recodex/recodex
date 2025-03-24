@@ -27,11 +27,11 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::prefix('admin')->name('admin.')->group(function (){
 
-            Route::view('manage-user', 'dashboard.admin.user')
+            Route::get('manage-users', App\Livewire\Admin\ManageUsers::class)
                 ->name('user')
                 ->middleware('can:manage users');
 
-            Route::view('manage-role', 'dashboard.admin.role')
+            Route::get('manage-roles', App\Livewire\Admin\ManageRoles::class)
                 ->name('role')
                 ->middleware('can:manage roles');
         });
