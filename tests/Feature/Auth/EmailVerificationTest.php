@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\URL;
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 test('email verification screen can be rendered', function () {
-    $user = User::factory()->unverified()->create();
+    $user = User::factory()->create([
+        'email_verified_at' => null
+    ]);
 
     $response = $this->actingAs($user)->get('/verify-email');
 
@@ -16,7 +18,9 @@ test('email verification screen can be rendered', function () {
 });
 
 test('email can be verified', function () {
-    $user = User::factory()->unverified()->create();
+    $user = User::factory()->create([
+        'email_verified_at' => null
+    ]);
 
     Event::fake();
 
@@ -35,7 +39,9 @@ test('email can be verified', function () {
 });
 
 test('email is not verified with invalid hash', function () {
-    $user = User::factory()->unverified()->create();
+    $user = User::factory()->create([
+        'email_verified_at' => null
+    ]);
 
     $verificationUrl = URL::temporarySignedRoute(
         'verification.verify',
