@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Faq;
 use App\Models\Hero;
 use App\Models\About;
-use App\Models\Member;
 use App\Models\Counter;
 use App\Models\Project;
 use App\Models\Service;
@@ -21,7 +20,7 @@ class MainController extends Controller
         $projects = Project::all();
         $workProcesses = WorkProcess::all();
 
-        return view('main.index', compact('hero', 'services', 'counters', 'projects', 'workProcesses', 'members'));
+        return view('main.index', compact('hero', 'services', 'counters', 'projects', 'workProcesses'));
     }
 
     public function about()
