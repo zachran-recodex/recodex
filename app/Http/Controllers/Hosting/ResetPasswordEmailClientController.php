@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Webmail;
+namespace App\Http\Controllers\Hosting;
 
 use Illuminate\Http\Request;
-use App\Models\Webmail\EmailClient;
+use App\Models\Hosting\EmailClient;
 use App\Http\Controllers\Controller;
 
 class ResetPasswordEmailClientController extends Controller
@@ -14,7 +14,7 @@ class ResetPasswordEmailClientController extends Controller
             ->where('reset_token_expires_at', '>', now())
             ->firstOrFail();
 
-        return view('email.reset-password', compact('token'));
+        return view('hosting.reset-password', compact('token'));
     }
 
     public function update(Request $request, string $token)

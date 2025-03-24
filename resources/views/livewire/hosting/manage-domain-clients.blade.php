@@ -5,7 +5,7 @@
 
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Webmail</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Hosting</flux:breadcrumbs.item>
             <flux:breadcrumbs.item separator="slash">Manage Domain Clients</flux:breadcrumbs.item>
         </flux:breadcrumbs>
     </div>

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Livewire\Webmail;
+namespace App\Livewire\Hosting;
 
 use Livewire\Component;
 use App\WithNotification;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
-use App\Models\Webmail\EmailClient;
-use App\Models\Webmail\DomainClient;
+use App\Models\Hosting\EmailClient;
+use App\Models\Hosting\DomainClient;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordEmailClient;
 
@@ -156,7 +156,7 @@ class ManageEmailClients extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.webmail.manage-email-clients', [
+        return view('livewire.hosting.manage-email-clients', [
             'clients' => $clients,
             'domains' => DomainClient::all()
         ]);

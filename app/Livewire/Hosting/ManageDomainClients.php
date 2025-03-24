@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Webmail;
+namespace App\Livewire\Hosting;
 
-use App\Models\Webmail\DomainClient;
+use App\Models\Hosting\DomainClient;
 use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithPagination;
@@ -113,7 +113,7 @@ class ManageDomainClients extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.webmail.manage-domain-clients', [
+        return view('livewire.hosting.manage-domain-clients', [
             'domains' => $domains
         ]);
     }

@@ -49,10 +49,10 @@
             </flux:navlist.group>
         @endcan
 
-        <flux:navlist.group expandable expanded="false" heading="Webmail">
-            <flux:navlist.item icon="cog" :href="route('dashboard.webmail.domain-clients')" :current="request()->routeIs('dashboard.webmail.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
+        <flux:navlist.group expandable expanded="false" heading="Hosting">
+            <flux:navlist.item icon="cog" :href="route('dashboard.hosting.domain-clients')" :current="request()->routeIs('dashboard.hosting.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
 
-            <flux:navlist.item icon="cog" :href="route('dashboard.webmail.email-clients')" :current="request()->routeIs('dashboard.webmail.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
+            <flux:navlist.item icon="cog" :href="route('dashboard.hosting.email-clients')" :current="request()->routeIs('dashboard.hosting.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
         </flux:navlist.group>
 
     </flux:navlist>

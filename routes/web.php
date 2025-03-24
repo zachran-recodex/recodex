@@ -3,7 +3,7 @@
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\Webmail\ResetPasswordEmailClientController;
+use App\Http\Controllers\Hosting\ResetPasswordEmailClientController;
 
 Route::controller(MainController::class)->group(function () {
 
@@ -17,10 +17,10 @@ Route::controller(MainController::class)->group(function () {
 
 });
 
-Route::get('email/reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
-    ->name('email.reset-password');
-Route::post('email/reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
-    ->name('email.update-password');
+Route::get('hosting/reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
+    ->name('hosting.reset-password');
+Route::post('hosting/reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
+    ->name('hosting.update-password');
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
@@ -73,12 +73,12 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
             });
         });
 
-        Route::prefix('webmail')->name('webmail.')->group(function (){
+        Route::prefix('hosting')->name('hosting.')->group(function (){
 
-            Route::get('domain-clients', App\Livewire\Webmail\ManageDomainClients::class)
+            Route::get('domain-clients', App\Livewire\Hosting\ManageDomainClients::class)
                 ->name('domain-clients');
 
-            Route::get('email-clients', App\Livewire\Webmail\ManageEmailClients::class)
+            Route::get('email-clients', App\Livewire\Hosting\ManageEmailClients::class)
                 ->name('email-clients');
         });
 
