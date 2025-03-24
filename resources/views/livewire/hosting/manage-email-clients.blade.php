@@ -39,7 +39,20 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $client->password }}
+                                    <button
+                                        type="button"
+                                        class="hover:text-primary-600 cursor-pointer"
+                                        x-data
+                                        @click="
+                                            navigator.clipboard.writeText($el.innerText);
+                                            $dispatch('notify', {
+                                                type: 'success',
+                                                message: 'Password copied to clipboard!'
+                                            })
+                                        "
+                                    >
+                                        {{ $client->password }}
+                                    </button>
                                 </flux:table.cell>
 
                                 <flux:table.cell>
