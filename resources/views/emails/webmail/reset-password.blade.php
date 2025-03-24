@@ -1,16 +1,27 @@
-<x-mail::message>
-# Reset Your Password
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reset Your Password</title>
+</head>
+<body>
+    <h1>Reset Your Password</h1>
 
-Hello,
+    <p>Hello,</p>
 
-You are receiving this email because a password reset request was made for your email account.
+    <p>You are receiving this email because a password reset request was made for your email account.</p>
 
-<x-mail::button :url="route('webmail.reset-password', ['token' => $resetToken])">
-Reset Password
-</x-mail::button>
+    <p>
+        <a href="{{ route('webmail.reset-password', ['token' => $resetToken]) }}"
+           style="background-color: #4CAF50; color: white; padding: 14px 20px; text-decoration: none; border-radius: 4px;">
+            Reset Password
+        </a>
+    </p>
 
-If you did not request a password reset, no further action is required.
+    <p>If you did not request a password reset, no further action is required.</p>
 
-Thanks,<br>
-{{ config('app.name') }}
-</x-mail::message>
+    <p>
+        Thanks,<br>
+        {{ config('app.name') }}
+    </p>
+</body>
+</html>

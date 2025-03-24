@@ -42,6 +42,9 @@ class ResetPassword extends Mailable
     {
         return new Content(
             view: 'emails.webmail.reset-password',
+            with: [
+                'resetToken' => $this->resetToken
+            ]
         );
     }
 

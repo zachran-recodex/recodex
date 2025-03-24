@@ -133,31 +133,37 @@ class ManageEmailClients extends Component
     }
 
     public function sendResetPassword()
-{
-    try {
-        $client = EmailClient::findOrFail($this->clientId);
-        
-        // Delete any existing reset tokens for this client
-        EmailClientPasswordReset::where('email_client_id', $client->id)->delete();
-        
-        // Send the reset password email
-        $mail = new ResetPassword($client);
-        Mail::to($client->email)->send($mail);
-        
-        // Save the reset token
-        EmailClientPasswordReset::create([
-            'email_client_id' => $client->id,
-            'token' => $mail->resetToken,
-            'expires_at' => now()->addHours(24),
-        ]);
+    {
+        try {
+            DB::beginTransaction();
 
-        $this->notifySuccess('Password reset email sent successfully to ' . $client->email);
-        $this->modal('sendResetPassword')->close();
+            $client = EmailClient::findOrFail($this->clientId);
 
-    } catch (\Exception $e) {
-        $this->notifyError('Failed to send reset password email: ' . $e->getMessage());
+            // Delete any existing reset tokens for this client
+            EmailClientPasswordReset::where('email_client_id', $client->id)->delete();
+
+            // Create and send the reset password email
+            $mail = new ResetPassword($client);
+
+            Mail::send($mail);
+
+            // Save the reset token
+            EmailClientPasswordReset::create([
+                'email_client_id' => $client->id,
+                'token' => $mail->resetToken,
+                'expires_at' => now()->addHours(24),
+            ]);
+
+            DB::commit();
+            $this->notifySuccess('Password reset email sent successfully to ' . $client->email);
+            $this->modal('sendResetPassword')->close();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            report($e); // Log the error
+            $this->notifyError('Failed to send reset password email. Please try again later.');
+        }
     }
-}
 
     public function render()
     {
