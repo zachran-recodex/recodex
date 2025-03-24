@@ -41,7 +41,7 @@ class ResetPassword extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.webmail.reset-password',
+            view: 'mail.webmail.reset-password',
             with: [
                 'resetToken' => $this->resetToken
             ]
