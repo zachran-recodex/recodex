@@ -1,7 +1,7 @@
 <x-mail::message>
-# Reset Your Email Client Password
+# Reset Your Email Password
 
-You are receiving this email because we received a password reset request for your email client account.
+You are receiving this email because we received a password reset request for your email account: {{ $emailClient->email }}
 
 <x-mail::button :url="$url">
 Reset Password

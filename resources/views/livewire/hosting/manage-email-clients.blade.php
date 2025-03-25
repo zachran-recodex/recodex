@@ -27,6 +27,7 @@
                     <flux:table.columns>
                         <flux:table.column>Email</flux:table.column>
                         <flux:table.column>Password</flux:table.column>
+                        <flux:table.column>Last Updated</flux:table.column>
                         <flux:table.column>Actions</flux:table.column>
                     </flux:table.columns>
 
@@ -53,6 +54,10 @@
                                     >
                                         {{ $client->password }}
                                     </button>
+                                </flux:table.cell>
+
+                                <flux:table.cell>
+                                    {{ $client->updated_at->format('d M Y H:i') }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
