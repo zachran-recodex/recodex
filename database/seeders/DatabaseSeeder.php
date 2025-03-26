@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             ServiceSeeder::class,
             WorkProcessSeeder::class,
+            ClientSeeder::class,
         ]);
     }
 }

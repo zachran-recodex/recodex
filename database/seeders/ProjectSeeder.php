@@ -13,44 +13,50 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get a random client or create one if none exists
-        $client = Client::inRandomOrder()->first() ?? Client::create([
-            'name' => 'Default Client',
-            'email' => 'client@example.com',
-            'phone' => '123456789',
-            'company' => 'Default Company',
-            'photo' => 'images/clients/default.jpg',
-        ]);
+        // Get all clients
+        $clients = Client::all();
+
+        if ($clients->isEmpty()) {
+            // Create a default client if none exists
+            $defaultClient = Client::create([
+                'name' => 'Default Client',
+                'email' => 'client@example.com',
+                'phone' => '123456789',
+                'company' => 'Default Company',
+                'photo' => 'images/clients/default.jpg',
+            ]);
+            $clients = collect([$defaultClient]);
+        }
 
         $projects = [
             [
-                'client_id' => $client->id,
+                'client_id' => $clients->where('name', 'Sagala Pro')->first()->id ?? $clients->first()->id,
                 'image' => 'images/projects/web_development.jpg',
-                'title' => 'Web Development',
+                'title' => 'Corporate Website Redesign',
                 'category' => 'Web Development',
-                'description' => 'PT Triwalana Sagala Pro',
+                'description' => 'Complete redesign of corporate website for PT Triwalana Sagala Pro with modern UI/UX and responsive design',
                 'project_date' => '2023-01-15',
                 'duration' => '3 months',
                 'cost' => 25000000,
                 'status' => 'completed',
             ],
             [
-                'client_id' => $client->id,
+                'client_id' => $clients->where('name', 'Alfa5 Aviation')->first()->id ?? $clients->first()->id,
                 'image' => 'images/projects/mobile_development.jpg',
-                'title' => 'Web Development',
+                'title' => 'Aviation Services Portal',
                 'category' => 'Web Development',
-                'description' => 'PT Alfalima Cakrawala Indonesia',
+                'description' => 'Development of comprehensive aviation services web portal for PT Alfalima Cakrawala Indonesia with booking system',
                 'project_date' => '2023-04-01',
                 'duration' => '4 months',
                 'cost' => 35000000,
                 'status' => 'in_progress',
             ],
             [
-                'client_id' => $client->id,
+                'client_id' => $clients->where('name', 'Private Jet Charter')->first()->id ?? $clients->first()->id,
                 'image' => 'images/projects/seo.jpg',
-                'title' => 'Web Development',
+                'title' => 'Charter Booking Platform',
                 'category' => 'Web Development',
-                'description' => 'Indonesian Conference on Religion and Peace',
+                'description' => 'Custom web application for PT Prioritas Jasa Cakti Indonesia featuring private jet booking and management system',
                 'project_date' => '2023-08-20',
                 'duration' => '2 months',
                 'cost' => 15000000,
