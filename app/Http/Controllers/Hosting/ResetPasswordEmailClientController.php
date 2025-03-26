@@ -41,7 +41,7 @@ class ResetPasswordEmailClientController extends Controller
             ->firstOrFail();
 
         $emailClient->update([
-            'password' => $request->password,
+            'password' => $request->password, // Simpan password dalam bentuk teks biasa
             'reset_token' => null,
             'reset_token_expires_at' => null,
         ]);
