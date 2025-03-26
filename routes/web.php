@@ -73,13 +73,16 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
             });
         });
 
-        Route::prefix('hosting')->name('hosting.')->group(function (){
+        Route::middleware(['can:manage hosting'])->group(function (){
 
-            Route::get('domain-clients', App\Livewire\Hosting\ManageDomainClients::class)
-                ->name('domain-clients');
+            Route::prefix('hosting')->name('hosting.')->group(function (){
 
-            Route::get('email-clients', App\Livewire\Hosting\ManageEmailClients::class)
-                ->name('email-clients');
+                Route::get('domain-clients', App\Livewire\Hosting\ManageDomainClients::class)
+                    ->name('domain-clients');
+
+                Route::get('email-clients', App\Livewire\Hosting\ManageEmailClients::class)
+                    ->name('email-clients');
+            });
         });
 
     });

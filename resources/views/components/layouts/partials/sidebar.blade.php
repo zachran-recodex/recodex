@@ -49,11 +49,13 @@
             </flux:navlist.group>
         @endcan
 
+        @can('manage hosting')
         <flux:navlist.group expandable expanded="false" heading="Hosting">
             <flux:navlist.item :href="route('dashboard.hosting.domain-clients')" :current="request()->routeIs('dashboard.hosting.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
 
             <flux:navlist.item :href="route('dashboard.hosting.email-clients')" :current="request()->routeIs('dashboard.hosting.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
         </flux:navlist.group>
+        @endcan
 
     </flux:navlist>
 </flux:sidebar>
