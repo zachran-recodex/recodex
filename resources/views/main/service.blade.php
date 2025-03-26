@@ -35,7 +35,7 @@
                         <!-- Breadcrumb Nav -->
                         <ul class="breadcrumb-nav">
                             <li>
-                                <a href="index.html">Home</a>
+                                <a href="{{ route('home') }}">Home</a>
                             </li>
                             <li>Our Services</li>
                         </ul>

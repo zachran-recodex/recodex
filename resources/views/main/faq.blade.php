@@ -35,7 +35,7 @@
                         <!-- Breadcrumb Nav -->
                         <ul class="breadcrumb-nav">
                             <li>
-                                <a href="index.html">Home</a>
+                                <a href="{{ route('home') }}">Home</a>
                             </li>
                             <li>FAQs</li>
                         </ul>
@@ -118,7 +118,7 @@
                 <!-- Accordion List -->
 
                 <div class="mt-10 flex justify-center md:mt-[60px] lg:mt-20">
-                    <a href="contact.html" class="btn-primary relative justify-start bg-black pr-20 text-white">
+                    <a href="{{ route('contact') }}" class="btn-primary relative justify-start bg-black pr-20 text-white">
                         Still, have any questions? Contact us
                         <span
                             class="absolute right-[5px] inline-flex h-[50px] w-[50px] items-center justify-center rounded-[50%] bg-colorLightLime"><img
