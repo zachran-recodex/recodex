@@ -16,7 +16,7 @@
         <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
 
         @if(auth()->user()->hasRole(['admin', 'super-admin']))
-            <flux:navlist.group expandable expanded="false" heading="Admin">
+            <flux:navlist.group expandable heading="Admin">
                 @can('manage users')
                     <flux:navlist.item icon="users" :href="route('dashboard.admin.user')" :current="request()->routeIs('dashboard.admin.user')" wire:navigate>User</flux:navlist.item>
                 @endcan
@@ -28,7 +28,7 @@
         @endif
 
         @can('manage cms')
-            <flux:navlist.group expandable expanded="false" heading="CMS">
+            <flux:navlist.group expandable heading="CMS">
                 <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.cms.services')" :current="request()->routeIs('dashboard.cms.services')" wire:navigate>Services</flux:navlist.item>
 
                 <flux:navlist.item icon="folder" :href="route('dashboard.cms.projects')" :current="request()->routeIs('dashboard.cms.projects')" wire:navigate>Projects</flux:navlist.item>
@@ -50,14 +50,14 @@
         @endcan
 
         @can('manage hosting')
-        <flux:navlist.group expandable expanded="false" heading="Hosting">
+        <flux:navlist.group expandable heading="Hosting">
             <flux:navlist.item :href="route('dashboard.hosting.domain-clients')" :current="request()->routeIs('dashboard.hosting.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
 
             <flux:navlist.item :href="route('dashboard.hosting.email-clients')" :current="request()->routeIs('dashboard.hosting.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
         </flux:navlist.group>
         @endcan
 
-        <flux:navlist.group expandable expanded="false" heading="Project">
+        <flux:navlist.group expandable heading="Project">
             <flux:navlist.item :href="route('dashboard.project.index')" :current="request()->routeIs('dashboard.project.index')" wire:navigate>Overview</flux:navlist.item>
         </flux:navlist.group>
 
