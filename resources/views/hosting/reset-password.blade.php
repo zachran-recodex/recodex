@@ -113,7 +113,17 @@
                 },
 
                 shuffleString(str) {
-                    return str.split('').sort(() => Math.random() - 0.5).join('');
+                    // Konversi string ke array
+                    const array = str.split('');
+                    
+                    // Algoritma shuffle Fisher-Yates
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                    
+                    // Kembalikan array ke string
+                    return array.join('');
                 },
 
                 checkPasswordStrength() {

@@ -41,7 +41,7 @@ class ResetPasswordEmailClientController extends Controller
             ->firstOrFail();
 
         $emailClient->update([
-            'password' => $request->password,
+            'password' => bcrypt($request->password), // Use bcrypt for secure hashing
             'reset_token' => null,
             'reset_token_expires_at' => null,
         ]);
@@ -56,18 +56,16 @@ class ResetPasswordEmailClientController extends Controller
      */
     private function generateStrongPassword(): string
     {
-        // Generate a password with:
-        // - Minimum 16 characters
-        // - At least one lowercase letter
-        // - At least one uppercase letter
-        // - At least one number
-        // - At least one special character
         $lowercase = Str::random(4);
-        $uppercase = Str::of($lowercase)->upper();
-        $numbers = Str::random(2) . rand(10, 99);
+        $uppercase = strtoupper($lowercase);
+        $numbers = rand(10, 99);
         $specialChars = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
         $specialChar = $specialChars[array_rand($specialChars)];
 
-        return Str::shuffle($lowercase . $uppercase . $numbers . $specialChar);
+        // Manual shuffle
+        $password = $lowercase . $uppercase . $numbers . $specialChar;
+        $passwordArray = str_split($password);
+        shuffle($passwordArray);
+        return implode('', $passwordArray);
     }
 }
