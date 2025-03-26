@@ -13,7 +13,7 @@ class ManageClients extends Component
 {
     use WithPagination, WithNotification, WithFileUploads;
 
-    public $clientId;
+    public $client_id;
     public $name;
     public $email;
     public $phone;
@@ -54,7 +54,7 @@ class ManageClients extends Component
 
         if ($client) {
             $this->isEditing = true;
-            $this->clientId = $id;
+            $this->client_id = $id;
             $this->name = $client->name;
             $this->email = $client->email;
             $this->phone = $client->phone;
@@ -67,13 +67,13 @@ class ManageClients extends Component
 
     public function confirmDelete($id)
     {
-        $this->clientId = $id;
+        $this->client_id = $id;
         $this->modal('delete')->show();
     }
 
     public function delete()
     {
-        $client = Client::findOrFail($this->clientId);
+        $client = Client::findOrFail($this->client_id);
 
         if ($client) {
             $client->delete();
@@ -84,7 +84,7 @@ class ManageClients extends Component
 
     public function resetForm()
     {
-        $this->reset(['clientId', 'name', 'email', 'phone', 'company', 'photo', 'newPhoto']);
+        $this->reset(['client_id', 'name', 'email', 'phone', 'company', 'photo', 'newPhoto']);
         $this->resetValidation();
     }
 
@@ -100,7 +100,7 @@ class ManageClients extends Component
             }
 
             if ($this->isEditing) {
-                $client = Client::findOrFail($this->clientId);
+                $client = Client::findOrFail($this->client_id);
                 $client->update([
                     'name' => $this->name,
                     'email' => $this->email,
