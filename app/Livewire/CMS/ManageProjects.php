@@ -97,7 +97,7 @@ class ManageProjects extends Component
 
     public function resetForm()
     {
-        $this->reset(['projectId', 'title', 'description', 'image', 'newImage', 'project_date', 'duration', 'cost', 'category', 'status']);
+        $this->reset(['projectId', 'client_id', 'title', 'description', 'image', 'newImage', 'project_date', 'duration', 'cost', 'category', 'status']);
         $this->resetValidation();
     }
 
@@ -113,6 +113,7 @@ class ManageProjects extends Component
             }
 
             $projectData = [
+                'client_id' => $this->client_id,
                 'title' => $this->title,
                 'description' => $this->description,
                 'image' => $this->newImage ? $imagePath : $this->image,
