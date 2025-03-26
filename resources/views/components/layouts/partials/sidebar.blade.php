@@ -57,5 +57,9 @@
         </flux:navlist.group>
         @endcan
 
+        <flux:navlist.group expandable expanded="false" heading="Project">
+            <flux:navlist.item :href="route('dashboard.project.index')" :current="request()->routeIs('dashboard.project.index')" wire:navigate>Overview</flux:navlist.item>
+        </flux:navlist.group>
+
     </flux:navlist>
 </flux:sidebar>

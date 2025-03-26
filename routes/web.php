@@ -3,6 +3,7 @@
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Hosting\ResetPasswordEmailClientController;
 
 Route::controller(MainController::class)->group(function () {
@@ -83,6 +84,12 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 Route::get('email-clients', App\Livewire\Hosting\ManageEmailClients::class)
                     ->name('email-clients');
             });
+        });
+
+        Route::prefix('project')->name('project.')->group(function (){
+
+            Route::get('/', [ProjectController::class, 'index'])
+                ->name('index');
         });
 
     });
