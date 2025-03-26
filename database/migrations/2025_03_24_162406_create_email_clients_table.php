@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('reset_token')->nullable();
             $table->timestamp('reset_token_expires_at')->nullable();
+            $table->timestamp('password_updated_at')->nullable();
             $table->timestamps();
         });
     }

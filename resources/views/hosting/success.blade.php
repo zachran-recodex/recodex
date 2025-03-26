@@ -1,5 +1,5 @@
 <x-layouts.auth>
-    <div class="mb-4 text-sm text-gray-600">
+    <div class="mb-4 text-sm text-center text-zinc-600 dark:text-zinc-200">
         Your password has been reset successfully.
     </div>
 

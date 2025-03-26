@@ -1,12 +1,12 @@
 <x-layouts.auth>
-    <div class="mb-4 text-sm text-gray-600">
+    <div class="mb-4 text-sm text-center text-zinc-600 dark:text-zinc-200">
         Please enter your new password to complete the password reset process.
     </div>
 
-    <form 
-        method="POST" 
-        action="{{ route('hosting.update-password', $token) }}" 
-        class="flex flex-col gap-6" 
+    <form
+        method="POST"
+        action="{{ route('hosting.update-password', $token) }}"
+        class="flex flex-col gap-6"
         x-data="passwordManager"
     >
         @csrf
@@ -30,7 +30,7 @@
             <!-- Password Strength Indicator -->
             <div class="mt-2">
                 <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                    <div 
+                    <div
                         class="h-full transition-all duration-300 ease-in-out"
                         :class="{
                             'bg-red-500': strengthLevel < 2,
@@ -40,7 +40,7 @@
                         :style="{ width: strengthPercentage + '%' }"
                     ></div>
                 </div>
-                <p 
+                <p
                     class="mt-1 text-sm"
                     :class="{
                         'text-red-500': strengthLevel < 2,
@@ -54,8 +54,8 @@
 
             <!-- Generate Password Button -->
             <div class="mt-2">
-                <button 
-                    type="button" 
+                <button
+                    type="button"
                     @click="generatePassword"
                     class="text-sm text-blue-600 hover:underline"
                 >
@@ -115,13 +115,13 @@
                 shuffleString(str) {
                     // Konversi string ke array
                     const array = str.split('');
-                    
+
                     // Algoritma shuffle Fisher-Yates
                     for (let i = array.length - 1; i > 0; i--) {
                         const j = Math.floor(Math.random() * (i + 1));
                         [array[i], array[j]] = [array[j], array[i]];
                     }
-                    
+
                     // Kembalikan array ke string
                     return array.join('');
                 },

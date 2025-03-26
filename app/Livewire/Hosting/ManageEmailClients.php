@@ -102,6 +102,7 @@ class ManageEmailClients extends Component
 
                 if ($this->password) {
                     $data['password'] = $this->password;
+                    $data['password_updated_at'] = now();
                 }
 
                 $client->update($data);
@@ -111,6 +112,7 @@ class ManageEmailClients extends Component
                     'domain_client_id' => $this->domain_client_id,
                     'email' => $fullEmail,
                     'password' => $this->password,
+                    'password_updated_at' => now(),
                 ]);
 
                 $this->notifySuccess('Email client created successfully.');

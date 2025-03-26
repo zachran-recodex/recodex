@@ -25,8 +25,8 @@ class ResetPasswordEmailClientController extends Controller
     {
         $request->validate([
             'password' => [
-                'required', 
-                'string', 
+                'required',
+                'string',
                 'min:12', // Increased minimum length
                 'confirmed',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/' // Strong password regex
@@ -41,9 +41,10 @@ class ResetPasswordEmailClientController extends Controller
             ->firstOrFail();
 
         $emailClient->update([
-            'password' => $request->password, // Simpan password dalam bentuk teks biasa
+            'password' => $request->password,
             'reset_token' => null,
             'reset_token_expires_at' => null,
+            'password_updated_at' => now(),
         ]);
 
         return view('hosting.success');
@@ -51,7 +52,7 @@ class ResetPasswordEmailClientController extends Controller
 
     /**
      * Generate a strong, random password
-     * 
+     *
      * @return string
      */
     private function generateStrongPassword(): string

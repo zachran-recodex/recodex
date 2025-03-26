@@ -12,10 +12,12 @@ class EmailClient extends Model
         'password',
         'reset_token',
         'reset_token_expires_at',
+        'password_updated_at',
     ];
 
     protected $casts = [
         'reset_token_expires_at' => 'datetime',
+        'password_updated_at' => 'datetime',
     ];
 
     public function domainClient()

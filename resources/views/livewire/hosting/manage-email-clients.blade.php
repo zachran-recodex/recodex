@@ -27,7 +27,7 @@
                     <flux:table.columns>
                         <flux:table.column>Email</flux:table.column>
                         <flux:table.column>Password</flux:table.column>
-                        <flux:table.column>Last Updated</flux:table.column>
+                        <flux:table.column>Password Updated At</flux:table.column>
                         <flux:table.column>Actions</flux:table.column>
                     </flux:table.columns>
 
@@ -57,7 +57,11 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $client->updated_at->format('d M Y H:i') }}
+                                    @if($client->password_updated_at)
+                                        {{ $client->password_updated_at->format('d M Y H:i') }}
+                                    @else
+                                        <span class="text-gray-400">Never updated</span>
+                                    @endif
                                 </flux:table.cell>
 
                                 <flux:table.cell>
@@ -77,7 +81,7 @@
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="3" class="text-center">
+                                <flux:table.cell colspan="4" class="text-center">
                                     <div class="flex flex-col items-center justify-center">
                                         <flux:icon.envelope class="size-12 mb-2" />
                                         <flux:heading size="lg">No email clients found</flux:heading>
