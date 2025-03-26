@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->string('image')->nullable();
             $table->string('title');
+            $table->string('category')->nullable();
             $table->text('description');
             $table->date('project_date');
             $table->string('duration');
-            $table->decimal('cost', 10, 2);
+            $table->decimal('cost', 15, 2);
+            $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled', 'on_hold']);
             $table->timestamps();
         });
     }

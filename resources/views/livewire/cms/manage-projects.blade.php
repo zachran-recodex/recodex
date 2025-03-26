@@ -25,11 +25,12 @@
             <div class="overflow-x-auto">
                 <flux:table hover striped>
                     <flux:table.columns>
-                        <flux:table.column>Image</flux:table.column>
-                        <flux:table.column>Title</flux:table.column>
+                        <flux:table.column>Client</flux:table.column>
+                        <flux:table.column>Project Name</flux:table.column>
+                        <flux:table.column>Category</flux:table.column>
                         <flux:table.column>Date</flux:table.column>
-                        <flux:table.column>Duration</flux:table.column>
                         <flux:table.column>Cost</flux:table.column>
+                        <flux:table.column>Status</flux:table.column>
                         <flux:table.column>Actions</flux:table.column>
                     </flux:table.columns>
 
@@ -37,16 +38,15 @@
                         @forelse ($projects as $project)
                             <flux:table.row>
                                 <flux:table.cell>
-                                    <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" class="w-16 h-16 object-cover rounded">
+                                    {{ $project->client->name }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    <div>
-                                        <div class="font-medium">{{ $project->title }}</div>
-                                        <div class="text-sm text-gray-500">
-                                            {{ Str::limit($project->description, 50) }}
-                                        </div>
-                                    </div>
+                                    {{ $project->title }}
+                                </flux:table.cell>
+
+                                <flux:table.cell>
+                                    {{ $project->category }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
@@ -54,11 +54,20 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $project->duration }}
+                                    ${{ number_format($project->cost, 2) }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    ${{ number_format($project->cost, 2) }}
+                                    <flux:badge variant="solid" :color="match($project->status) {
+                                        'pending' => 'yellow',
+                                        'in_progress' => 'blue',
+                                        'completed' => 'green',
+                                        'cancelled' => 'red',
+                                        'on_hold' => 'orange',
+                                        default => 'gray'
+                                    }">
+                                        {{ str_replace('_', ' ', ucfirst($project->status)) }}
+                                    </flux:badge>
                                 </flux:table.cell>
 
                                 <flux:table.cell>
@@ -75,7 +84,7 @@
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="6" class="text-center">
+                                <flux:table.cell colspan="7" class="text-center">
                                     <div class="flex flex-col items-center justify-center">
                                         <flux:icon.folder class="size-12 mb-2" />
                                         <flux:heading size="lg">No projects found</flux:heading>
@@ -104,6 +113,18 @@
                 <form wire:submit.prevent="save" class="flex flex-col space-y-6">
                     <flux:fieldset>
                         <div class="space-y-6">
+                            <flux:select
+                                label="Client"
+                                wire:model="client_id"
+                                placeholder="Select client"
+                            >
+                                @foreach($clients as $client)
+                                    <flux:select.option value="{{ $client->id }}">
+                                        {{ $client->name }}
+                                    </flux:select.option>
+                                @endforeach
+                            </flux:select>
+
                             <flux:field>
                                 <flux:label>Image</flux:label>
                                 @if ($newImage)
@@ -119,6 +140,12 @@
                                 label="Title"
                                 wire:model="title"
                                 placeholder="Enter project title"
+                            />
+
+                            <flux:input
+                                label="Category"
+                                wire:model="category"
+                                placeholder="Enter project category"
                             />
 
                             <flux:textarea
@@ -147,6 +174,18 @@
                                 placeholder="Enter project cost"
                                 step="0.01"
                             />
+
+                            <flux:select
+                                label="Status"
+                                wire:model="status"
+                                placeholder="Select status"
+                            >
+                                @foreach(App\Models\Project::getStatusList() as $statusValue)
+                                    <flux:select.option value="{{ $statusValue }}">
+                                        {{ str_replace('_', ' ', ucfirst($statusValue)) }}
+                                    </flux:select.option>
+                                @endforeach
+                            </flux:select>
                         </div>
                     </flux:fieldset>
 

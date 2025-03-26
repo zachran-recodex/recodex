@@ -36,7 +36,7 @@
                         </div>
 
                         <flux:heading size="xl" class="font-bold!">
-                            Rp 12.000.000,-
+                            Rp {{ number_format($totalRevenue, 0, ',', '.') }},-
                         </flux:heading>
 
                         <div class="flex justify-between items-end">
@@ -70,7 +70,7 @@
                         </div>
 
                         <flux:heading size="xl" class="font-bold!">
-                            10
+                            {{ $totalProjects }}
                         </flux:heading>
 
                         <div class="flex justify-between items-end">
@@ -104,7 +104,7 @@
                         </div>
 
                         <flux:heading size="xl" class="font-bold!">
-                            5
+                            {{ $ongoingProjects }}
                         </flux:heading>
 
                         <div class="flex justify-between items-end">
@@ -138,7 +138,7 @@
                         </div>
 
                         <flux:heading size="xl" class="font-bold!">
-                            20
+                            {{ $totalClients }}
                         </flux:heading>
 
                         <div class="flex justify-between items-end">
@@ -194,7 +194,7 @@
                                 @forelse ($projects as $project)
                                     <flux:table.row>
                                         <flux:table.cell>
-                                            Nanang
+                                            {{ $project->client->name }}
                                         </flux:table.cell>
 
                                         <flux:table.cell>
@@ -202,12 +202,19 @@
                                         </flux:table.cell>
 
                                         <flux:table.cell>
-                                            {{ $project->duration }}
+                                            {{ $project->project_date->format('d M Y') }}
                                         </flux:table.cell>
 
                                         <flux:table.cell>
-                                            <flux:badge color="green" variant="solid">
-                                                Completed
+                                            <flux:badge variant="solid" :color="match($project->status) {
+                                                'pending' => 'yellow',
+                                                'in_progress' => 'blue',
+                                                'completed' => 'green',
+                                                'cancelled' => 'red',
+                                                'on_hold' => 'orange',
+                                                default => 'gray'
+                                            }">
+                                                {{ str_replace('_', ' ', ucfirst($project->status)) }}
                                             </flux:badge>
                                         </flux:table.cell>
                                     </flux:table.row>
@@ -266,12 +273,17 @@
                                     labels: ['Revenue (Millions)', 'Total Projects', 'Ongoing Projects', 'Total Clients'],
                                     datasets: [{
                                         label: 'Current Statistics',
-                                        data: [12, 10, 5, 20],
+                                        data: [
+                                            {{ $totalRevenue / 1000000 }}, // Convert to millions
+                                            {{ $totalProjects }},
+                                            {{ $ongoingProjects }},
+                                            {{ $totalClients }}
+                                        ],
                                         backgroundColor: [
-                                            'rgb(232, 121, 249)', // fuchsia for revenue
-                                            'rgb(249, 115, 22)',  // orange for total projects
-                                            'rgb(34, 197, 94)',   // green for ongoing
-                                            'rgb(59, 130, 246)'   // blue for clients
+                                            'rgb(232, 121, 249)',
+                                            'rgb(249, 115, 22)',
+                                            'rgb(34, 197, 94)',
+                                            'rgb(59, 130, 246)'
                                         ],
                                         borderColor: [
                                             'rgb(232, 121, 249)',

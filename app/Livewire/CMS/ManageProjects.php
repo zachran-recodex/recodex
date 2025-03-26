@@ -2,6 +2,7 @@
 
 namespace App\Livewire\CMS;
 
+use App\Models\Client;
 use App\Models\Project;
 use Livewire\Component;
 use App\WithNotification;
@@ -13,6 +14,7 @@ class ManageProjects extends Component
 {
     use WithPagination, WithNotification, WithFileUploads;
 
+    public $client_id;
     public $projectId;
     public $title;
     public $description;
@@ -21,6 +23,8 @@ class ManageProjects extends Component
     public $project_date;
     public $duration;
     public $cost;
+    public $category;
+    public $status;
 
     public $isEditing = false;
     public $searchTerm = '';
@@ -28,13 +32,16 @@ class ManageProjects extends Component
     protected function rules()
     {
         return [
+            'client_id' => 'required|exists:clients,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'image' => $this->isEditing ? 'nullable|string' : 'required|string',
             'newImage' => $this->isEditing ? 'nullable|image|max:1024' : 'required|image|max:1024',
             'project_date' => 'required|date',
             'duration' => 'required|string|max:255',
-            'cost' => 'required|numeric|min:0'
+            'cost' => 'required|numeric|min:0',
+            'category' => 'required|string|max:255',
+            'status' => 'required|string|in:' . implode(',', Project::getStatusList())
         ];
     }
 
@@ -56,6 +63,7 @@ class ManageProjects extends Component
 
         if ($project) {
             $this->isEditing = true;
+            $this->client_id = $project->client_id;
             $this->projectId = $id;
             $this->title = $project->title;
             $this->description = $project->description;
@@ -63,6 +71,8 @@ class ManageProjects extends Component
             $this->project_date = $project->project_date->format('Y-m-d');
             $this->duration = $project->duration;
             $this->cost = $project->cost;
+            $this->category = $project->category;
+            $this->status = $project->status;
 
             $this->modal('form')->show();
         }
@@ -87,7 +97,7 @@ class ManageProjects extends Component
 
     public function resetForm()
     {
-        $this->reset(['projectId', 'title', 'description', 'image', 'newImage', 'project_date', 'duration', 'cost']);
+        $this->reset(['projectId', 'title', 'description', 'image', 'newImage', 'project_date', 'duration', 'cost', 'category', 'status']);
         $this->resetValidation();
     }
 
@@ -102,27 +112,24 @@ class ManageProjects extends Component
                 $imagePath = $this->newImage->store('projects', 'public');
             }
 
+            $projectData = [
+                'title' => $this->title,
+                'description' => $this->description,
+                'image' => $this->newImage ? $imagePath : $this->image,
+                'project_date' => $this->project_date,
+                'duration' => $this->duration,
+                'cost' => $this->cost,
+                'category' => $this->category,
+                'status' => $this->status,
+            ];
+
             if ($this->isEditing) {
                 $project = Project::findOrFail($this->projectId);
-                $project->update([
-                    'title' => $this->title,
-                    'description' => $this->description,
-                    'image' => $this->newImage ? $imagePath : $this->image,
-                    'project_date' => $this->project_date,
-                    'duration' => $this->duration,
-                    'cost' => $this->cost,
-                ]);
+                $project->update($projectData);
 
                 $this->notifySuccess('Project updated successfully.');
             } else {
-                Project::create([
-                    'title' => $this->title,
-                    'description' => $this->description,
-                    'image' => $imagePath,
-                    'project_date' => $this->project_date,
-                    'duration' => $this->duration,
-                    'cost' => $this->cost,
-                ]);
+                Project::create($projectData);
 
                 $this->notifySuccess('Project created successfully.');
             }
@@ -139,15 +146,19 @@ class ManageProjects extends Component
 
     public function render()
     {
-        $projects = Project::when($this->searchTerm, function($query) {
+        $projects = Project::with('client')
+            ->when($this->searchTerm, function($query) {
                 $query->where('title', 'like', '%' . $this->searchTerm . '%')
                     ->orWhere('description', 'like', '%' . $this->searchTerm . '%');
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+        $clients = Client::all();
+
         return view('livewire.cms.manage-projects', [
-            'projects' => $projects
+            'projects' => $projects,
+            'clients' => $clients
         ]);
     }
 }

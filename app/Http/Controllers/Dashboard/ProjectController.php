@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProjectController extends Controller
 {
@@ -13,9 +14,21 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::paginate(10);
+        $projects = Project::with('client')->paginate(10);
 
-        return view('dashboard.project.index', compact('projects'));
+        // Get statistics
+        $totalRevenue = Project::sum('cost');
+        $totalProjects = Project::count();
+        $ongoingProjects = Project::where('status', 'in_progress')->count();
+        $totalClients = Client::count();
+
+        return view('dashboard.project.index', compact(
+            'projects',
+            'totalRevenue',
+            'totalProjects',
+            'ongoingProjects',
+            'totalClients'
+        ));
     }
 
     /**
