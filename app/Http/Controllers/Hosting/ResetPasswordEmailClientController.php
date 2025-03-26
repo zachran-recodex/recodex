@@ -41,7 +41,7 @@ class ResetPasswordEmailClientController extends Controller
             ->firstOrFail();
 
         $emailClient->update([
-            'password' => bcrypt($request->password), // Use bcrypt for secure hashing
+            'password' => $request->password,
             'reset_token' => null,
             'reset_token_expires_at' => null,
         ]);
