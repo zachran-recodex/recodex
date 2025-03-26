@@ -43,16 +43,16 @@
 
                 <flux:navlist.item icon="cog" :href="route('dashboard.cms.work-processes')" :current="request()->routeIs('dashboard.cms.work-processes')" wire:navigate>Work Processes</flux:navlist.item>
 
-                <flux:navlist.item icon="cog" :href="route('dashboard.cms.about')" :current="request()->routeIs('dashboard.cms.about')" wire:navigate>About</flux:navlist.item>
+                <flux:navlist.item icon="document-text" :href="route('dashboard.cms.about')" :current="request()->routeIs('dashboard.cms.about')" wire:navigate>About</flux:navlist.item>
 
-                <flux:navlist.item icon="cog" :href="route('dashboard.cms.hero')" :current="request()->routeIs('dashboard.cms.hero')" wire:navigate>Hero</flux:navlist.item>
+                <flux:navlist.item icon="tv" :href="route('dashboard.cms.hero')" :current="request()->routeIs('dashboard.cms.hero')" wire:navigate>Hero</flux:navlist.item>
             </flux:navlist.group>
         @endcan
 
         <flux:navlist.group expandable expanded="false" heading="Hosting">
-            <flux:navlist.item icon="cog" :href="route('dashboard.hosting.domain-clients')" :current="request()->routeIs('dashboard.hosting.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
+            <flux:navlist.item :href="route('dashboard.hosting.domain-clients')" :current="request()->routeIs('dashboard.hosting.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
 
-            <flux:navlist.item icon="cog" :href="route('dashboard.hosting.email-clients')" :current="request()->routeIs('dashboard.hosting.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
+            <flux:navlist.item :href="route('dashboard.hosting.email-clients')" :current="request()->routeIs('dashboard.hosting.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
         </flux:navlist.group>
 
     </flux:navlist>
