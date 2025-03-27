@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\CMS;
+namespace App\Livewire\Project;
 
 use App\Models\Client;
 use App\Models\Project;
@@ -35,7 +35,7 @@ class ManageProjects extends Component
             'client_id' => 'required|exists:clients,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => $this->isEditing ? 'nullable|string' : 'required|string',
+            'image' => $this->isEditing ? 'nullable|string' : 'nullable|string',
             'newImage' => $this->isEditing ? 'nullable|image|max:1024' : 'required|image|max:1024',
             'project_date' => 'required|date',
             'duration' => 'required|string|max:255',
@@ -43,6 +43,12 @@ class ManageProjects extends Component
             'category' => 'required|string|max:255',
             'status' => 'required|string|in:' . implode(',', Project::getStatusList())
         ];
+    }
+
+    public function mount()
+    {
+        $this->client_id = Client::first()->id;
+        $this->status = Project::STATUS_PENDING;
     }
 
     public function updated($propertyName)
@@ -54,6 +60,9 @@ class ManageProjects extends Component
     {
         $this->resetForm();
         $this->isEditing = false;
+        // Set default values
+        $this->client_id = Client::first()->id;
+        $this->status = Project::STATUS_PENDING;
         $this->modal('form')->show();
     }
 
@@ -157,7 +166,7 @@ class ManageProjects extends Component
 
         $clients = Client::all();
 
-        return view('livewire.cms.manage-projects', [
+        return view('livewire.project.manage-projects', [
             'projects' => $projects,
             'clients' => $clients
         ]);

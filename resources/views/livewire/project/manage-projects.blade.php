@@ -5,7 +5,7 @@
 
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">CMS</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('dashboard.project.overview') }}" separator="slash">Project</flux:breadcrumbs.item>
             <flux:breadcrumbs.item separator="slash">Manage Projects</flux:breadcrumbs.item>
         </flux:breadcrumbs>
     </div>

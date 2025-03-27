@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\CMS;
+namespace App\Livewire\Project;
 
 use App\Models\Client;
 use Livewire\Component;
@@ -31,8 +31,8 @@ class ManageClients extends Component
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'company' => 'required|string|max:255',
-            'photo' => $this->isEditing ? 'nullable|string' : 'required|string',
-            'newPhoto' => $this->isEditing ? 'nullable|image|max:1024' : 'required|image|max:1024',
+            'photo' => $this->isEditing ? 'nullable' : 'nullable',
+            'newPhoto' => $this->isEditing ? 'nullable|image|max:1024' : 'nullable|image|max:1024',
         ];
     }
 
@@ -95,12 +95,13 @@ class ManageClients extends Component
         try {
             DB::beginTransaction();
 
+            $photoPath = null;
             if ($this->newPhoto) {
                 $photoPath = $this->newPhoto->store('clients', 'public');
             }
 
             if ($this->isEditing) {
-                $client = Client::findOrFail($this->client_id);
+                $client = Client::findOrFail($this->clientId);
                 $client->update([
                     'name' => $this->name,
                     'email' => $this->email,
@@ -116,7 +117,7 @@ class ManageClients extends Component
                     'email' => $this->email,
                     'phone' => $this->phone,
                     'company' => $this->company,
-                    'photo' => $photoPath,
+                    'photo' => $photoPath ?? 'clients/default.png', // Provide a default photo path
                 ]);
 
                 $this->notifySuccess('Client created successfully.');
@@ -142,7 +143,7 @@ class ManageClients extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.cms.manage-clients', [
+        return view('livewire.project.manage-clients', [
             'clients' => $clients
         ]);
     }

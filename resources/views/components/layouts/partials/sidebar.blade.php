@@ -31,11 +31,7 @@
             <flux:navlist.group expandable heading="CMS">
                 <flux:navlist.item icon="wrench-screwdriver" :href="route('dashboard.cms.services')" :current="request()->routeIs('dashboard.cms.services')" wire:navigate>Services</flux:navlist.item>
 
-                <flux:navlist.item icon="folder" :href="route('dashboard.cms.projects')" :current="request()->routeIs('dashboard.cms.projects')" wire:navigate>Projects</flux:navlist.item>
-
                 <flux:navlist.item icon="newspaper" :href="route('dashboard.cms.blogs')" :current="request()->routeIs('dashboard.cms.blogs')" wire:navigate>Blogs</flux:navlist.item>
-
-                <flux:navlist.item icon="users" :href="route('dashboard.cms.clients')" :current="request()->routeIs('dashboard.cms.clients')" wire:navigate>Clients</flux:navlist.item>
 
                 <flux:navlist.item icon="calculator" :href="route('dashboard.cms.counters')" :current="request()->routeIs('dashboard.cms.counters')" wire:navigate>Counters</flux:navlist.item>
 
@@ -58,7 +54,11 @@
         @endcan
 
         <flux:navlist.group expandable heading="Project">
-            <flux:navlist.item :href="route('dashboard.project.index')" :current="request()->routeIs('dashboard.project.index')" wire:navigate>Overview</flux:navlist.item>
+            <flux:navlist.item :href="route('dashboard.project.overview')" :current="request()->routeIs('dashboard.project.index')" wire:navigate>Overview</flux:navlist.item>
+
+            <flux:navlist.item icon="folder" :href="route('dashboard.project.projects')" :current="request()->routeIs('dashboard.project.projects')" wire:navigate>Projects</flux:navlist.item>
+            <flux:navlist.item icon="users" :href="route('dashboard.project.clients')" :current="request()->routeIs('dashboard.project.clients')" wire:navigate>Clients</flux:navlist.item>
+
         </flux:navlist.group>
 
     </flux:navlist>

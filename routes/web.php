@@ -47,14 +47,8 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
                 Route::get('manage-services', App\Livewire\CMS\ManageServices::class)
                     ->name('services');
 
-                Route::get('manage-projects', App\Livewire\CMS\ManageProjects::class)
-                    ->name('projects');
-
                 Route::get('manage-blogs', App\Livewire\CMS\ManageBlogs::class)
                     ->name('blogs');
-
-                Route::get('manage-clients', App\Livewire\CMS\ManageClients::class)
-                    ->name('clients');
 
                 Route::get('manage-counters', App\Livewire\CMS\ManageCounters::class)
                     ->name('counters');
@@ -88,8 +82,14 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
         Route::prefix('project')->name('project.')->group(function (){
 
-            Route::get('/', [ProjectController::class, 'index'])
-                ->name('index');
+            Route::get('/', App\Livewire\Project\Overview::class)
+                ->name('overview');
+
+            Route::get('manage-projects', App\Livewire\Project\ManageProjects::class)
+                ->name('projects');
+
+            Route::get('manage-clients', App\Livewire\Project\ManageClients::class)
+                ->name('clients');
         });
 
     });
