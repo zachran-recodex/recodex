@@ -101,7 +101,7 @@ class ManageClients extends Component
             }
 
             if ($this->isEditing) {
-                $client = Client::findOrFail($this->clientId);
+                $client = Client::findOrFail($this->client_id);
                 $client->update([
                     'name' => $this->name,
                     'email' => $this->email,
