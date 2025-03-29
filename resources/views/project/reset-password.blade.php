@@ -5,7 +5,7 @@
 
     <form
         method="POST"
-        action="{{ route('hosting.update-password', $token) }}"
+        action="{{ route('project.update-password', $token) }}"
         class="flex flex-col gap-6"
         x-data="passwordManager"
     >

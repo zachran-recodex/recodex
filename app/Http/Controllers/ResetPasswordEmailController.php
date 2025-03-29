@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Hosting;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Hosting\EmailClient;
+use App\Models\Email;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 
-class ResetPasswordEmailClientController extends Controller
+class ResetPasswordEmailController extends Controller
 {
     public function reset(string $token)
     {
-        $emailClient = EmailClient::where('reset_token', $token)
+        $email = Email::where('reset_token', $token)
             ->where('reset_token_expires_at', '>', now())
             ->firstOrFail();
 
         // Generate a strong password suggestion
         $suggestedPassword = $this->generateStrongPassword();
 
-        return view('hosting.reset-password', compact('token', 'suggestedPassword'));
+        return view('project.reset-password', compact('token', 'suggestedPassword'));
     }
 
     public function update(Request $request, string $token)
@@ -36,18 +36,18 @@ class ResetPasswordEmailClientController extends Controller
             'password.regex' => 'Password must include lowercase, uppercase, number, and special character.',
         ]);
 
-        $emailClient = EmailClient::where('reset_token', $token)
+        $email = Email::where('reset_token', $token)
             ->where('reset_token_expires_at', '>', now())
             ->firstOrFail();
 
-        $emailClient->update([
+        $email->update([
             'password' => $request->password,
             'reset_token' => null,
             'reset_token_expires_at' => null,
             'password_updated_at' => now(),
         ]);
 
-        return view('hosting.success');
+        return view('project.success');
     }
 
     /**

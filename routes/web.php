@@ -3,8 +3,7 @@
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\Dashboard\ProjectController;
-use App\Http\Controllers\Hosting\ResetPasswordEmailClientController;
+use App\Http\Controllers\ResetPasswordEmailController;
 
 Route::controller(MainController::class)->group(function () {
 
@@ -18,10 +17,10 @@ Route::controller(MainController::class)->group(function () {
 
 });
 
-Route::get('hosting/reset-password/{token}', [ResetPasswordEmailClientController::class, 'reset'])
-    ->name('hosting.reset-password');
-Route::post('hosting/reset-password/{token}', [ResetPasswordEmailClientController::class, 'update'])
-    ->name('hosting.update-password');
+Route::get('project/reset-password/{token}', [ResetPasswordEmailController::class, 'reset'])
+    ->name('project.reset-password');
+Route::post('project/reset-password/{token}', [ResetPasswordEmailController::class, 'update'])
+    ->name('project.update-password');
 
 Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
@@ -67,19 +66,7 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
             });
         });
-
-        Route::middleware(['can:manage hosting'])->group(function (){
-
-            Route::prefix('hosting')->name('hosting.')->group(function (){
-
-                Route::get('domain-clients', App\Livewire\Hosting\ManageDomainClients::class)
-                    ->name('domain-clients');
-
-                Route::get('email-clients', App\Livewire\Hosting\ManageEmailClients::class)
-                    ->name('email-clients');
-            });
-        });
-
+        
         Route::prefix('project')->name('project.')->group(function (){
 
             Route::get('/', App\Livewire\Project\Overview::class)
@@ -90,6 +77,12 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
             Route::get('manage-clients', App\Livewire\Project\ManageClients::class)
                 ->name('clients');
+
+            Route::get('manage-domains', App\Livewire\Project\ManageDomains::class)
+                ->name('domains');
+
+            Route::get('manage-emails', App\Livewire\Project\ManageEmails::class)
+                ->name('emails');
         });
 
     });

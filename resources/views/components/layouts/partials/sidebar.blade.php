@@ -45,19 +45,12 @@
             </flux:navlist.group>
         @endcan
 
-        @can('manage hosting')
-        <flux:navlist.group expandable heading="Hosting">
-            <flux:navlist.item :href="route('dashboard.hosting.domain-clients')" :current="request()->routeIs('dashboard.hosting.domain-clients')" wire:navigate>Domain Clients</flux:navlist.item>
-
-            <flux:navlist.item :href="route('dashboard.hosting.email-clients')" :current="request()->routeIs('dashboard.hosting.email-clients')" wire:navigate>Email Clients</flux:navlist.item>
-        </flux:navlist.group>
-        @endcan
-
         <flux:navlist.group expandable heading="Project">
             <flux:navlist.item :href="route('dashboard.project.overview')" :current="request()->routeIs('dashboard.project.index')" wire:navigate>Overview</flux:navlist.item>
             <flux:navlist.item :href="route('dashboard.project.clients')" :current="request()->routeIs('dashboard.project.clients')" wire:navigate>Clients</flux:navlist.item>
             <flux:navlist.item :href="route('dashboard.project.domains')" :current="request()->routeIs('dashboard.project.domains')" wire:navigate>Domains</flux:navlist.item>
             <flux:navlist.item :href="route('dashboard.project.projects')" :current="request()->routeIs('dashboard.project.projects')" wire:navigate>Projects</flux:navlist.item>
+            <flux:navlist.item :href="route('dashboard.project.emails')" :current="request()->routeIs('dashboard.project.emails')" wire:navigate>Emails</flux:navlist.item>
         </flux:navlist.group>
 
     </flux:navlist>
