@@ -17,10 +17,9 @@ class DatabaseSeeder extends Seeder
             CounterSeeder::class,
             FAQSeeder::class,
             HeroSeeder::class,
-            ProjectSeeder::class,
             ServiceSeeder::class,
             WorkProcessSeeder::class,
-            ClientSeeder::class,
+            ProjectSeeder::class,
         ]);
     }
 }

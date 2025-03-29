@@ -2,73 +2,90 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\Client;
+use App\Models\Domain;
+use App\Models\Project;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ProjectSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Get all clients
-        $clients = Client::all();
-
-        if ($clients->isEmpty()) {
-            // Create a default client if none exists
-            $defaultClient = Client::create([
-                'name' => 'Default Client',
-                'email' => 'client@example.com',
-                'phone' => '123456789',
-                'company' => 'Default Company',
-                'photo' => 'images/clients/default.jpg',
-            ]);
-            $clients = collect([$defaultClient]);
-        }
-
-        $projects = [
+        // Create Clients
+        $clients = [
             [
-                'client_id' => $clients->where('name', 'Sagala Pro')->first()->id ?? $clients->first()->id,
-                'image' => 'images/projects/web_development.jpg',
-                'title' => 'Corporate Website Redesign',
-                'category' => 'Web Development',
-                'description' => 'Complete redesign of corporate website for PT Triwalana Sagala Pro with modern UI/UX and responsive design',
-                'project_date' => '2023-01-15',
-                'duration' => '3 months',
-                'cost' => 25000000,
-                'status' => 'completed',
+                'name' => 'Acme Corporation',
+                'email' => 'contact@acme.com',
+                'phone' => '(555) 123-4567',
+                'company' => 'Acme Corp',
+                'logo' => 'acme-logo.png'
             ],
             [
-                'client_id' => $clients->where('name', 'Alfa5 Aviation')->first()->id ?? $clients->first()->id,
-                'image' => 'images/projects/mobile_development.jpg',
-                'title' => 'Aviation Services Portal',
-                'category' => 'Web Development',
-                'description' => 'Development of comprehensive aviation services web portal for PT Alfalima Cakrawala Indonesia with booking system',
-                'project_date' => '2023-04-01',
-                'duration' => '4 months',
-                'cost' => 35000000,
-                'status' => 'in_progress',
-            ],
-            [
-                'client_id' => $clients->where('name', 'Private Jet Charter')->first()->id ?? $clients->first()->id,
-                'image' => 'images/projects/seo.jpg',
-                'title' => 'Charter Booking Platform',
-                'category' => 'Web Development',
-                'description' => 'Custom web application for PT Prioritas Jasa Cakti Indonesia featuring private jet booking and management system',
-                'project_date' => '2023-08-20',
-                'duration' => '2 months',
-                'cost' => 15000000,
-                'status' => 'pending',
+                'name' => 'Tech Solutions',
+                'email' => 'info@techsolutions.com',
+                'phone' => '(555) 987-6543',
+                'company' => 'Tech Solutions Inc',
+                'logo' => 'tech-logo.png'
             ],
         ];
 
-        foreach ($projects as $project) {
-            DB::table('projects')->insert(array_merge($project, [
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]));
+        foreach ($clients as $clientData) {
+            $client = Client::create($clientData);
+
+            // Create Domains for each client
+            $domain = Domain::create([
+                'client_id' => $client->id,
+                'name' => str_replace('contact@', '', $client->email),
+                'registration_date' => Carbon::now()->subYears(rand(1, 3)),
+                'expiration_date' => Carbon::now()->addYears(rand(1, 2)),
+            ]);
+
+            // Create Emails for each domain
+            $emails = [
+                [
+                    'email' => 'admin@' . $domain->name,
+                    'password' => bcrypt('password123'),
+                    'password_updated_at' => Carbon::now(),
+                ],
+                [
+                    'email' => 'support@' . $domain->name,
+                    'password' => bcrypt('password123'),
+                    'password_updated_at' => Carbon::now(),
+                ],
+            ];
+
+            foreach ($emails as $emailData) {
+                $domain->emails()->create($emailData);
+            }
+
+            // Create Projects for each client
+            $projects = [
+                [
+                    'title' => 'Website Redesign',
+                    'category' => 'Web Development',
+                    'description' => 'Complete website overhaul and modernization',
+                    'image' => 'website-redesign.jpg',
+                    'start_date' => Carbon::now()->subMonths(2),
+                    'end_date' => Carbon::now()->addMonths(4),
+                    'cost' => rand(5000, 15000),
+                    'status' => Project::STATUS_IN_PROGRESS,
+                ],
+                [
+                    'title' => 'Mobile App Development',
+                    'category' => 'Mobile Development',
+                    'description' => 'Native mobile application development',
+                    'image' => 'mobile-app.jpg',
+                    'start_date' => Carbon::now()->addMonth(),
+                    'end_date' => Carbon::now()->addMonths(6),
+                    'cost' => rand(10000, 25000),
+                    'status' => Project::STATUS_PENDING,
+                ],
+            ];
+
+            foreach ($projects as $projectData) {
+                $client->projects()->create($projectData);
+            }
         }
     }
 }
