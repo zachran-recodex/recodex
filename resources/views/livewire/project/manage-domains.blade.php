@@ -88,34 +88,38 @@
                 <form wire:submit.prevent="save">
                     <flux:fieldset>
                         <div class="space-y-6">
-                            <flux:field>
-                                <flux:label>Client</flux:label>
-                                <flux:select wire:model="client_id">
-                                    <option value="">Select Client</option>
-                                    @foreach($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                    @endforeach
-                                </flux:select>
-                                <flux:error name="client_id" />
-                            </flux:field>
 
-                            <flux:field>
-                                <flux:label>Name</flux:label>
-                                <flux:input wire:model="name" />
-                                <flux:error name="name" />
-                            </flux:field>
+                            <div class="grid grid-cols-2 gap-6">
 
-                            <flux:field>
-                                <flux:label>Registration Date</flux:label>
-                                <flux:input type="date" wire:model="registration_date" />
-                                <flux:error name="registration_date" />
-                            </flux:field>
+                                <flux:field>
+                                    <flux:label>Client</flux:label>
+                                    <flux:select wire:model="client_id">
+                                        <option value="">Select Client</option>
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </flux:select>
+                                    <flux:error name="client_id" />
+                                </flux:field>
 
-                            <flux:field>
-                                <flux:label>Expiration Date</flux:label>
-                                <flux:input type="date" wire:model="expiration_date" />
-                                <flux:error name="expiration_date" />
-                            </flux:field>
+                                <flux:field>
+                                    <flux:label>Name</flux:label>
+                                    <flux:input wire:model="name" />
+                                    <flux:error name="name" />
+                                </flux:field>
+
+                                <flux:field>
+                                    <flux:label>Registration Date</flux:label>
+                                    <flux:input type="date" wire:model="registration_date" />
+                                    <flux:error name="registration_date" />
+                                </flux:field>
+
+                                <flux:field>
+                                    <flux:label>Expiration Date</flux:label>
+                                    <flux:input type="date" wire:model="expiration_date" />
+                                    <flux:error name="expiration_date" />
+                                </flux:field>
+                            </div>
 
                             <div class="flex">
                                 <flux:spacer />
