@@ -39,11 +39,11 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $domain->registration_date ? $domain->registration_date->format('Y-m-d') : '-' }}
+                                    {{ $domain->registration_date ? $domain->registration_date->format('d F Y') : '-' }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $domain->expiration_date ? $domain->expiration_date->format('Y-m-d') : '-' }}
+                                    {{ $domain->expiration_date ? $domain->expiration_date->format('d F Y') : '-' }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
@@ -117,9 +117,12 @@
                                 <flux:error name="expiration_date" />
                             </flux:field>
 
-                            <flux:button type="submit" variant="primary" class="w-fit">
-                                {{ $isEditing ? 'Update' : 'Create' }}
-                            </flux:button>
+                            <div class="flex">
+                                <flux:spacer />
+                                <flux:button type="submit" variant="primary" class="w-fit">
+                                    {{ $isEditing ? 'Update' : 'Create' }}
+                                </flux:button>
+                            </div>
                         </div>
                     </flux:fieldset>
                 </form>
