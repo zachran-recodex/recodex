@@ -55,10 +55,9 @@
 
         <flux:navlist.group expandable heading="Project">
             <flux:navlist.item :href="route('dashboard.project.overview')" :current="request()->routeIs('dashboard.project.index')" wire:navigate>Overview</flux:navlist.item>
-
-            <flux:navlist.item icon="folder" :href="route('dashboard.project.projects')" :current="request()->routeIs('dashboard.project.projects')" wire:navigate>Projects</flux:navlist.item>
-            <flux:navlist.item icon="users" :href="route('dashboard.project.clients')" :current="request()->routeIs('dashboard.project.clients')" wire:navigate>Clients</flux:navlist.item>
-
+            <flux:navlist.item :href="route('dashboard.project.clients')" :current="request()->routeIs('dashboard.project.clients')" wire:navigate>Clients</flux:navlist.item>
+            <flux:navlist.item :href="route('dashboard.project.domains')" :current="request()->routeIs('dashboard.project.domains')" wire:navigate>Domains</flux:navlist.item>
+            <flux:navlist.item :href="route('dashboard.project.projects')" :current="request()->routeIs('dashboard.project.projects')" wire:navigate>Projects</flux:navlist.item>
         </flux:navlist.group>
 
     </flux:navlist>
