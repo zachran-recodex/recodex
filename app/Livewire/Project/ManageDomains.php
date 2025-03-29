@@ -70,8 +70,8 @@ class ManageDomains extends Component
         $this->client_id = $domain->client_id;
         $this->domain_id = $id;
         $this->name = $domain->name;
-        $this->registration_date = $domain->registration_date->format('Y-m-d');
-        $this->expiration_date = $domain->expiration_date->format('Y-m-d');
+        $this->registration_date = $domain->registration_date;
+        $this->expiration_date = $domain->expiration_date;
 
         $this->modal('form')->show();
     }
