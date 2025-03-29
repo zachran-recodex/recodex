@@ -115,7 +115,7 @@ class ManageClients extends Component
     public function delete(): void
     {
         $client = Client::findOrFail($this->client_id);
-        $client->delete(); // Using soft delete now
+        $client->delete();
         $this->notifySuccess('Client deleted successfully');
         $this->modal('delete')->close();
     }
