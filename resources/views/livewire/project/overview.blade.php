@@ -2,7 +2,7 @@
     <!-- Page Header -->
     <div class="sm:flex sm:items-center sm:justify-between">
         <div>
-            <flux:heading size="xl" class="font-bold!">Hello {{ auth()->user()->name }}! 🙌🏻</flux:heading>
+            <flux:heading size="xl" class="font-bold!">Hello {{ auth()->user()->name }}!</flux:heading>
             <flux:subheading class="mt-2">
                 Welcome to Dashboard Projects
             </flux:subheading>
@@ -201,7 +201,7 @@
                                     </flux:table.cell>
 
                                     <flux:table.cell>
-                                        {{ $project->project_date->format('d M Y') }}
+                                        {{ $project->end_date->format('d M Y') }}
                                     </flux:table.cell>
 
                                     <flux:table.cell>
