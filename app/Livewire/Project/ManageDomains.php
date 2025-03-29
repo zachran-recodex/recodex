@@ -32,8 +32,8 @@ class ManageDomains extends Component
         return [
             'client_id' => 'required|exists:clients,id',
             'name' => 'required|string|max:255',
-            'registration_date' => 'required|date',
-            'expiration_date' => 'required|date|after:registration_date',
+            'registration_date' => 'nullable|date',
+            'expiration_date' => 'nullable|date|after:registration_date',
         ];
     }
 
@@ -70,8 +70,8 @@ class ManageDomains extends Component
         $this->client_id = $domain->client_id;
         $this->domain_id = $id;
         $this->name = $domain->name;
-        $this->registration_date = $domain->registration_date;
-        $this->expiration_date = $domain->expiration_date;
+        $this->registration_date = $domain->registration_date ? $domain->registration_date->format('Y-m-d') : null;
+        $this->expiration_date = $domain->expiration_date ? $domain->expiration_date->format('Y-m-d') : null;
 
         $this->modal('form')->show();
     }
