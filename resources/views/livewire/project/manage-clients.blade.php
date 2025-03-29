@@ -45,10 +45,10 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    <div class="">
+                                    <div class="space-y-2">
                                         <flux:heading class="font-semibold">{{ $client->name }}</flux:heading>
                                         @if($client->domain)
-                                            <flux:text class="mt-2">
+                                            <flux:text>
                                                 <flux:link href="https://{{ $client->domain->name }}" target="_blank">{{ $client->domain->name }}</flux:link>
                                             </flux:text>
                                         @endif
