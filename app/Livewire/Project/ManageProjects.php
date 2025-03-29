@@ -25,7 +25,6 @@ class ManageProjects extends Component
     public $newImage;
     public $start_date;
     public $end_date;
-    public $duration;
     public $cost;
     public $status;
 
@@ -90,7 +89,6 @@ class ManageProjects extends Component
         $this->image = $project->image;
         $this->start_date = $project->start_date;
         $this->end_date = $project->end_date;
-        $this->duration = $project->duration;
         $this->cost = $project->cost;
         $this->status = $project->status;
 

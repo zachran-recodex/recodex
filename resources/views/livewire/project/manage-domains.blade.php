@@ -15,7 +15,7 @@
             <flux:heading size="lg">List Domain</flux:heading>
 
             <flux:modal.trigger name="form">
-                <flux:button type="button" variant="primary" class="w-fit" icon="plus">
+                <flux:button type="button" variant="primary" class="w-fit" icon="plus" wire:click="create">
                     Add New
                 </flux:button>
             </flux:modal.trigger>
