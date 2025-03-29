@@ -5,99 +5,172 @@ namespace App\Livewire\Project;
 use App\Models\Client;
 use Livewire\Component;
 use App\WithNotification;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ManageClients extends Component
 {
     use WithPagination, WithNotification, WithFileUploads;
 
     public $client_id;
-    public $name;
-    public $email;
-    public $phone;
-    public $company;
-    public $photo;
-    public $newPhoto;
+    public $name = '';
+    public $email = '';
+    public $phone = '';
+    public $company = '';
+    public $logo;
+    public $newLogo;
+    public $domain = '';
 
     public $isEditing = false;
-    public $searchTerm = '';
+    public $clientToDelete = '';
 
-    protected function rules()
+    /**
+     * Validation rules for client form.
+     *
+     * @return array
+     */
+    protected function rules(): array
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|unique:clients,email,' . ($this->client_id ?? 'NULL'),
             'phone' => 'required|string|max:20',
             'company' => 'required|string|max:255',
-            'photo' => $this->isEditing ? 'nullable' : 'nullable',
-            'newPhoto' => $this->isEditing ? 'nullable|image|max:1024' : 'nullable|image|max:1024',
+            'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'domain' => 'required|string|max:255|regex:/^[\w\-\.]+\.[a-zA-Z]{2,}$/|unique:domains,name,' . ($this->client_id ? $this->getDomainId() : 'NULL')
         ];
     }
 
-    public function updated($propertyName)
+    /**
+     * Get the domain ID for unique validation
+     *
+     * @return int|null
+     */
+    protected function getDomainId(): ?int
+    {
+        $client = Client::find($this->client_id);
+        return $client && $client->domain ? $client->domain->id : null;
+    }
+
+    /**
+     * Validate only the changed property.
+     *
+     * @param string $propertyName
+     */
+    public function updated(string $propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
-    public function create()
+    /**
+     * Prepare for creating a new client.
+     */
+    public function create(): void
     {
         $this->resetForm();
         $this->isEditing = false;
         $this->modal('form')->show();
     }
 
-    public function edit($id)
+    /**
+     * Prepare for editing an existing client.
+     *
+     * @param int $id
+     */
+    public function edit(int $id): void
     {
         $client = Client::findOrFail($id);
 
-        if ($client) {
-            $this->isEditing = true;
-            $this->client_id = $id;
-            $this->name = $client->name;
-            $this->email = $client->email;
-            $this->phone = $client->phone;
-            $this->company = $client->company;
-            $this->photo = $client->photo;
+        $this->isEditing = true;
+        $this->client_id = $id;
+        $this->name = $client->name;
+        $this->email = $client->email;
+        $this->phone = $client->phone;
+        $this->company = $client->company;
+        $this->logo = $client->logo;
+        $this->domain = $client->domain?->name ?? '';
 
-            $this->modal('form')->show();
-        }
+        $this->modal('form')->show();
     }
 
-    public function confirmDelete($id)
+    /**
+     * Confirm deletion of a client.
+     *
+     * @param int $id
+     */
+    public function confirmDelete(int $id): void
     {
+        $client = Client::findOrFail($id);
         $this->client_id = $id;
+        $this->clientToDelete = $client->name;
         $this->modal('delete')->show();
     }
 
-    public function delete()
+    /**
+     * Delete the selected client.
+     */
+    public function delete(): void
     {
         $client = Client::findOrFail($this->client_id);
-
-        if ($client) {
-            $client->delete();
-            $this->notifySuccess('Client deleted successfully');
-            $this->modal('delete')->close();
-        }
+        $client->delete(); // Using soft delete now
+        $this->notifySuccess('Client deleted successfully');
+        $this->modal('delete')->close();
     }
 
-    public function resetForm()
+    /**
+     * Reset form to initial state.
+     */
+    public function resetForm(): void
     {
-        $this->reset(['client_id', 'name', 'email', 'phone', 'company', 'photo', 'newPhoto']);
+        $this->reset([
+            'client_id',
+            'name',
+            'email',
+            'phone',
+            'company',
+            'logo',
+            'newLogo',
+            'isEditing',
+            'clientToDelete',
+            'domain'
+        ]);
         $this->resetValidation();
     }
 
-    public function save()
+    /**
+     * Handle modal close event
+     */
+    public function closeModal(): void
+    {
+        $this->resetForm();
+        $this->isEditing = false;
+        $this->clientToDelete = '';
+    }
+
+    /**
+     * Save or update client.
+     */
+    public function save(): void
     {
         $this->validate();
 
         try {
             DB::beginTransaction();
 
-            $photoPath = null;
-            if ($this->newPhoto) {
-                $photoPath = $this->newPhoto->store('clients', 'public');
+            $logoPath = $this->logo;
+            if ($this->newLogo) {
+                // Delete old logo if exists
+                if ($logoPath && Storage::disk('public')->exists($logoPath)) {
+                    Storage::disk('public')->delete($logoPath);
+                }
+
+                // Create a safe filename
+                $filename = Str::slug($this->name) . '-' . time() . '.' . $this->newLogo->getClientOriginalExtension();
+                $logoPath = $this->newLogo->storeAs('clients', $filename, 'public');
             }
 
             if ($this->isEditing) {
@@ -107,17 +180,28 @@ class ManageClients extends Component
                     'email' => $this->email,
                     'phone' => $this->phone,
                     'company' => $this->company,
-                    'photo' => $this->newPhoto ? $photoPath : $this->photo,
+                    'logo' => $logoPath,
                 ]);
+
+                // Check if domain exists before updating
+                if ($client->domain) {
+                    $client->domain->update(['name' => $this->domain]);
+                } else {
+                    $client->domain()->create(['name' => $this->domain]);
+                }
 
                 $this->notifySuccess('Client updated successfully.');
             } else {
-                Client::create([
+                $client = Client::create([
                     'name' => $this->name,
                     'email' => $this->email,
                     'phone' => $this->phone,
                     'company' => $this->company,
-                    'photo' => $photoPath ?? 'clients/default.png', // Provide a default photo path
+                    'logo' => $logoPath,
+                ]);
+
+                $client->domain()->create([
+                    'name' => $this->domain
                 ]);
 
                 $this->notifySuccess('Client created successfully.');
@@ -133,14 +217,14 @@ class ManageClients extends Component
         }
     }
 
+    /**
+     * Render the Livewire component.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function render()
     {
-        $clients = Client::when($this->searchTerm, function($query) {
-                $query->where('name', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('company', 'like', '%' . $this->searchTerm . '%');
-            })
-            ->orderBy('created_at', 'desc')
+        $clients = Client::orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('livewire.project.manage-clients', [
