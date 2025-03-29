@@ -6,140 +6,205 @@ use App\Models\Client;
 use App\Models\Project;
 use Livewire\Component;
 use App\WithNotification;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ManageProjects extends Component
 {
     use WithPagination, WithNotification, WithFileUploads;
 
     public $client_id;
-    public $projectId;
-    public $title;
-    public $description;
+    public $project_id;
+    public $title = '';
+    public $category = '';
+    public $description = '';
     public $image;
     public $newImage;
-    public $project_date;
+    public $start_date;
+    public $end_date;
     public $duration;
     public $cost;
-    public $category;
     public $status;
 
-    public $isEditing = false;
-    public $searchTerm = '';
+    public bool $isEditing = false;
+    public $projectToDelete = '';
 
-    protected function rules()
+    /**
+     * Validation rules for project form.
+     *
+     * @return array
+     */
+    protected function rules(): array
     {
         return [
             'client_id' => 'required|exists:clients,id',
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => $this->isEditing ? 'nullable|string' : 'nullable|string',
-            'newImage' => $this->isEditing ? 'nullable|image|max:1024' : 'required|image|max:1024',
-            'project_date' => 'required|date',
-            'duration' => 'required|string|max:255',
-            'cost' => 'required|numeric|min:0',
             'category' => 'required|string|max:255',
-            'status' => 'required|string|in:' . implode(',', Project::getStatusList())
+            'description' => 'required|string',
+            'newImage' => 'nullable|image|max:1024',
+            'start_date' => 'required|date',
+            'end_date' => 'nullablle|date|after:start_date',
+            'cost' => 'required|numeric|min:0',
+            'status' => 'required|in:' . implode(',', Project::getStatusList()),
         ];
     }
 
-    public function mount()
-    {
-        $this->client_id = Client::first()->id;
-        $this->status = Project::STATUS_PENDING;
-    }
-
-    public function updated($propertyName)
+    /**
+     * Validate only the changed property.
+     *
+     * @param string $propertyName
+     */
+    public function updated(string $propertyName): void
     {
         $this->validateOnly($propertyName);
     }
 
-    public function create()
+    /**
+     * Prepare for creating a new project.
+     */
+    public function create(): void
     {
         $this->resetForm();
         $this->isEditing = false;
-        // Set default values
-        $this->client_id = Client::first()->id;
-        $this->status = Project::STATUS_PENDING;
         $this->modal('form')->show();
     }
 
-    public function edit($id)
+    /**
+     * Prepare for editing an existing project.
+     *
+     * @param int $id
+     */
+    public function edit(int $id): void
     {
         $project = Project::findOrFail($id);
 
-        if ($project) {
-            $this->isEditing = true;
-            $this->client_id = $project->client_id;
-            $this->projectId = $id;
-            $this->title = $project->title;
-            $this->description = $project->description;
-            $this->image = $project->image;
-            $this->project_date = $project->project_date->format('Y-m-d');
-            $this->duration = $project->duration;
-            $this->cost = $project->cost;
-            $this->category = $project->category;
-            $this->status = $project->status;
+        $this->isEditing = true;
+        $this->client_id = $project->client_id;
+        $this->project_id = $id;
+        $this->title = $project->title;
+        $this->category = $project->category;
+        $this->description = $project->description;
+        $this->image = $project->image;
+        $this->start_date = $project->start_date;
+        $this->end_date = $project->end_date;
+        $this->duration = $project->duration;
+        $this->cost = $project->cost;
+        $this->status = $project->status;
 
-            $this->modal('form')->show();
-        }
+        $this->modal('form')->show();
     }
 
-    public function confirmDelete($id)
+    /**
+     * Confirm deletion of a project.
+     *
+     * @param int $id
+     */
+    public function confirmDelete(int $id): void
     {
-        $this->projectId = $id;
+        $project = Project::findOrFail($id);
+        $this->project_id = $id;
+        $this->projectToDelete = $project->title;
         $this->modal('delete')->show();
     }
 
-    public function delete()
+    /**
+     * Delete the selected project.
+     */
+    public function delete(): void
     {
-        $project = Project::findOrFail($this->projectId);
-
-        if ($project) {
-            $project->delete();
-            $this->notifySuccess('Project deleted successfully');
-            $this->modal('delete')->close();
-        }
+        $project = Project::findOrFail($this->project_id);
+        $project->delete();
+        $this->notifySuccess('Project deleted successfully');
+        $this->modal('delete')->close();
     }
 
-    public function resetForm()
+    /**
+     * Reset form to initial state.
+     */
+    public function resetForm(): void
     {
-        $this->reset(['projectId', 'client_id', 'title', 'description', 'image', 'newImage', 'project_date', 'duration', 'cost', 'category', 'status']);
+        $this->reset([
+            'client_id',
+            'project_id',
+            'title',
+            'category',
+            'description',
+            'image',
+            'newImage',
+            'start_date',
+            'end_date',
+            'duration',
+            'cost',
+            'status',
+            'isEditing',
+            'projectToDelete',
+        ]);
         $this->resetValidation();
     }
 
-    public function save()
+    /**
+     * Handle modal close event
+     */
+    public function closeModal(): void
+    {
+        $this->resetForm();
+        $this->isEditing = false;
+        $this->projectToDelete = '';
+    }
+
+    /**
+     * Save or update project.
+     */
+    public function save(): void
     {
         $this->validate();
 
         try {
             DB::beginTransaction();
 
+            $imagePath = $this->image;
             if ($this->newImage) {
-                $imagePath = $this->newImage->store('projects', 'public');
+                // Delete old image if exists
+                if ($imagePath && Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                }
+
+                // Create a safe filename
+                $filename = Str::slug($this->title) . '-' . time() . '.' . $this->newImage->getClientOriginalExtension();
+                $imagePath = $this->newImage->storeAs('projects', $filename, 'public');
             }
 
-            $projectData = [
-                'client_id' => $this->client_id,
-                'title' => $this->title,
-                'description' => $this->description,
-                'image' => $this->newImage ? $imagePath : $this->image,
-                'project_date' => $this->project_date,
-                'duration' => $this->duration,
-                'cost' => $this->cost,
-                'category' => $this->category,
-                'status' => $this->status,
-            ];
-
             if ($this->isEditing) {
-                $project = Project::findOrFail($this->projectId);
-                $project->update($projectData);
+                $project = Project::findOrFail($this->project_id);
+                $project->update([
+                    'title' => $this->title,
+                    'category' => $this->category,
+                    'description' => $this->description,
+                    'image' => $imagePath,
+                    'start_date' => $this->start_date,
+                    'end_date' => $this->end_date,
+                    'duration' => $this->duration,
+                    'cost' => $this->cost,
+                    'status' => $this->status,
+                ]);
 
                 $this->notifySuccess('Project updated successfully.');
             } else {
-                Project::create($projectData);
+                $project = Project::create([
+                    'client_id' => $this->client_id,
+                    'title' => $this->title,
+                    'category' => $this->category,
+                    'description' => $this->description,
+                    'image' => $imagePath,
+                    'start_date' => $this->start_date,
+                    'end_date' => $this->end_date,
+                    'duration' => $this->duration,
+                    'cost' => $this->cost,
+                    'status' => $this->status,
+                ]);
 
                 $this->notifySuccess('Project created successfully.');
             }
@@ -154,21 +219,19 @@ class ManageProjects extends Component
         }
     }
 
+    /**
+     * Render the Livewire component.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function render()
     {
-        $projects = Project::with('client')
-            ->when($this->searchTerm, function($query) {
-                $query->where('title', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('description', 'like', '%' . $this->searchTerm . '%');
-            })
-            ->orderBy('created_at', 'desc')
+        $projects = Project::orderBy('created_at', 'desc')
             ->paginate(10);
-
-        $clients = Client::all();
 
         return view('livewire.project.manage-projects', [
             'projects' => $projects,
-            'clients' => $clients
+            'clients' => Client::orderBy('name')->get()
         ]);
     }
 }

@@ -12,7 +12,7 @@
 
     <flux:card>
         <flux:card.header class="flex justify-between items-center">
-            <flux:input class="w-64!" icon="magnifying-glass" wire:model.live.debounce.300ms="searchTerm" placeholder="Search projects..." />
+            <flux:heading size="lg">List Project</flux:heading>
 
             <flux:modal.trigger name="form">
                 <flux:button type="button" variant="primary" class="w-fit" icon="plus">
@@ -25,10 +25,9 @@
             <div class="overflow-x-auto">
                 <flux:table hover striped>
                     <flux:table.columns>
-                        <flux:table.column>Client</flux:table.column>
                         <flux:table.column>Project Name</flux:table.column>
+                        <flux:table.column>Duration</flux:table.column>
                         <flux:table.column>Category</flux:table.column>
-                        <flux:table.column>Date</flux:table.column>
                         <flux:table.column>Cost</flux:table.column>
                         <flux:table.column>Status</flux:table.column>
                         <flux:table.column>Actions</flux:table.column>
@@ -37,12 +36,18 @@
                     <flux:table.rows>
                         @forelse ($projects as $project)
                             <flux:table.row>
+
                                 <flux:table.cell>
-                                    {{ $project->client->name }}
+                                    <div class="space-y-2">
+                                        <flux:heading class="font-semibold">{{ $project->client->name }}</flux:heading>
+                                        <flux:text class="mt-2">
+                                            {{ $project->title }}
+                                        </flux:text>
+                                    </div>
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $project->title }}
+                                    {{ $project->duration }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
@@ -50,11 +55,7 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    {{ $project->project_date->format('d M Y') }}
-                                </flux:table.cell>
-
-                                <flux:table.cell>
-                                    ${{ number_format($project->cost, 2) }}
+                                    Rp {{ number_format($project->cost) }}
                                 </flux:table.cell>
 
                                 <flux:table.cell>
@@ -84,9 +85,8 @@
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="7" class="text-center">
+                                <flux:table.cell colspan="6" class="text-center">
                                     <div class="flex flex-col items-center justify-center">
-                                        <flux:icon.folder class="size-12 mb-2" />
                                         <flux:heading size="lg">No projects found</flux:heading>
                                         <flux:subheading>
                                             Start by creating a new project.
@@ -104,113 +104,134 @@
             {{ $projects->links() }}
         </flux:card.footer>
 
-        <flux:modal name="form" class="w-7xl">
+        <flux:modal name="form" class="min-w-4xl" x-on:hidden="$wire.closeModal()">
             <div class="space-y-6">
                 <flux:heading size="lg" class="font-semibold mb-6">
                     {{ $isEditing ? 'Edit Project' : 'Add New Project' }}
                 </flux:heading>
 
-                <form wire:submit.prevent="save" class="flex flex-col space-y-6">
+                <form wire:submit.prevent="save">
                     <flux:fieldset>
                         <div class="space-y-6">
-                            <flux:select
-                                label="Client"
-                                wire:model="client_id"
-                                placeholder="Select client"
-                            >
-                                @foreach($clients as $client)
-                                    <flux:select.option value="{{ $client->id }}">
-                                        {{ $client->name }}
-                                    </flux:select.option>
-                                @endforeach
-                            </flux:select>
+
+                            <flux:field>
+                                <flux:label>Client</flux:label>
+                                <flux:select wire:model="client_id">
+                                    <option value="">Select Client</option>
+                                    @foreach($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
+                                </flux:select>
+                                <flux:error name="client_id" />
+                            </flux:field>
 
                             <flux:field>
                                 <flux:label>Image</flux:label>
                                 @if ($newImage)
-                                    <img src="{{ $newImage->temporaryUrl() }}" alt="Preview" class="h-32 w-auto object-cover rounded">
-                                @elseif ($image && !$newImage)
-                                    <img src="{{ Storage::url($image) }}" alt="Current Image" class="h-32 w-auto object-cover rounded">
+                                    <img
+                                        src="{{ $newImage->temporaryUrl() }}"
+                                        alt="Preview"
+                                        class="h-32 w-32 object-cover rounded-lg"
+                                    >
+                                @elseif ($image)
+                                    <img
+                                        src="{{ Storage::disk('public')->url($image) }}"
+                                        alt="Current Image"
+                                        class="h-32 w-32 object-cover rounded-lg"
+                                    >
                                 @endif
-                                <flux:input type="file" wire:model="newImage" accept="image/*" />
+                                <flux:input
+                                    type="file"
+                                    wire:model="newImage"
+                                    accept="image/jpeg,image/png,image/jpg,image/gif"
+                                />
+                                <flux:description>Max size: 2MB. Formats: JPEG, PNG, GIF</flux:description>
                                 <flux:error name="newImage" />
                             </flux:field>
 
-                            <flux:input
-                                label="Title"
-                                wire:model="title"
-                                placeholder="Enter project title"
-                            />
+                            <div class="grid grid-cols-2 gap-6 items-start">
+                                <flux:field>
+                                    <flux:label>Title</flux:label>
+                                    <flux:input wire:model="title" />
+                                    <flux:error name="title" />
+                                </flux:field>
 
-                            <flux:input
-                                label="Category"
-                                wire:model="category"
-                                placeholder="Enter project category"
-                            />
+                                <flux:field>
+                                    <flux:label>Category</flux:label>
+                                    <flux:input wire:model="category" />
+                                    <flux:error name="category" />
+                                </flux:field>
+                            </div>
 
-                            <flux:textarea
-                                label="Description"
-                                wire:model="description"
-                                placeholder="Enter project description"
-                                rows="4"
-                            />
+                            <flux:field>
+                                <flux:label>Description</flux:label>
+                                <flux:textarea wire:model="description" rows="4" />
+                                <flux:error name="description" />
+                            </flux:field>
 
-                            <flux:input
-                                type="date"
-                                label="Project Date"
-                                wire:model="project_date"
-                            />
+                            <div class="grid grid-cols-2 gap-6 items-start">
+                                <flux:field>
+                                    <flux:label>Start Date</flux:label>
+                                    <flux:input type="date" wire:model="start_date" />
+                                    <flux:error name="start_date" />
+                                </flux:field>
 
-                            <flux:input
-                                label="Duration"
-                                wire:model="duration"
-                                placeholder="e.g., 3 months, 1 year"
-                            />
+                                <flux:field>
+                                    <flux:label>End Date</flux:label>
+                                    <flux:input type="date" wire:model="end_date" />
+                                    <flux:error name="end_date" />
+                                </flux:field>
 
-                            <flux:input
-                                type="number"
-                                label="Cost"
-                                wire:model="cost"
-                                placeholder="Enter project cost"
-                                step="0.01"
-                            />
+                                <flux:field>
+                                    <flux:label>Duration</flux:label>
+                                    <flux:input wire:model="duration" placeholder="e.g., 3 months, 1 year" />
+                                    <flux:error name="duration" />
+                                </flux:field>
 
-                            <flux:select
-                                label="Status"
-                                wire:model="status"
-                                placeholder="Select status"
-                            >
-                                @foreach(App\Models\Project::getStatusList() as $statusValue)
-                                    <flux:select.option value="{{ $statusValue }}">
-                                        {{ str_replace('_', ' ', ucfirst($statusValue)) }}
-                                    </flux:select.option>
-                                @endforeach
-                            </flux:select>
+                                <flux:field>
+                                    <flux:label>Cost</flux:label>
+                                    <flux:input type="number" wire:model="cost" step="0.01" />
+                                    <flux:error name="cost" />
+                                </flux:field>
+                            </div>
+
+                            <flux:field>
+                                <flux:label>Status</flux:label>
+                                <flux:select wire:model="status">
+                                    <option value="">Select Status</option>
+                                    @foreach(App\Models\Project::getStatusList() as $statusValue)
+                                        <option value="{{ $statusValue }}">
+                                            {{ str_replace('_', ' ', ucfirst($statusValue)) }}
+                                        </option>
+                                    @endforeach
+                                </flux:select>
+                                <flux:error name="status" />
+                            </flux:field>
+
+                            <div class="flex">
+                                <flux:spacer />
+                                <flux:button type="submit" variant="primary" class="w-fit">
+                                    {{ $isEditing ? 'Update' : 'Create' }}
+                                </flux:button>
+                            </div>
                         </div>
                     </flux:fieldset>
-
-                    <div class="flex">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary" class="w-fit">
-                            {{ $isEditing ? 'Update' : 'Create' }}
-                        </flux:button>
-                    </div>
                 </form>
             </div>
         </flux:modal>
 
-        <flux:modal name="delete" class="min-w-[22rem]">
+        <flux:modal name="delete" class="min-w-sm" x-on:hidden="$wire.closeModal()">
             <div class="space-y-6">
                 <div>
-                    <flux:heading size="lg">Delete project?</flux:heading>
+                    <flux:heading size="lg">Delete {{ $projectToDelete }}?</flux:heading>
 
-                    <flux:subheading>
+                    <flux:text class="mt-2">
                         <p>Are you sure you want to delete this project?</p>
-                        <p>This action cannot be undone.</p>
-                    </flux:subheading>
+                        <p>This action can be reversed from the trash.</p>
+                    </flux:text>
                 </div>
 
-                <div class="flex gap-2">
+                <div class="flex">
                     <flux:spacer />
                     <flux:button variant="danger" wire:click="delete">Delete</flux:button>
                 </div>

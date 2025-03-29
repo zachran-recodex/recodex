@@ -14,15 +14,22 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->string('image')->nullable();
             $table->string('title');
-            $table->string('category')->nullable();
+            $table->string('category');
             $table->text('description');
-            $table->date('project_date');
-            $table->string('duration');
-            $table->decimal('cost', 15, 2);
-            $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled', 'on_hold']);
+            $table->string('image')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->decimal('cost', 15);
+            $table->enum('status', [
+                'pending',
+                'in_progress',
+                'completed',
+                'cancelled',
+                'on_hold'
+            ])->default('pending');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
