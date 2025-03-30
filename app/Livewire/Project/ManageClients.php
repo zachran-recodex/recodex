@@ -36,7 +36,7 @@ class ManageClients extends Component
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:clients,email,' . ($this->client_id ?? 'NULL'),
+            'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
             'company' => 'required|string|max:255',
             'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
