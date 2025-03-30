@@ -134,7 +134,6 @@ class ManageProjects extends Component
             'newImage',
             'start_date',
             'end_date',
-            'duration',
             'cost',
             'status',
             'isEditing',
@@ -184,7 +183,6 @@ class ManageProjects extends Component
                     'image' => $imagePath,
                     'start_date' => $this->start_date,
                     'end_date' => $this->end_date,
-                    'duration' => $this->duration,
                     'cost' => $this->cost,
                     'status' => $this->status,
                 ]);
@@ -199,7 +197,6 @@ class ManageProjects extends Component
                     'image' => $imagePath,
                     'start_date' => $this->start_date,
                     'end_date' => $this->end_date,
-                    'duration' => $this->duration,
                     'cost' => $this->cost,
                     'status' => $this->status,
                 ]);

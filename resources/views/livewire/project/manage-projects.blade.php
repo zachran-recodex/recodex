@@ -183,30 +183,24 @@
                                 </flux:field>
 
                                 <flux:field>
-                                    <flux:label>Duration</flux:label>
-                                    <flux:input wire:model="duration" placeholder="e.g., 3 months, 1 year" />
-                                    <flux:error name="duration" />
-                                </flux:field>
-
-                                <flux:field>
                                     <flux:label>Cost</flux:label>
                                     <flux:input type="number" wire:model="cost" step="0.01" />
                                     <flux:error name="cost" />
                                 </flux:field>
-                            </div>
 
-                            <flux:field>
-                                <flux:label>Status</flux:label>
-                                <flux:select wire:model="status">
-                                    <option value="">Select Status</option>
-                                    @foreach(App\Models\Project::getStatusList() as $statusValue)
-                                        <option value="{{ $statusValue }}">
-                                            {{ str_replace('_', ' ', ucfirst($statusValue)) }}
-                                        </option>
-                                    @endforeach
-                                </flux:select>
-                                <flux:error name="status" />
-                            </flux:field>
+                                <flux:field>
+                                    <flux:label>Status</flux:label>
+                                    <flux:select wire:model="status">
+                                        <option value="">Select Status</option>
+                                        @foreach(App\Models\Project::getStatusList() as $statusValue)
+                                            <option value="{{ $statusValue }}">
+                                                {{ str_replace('_', ' ', ucfirst($statusValue)) }}
+                                            </option>
+                                        @endforeach
+                                    </flux:select>
+                                    <flux:error name="status" />
+                                </flux:field>
+                            </div>
 
                             <div class="flex">
                                 <flux:spacer />
