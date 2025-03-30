@@ -59,6 +59,14 @@
                                 <flux:table.cell>{{ $client->company }}</flux:table.cell>
 
                                 <flux:table.cell>
+                                    <flux:modal.trigger name="show">
+                                        <flux:button
+                                            variant="success"
+                                            wire:click="show({{ $client->id }})"
+                                            icon="eye"
+                                        ></flux:button>
+                                    </flux:modal.trigger>
+
                                     <flux:modal.trigger name="form">
                                         <flux:button
                                             variant="warning"
@@ -96,6 +104,63 @@
         <flux:card.footer>
             {{ $clients->links() }}
         </flux:card.footer>
+
+        <flux:modal variant="flyout" name="show" x-on:hidden="$wire.closeModal()">
+            <div class="space-y-6">
+                <flux:heading size="lg" class="font-semibold mb-6">
+                    Client Details
+                </flux:heading>
+
+                <flux:separator />
+
+                <div class="space-y-6">
+                    @if ($logo)
+                        <div class="flex justify-center">
+                            <img
+                                src="{{ Storage::url($logo) }}"
+                                alt="{{ $name }}"
+                                class="h-32 w-auto"
+                            >
+                        </div>
+                    @endif
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div>
+                            <flux:label>Name</flux:label>
+                            <flux:text>{{ $name }}</flux:text>
+                        </div>
+
+                        <div>
+                            <flux:label>Company</flux:label>
+                            <flux:text>{{ $company }}</flux:text>
+                        </div>
+
+                        <div>
+                            <flux:label>Email</flux:label>
+                            <flux:text>{{ $email ?: 'N/A' }}</flux:text>
+                        </div>
+
+                        <div>
+                            <flux:label>Phone</flux:label>
+                            <flux:text>{{ $phone ?: 'N/A' }}</flux:text>
+                        </div>
+
+                        <div>
+                            <flux:label>Domain</flux:label>
+                            <flux:text>
+                                @if($domain)
+                                    <flux:link href="https://{{ $domain }}" target="_blank">
+                                        {{ $domain }}
+                                    </flux:link>
+                                @else
+                                    N/A
+                                @endif
+                            </flux:text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </flux:modal>
 
         <flux:modal name="form" class="min-w-4xl" x-on:hidden="$wire.closeModal()">
             <div class="space-y-6">

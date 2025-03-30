@@ -97,6 +97,25 @@ class ManageClients extends Component
     }
 
     /**
+     * Show client details.
+     *
+     * @param int $id
+     */
+    public function show(int $id): void
+    {
+        $client = Client::findOrFail($id);
+        $this->client_id = $id;
+        $this->name = $client->name;
+        $this->email = $client->email;
+        $this->phone = $client->phone;
+        $this->company = $client->company;
+        $this->logo = $client->logo;
+        $this->domain = $client->domain?->name ?? '';
+
+        $this->modal('show')->show();
+    }
+
+    /**
      * Confirm deletion of a client.
      *
      * @param int $id
