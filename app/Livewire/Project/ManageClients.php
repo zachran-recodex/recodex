@@ -25,7 +25,7 @@ class ManageClients extends Component
     public $newLogo;
     public $primary_domain_id;
     public $primaryDomain;
-    public $domains = [];
+    public $domains;
 
     public $isEditing = false;
     public $clientToDelete = '';
@@ -148,6 +148,7 @@ class ManageClients extends Component
             'newLogo',
             'primary_domain_id',
             'primaryDomain',
+            'domains',
             'isEditing',
             'clientToDelete',
         ]);
