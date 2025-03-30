@@ -135,6 +135,23 @@
                         @endif
                     </flux:text>
 
+                    @if($domains->isNotEmpty())
+                        <div>
+                            <flux:label>Other Domains</flux:label>
+                            <div class="space-y-2">
+                                @foreach($domains as $domain)
+                                    @if($domain->id !== $primary_domain_id)
+                                        <flux:text>
+                                            <flux:link href="https://{{ $domain->name }}" target="_blank">
+                                                {{ $domain->name }}
+                                            </flux:link>
+                                        </flux:text>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="grid grid-cols-2 gap-6">
                         <div>
                             <flux:label>Name</flux:label>

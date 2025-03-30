@@ -25,6 +25,7 @@ class ManageClients extends Component
     public $newLogo;
     public $primary_domain_id;
     public $primaryDomain;
+    public $domains = [];
 
     public $isEditing = false;
     public $clientToDelete = '';
@@ -94,7 +95,7 @@ class ManageClients extends Component
      */
     public function show(int $id): void
     {
-        $client = Client::with('primaryDomain')->findOrFail($id);
+        $client = Client::with(['primaryDomain', 'domains'])->findOrFail($id);
         $this->client_id = $id;
         $this->name = $client->name;
         $this->email = $client->email;
@@ -103,6 +104,7 @@ class ManageClients extends Component
         $this->logo = $client->logo;
         $this->primary_domain_id = $client->primary_domain_id;
         $this->primaryDomain = $client->primaryDomain;
+        $this->domains = $client->domains;
 
         $this->modal('show')->show();
     }
