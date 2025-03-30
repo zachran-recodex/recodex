@@ -74,30 +74,27 @@ class Project extends Model
      */
     public function getDurationAttribute()
     {
-        $startDate = Carbon::parse($this->start_date);
+        if (!$this->start_date) {
+            return 'Not set';
+        }
 
         if (!$this->end_date) {
             return 'Ongoing';
         }
 
+        $startDate = Carbon::parse($this->start_date);
         $endDate = Carbon::parse($this->end_date);
+
         $days = $startDate->diffInDays($endDate);
-
-        if ($days < 30) {
-            return $days . ' days';
-        }
-
-        $months = $startDate->diffInMonths($endDate);
+        $months = floor($days / 30);
         $remainingDays = $days % 30;
 
-        if ($months < 12) {
-            return $months . ' months' . ($remainingDays > 0 ? ' ' . $remainingDays . ' days' : '');
+        if ($days < 30) {
+            return $days . ' day' . ($days !== 1 ? 's' : '');
         }
 
-        $years = $startDate->diffInYears($endDate);
-        $remainingMonths = $months % 12;
-
-        return $years . ' years' . ($remainingMonths > 0 ? ' ' . $remainingMonths . ' months' : '');
+        return $months . ' month' . ($months !== 1 ? 's' : '') .
+               ($remainingDays > 0 ? ' ' . $remainingDays . ' day' . ($remainingDays !== 1 ? 's' : '') : '');
     }
 
     /**

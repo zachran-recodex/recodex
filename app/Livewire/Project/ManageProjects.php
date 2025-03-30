@@ -87,8 +87,8 @@ class ManageProjects extends Component
         $this->category = $project->category;
         $this->description = $project->description;
         $this->image = $project->image;
-        $this->start_date = $project->start_date;
-        $this->end_date = $project->end_date;
+        $this->start_date = $project->start_date ? $project->start_date->format('Y-m-d') : null;
+        $this->end_date = $project->end_date ? $project->end_date->format('Y-m-d') : null;
         $this->cost = $project->cost;
         $this->status = $project->status;
 
