@@ -29,7 +29,6 @@
                         <flux:table.column>Name</flux:table.column>
                         <flux:table.column>Email</flux:table.column>
                         <flux:table.column>Phone</flux:table.column>
-                        <flux:table.column>Company</flux:table.column>
                         <flux:table.column>Actions</flux:table.column>
                     </flux:table.columns>
 
@@ -50,17 +49,14 @@
 
                                 <flux:table.cell>
                                     <div class="space-y-2">
-                                        <flux:heading class="font-semibold">{{ $client->name }}</flux:heading>
-                                        @if($client->domain)
-                                            <flux:text>
-                                                <flux:link href="https://{{ $client->domain->name }}" target="_blank">{{ $client->domain->name }}</flux:link>
-                                            </flux:text>
-                                        @endif
+                                        <flux:heading class="font-semibold">
+                                            {{ $client->name }}
+                                        </flux:heading>
+                                        <flux:text><flux:link href="https://{{ $client->primaryDomain?->name ?: 'N/A' }}">{{ $client->primaryDomain?->name ?: 'N/A' }}</flux:link></flux:text>
                                     </div>
                                 </flux:table.cell>
                                 <flux:table.cell>{{ $client->email ?: 'N/A' }}</flux:table.cell>
                                 <flux:table.cell>{{ $client->phone ?: 'N/A' }}</flux:table.cell>
-                                <flux:table.cell>{{ $client->company }}</flux:table.cell>
 
                                 <flux:table.cell>
                                     <flux:modal.trigger name="show">
@@ -90,7 +86,7 @@
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="6" class="text-center">
+                                <flux:table.cell colspan="5" class="text-center">
                                     <div class="flex flex-col items-center justify-center">
                                         <flux:heading size="lg">No Clients Found</flux:heading>
                                         <flux:subheading>
@@ -128,6 +124,17 @@
                         </div>
                     @endif
 
+                    <flux:label>Primary Domain</flux:label>
+                    <flux:text>
+                        @if($primaryDomain)
+                            <flux:link href="https://{{ $primaryDomain->name }}" target="_blank">
+                                {{ $primaryDomain->name }}
+                            </flux:link>
+                        @else
+                            <span class="text-zinc-400">N/A</span>
+                        @endif
+                    </flux:text>
+
                     <div class="grid grid-cols-2 gap-6">
                         <div>
                             <flux:label>Name</flux:label>
@@ -148,19 +155,6 @@
                             <flux:label>Phone</flux:label>
                             <flux:text>{{ $phone ?: 'N/A' }}</flux:text>
                         </div>
-
-                        <div>
-                            <flux:label>Domain</flux:label>
-                            <flux:text>
-                                @if($domain)
-                                    <flux:link href="https://{{ $domain }}" target="_blank">
-                                        {{ $domain }}
-                                    </flux:link>
-                                @else
-                                    N/A
-                                @endif
-                            </flux:text>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -179,12 +173,14 @@
                         <div class="space-y-6">
 
                             <flux:field>
-                                <flux:label>Domain</flux:label>
-                                <flux:input.group>
-                                    <flux:input.group.prefix>https://</flux:input.group.prefix>
-                                    <flux:input wire:model="domain" placeholder="example.com" />
-                                </flux:input.group>
-                                <flux:error name="domain" />
+                                <flux:label>Primary Domain</flux:label>
+                                <flux:select wire:model="primary_domain_id">
+                                    <option value="">Select Domain</option>
+                                    @foreach($domains as $domain)
+                                        <option value="{{ $domain->id }}">{{ $domain->name }}</option>
+                                    @endforeach
+                                </flux:select>
+                                <flux:error name="primary_domain_id" />
                             </flux:field>
 
                             <flux:field>

@@ -3,6 +3,7 @@
 namespace App\Livewire\Project;
 
 use App\Models\Client;
+use App\Models\Domain;
 use Livewire\Component;
 use App\WithNotification;
 use Illuminate\Support\Str;
@@ -22,7 +23,8 @@ class ManageClients extends Component
     public $company = '';
     public $logo;
     public $newLogo;
-    public $domain = '';
+    public $primary_domain_id;
+    public $primaryDomain;
 
     public $isEditing = false;
     public $clientToDelete = '';
@@ -40,19 +42,8 @@ class ManageClients extends Component
             'phone' => 'nullable|string|max:20',
             'company' => 'required|string|max:255',
             'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'domain' => 'required|string|max:255|regex:/^[\w\-\.]+\.[a-zA-Z]{2,}$/|unique:domains,name,' . ($this->client_id ? $this->getDomainId() : 'NULL')
+            'primary_domain_id' => 'required|exists:domains,id'
         ];
-    }
-
-    /**
-     * Get the domain ID for unique validation
-     *
-     * @return int|null
-     */
-    protected function getDomainId(): ?int
-    {
-        $client = Client::find($this->client_id);
-        return $client && $client->domain ? $client->domain->id : null;
     }
 
     /**
@@ -91,7 +82,7 @@ class ManageClients extends Component
         $this->phone = $client->phone;
         $this->company = $client->company;
         $this->logo = $client->logo;
-        $this->domain = $client->domain?->name ?? '';
+        $this->primary_domain_id = $client->primary_domain_id;
 
         $this->modal('form')->show();
     }
@@ -103,14 +94,15 @@ class ManageClients extends Component
      */
     public function show(int $id): void
     {
-        $client = Client::findOrFail($id);
+        $client = Client::with('primaryDomain')->findOrFail($id);
         $this->client_id = $id;
         $this->name = $client->name;
         $this->email = $client->email;
         $this->phone = $client->phone;
         $this->company = $client->company;
         $this->logo = $client->logo;
-        $this->domain = $client->domain?->name ?? '';
+        $this->primary_domain_id = $client->primary_domain_id;
+        $this->primaryDomain = $client->primaryDomain;
 
         $this->modal('show')->show();
     }
@@ -152,9 +144,10 @@ class ManageClients extends Component
             'company',
             'logo',
             'newLogo',
+            'primary_domain_id',
+            'primaryDomain',
             'isEditing',
             'clientToDelete',
-            'domain'
         ]);
         $this->resetValidation();
     }
@@ -191,36 +184,22 @@ class ManageClients extends Component
                 $logoPath = $this->newLogo->storeAs('clients', $filename, 'public');
             }
 
+            $data = [
+                'name' => $this->name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'company' => $this->company,
+                'logo' => $logoPath,
+                'primary_domain_id' => $this->primary_domain_id,
+            ];
+
             if ($this->isEditing) {
                 $client = Client::findOrFail($this->client_id);
-                $client->update([
-                    'name' => $this->name,
-                    'email' => $this->email,
-                    'phone' => $this->phone,
-                    'company' => $this->company,
-                    'logo' => $logoPath,
-                ]);
-
-                // Check if domain exists before updating
-                if ($client->domain) {
-                    $client->domain->update(['name' => $this->domain]);
-                } else {
-                    $client->domain()->create(['name' => $this->domain]);
-                }
+                $client->update($data);
 
                 $this->notifySuccess('Client updated successfully.');
             } else {
-                $client = Client::create([
-                    'name' => $this->name,
-                    'email' => $this->email,
-                    'phone' => $this->phone,
-                    'company' => $this->company,
-                    'logo' => $logoPath,
-                ]);
-
-                $client->domain()->create([
-                    'name' => $this->domain
-                ]);
+                Client::create($data);
 
                 $this->notifySuccess('Client created successfully.');
             }
@@ -245,8 +224,11 @@ class ManageClients extends Component
         $clients = Client::orderBy('created_at', 'desc')
             ->paginate(10);
 
+        $domains = Domain::orderBy('name')->get();
+
         return view('livewire.project.manage-clients', [
-            'clients' => $clients
+            'clients' => $clients,
+            'domains' => $domains,
         ]);
     }
 }

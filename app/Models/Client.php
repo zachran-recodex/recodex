@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Client extends Model
 {
@@ -21,15 +21,16 @@ class Client extends Model
         'email',
         'phone',
         'company',
-        'logo'
+        'logo',
+        'primary_domain_id'
     ];
 
     /**
-     * Get the domain associated with the client.
+     * Get all domains for the client.
      */
-    public function domain(): HasOne
+    public function domains(): HasMany
     {
-        return $this->hasOne(Domain::class);
+        return $this->hasMany(Domain::class);
     }
 
     /**
@@ -38,5 +39,13 @@ class Client extends Model
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
+    }
+
+    /**
+     * Get the primary domain for the client.
+     */
+    public function primaryDomain(): BelongsTo
+    {
+        return $this->belongsTo(Domain::class, 'primary_domain_id');
     }
 }
