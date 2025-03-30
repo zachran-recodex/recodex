@@ -38,9 +38,9 @@
                             <flux:table.row>
                                 <flux:table.cell>
                                     <img
-                                        src="{{ Storage::disk('public')->url($client->logo) }}"
+                                        src="{{ Storage::url($client->logo) }}"
                                         alt="{{ $client->name }}"
-                                        class="w-12 h-12 object-cover rounded-lg"
+                                        class="w-auto h-12"
                                     >
                                 </flux:table.cell>
 
@@ -124,13 +124,13 @@
                                     <img
                                         src="{{ $newLogo->temporaryUrl() }}"
                                         alt="Preview"
-                                        class="h-32 w-32 object-cover rounded-lg"
+                                        class="h-32 w-auto"
                                     >
                                 @elseif ($logo)
                                     <img
-                                        src="{{ Storage::disk('public')->url($logo) }}"
+                                        src="{{ Storage::url($logo) }}"
                                         alt="Current Logo"
-                                        class="h-32 w-32 object-cover rounded-lg"
+                                        class="h-32 w-auto"
                                     >
                                 @endif
                                 <flux:input
