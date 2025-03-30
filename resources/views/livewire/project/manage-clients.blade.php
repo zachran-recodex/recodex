@@ -37,11 +37,15 @@
                         @forelse ($clients as $client)
                             <flux:table.row>
                                 <flux:table.cell>
-                                    <img
-                                        src="{{ Storage::url($client->logo) }}"
-                                        alt="{{ $client->name }}"
-                                        class="w-auto h-12"
-                                    >
+                                    @if ($client->logo)
+                                        <img
+                                            src="{{ Storage::url($client->logo) }}"
+                                            alt="{{ $client->name }}"
+                                            class="w-auto h-12"
+                                        >
+                                    @else
+                                        <span class="text-zinc-400">N/A</span>
+                                    @endif
                                 </flux:table.cell>
 
                                 <flux:table.cell>
