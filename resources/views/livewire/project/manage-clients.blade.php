@@ -54,8 +54,8 @@
                                         @endif
                                     </div>
                                 </flux:table.cell>
-                                <flux:table.cell>{{ $client->email }}</flux:table.cell>
-                                <flux:table.cell>{{ $client->phone }}</flux:table.cell>
+                                <flux:table.cell>{{ $client->email ?: 'N/A' }}</flux:table.cell>
+                                <flux:table.cell>{{ $client->phone ?: 'N/A' }}</flux:table.cell>
                                 <flux:table.cell>{{ $client->company }}</flux:table.cell>
 
                                 <flux:table.cell>

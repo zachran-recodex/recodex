@@ -36,8 +36,8 @@ class ManageClients extends Component
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email,' . ($this->client_id ?? 'NULL'),
-            'phone' => 'required|string|max:20',
+            'email' => 'nullable|email|unique:clients,email,' . ($this->client_id ?? 'NULL'),
+            'phone' => 'nullable|string|max:20',
             'company' => 'required|string|max:255',
             'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'domain' => 'required|string|max:255|regex:/^[\w\-\.]+\.[a-zA-Z]{2,}$/|unique:domains,name,' . ($this->client_id ? $this->getDomainId() : 'NULL')
