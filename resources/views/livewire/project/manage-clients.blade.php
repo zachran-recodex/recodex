@@ -135,7 +135,7 @@
                         @endif
                     </flux:text>
 
-                    @if($domains && $domains->isNotEmpty())
+                    @if(count($domains) > 0)
                         <div>
                             <flux:label>Other Domains</flux:label>
                             <div class="space-y-2">
