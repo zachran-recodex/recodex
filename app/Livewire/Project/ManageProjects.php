@@ -23,10 +23,10 @@ class ManageProjects extends Component
     public $description = '';
     public $image;
     public $newImage;
-    public $start_date;
-    public $end_date;
-    public $cost;
-    public $status;
+    public $start_date = '';
+    public $end_date = '';
+    public $cost = '';
+    public $status = '';
 
     public bool $isEditing = false;
     public $projectToDelete = '';
@@ -45,7 +45,7 @@ class ManageProjects extends Component
             'description' => 'required|string',
             'newImage' => 'nullable|image|max:1024',
             'start_date' => 'required|date',
-            'end_date' => 'nullablle|date|after:start_date',
+            'end_date' => 'nullable|date|after:start_date',
             'cost' => 'required|numeric|min:0',
             'status' => 'required|in:' . implode(',', Project::getStatusList()),
         ];
