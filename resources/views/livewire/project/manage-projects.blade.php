@@ -126,18 +126,18 @@
                             </flux:field>
 
                             <flux:field>
-                                <flux:label>Image</flux:label>
+                                <flux:label badge="516x390">Image</flux:label>
                                 @if ($newImage)
                                     <img
                                         src="{{ $newImage->temporaryUrl() }}"
                                         alt="Preview"
-                                        class="h-32 w-32 object-cover rounded-lg"
+                                        class="h-32 w-auto"
                                     >
                                 @elseif ($image)
                                     <img
-                                        src="{{ Storage::disk('public')->url($image) }}"
+                                        src="{{ Storage::url($image) }}"
                                         alt="Current Image"
-                                        class="h-32 w-32 object-cover rounded-lg"
+                                        class="h-32 w-auto"
                                     >
                                 @endif
                                 <flux:input

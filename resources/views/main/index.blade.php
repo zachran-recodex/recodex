@@ -261,7 +261,7 @@
                                                     {{ $project->title }}
                                                 </a>
                                                 <p class="line-clamp-2">
-                                                    {{ $project->description }}
+                                                    {{ $project->category }}
                                                 </p>
                                             </div>
                                             <a href="" class="relative inline-flex items-start justify-center overflow-hidden">
