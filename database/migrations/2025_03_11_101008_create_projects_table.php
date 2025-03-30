@@ -29,7 +29,6 @@ return new class extends Migration
                 'on_hold'
             ])->default('pending');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

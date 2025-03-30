@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('registration_date')->nullable();
             $table->date('expiration_date')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
