@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Project;
 
-use App\Models\Client;
 use App\Models\Domain;
 use Livewire\Component;
 use App\WithNotification;
@@ -14,7 +13,6 @@ class ManageDomains extends Component
     use WithPagination, WithNotification;
 
     public $domain_id;
-    public $client_id;
     public $name = '';
     public $registration_date;
     public $expiration_date;
@@ -30,7 +28,6 @@ class ManageDomains extends Component
     protected function rules(): array
     {
         return [
-            'client_id' => 'required|exists:clients,id',
             'name' => 'required|string|max:255',
             'registration_date' => 'nullable|date',
             'expiration_date' => 'nullable|date|after:registration_date',
@@ -67,7 +64,6 @@ class ManageDomains extends Component
         $domain = Domain::findOrFail($id);
 
         $this->isEditing = true;
-        $this->client_id = $domain->client_id;
         $this->domain_id = $id;
         $this->name = $domain->name;
         $this->registration_date = $domain->registration_date ? $domain->registration_date->format('Y-m-d') : null;
@@ -106,7 +102,6 @@ class ManageDomains extends Component
     public function resetForm(): void
     {
         $this->reset([
-            'client_id',
             'domain_id',
             'name',
             'registration_date',
@@ -140,7 +135,6 @@ class ManageDomains extends Component
             if ($this->isEditing) {
                 $domain = Domain::findOrFail($this->domain_id);
                 $domain->update([
-                    'client_id' => $this->client_id,
                     'name' => $this->name,
                     'registration_date' => $this->registration_date,
                     'expiration_date' => $this->expiration_date,
@@ -149,7 +143,6 @@ class ManageDomains extends Component
                 $this->notifySuccess('Domain updated successfully.');
             } else {
                 $domain = Domain::create([
-                    'client_id' => $this->client_id,
                     'name' => $this->name,
                     'registration_date' => $this->registration_date,
                     'expiration_date' => $this->expiration_date,
@@ -180,7 +173,6 @@ class ManageDomains extends Component
 
         return view('livewire.project.manage-domains', [
             'domains' => $domains,
-            'clients' => Client::orderBy('name')->get()
         ]);
     }
 }
