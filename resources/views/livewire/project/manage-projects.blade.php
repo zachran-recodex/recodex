@@ -77,6 +77,10 @@
 
                                 <flux:table.cell>
                                     <div class="flex gap-2">
+                                        <flux:modal.trigger name="show">
+                                            <flux:button variant="outline" wire:click="show({{ $project->id }})" icon="eye" class="!p-1.5 md:!p-2"></flux:button>
+                                        </flux:modal.trigger>
+
                                         <flux:modal.trigger name="form">
                                             <flux:button variant="warning" wire:click="edit({{ $project->id }})" icon="pencil" class="!p-1.5 md:!p-2"></flux:button>
                                         </flux:modal.trigger>
@@ -104,6 +108,83 @@
             {{ $projects->links() }}
         </flux:card.footer>
     </flux:card>
+
+    <flux:modal name="show" variant="flyout">
+        <div class="space-y-6">
+            <flux:heading size="lg" class="font-semibold">
+                Details Project
+            </flux:heading>
+
+            <flux:separator />
+
+            <div class="space-y-6">
+                @if ($existing_image)
+                    <div class="flex justify-center">
+                        <img
+                            src="{{ Storage::url($existing_image) }}"
+                            alt="Project Image"
+                            class="h-48 w-auto object-contain"
+                        >
+                    </div>
+                @endif
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <flux:field>
+                        <flux:label>Client</flux:label>
+                        <flux:text>{{ $client_id ? $clients->find($client_id)->name : '-' }}</flux:text>
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Category</flux:label>
+                        <flux:text>{{ $category ?? '-' }}</flux:text>
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Title</flux:label>
+                        <flux:text>{{ $title ?? '-' }}</flux:text>
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Start Date</flux:label>
+                        <flux:text>{{ $start_date ? \Carbon\Carbon::parse($start_date)->format('d F Y') : '-' }}</flux:text>
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>End Date</flux:label>
+                        <flux:text>{{ $end_date ? \Carbon\Carbon::parse($end_date)->format('d F Y') : '-' }}</flux:text>
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Cost</flux:label>
+                        <flux:text>{{ $cost ? 'Rp ' . number_format($cost, 2, ',', '.') : '-' }}</flux:text>
+                    </flux:field>
+                </div>
+
+                <flux:field>
+                    <flux:label>Description</flux:label>
+                    <flux:text>{{ $description ?? '-' }}</flux:text>
+                </flux:field>
+
+                <flux:field>
+                    <flux:label>Status</flux:label>
+                    <flux:badge
+                        variant="solid"
+                        class="text-xs md:text-sm whitespace-nowrap w-fit!"
+                        :color="match($status) {
+                            'pending' => 'yellow',
+                            'in_progress' => 'blue',
+                            'completed' => 'green',
+                            'cancelled' => 'red',
+                            'on_hold' => 'orange',
+                            default => 'zinc'
+                        }"
+                    >
+                        {{ $status ? str_replace('_', ' ', ucfirst($status)) : '-' }}
+                    </flux:badge>
+                </flux:field>
+            </div>
+        </div>
+    </flux:modal>
 
     <flux:modal name="form" class="min-w-sm md:min-w-2xl lg:min-w-4xl">
         <div class="space-y-6">

@@ -150,16 +150,27 @@ class ManageProjects extends Component
     }
 
     /**
-     * Show delete confirmation modal
-     * Sets the project ID for deletion and opens confirmation modal
+     * Show project details
+     * Loads and displays project information in a modal
      *
-     * @param int $id Project ID to delete
+     * @param int $id Project ID to show
      * @return void
      */
-    public function confirmDelete($id)
+    public function show($id)
     {
+        $project = Project::findOrFail($id);
         $this->project_id = $id;
-        $this->toggleModal('delete');
+        $this->client_id = $project->client_id;
+        $this->title = $project->title;
+        $this->category = $project->category;
+        $this->description = $project->description;
+        $this->existing_image = $project->image;
+        $this->start_date = $project->start_date->format('Y-m-d');
+        $this->end_date = $project->end_date ? $project->end_date->format('Y-m-d') : null;
+        $this->cost = $project->cost;
+        $this->status = $project->status;
+
+        $this->toggleModal('show');
     }
 
     /**
@@ -225,6 +236,19 @@ class ManageProjects extends Component
         } catch (\Exception $e) {
             $this->notifyError('Operation failed: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Show delete confirmation modal
+     * Sets the project ID for deletion and opens confirmation modal
+     *
+     * @param int $id Project ID to delete
+     * @return void
+     */
+    public function confirmDelete($id)
+    {
+        $this->project_id = $id;
+        $this->toggleModal('delete');
     }
 
     /**
