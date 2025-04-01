@@ -32,15 +32,15 @@
 
         <flux:card.body :padding="false">
             <div class="overflow-x-auto">
-                <flux:table hover striped>
+                <flux:table hover striped responsive>
                     <flux:table.columns>
-                        <flux:table.column>Title</flux:table.column>
-                        <flux:table.column>Start Date</flux:table.column>
-                        <flux:table.column>Duration</flux:table.column>
-                        <flux:table.column>Category</flux:table.column>
-                        <flux:table.column>Cost</flux:table.column>
-                        <flux:table.column>Status</flux:table.column>
-                        <flux:table.column>Actions</flux:table.column>
+                        <flux:table.column class="min-w-[200px] md:w-auto">Title</flux:table.column>
+                        <flux:table.column class="min-w-[120px] md:w-auto">Start Date</flux:table.column>
+                        <flux:table.column class="min-w-[100px] md:w-auto">Duration</flux:table.column>
+                        <flux:table.column class="min-w-[120px] md:w-auto">Category</flux:table.column>
+                        <flux:table.column class="min-w-[120px] md:w-auto">Cost</flux:table.column>
+                        <flux:table.column class="min-w-[120px] md:w-auto">Status</flux:table.column>
+                        <flux:table.column class="min-w-[100px] md:w-auto">Actions</flux:table.column>
                     </flux:table.columns>
 
                     <flux:table.rows>
@@ -48,22 +48,20 @@
                             <flux:table.row>
                                 <flux:table.cell>
                                     <div class="space-y-2">
-                                        <flux:heading class="font-semibold">{{ $project->client->name }}</flux:heading>
-                                        <flux:text class="mt-2">{{ $project->title }}</flux:text>
+                                        <flux:heading class="font-semibold text-sm md:text-base">{{ $project->client->name }}</flux:heading>
+                                        <flux:text class="mt-2 text-xs md:text-sm">{{ $project->title }}</flux:text>
                                     </div>
                                 </flux:table.cell>
 
-                                <flux:table.cell>{{ $project->start_date->format('d F Y') }}</flux:table.cell>
-
-                                <flux:table.cell>{{ $project->duration }} days</flux:table.cell>
-
-                                <flux:table.cell>{{ $project->category }}</flux:table.cell>
-
-                                <flux:table.cell>{{ $project->formatted_cost }}</flux:table.cell>
+                                <flux:table.cell class="text-sm md:text-base">{{ $project->start_date->format('d F Y') }}</flux:table.cell>
+                                <flux:table.cell class="text-sm md:text-base">{{ $project->duration }} days</flux:table.cell>
+                                <flux:table.cell class="text-sm md:text-base">{{ $project->category }}</flux:table.cell>
+                                <flux:table.cell class="text-sm md:text-base">{{ $project->formatted_cost }}</flux:table.cell>
 
                                 <flux:table.cell>
                                     <flux:badge
                                         variant="solid"
+                                        class="text-xs md:text-sm whitespace-nowrap"
                                         :color="match($project->status) {
                                             'pending' => 'yellow',
                                             'in_progress' => 'blue',
@@ -78,20 +76,22 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    <flux:modal.trigger name="form">
-                                        <flux:button variant="warning" wire:click="edit({{ $project->id }})" icon="pencil"></flux:button>
-                                    </flux:modal.trigger>
+                                    <div class="flex gap-2">
+                                        <flux:modal.trigger name="form">
+                                            <flux:button variant="warning" wire:click="edit({{ $project->id }})" icon="pencil" class="!p-1.5 md:!p-2"></flux:button>
+                                        </flux:modal.trigger>
 
-                                    <flux:modal.trigger name="delete">
-                                        <flux:button variant="danger" wire:click="confirmDelete({{ $project->id }})" icon="trash"></flux:button>
-                                    </flux:modal.trigger>
+                                        <flux:modal.trigger name="delete">
+                                            <flux:button variant="danger" wire:click="confirmDelete({{ $project->id }})" icon="trash" class="!p-1.5 md:!p-2"></flux:button>
+                                        </flux:modal.trigger>
+                                    </div>
                                 </flux:table.cell>
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="7" class="text-center py-8">
-                                    <flux:heading size="lg">No data found.</flux:heading>
-                                    <flux:subheading>Start by creating new project.</flux:subheading>
+                                <flux:table.cell colspan="7" class="text-center py-6 md:py-8">
+                                    <flux:heading size="lg" class="text-base md:text-lg">No data found.</flux:heading>
+                                    <flux:subheading class="text-sm md:text-base">Start by creating new project.</flux:subheading>
                                 </flux:table.cell>
                             </flux:table.row>
                         @endforelse
