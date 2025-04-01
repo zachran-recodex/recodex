@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Carbon\Carbon;
 
 class Project extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'client_id',
@@ -22,13 +21,13 @@ class Project extends Model
         'start_date',
         'end_date',
         'cost',
-        'status'
+        'status',
     ];
 
     /**
      * The attributes that should be cast.
      *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $casts = [
         'start_date' => 'date',
@@ -36,30 +35,36 @@ class Project extends Model
         'cost' => 'decimal:2',
     ];
 
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_IN_PROGRESS = 'in_progress';
-    public const STATUS_COMPLETED = 'completed';
-    public const STATUS_CANCELLED = 'cancelled';
-    public const STATUS_ON_HOLD = 'on_hold';
+    const STATUS_PENDING = 'pending';
+
+    const STATUS_IN_PROGRESS = 'in_progress';
+
+    const STATUS_COMPLETED = 'completed';
+
+    const STATUS_CANCELLED = 'cancelled';
+
+    const STATUS_ON_HOLD = 'on_hold';
 
     /**
-     * Get list of all available statuses.
+     * Get all available project status options with display labels.
      *
-     * @return array<string>
+     * @return array<string, string> Array of status codes mapped to their display labels
      */
-    public static function getStatusList(): array
+    public static function getStatusOptions()
     {
         return [
-            self::STATUS_PENDING,
-            self::STATUS_IN_PROGRESS,
-            self::STATUS_COMPLETED,
-            self::STATUS_CANCELLED,
-            self::STATUS_ON_HOLD,
+            self::STATUS_PENDING => 'Pending',
+            self::STATUS_IN_PROGRESS => 'In Progress',
+            self::STATUS_COMPLETED => 'Completed',
+            self::STATUS_CANCELLED => 'Cancelled',
+            self::STATUS_ON_HOLD => 'On Hold',
         ];
     }
 
     /**
-     * Get the client that owns the project.
+     * Get the client that owns this project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function client(): BelongsTo
     {
@@ -67,40 +72,36 @@ class Project extends Model
     }
 
     /**
-     * Get project duration in a human-readable format.
+     * Get the human-readable status label based on current status code.
+     *
+     * @return string Formatted status label
      */
-    public function getDurationAttribute()
+    public function getStatusLabelAttribute()
     {
-        if (!$this->start_date) {
-            return 'Not set';
-        }
-
-        if (!$this->end_date) {
-            return 'Ongoing';
-        }
-
-        $startDate = Carbon::parse($this->start_date);
-        $endDate = Carbon::parse($this->end_date);
-
-        $days = $startDate->diffInDays($endDate);
-        $months = floor($days / 30);
-        $remainingDays = $days % 30;
-
-        if ($days < 30) {
-            return $days . ' day' . ($days !== 1 ? 's' : '');
-        }
-
-        return $months . ' month' . ($months !== 1 ? 's' : '') .
-               ($remainingDays > 0 ? ' ' . $remainingDays . ' day' . ($remainingDays !== 1 ? 's' : '') : '');
+        return self::getStatusOptions()[$this->status] ?? $this->status;
     }
 
     /**
-     * Get formatted status for display.
+     * Get the cost formatted with Indonesian currency format.
      *
-     * @return string
+     * @return string Formatted cost with Rupiah symbol
      */
-    public function getFormattedStatusAttribute(): string
+    public function getFormattedCostAttribute()
     {
-        return str_replace('_', ' ', ucfirst($this->status));
+        return 'Rp ' . number_format($this->cost, 2, ',', '.');
+    }
+
+    /**
+     * Calculate project duration in days between start and end dates.
+     *
+     * @return int|null Number of days between start and end dates, or null if end date not set
+     */
+    public function getDurationAttribute()
+    {
+        if (!$this->end_date) {
+            return null;
+        }
+
+        return $this->start_date->diffInDays($this->end_date);
     }
 }

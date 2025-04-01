@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->decimal('cost', 15);
+            $table->decimal('cost', 15, 2);
             $table->enum('status', [
                 'pending',
                 'in_progress',
