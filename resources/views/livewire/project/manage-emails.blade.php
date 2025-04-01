@@ -1,24 +1,30 @@
 <flux:container class="space-y-6">
-    <!-- Page Header -->
-    <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
         <flux:heading size="xl" class="font-bold!">Manage Emails</flux:heading>
 
         <flux:breadcrumbs>
-            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item href="{{ route('dashboard.project.overview') }}" separator="slash">Project</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item separator="slash">Manage Emails</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('dashboard') }}">Dashboard</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('dashboard.project.overview') }}">Project</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item>Manage Email</flux:breadcrumbs.item>
         </flux:breadcrumbs>
     </div>
 
-    <flux:card>
-        <flux:card.header class="flex justify-between items-center">
-            <flux:heading size="lg">List Email</flux:heading>
+    @if (session()->has('error'))
+        <flux:callout variant="danger" icon="x-circle" heading="{{ session('error') }}" />
+    @endif
 
-            <flux:modal.trigger name="form">
-                <flux:button type="button" variant="primary" class="w-fit" icon="plus" wire:click="create">
-                    Add New
-                </flux:button>
-            </flux:modal.trigger>
+    <flux:card>
+        <flux:card.header>
+            <div class="flex justify-between items-center">
+                <flux:heading size="lg" class="semi-bold!">List Email</flux:heading>
+
+                <flux:modal.trigger name="form">
+                    <flux:button type="button" variant="primary" class="w-fit" icon="plus" wire:click="create">
+                        Add New
+                    </flux:button>
+                </flux:modal.trigger>
+            </div>
         </flux:card.header>
 
         <flux:card.body :padding="false">
@@ -99,75 +105,75 @@
         <flux:card.footer>
             {{ $emails->links() }}
         </flux:card.footer>
-
-        <flux:modal name="form" class="min-w-4xl" x-on:hidden="$wire.closeModal()">
-            <div class="space-y-6">
-                <flux:heading size="lg" class="font-semibold mb-6">
-                    {{ $isEditing ? 'Edit Email' : 'Add New Email' }}
-                </flux:heading>
-
-                <form wire:submit.prevent="save">
-                    <flux:fieldset>
-                        <div class="space-y-6">
-                            <flux:field>
-                                <flux:label>Email</flux:label>
-
-                                <flux:input.group>
-                                    <flux:input
-                                        type="text"
-                                        wire:model="email"
-                                        placeholder="Enter email username"
-                                    />
-
-                                    <flux:select
-                                        wire:model="domain_id"
-                                        class="max-w-fit"
-                                    >
-                                        <option value="">Select Domain</option>
-                                        @foreach($domains as $domain)
-                                            <option value="{{ $domain->id }}">{{ '@' . $domain->name }}</option>
-                                        @endforeach
-                                    </flux:select>
-                                </flux:input.group>
-
-                                <flux:error name="email" />
-                                <flux:error name="domain_id" />
-                            </flux:field>
-
-                            <flux:field>
-                                <flux:label>Password</flux:label>
-                                <flux:input wire:model="password" placeholder="{{ $isEditing ? 'Leave blank to keep current password' : 'Enter password' }}" />
-                                <flux:error name="password" />
-                            </flux:field>
-
-                            <div class="flex">
-                                <flux:spacer />
-                                <flux:button type="submit" variant="primary" class="w-fit">
-                                    {{ $isEditing ? 'Update' : 'Create' }}
-                                </flux:button>
-                            </div>
-                        </div>
-                    </flux:fieldset>
-                </form>
-            </div>
-        </flux:modal>
-
-        <flux:modal name="delete" class="min-w-sm" x-on:hidden="$wire.closeModal()">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Delete {{ $emailToDelete }}?</flux:heading>
-
-                    <flux:text class="mt-2">
-                        <p>Are you sure you want to delete this email?</p>
-                        <p>This action cannot be undone.</p>
-                    </flux:text>
-                </div>
-
-                <div class="flex">
-                    <flux:spacer />
-                    <flux:button variant="danger" wire:click="delete">Delete</flux:button>
-                </div>
-            </div>
-        </flux:modal>
     </flux:card>
+
+    <flux:modal name="form" class="min-w-4xl">
+        <div class="space-y-6">
+            <flux:heading size="lg" class="font-semibold mb-6">
+                {{ $email_id ? 'Edit Email' : 'Add New Email' }}
+            </flux:heading>
+
+            <form wire:submit.prevent="store">
+                <flux:fieldset>
+                    <div class="space-y-6">
+                        <flux:field>
+                            <flux:label>Email</flux:label>
+
+                            <flux:input.group>
+                                <flux:input
+                                    type="text"
+                                    wire:model="email"
+                                    placeholder="Enter email username"
+                                />
+
+                                <flux:select
+                                    wire:model="domain_id"
+                                    class="max-w-fit"
+                                >
+                                    <option value="">Select Domain</option>
+                                    @foreach($domains as $domain)
+                                        <option value="{{ $domain->id }}">{{ '@' . $domain->name }}</option>
+                                    @endforeach
+                                </flux:select>
+                            </flux:input.group>
+
+                            <flux:error name="email" />
+                            <flux:error name="domain_id" />
+                        </flux:field>
+
+                        <flux:field>
+                            <flux:label>Password</flux:label>
+                            <flux:input wire:model="password" placeholder="{{ $email_id ? 'Leave blank to keep current password' : 'Enter password' }}" />
+                            <flux:error name="password" />
+                        </flux:field>
+
+                        <div class="flex">
+                            <flux:spacer />
+                            <flux:button type="submit" variant="primary" class="w-fit">
+                                {{ $email_id ? 'Update' : 'Create' }}
+                            </flux:button>
+                        </div>
+                    </div>
+                </flux:fieldset>
+            </form>
+        </div>
+    </flux:modal>
+
+    <flux:modal name="delete" class="min-w-sm">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete email?</flux:heading>
+
+                <flux:text class="mt-2">
+                    <p>Are you sure you want to delete this email?</p>
+                    <p>This action cannot be undone.</p>
+                </flux:text>
+            </div>
+
+            <div class="flex">
+                <flux:spacer />
+                <flux:button type="button" variant="danger" wire:click="deleteEmail">Delete</flux:button>
+            </div>
+        </div>
+    </flux:modal>
 </flux:container>

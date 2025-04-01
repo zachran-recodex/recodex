@@ -10,7 +10,7 @@ class Email extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'domain_id',
@@ -24,7 +24,7 @@ class Email extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $casts = [
         'reset_token_expires_at' => 'datetime',
@@ -32,7 +32,9 @@ class Email extends Model
     ];
 
     /**
-     * Get the domain that owns the email.
+     * Get the domain that owns this email.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function domain(): BelongsTo
     {

@@ -7,139 +7,128 @@ use App\Models\Domain;
 use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordEmailClient;
 
 class ManageEmails extends Component
 {
-    use WithPagination, WithNotification;
+    use WithPagination;
+    use WithNotification;
 
+    // Form Properties
     public $domain_id;
     public $email_id;
     public $email;
     public $password;
 
-    public $isEditing = false;
-    public $emailToDelete = '';
+    // Track active modal
+    public $activeModal = null;
 
     /**
-     * Validation rules for email form.
+     * Define validation rules for client form
      *
-     * @return array
+     * @return array Validation rules array
      */
-    protected function rules(): array
+    protected function rules()
     {
         return [
             'domain_id' => 'required|exists:domains,id',
             'email' => 'required|max:255|unique:emails,email,' . ($this->email_id ?? ''),
-            'password' => $this->isEditing ? 'nullable|string|min:6' : 'required|string|min:6',
+            'password' => $this->email_id ? 'nullable|string|min:6' : 'required|string|min:6',
         ];
     }
 
     /**
-     * Validate only the changed property.
+     * Reset all form input fields and validation state
      *
-     * @param string $propertyName
+     * @return void
      */
-    public function updated($propertyName): void
+    public function resetInputFields()
     {
-        $this->validateOnly($propertyName);
-    }
-
-    /**
-     * Prepare for creating a new email.
-     */
-    public function create(): void
-    {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->modal('form')->show();
-    }
-
-    /**
-     * Prepare for editing an existing email.
-     *
-     * @param int $id
-     */
-    public function edit($id): void
-    {
-        $email = Email::findOrFail($id);
-
-        $this->isEditing = true;
-        $this->domain_id = $email->domain_id;
-        $this->email_id = $id;
-        $this->email = explode('@', $email->email)[0]; // Get username part only
+        $this->email_id = null;
+        $this->domain_id = '';
+        $this->email = '';
         $this->password = '';
-
-        $this->modal('form')->show();
-    }
-
-    /**
-     * Confirm deletion of a email.
-     *
-     * @param int $id
-     */
-    public function confirmDelete($id): void
-    {
-        $email = Email::findOrFail($id);
-        $this->email_id = $id;
-        $this->emailToDelete = $email->email;
-        $this->modal('delete')->show();
-    }
-
-    /**
-     * Delete the selected email.
-     */
-    public function delete(): void
-    {
-        $email = Email::findOrFail($this->email_id);
-        $email->delete();
-        $this->notifySuccess('Email deleted successfully');
-        $this->modal('delete')->close();
-    }
-
-    /**
-     * Reset form to initial state.
-     */
-    public function resetForm(): void
-    {
-        $this->reset([
-            'domain_id',
-            'email_id',
-            'email',
-            'password',
-            'isEditing',
-            'emailToDelete',
-        ]);
         $this->resetValidation();
     }
 
     /**
-     * Handle modal close event
+     * Unified modal control method
+     *
+     * @param string $modalName The name of the modal to show
+     * @param bool $show Whether to show or hide the modal
+     * @return void
      */
-    public function closeModal(): void
+    public function toggleModal(string $modalName, bool $show = true)
     {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->emailToDelete = '';
+        if ($show) {
+            $this->activeModal = $modalName;
+            $this->modal($modalName)->show();
+        } else {
+            $this->activeModal = null;
+            $this->modal($modalName)->close();
+        }
     }
 
     /**
-     * Save or update email.
+     * Initialize create email form
+     * Resets form fields and opens the form modal
+     *
+     * @return void
      */
-    public function save(): void
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Load email data for editing
+     * Populates form fields with existing email data
+     *
+     * @param int $id Email ID to edit
+     * @return void
+     */
+    public function edit($id)
+    {
+        $email = Email::findOrFail($id);
+        $this->email_id = $id;
+        $this->domain_id = $email->domain_id;
+        $this->email = explode('@', $email->email)[0]; // Get username part only
+        $this->password = $email->password;
+
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Show delete confirmation modal
+     * Sets the email ID for deletion and opens confirmation modal
+     *
+     * @param int $id Email ID to delete
+     * @return void
+     */
+    public function confirmDelete($id)
+    {
+        $this->email_id = $id;
+        $this->toggleModal('delete');
+    }
+
+    /**
+     * Store or update email data
+     * Validates input and saves email information to database
+     *
+     * @return void
+     */
+    public function store()
     {
         $this->validate();
 
         try {
-            DB::beginTransaction();
-
             $domain = Domain::findOrFail($this->domain_id);
             $fullEmail = $this->email . '@' . $domain->name;
 
-            if ($this->isEditing) {
+            if ($this->email_id) {
                 $email = Email::findOrFail($this->email_id);
                 $data = [
                     'domain_id' => $this->domain_id,
@@ -164,13 +153,30 @@ class ManageEmails extends Component
                 $this->notifySuccess('Email created successfully.');
             }
 
-            DB::commit();
-            $this->resetForm();
-            $this->modal('form')->close();
-
+            $this->toggleModal('form', false);
+            $this->resetInputFields();
         } catch (\Exception $e) {
-            DB::rollBack();
-            $this->notifyError('Something went wrong: ' . $e->getMessage());
+            $this->notifyError('Operation failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete email record
+     *
+     * @return void
+     */
+    public function deleteEmail()
+    {
+        try{
+            $email = Email::find($this->email_id);
+
+            $email->delete();
+            $this->notifySuccess('Email deleted successfully.');
+
+            $this->toggleModal('delete', false);
+            $this->resetInputFields();
+        } catch (\Exception $e) {
+            $this->notifyError('Delete operation failed: ' . $e->getMessage());
         }
     }
 
@@ -196,9 +202,10 @@ class ManageEmails extends Component
     }
 
     /**
-     * Render the Livewire component.
+     * Render component view
+     * Fetches paginated projects and renders the component template
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return \Illuminate\View\View
      */
     public function render()
     {
@@ -206,9 +213,8 @@ class ManageEmails extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.project.manage-emails', [
-            'emails' => $emails,
-            'domains' => Domain::all()
-        ]);
+        $domains = Domain::orderBy('name')->get();
+
+        return view('livewire.project.manage-emails', compact('emails', 'domains'));
     }
 }
