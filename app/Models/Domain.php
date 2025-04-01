@@ -4,17 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Domain extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<string>
+     * @var array<int, string>
      */
     protected $fillable = [
-        'client_id',
         'name',
         'registration_date',
         'expiration_date'
@@ -23,7 +21,7 @@ class Domain extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $casts = [
         'registration_date' => 'date',
@@ -31,15 +29,9 @@ class Domain extends Model
     ];
 
     /**
-     * Get the client that owns the project.
-     */
-    public function client(): BelongsTo
-    {
-        return $this->belongsTo(Client::class);
-    }
-
-    /**
-     * Get the emails associated with the domain.
+     * Get emails associated with this domain.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function emails(): HasMany
     {

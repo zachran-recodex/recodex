@@ -6,26 +6,27 @@ use App\Models\Domain;
 use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithPagination;
-use Illuminate\Support\Facades\DB;
 
 class ManageDomains extends Component
 {
-    use WithPagination, WithNotification;
+    use WithPagination;
+    use WithNotification;
 
+    // Form Properties
     public $domain_id;
-    public $name = '';
+    public $name;
     public $registration_date;
     public $expiration_date;
 
-    public $isEditing = false;
-    public $domainToDelete = '';
+    // Track active modal
+    public $activeModal = null;
 
     /**
-     * Validation rules for domain form.
+     * Define validation rules for client form
      *
-     * @return array
+     * @return array Validation rules array
      */
-    protected function rules(): array
+    protected function rules()
     {
         return [
             'name' => 'required|string|max:255',
@@ -35,144 +36,146 @@ class ManageDomains extends Component
     }
 
     /**
-     * Validate only the changed property.
+     * Reset all form input fields and validation state
      *
-     * @param string $propertyName
+     * @return void
      */
-    public function updated($propertyName): void
+    public function resetInputFields()
     {
-        $this->validateOnly($propertyName);
-    }
-
-    /**
-     * Prepare for creating a new domain.
-     */
-    public function create(): void
-    {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->modal('form')->show();
-    }
-
-    /**
-     * Prepare for editing an existing domain.
-     *
-     * @param int $id
-     */
-    public function edit($id): void
-    {
-        $domain = Domain::findOrFail($id);
-
-        $this->isEditing = true;
-        $this->domain_id = $id;
-        $this->name = $domain->name;
-        $this->registration_date = $domain->registration_date ? $domain->registration_date->format('Y-m-d') : null;
-        $this->expiration_date = $domain->expiration_date ? $domain->expiration_date->format('Y-m-d') : null;
-
-        $this->modal('form')->show();
-    }
-
-    /**
-     * Confirm deletion of a domain.
-     *
-     * @param int $id
-     */
-    public function confirmDelete($id): void
-    {
-        $domain = Domain::findOrFail($id);
-        $this->domain_id = $id;
-        $this->domainToDelete = $domain->name;
-        $this->modal('delete')->show();
-    }
-
-    /**
-     * Delete the selected domain.
-     */
-    public function delete(): void
-    {
-        $domain = Domain::findOrFail($this->domain_id);
-        $domain->delete();
-        $this->notifySuccess('Domain deleted successfully');
-        $this->modal('delete')->close();
-    }
-
-    /**
-     * Reset form to initial state.
-     */
-    public function resetForm(): void
-    {
-        $this->reset([
-            'domain_id',
-            'name',
-            'registration_date',
-            'expiration_date',
-            'isEditing',
-            'domainToDelete',
-        ]);
+        $this->domain_id = null;
+        $this->name = '';
+        $this->registration_date = null;
+        $this->expiration_date = null;
         $this->resetValidation();
     }
 
     /**
-     * Handle modal close event
+     * Unified modal control method
+     *
+     * @param string $modalName The name of the modal to show
+     * @param bool $show Whether to show or hide the modal
+     * @return void
      */
-    public function closeModal(): void
+    public function toggleModal(string $modalName, bool $show = true)
     {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->domainToDelete = '';
-    }
-
-    /**
-     * Save or update domain.
-     */
-    public function save(): void
-    {
-        $this->validate();
-
-        try {
-            DB::beginTransaction();
-
-            if ($this->isEditing) {
-                $domain = Domain::findOrFail($this->domain_id);
-                $domain->update([
-                    'name' => $this->name,
-                    'registration_date' => $this->registration_date,
-                    'expiration_date' => $this->expiration_date,
-                ]);
-
-                $this->notifySuccess('Domain updated successfully.');
-            } else {
-                $domain = Domain::create([
-                    'name' => $this->name,
-                    'registration_date' => $this->registration_date,
-                    'expiration_date' => $this->expiration_date,
-                ]);
-
-                $this->notifySuccess('Domain created successfully.');
-            }
-
-            DB::commit();
-            $this->resetForm();
-            $this->modal('form')->close();
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $this->notifyError('Something went wrong: ' . $e->getMessage());
+        if ($show) {
+            $this->activeModal = $modalName;
+            $this->modal($modalName)->show();
+        } else {
+            $this->activeModal = null;
+            $this->modal($modalName)->close();
         }
     }
 
     /**
-     * Render the Livewire component.
+     * Initialize create domain form
+     * Resets form fields and opens the form modal
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return void
+     */
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Load domain data for editing
+     * Populates form fields with existing domain data
+     *
+     * @param int $id Domain ID to edit
+     * @return void
+     */
+    public function edit($id)
+    {
+        $domain = Domain::findOrFail($id);
+        $this->domain_id = $id;
+        $this->name = $domain->name;
+        $this->registration_date = $domain->registration_date->format('Y-m-d');
+        $this->expiration_date = $domain->expiration_date->format('Y-m-d');
+
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Show delete confirmation modal
+     * Sets the domain ID for deletion and opens confirmation modal
+     *
+     * @param int $id Domain ID to delete
+     * @return void
+     */
+    public function confirmDelete($id)
+    {
+        $this->domain_id = $id;
+        $this->toggleModal('delete');
+    }
+
+    /**
+     * Store or update domain data
+     * Validates input and saves domain information to database
+     *
+     * @return void
+     */
+    public function store()
+    {
+        $this->validate();
+
+        try {
+            $data = [
+                'name' => $this->name,
+                'registration_date' => $this->registration_date,
+                'expiration_date' => $this->expiration_date,
+            ];
+
+            if ($this->domain_id) {
+                // Update existing domain
+                $domain = Domain::findOrFail($this->domain_id);
+                $domain->update($data);
+                $this->notifySuccess('Domain updated successfully.');
+            } else {
+                // Create new domain
+                $domain = Domain::create($data);
+                $this->notifySuccess('Domain created successfully.');
+            }
+
+            $this->toggleModal('form', false);
+            $this->resetInputFields();
+        } catch (\Exception $e) {
+            $this->notifyError('Operation failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Delete domain record
+     *
+     * @return void
+     */
+    public function deleteDomain()
+    {
+        try{
+            $domain = Domain::find($this->domain_id);
+
+            $domain->delete();
+            $this->notifySuccess('Domain deleted successfully.');
+
+            $this->toggleModal('delete', false);
+            $this->resetInputFields();
+        } catch (\Exception $e) {
+            $this->notifyError('Delete operation failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Render component view
+     * Fetches paginated domains and renders the component template
+     *
+     * @return \Illuminate\View\View
      */
     public function render()
     {
         $domains = Domain::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.project.manage-domains', [
-            'domains' => $domains,
-        ]);
+        return view('livewire.project.manage-domains', compact('domains'));
     }
 }

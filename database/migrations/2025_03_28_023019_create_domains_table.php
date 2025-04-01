@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->date('registration_date')->nullable();
             $table->date('expiration_date')->nullable();
