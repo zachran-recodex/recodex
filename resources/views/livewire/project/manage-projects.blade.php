@@ -117,6 +117,12 @@
 
             <flux:separator />
 
+            <div class="text-center">
+                <flux:heading>{{ $client_id ? $clients->find($client_id)->name : '-' }}</flux:heading>
+            </div>
+
+            <flux:separator />
+
             <div class="space-y-6">
                 @if ($existing_image)
                     <div class="flex justify-center">
@@ -129,19 +135,15 @@
                 @endif
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+
                     <flux:field>
-                        <flux:label>Client</flux:label>
-                        <flux:text>{{ $client_id ? $clients->find($client_id)->name : '-' }}</flux:text>
+                        <flux:label>Title</flux:label>
+                        <flux:text>{{ $title ?? '-' }}</flux:text>
                     </flux:field>
 
                     <flux:field>
                         <flux:label>Category</flux:label>
                         <flux:text>{{ $category ?? '-' }}</flux:text>
-                    </flux:field>
-
-                    <flux:field>
-                        <flux:label>Title</flux:label>
-                        <flux:text>{{ $title ?? '-' }}</flux:text>
                     </flux:field>
 
                     <flux:field>
@@ -156,31 +158,31 @@
 
                     <flux:field>
                         <flux:label>Cost</flux:label>
-                        <flux:text>{{ $cost ? 'Rp ' . number_format($cost, 2, ',', '.') : '-' }}</flux:text>
+                        <flux:text>{{ $cost ? 'Rp ' . number_format($cost, 0, ',', '.') : '-' }}</flux:text>
+                    </flux:field>
+
+                    <flux:field>
+                        <flux:label>Status</flux:label>
+                        <flux:badge
+                            variant="solid"
+                            class="text-xs md:text-sm whitespace-nowrap w-fit!"
+                            :color="match($status) {
+                                'pending' => 'yellow',
+                                'in_progress' => 'blue',
+                                'completed' => 'green',
+                                'cancelled' => 'red',
+                                'on_hold' => 'orange',
+                                default => 'zinc'
+                            }"
+                        >
+                            {{ $status ? str_replace('_', ' ', ucfirst($status)) : '-' }}
+                        </flux:badge>
                     </flux:field>
                 </div>
 
                 <flux:field>
                     <flux:label>Description</flux:label>
                     <flux:text>{{ $description ?? '-' }}</flux:text>
-                </flux:field>
-
-                <flux:field>
-                    <flux:label>Status</flux:label>
-                    <flux:badge
-                        variant="solid"
-                        class="text-xs md:text-sm whitespace-nowrap w-fit!"
-                        :color="match($status) {
-                            'pending' => 'yellow',
-                            'in_progress' => 'blue',
-                            'completed' => 'green',
-                            'cancelled' => 'red',
-                            'on_hold' => 'orange',
-                            default => 'zinc'
-                        }"
-                    >
-                        {{ $status ? str_replace('_', ' ', ucfirst($status)) : '-' }}
-                    </flux:badge>
                 </flux:field>
             </div>
         </div>
