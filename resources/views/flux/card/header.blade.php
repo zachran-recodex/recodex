@@ -5,7 +5,7 @@
 
 @php
     $classes = Flux::classes([
-        'px-6 py-3',
+        'p-6',
         'border-b' => $divided,
         'border-zinc-200 dark:border-zinc-700' => $variant === 'default' && $divided,
         'border-primary-200 dark:border-primary-800' => $variant === 'primary' && $divided,
