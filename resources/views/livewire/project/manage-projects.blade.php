@@ -116,41 +116,43 @@
             <form wire:submit.prevent="store">
                 <flux:fieldset>
                     <div class="space-y-6">
-                        <flux:radio.group wire:model="client_type" label="Client Type" variant="segmented">
-                            <flux:radio value="existing" label="Existing Client" />
-                            <flux:radio value="new" label="New Client" />
-                        </flux:radio.group>
+                        @if (!$project_id)
+                            <flux:radio.group wire:model="client_type" label="Client Type" variant="segmented">
+                                <flux:radio value="existing" label="Existing Client" />
+                                <flux:radio value="new" label="New Client" />
+                            </flux:radio.group>
 
-                        <div x-show="$wire.client_type === 'existing'">
-                            <flux:field>
-                                <flux:label>Select Client</flux:label>
-                                <flux:select wire:model="client_id" id="client_id">
-                                    <option value="">Select Client</option>
-                                    @foreach($clients as $client)
-                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                                    @endforeach
-                                </flux:select>
-                                <flux:error name="client_id" />
-                            </flux:field>
-                        </div>
-
-                        <div x-show="$wire.client_type === 'new'">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                            <div x-show="$wire.client_type === 'existing'">
                                 <flux:field>
-                                    <flux:label>Client Name</flux:label>
-                                    <flux:input wire:model="new_client_name" id="new_client_name" placeholder="Enter client name" />
-                                    <flux:error name="new_client_name" />
-                                </flux:field>
-
-                                <flux:field>
-                                    <flux:label>Company</flux:label>
-                                    <flux:input wire:model="new_client_company" id="new_client_company" placeholder="Enter company name" />
-                                    <flux:error name="new_client_company" />
+                                    <flux:label>Select Client</flux:label>
+                                    <flux:select wire:model="client_id" id="client_id">
+                                        <option value="">Select Client</option>
+                                        @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                        @endforeach
+                                    </flux:select>
+                                    <flux:error name="client_id" />
                                 </flux:field>
                             </div>
-                        </div>
 
-                        <flux:separator />
+                            <div x-show="$wire.client_type === 'new'">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                    <flux:field>
+                                        <flux:label>Client Name</flux:label>
+                                        <flux:input wire:model="new_client_name" id="new_client_name" placeholder="Enter client name" />
+                                        <flux:error name="new_client_name" />
+                                    </flux:field>
+
+                                    <flux:field>
+                                        <flux:label>Company</flux:label>
+                                        <flux:input wire:model="new_client_company" id="new_client_company" placeholder="Enter company name" />
+                                        <flux:error name="new_client_company" />
+                                    </flux:field>
+                                </div>
+                            </div>
+
+                            <flux:separator />
+                        @endif
 
                         <flux:field>
                             <flux:label badge="516x390">Image</flux:label>

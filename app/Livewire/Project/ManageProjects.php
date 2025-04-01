@@ -55,14 +55,17 @@ class ManageProjects extends Component
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'cost' => 'required|numeric|min:0',
             'status' => ['required', Rule::in(array_keys(Project::getStatusOptions()))],
-            'client_type' => 'required|in:existing,new',
         ];
 
-        if ($this->client_type === 'existing') {
-            $rules['client_id'] = 'required|exists:clients,id';
-        } else {
-            $rules['new_client_name'] = 'required|string|max:255';
-            $rules['new_client_company'] = 'required|string|max:255';
+        if (!$this->project_id) {
+            $rules['client_type'] = 'required|in:existing,new';
+
+            if ($this->client_type === 'existing') {
+                $rules['client_id'] = 'required|exists:clients,id';
+            } else {
+                $rules['new_client_name'] = 'required|string|max:255';
+                $rules['new_client_company'] = 'required|string|max:255';
+            }
         }
 
         return $rules;
