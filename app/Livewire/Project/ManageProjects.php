@@ -33,6 +33,9 @@ class ManageProjects extends Component
 
     // Track active modal
     public $activeModal = null;
+    public $client_type = 'existing';
+    public $new_client_name;
+    public $new_client_company;
 
     /**
      * Define validation rules for client form
@@ -41,8 +44,7 @@ class ManageProjects extends Component
      */
     protected function rules()
     {
-        return [
-            'client_id' => 'required|exists:clients,id',
+        $rules = [
             'title' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'description' => 'required|string',
@@ -51,7 +53,17 @@ class ManageProjects extends Component
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'cost' => 'required|numeric|min:0',
             'status' => ['required', Rule::in(array_keys(Project::getStatusOptions()))],
+            'client_type' => 'required|in:existing,new',
         ];
+
+        if ($this->client_type === 'existing') {
+            $rules['client_id'] = 'required|exists:clients,id';
+        } else {
+            $rules['new_client_name'] = 'required|string|max:255';
+            $rules['new_client_company'] = 'required|string|max:255';
+        }
+
+        return $rules;
     }
 
     /**
@@ -62,7 +74,10 @@ class ManageProjects extends Component
     public function resetInputFields()
     {
         $this->project_id = null;
+        $this->client_type = 'existing';
         $this->client_id = '';
+        $this->new_client_name = '';
+        $this->new_client_company = '';
         $this->title = '';
         $this->category = '';
         $this->description = '';
@@ -153,6 +168,15 @@ class ManageProjects extends Component
         $this->validate();
 
         try {
+            // Handle new client creation if needed
+            if ($this->client_type === 'new') {
+                $client = Client::create([
+                    'name' => $this->new_client_name,
+                    'company' => $this->new_client_company,
+                ]);
+                $this->client_id = $client->id;
+            }
+
             $data = [
                 'client_id' => $this->client_id,
                 'title' => $this->title,
