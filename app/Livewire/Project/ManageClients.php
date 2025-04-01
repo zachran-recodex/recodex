@@ -3,235 +3,224 @@
 namespace App\Livewire\Project;
 
 use App\Models\Client;
-use App\Models\Domain;
 use Livewire\Component;
 use App\WithNotification;
-use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ManageClients extends Component
 {
-    use WithPagination, WithNotification, WithFileUploads;
+    use WithPagination;
+    use WithNotification;
+    use WithFileUploads;
 
+    // Form Properties
     public $client_id;
-    public $name = '';
-    public $email = '';
-    public $phone = '';
-    public $company = '';
+    public $name;
+    public $email;
+    public $phone;
+    public $company;
     public $logo;
-    public $newLogo;
-    public $primary_domain_id;
-    public $primaryDomain;
-    public $domains = [];
+    public $existing_logo;
 
-    public $isEditing = false;
-    public $clientToDelete = '';
+    // Track active modal
+    public $activeModal = null;
 
     /**
-     * Validation rules for client form.
+     * Define validation rules for client form
      *
-     * @return array
+     * @return array Validation rules array
      */
-    protected function rules(): array
+    protected function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
+            'name' => 'required|string|min:3|max:100',
+            'email' => ['nullable', 'email', Rule::unique('clients', 'email')->ignore($this->client_id)],
             'phone' => 'nullable|string|max:20',
-            'company' => 'required|string|max:255',
-            'newLogo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'primary_domain_id' => 'required|exists:domains,id'
+            'company' => 'required|string|min:2|max:100',
+            'logo' => 'nullable|image|mimes:png|max:2048',
         ];
     }
 
     /**
-     * Validate only the changed property.
+     * Reset all form input fields and validation state
      *
-     * @param string $propertyName
+     * @return void
      */
-    public function updated(string $propertyName): void
+    public function resetInputFields()
     {
-        $this->validateOnly($propertyName);
-    }
-
-    /**
-     * Prepare for creating a new client.
-     */
-    public function create(): void
-    {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->modal('form')->show();
-    }
-
-    /**
-     * Prepare for editing an existing client.
-     *
-     * @param int $id
-     */
-    public function edit(int $id): void
-    {
-        $client = Client::findOrFail($id);
-
-        $this->isEditing = true;
-        $this->client_id = $id;
-        $this->name = $client->name;
-        $this->email = $client->email;
-        $this->phone = $client->phone;
-        $this->company = $client->company;
-        $this->logo = $client->logo;
-        $this->primary_domain_id = $client->primary_domain_id;
-
-        $this->modal('form')->show();
-    }
-
-    /**
-     * Show client details.
-     *
-     * @param int $id
-     */
-    public function show(int $id): void
-    {
-        $client = Client::with(['primaryDomain', 'domains'])->findOrFail($id);
-        $this->client_id = $id;
-        $this->name = $client->name;
-        $this->email = $client->email;
-        $this->phone = $client->phone;
-        $this->company = $client->company;
-        $this->logo = $client->logo;
-        $this->primary_domain_id = $client->primary_domain_id;
-        $this->primaryDomain = $client->primaryDomain;
-        $this->domains = $client->domains;
-
-        $this->modal('show')->show();
-    }
-
-    /**
-     * Confirm deletion of a client.
-     *
-     * @param int $id
-     */
-    public function confirmDelete(int $id): void
-    {
-        $client = Client::findOrFail($id);
-        $this->client_id = $id;
-        $this->clientToDelete = $client->name;
-        $this->modal('delete')->show();
-    }
-
-    /**
-     * Delete the selected client.
-     */
-    public function delete(): void
-    {
-        $client = Client::findOrFail($this->client_id);
-        $client->delete();
-        $this->notifySuccess('Client deleted successfully');
-        $this->modal('delete')->close();
-    }
-
-    /**
-     * Reset form to initial state.
-     */
-    public function resetForm(): void
-    {
-        $this->reset([
-            'client_id',
-            'name',
-            'email',
-            'phone',
-            'company',
-            'logo',
-            'newLogo',
-            'primary_domain_id',
-            'primaryDomain',
-        ]);
-        $this->domains = [];
-        $this->isEditing = false;
-        $this->clientToDelete = '';
+        $this->client_id = '';
+        $this->name = '';
+        $this->email = '';
+        $this->phone = '';
+        $this->company = '';
+        $this->logo = null;
+        $this->existing_logo = null;
         $this->resetValidation();
     }
 
     /**
-     * Handle modal close event
+     * Unified modal control method
+     *
+     * @param string $modalName The name of the modal to show
+     * @param bool $show Whether to show or hide the modal
+     * @return void
      */
-    public function closeModal(): void
+    public function toggleModal(string $modalName, bool $show = true)
     {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->clientToDelete = '';
+        if ($show) {
+            $this->activeModal = $modalName;
+            $this->modal($modalName)->show();
+        } else {
+            $this->activeModal = null;
+            $this->modal($modalName)->close();
+        }
     }
 
     /**
-     * Save or update client.
+     * Initialize create client form
+     * Resets form fields and opens the form modal
+     *
+     * @return void
      */
-    public function save(): void
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Load client data for editing
+     * Populates form fields with existing client data
+     *
+     * @param int $id Client ID to edit
+     * @return void
+     */
+    public function edit($id)
+    {
+        $client = Client::findOrFail($id);
+        $this->client_id = $id;
+        $this->name = $client->name;
+        $this->email = $client->email;
+        $this->phone = $client->phone;
+        $this->company = $client->company;
+        $this->existing_logo = $client->logo;
+
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Show delete confirmation modal
+     * Sets the client ID for deletion and opens confirmation modal
+     *
+     * @param int $id Client ID to delete
+     * @return void
+     */
+    public function confirmDelete($id)
+    {
+        $this->client_id = $id;
+        $this->toggleModal('delete');
+    }
+
+    /**
+     * Store or update client data
+     * Validates input and saves client information to database
+     *
+     * @return void
+     */
+    public function store()
     {
         $this->validate();
 
         try {
-            DB::beginTransaction();
-
-            $logoPath = $this->logo;
-            if ($this->newLogo) {
-                // Delete old logo if exists
-                if ($logoPath && Storage::disk('public')->exists($logoPath)) {
-                    Storage::disk('public')->delete($logoPath);
-                }
-
-                // Create a safe filename
-                $filename = Str::slug($this->name) . '-' . time() . '.' . $this->newLogo->getClientOriginalExtension();
-                $logoPath = $this->newLogo->storeAs('clients', $filename, 'public');
-            }
-
             $data = [
                 'name' => $this->name,
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'company' => $this->company,
-                'logo' => $logoPath,
-                'primary_domain_id' => $this->primary_domain_id,
             ];
 
-            if ($this->isEditing) {
-                $client = Client::findOrFail($this->client_id);
-                $client->update($data);
+            // Handle file upload if present
+            if ($this->logo) {
+                try {
+                    // Delete old file if editing
+                    if ($this->client_id && $this->existing_logo) {
+                        Storage::delete('public/' . $this->existing_logo);
+                    }
 
+                    $logoPath = $this->logo->store('clients', 'public');
+                    $data['logo'] = str_replace('public/', '', $logoPath);
+                } catch (\Exception $e) {
+                    $this->notifyError('Error uploading logo: ' . $e->getMessage());
+                    return;
+                }
+            }
+
+            if ($this->client_id) {
+                // Update existing client
+                $client = Client::find($this->client_id);
+                $client->update($data);
                 $this->notifySuccess('Client updated successfully.');
             } else {
+                // Create new client
                 Client::create($data);
-
                 $this->notifySuccess('Client created successfully.');
             }
 
-            DB::commit();
-            $this->resetForm();
-            $this->modal('form')->close();
-
+            $this->toggleModal('form', false);
+            $this->resetInputFields();
         } catch (\Exception $e) {
-            DB::rollBack();
-            $this->notifyError('Something went wrong: ' . $e->getMessage());
+            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
     }
 
     /**
-     * Render the Livewire component.
+     * Delete client record
+     * Removes client and associated logo file from storage
      *
-     * @return \Illuminate\Contracts\View\View
+     * @return void
+     */
+    public function deleteClient()
+    {
+        try {
+            $client = Client::find($this->client_id);
+
+            if ($client) {
+                // Delete image file if exists
+                if ($client->logo) {
+                    try {
+                        Storage::delete('public/' . $client->logo);
+                    } catch (\Exception $e) {
+                        // Log error but continue with deletion
+                        Log::error('Failed to delete client logo: ' . $e->getMessage());
+                    }
+                }
+
+                $client->delete();
+                $this->notifySuccess('Client deleted successfully.');
+            }
+
+            $this->toggleModal('delete', false);
+            $this->resetInputFields();
+        } catch (\Exception $e) {
+            $this->notifyError('Delete operation failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Render component view
+     * Fetches paginated clients and renders the component template
+     *
+     * @return \Illuminate\View\View
      */
     public function render()
     {
         $clients = Client::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        $domains = Domain::orderBy('name')->get();
-
-        return view('livewire.project.manage-clients', [
-            'clients' => $clients,
-            'domains' => $domains,
-        ]);
+        return view('livewire.project.manage-clients', compact('clients'));
     }
 }

@@ -1,24 +1,30 @@
 <flux:container class="space-y-6">
-    <!-- Page Header -->
-    <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
         <flux:heading size="xl" class="font-bold!">Manage Clients</flux:heading>
 
         <flux:breadcrumbs>
-            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item href="{{ route('dashboard.project.overview') }}" separator="slash">Project</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item separator="slash">Manage Clients</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('dashboard') }}">Dashboard</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item href="{{ route('dashboard.project.overview') }}">Project</flux:breadcrumbs.item>
+            <flux:breadcrumbs.item>Manage Client</flux:breadcrumbs.item>
         </flux:breadcrumbs>
     </div>
 
-    <flux:card>
-        <flux:card.header class="flex justify-between items-center">
-            <flux:heading size="lg">Client List</flux:heading>
+    @if (session()->has('error'))
+        <flux:callout variant="danger" icon="x-circle" heading="{{ session('error') }}" />
+    @endif
 
-            <flux:modal.trigger name="form">
-                <flux:button type="button" variant="primary" class="w-fit" icon="plus" wire:click="create">
-                    Add New
-                </flux:button>
-            </flux:modal.trigger>
+    <flux:card>
+        <flux:card.header>
+            <div class="flex justify-between items-center">
+                <flux:heading size="lg" class="semi-bold!">List Client</flux:heading>
+
+                <flux:modal.trigger name="form">
+                    <flux:button type="button" variant="primary" class="w-fit" icon="plus" wire:click="create">
+                        Add New
+                    </flux:button>
+                </flux:modal.trigger>
+            </div>
         </flux:card.header>
 
         <flux:card.body :padding="false">
@@ -26,7 +32,7 @@
                 <flux:table hover striped>
                     <flux:table.columns>
                         <flux:table.column>Logo</flux:table.column>
-                        <flux:table.column>Name</flux:table.column>
+                        <flux:table.column>Client</flux:table.column>
                         <flux:table.column>Email</flux:table.column>
                         <flux:table.column>Phone</flux:table.column>
                         <flux:table.column>Actions</flux:table.column>
@@ -48,51 +54,26 @@
                                 </flux:table.cell>
 
                                 <flux:table.cell>
-                                    <div class="space-y-2">
-                                        <flux:heading class="font-semibold">
-                                            {{ $client->name }}
-                                        </flux:heading>
-                                        <flux:text><flux:link href="https://{{ $client->primaryDomain?->name ?: 'N/A' }}">{{ $client->primaryDomain?->name ?: 'N/A' }}</flux:link></flux:text>
-                                    </div>
+                                    <flux:heading class="font-semibold">{{ $client->name }}</flux:heading>
                                 </flux:table.cell>
                                 <flux:table.cell>{{ $client->email ?: 'N/A' }}</flux:table.cell>
                                 <flux:table.cell>{{ $client->phone ?: 'N/A' }}</flux:table.cell>
 
                                 <flux:table.cell>
-                                    <flux:modal.trigger name="show">
-                                        <flux:button
-                                            variant="success"
-                                            wire:click="show({{ $client->id }})"
-                                            icon="eye"
-                                        ></flux:button>
-                                    </flux:modal.trigger>
-
                                     <flux:modal.trigger name="form">
-                                        <flux:button
-                                            variant="warning"
-                                            wire:click="edit({{ $client->id }})"
-                                            icon="pencil"
-                                        ></flux:button>
+                                        <flux:button variant="warning" wire:click="edit({{ $client->id }})" icon="pencil"></flux:button>
                                     </flux:modal.trigger>
 
                                     <flux:modal.trigger name="delete">
-                                        <flux:button
-                                            variant="danger"
-                                            wire:click="confirmDelete({{ $client->id }})"
-                                            icon="trash"
-                                        ></flux:button>
+                                        <flux:button variant="danger" wire:click="confirmDelete({{ $client->id }})" icon="trash"></flux:button>
                                     </flux:modal.trigger>
                                 </flux:table.cell>
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="5" class="text-center">
-                                    <div class="flex flex-col items-center justify-center">
-                                        <flux:heading size="lg">No Clients Found</flux:heading>
-                                        <flux:subheading>
-                                            Start by creating a new client.
-                                        </flux:subheading>
-                                    </div>
+                                <flux:table.cell colspan="5" class="text-center py-8">
+                                    <flux:heading size="lg">No data found.</flux:heading>
+                                    <flux:subheading>Start by creating new client.</flux:subheading>
                                 </flux:table.cell>
                             </flux:table.row>
                         @endforelse
@@ -104,181 +85,100 @@
         <flux:card.footer>
             {{ $clients->links() }}
         </flux:card.footer>
+    </flux:card>
 
-        <flux:modal variant="flyout" name="show" x-on:hidden="$wire.closeModal()">
-            <div class="space-y-6">
-                <flux:heading size="lg" class="font-semibold mb-6">
-                    Client Details
-                </flux:heading>
+    <flux:modal name="form" class="min-w-4xl">
+        <div class="space-y-6">
+            <flux:heading size="lg" class="font-semibold">
+                {{ $client_id ? 'Edit Client' : 'Add New Client' }}
+            </flux:heading>
 
-                <flux:separator />
+            <flux:separator />
 
-                <div class="space-y-6">
-                    @if ($logo)
-                        <div class="flex justify-center">
-                            <img
-                                src="{{ Storage::url($logo) }}"
-                                alt="{{ $name }}"
-                                class="h-32 w-auto"
-                            >
+            <form wire:submit.prevent="store">
+                <flux:fieldset>
+                    <div class="space-y-6">
+
+                        <flux:field>
+                            <flux:label>Logo</flux:label>
+                            @if ($existing_logo)
+                                <img
+                                    src="{{ Storage::url($existing_logo) }}"
+                                    alt="Current Logo"
+                                    class="h-32 w-auto"
+                                >
+                                <flux:button type="button" variant="danger" wire:click="$set('existing_logo', null)" class="w-fit">
+                                    Delete
+                                </flux:button>
+                            @elseif ($logo)
+                                <img
+                                    src="{{ $logo->temporaryUrl() }}"
+                                    alt="Logo Preview"
+                                    class="h-32 w-auto"
+                                >
+                            @endif
+                            <flux:input
+                                type="file"
+                                wire:model="logo"
+                                accept="image/png,image"
+                            />
+                            <flux:description>Max size: 2MB. Formats: PNG</flux:description>
+                            <flux:error name="logo" />
+                        </flux:field>
+
+                        <div class="grid grid-cols-2 gap-6 items-start">
+                            <flux:field>
+                                <flux:label>Name</flux:label>
+                                <flux:input wire:model="name" />
+                                <flux:error name="name" />
+                            </flux:field>
+
+                            <flux:field>
+                                <flux:label>Company</flux:label>
+                                <flux:input wire:model="company" />
+                                <flux:error name="company" />
+                            </flux:field>
+
+                            <flux:field>
+                                <flux:label>Email</flux:label>
+                                <flux:input type="email" wire:model="email" />
+                                <flux:error name="email" />
+                            </flux:field>
+
+                            <flux:field>
+                                <flux:label>Phone</flux:label>
+                                <flux:input type="tel" wire:model="phone" />
+                                <flux:error name="phone" />
+                            </flux:field>
                         </div>
-                    @endif
 
-                    <flux:label>Primary Domain</flux:label>
-                    <flux:text>
-                        @if($primaryDomain)
-                            <flux:link href="https://{{ $primaryDomain->name }}" target="_blank">
-                                {{ $primaryDomain->name }}
-                            </flux:link>
-                        @else
-                            <span class="text-zinc-400">N/A</span>
-                        @endif
-                    </flux:text>
-
-                    @if(count($domains) > 0)
-                        <div>
-                            <flux:label>Other Domains</flux:label>
-                            <div class="space-y-2">
-                                @foreach($domains as $domain)
-                                    @if($domain->id !== $primary_domain_id)
-                                        <flux:text>
-                                            <flux:link href="https://{{ $domain->name }}" target="_blank">
-                                                {{ $domain->name }}
-                                            </flux:link>
-                                        </flux:text>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="grid grid-cols-2 gap-6">
-                        <div>
-                            <flux:label>Name</flux:label>
-                            <flux:text>{{ $name }}</flux:text>
-                        </div>
-
-                        <div>
-                            <flux:label>Company</flux:label>
-                            <flux:text>{{ $company }}</flux:text>
-                        </div>
-
-                        <div>
-                            <flux:label>Email</flux:label>
-                            <flux:text>{{ $email ?: 'N/A' }}</flux:text>
-                        </div>
-
-                        <div>
-                            <flux:label>Phone</flux:label>
-                            <flux:text>{{ $phone ?: 'N/A' }}</flux:text>
+                        <div class="flex">
+                            <flux:spacer />
+                            <flux:button type="submit" variant="primary" class="w-fit" wire:loading.attr="disabled">
+                                {{ $client_id ? 'Update' : 'Save' }}
+                            </flux:button>
                         </div>
                     </div>
-                </div>
+                </flux:fieldset>
+            </form>
+        </div>
+    </flux:modal>
+
+    <flux:modal name="delete" class="min-w-sm">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete client?</flux:heading>
+
+                <flux:text class="mt-2">
+                    <p>Are you sure you want to delete this client?</p>
+                    <p>This action cannot be undone.</p>
+                </flux:text>
             </div>
-        </flux:modal>
 
-        <flux:modal name="form" class="min-w-4xl" x-on:hidden="$wire.closeModal()">
-            <div class="space-y-6">
-                <flux:heading size="lg" class="font-semibold mb-6">
-                    {{ $isEditing ? 'Edit Client' : 'Add New Client' }}
-                </flux:heading>
-
-                <flux:separator />
-
-                <form wire:submit.prevent="save">
-                    <flux:fieldset>
-                        <div class="space-y-6">
-
-                            <flux:field>
-                                <flux:label>Primary Domain</flux:label>
-                                <flux:select wire:model="primary_domain_id">
-                                    <option value="">Select Domain</option>
-                                    @foreach($domains as $domain)
-                                        <option value="{{ $domain->id }}">{{ $domain->name }}</option>
-                                    @endforeach
-                                </flux:select>
-                                <flux:error name="primary_domain_id" />
-                            </flux:field>
-
-                            <flux:field>
-                                <flux:label>Logo</flux:label>
-                                @if ($newLogo)
-                                    <img
-                                        src="{{ $newLogo->temporaryUrl() }}"
-                                        alt="Preview"
-                                        class="h-32 w-auto"
-                                    >
-                                @elseif ($logo)
-                                    <img
-                                        src="{{ Storage::url($logo) }}"
-                                        alt="Current Logo"
-                                        class="h-32 w-auto"
-                                    >
-                                @endif
-                                <flux:input
-                                    type="file"
-                                    wire:model="newLogo"
-                                    accept="image/jpeg,image/png,image/jpg,image/gif"
-                                />
-                                <flux:description>Max size: 2MB. Formats: JPEG, PNG, GIF</flux:description>
-                                <flux:error name="newLogo" />
-                            </flux:field>
-
-                            <div class="grid grid-cols-2 gap-6 items-start">
-                                <flux:field>
-                                    <flux:label>Name</flux:label>
-                                    <flux:input wire:model="name" />
-                                    <flux:error name="name" />
-                                </flux:field>
-
-                                <flux:field>
-                                    <flux:label>Company</flux:label>
-                                    <flux:input wire:model="company" />
-                                    <flux:error name="company" />
-                                </flux:field>
-
-                                <flux:field>
-                                    <flux:label>Email</flux:label>
-                                    <flux:input type="email" wire:model="email" />
-                                    <flux:error name="email" />
-                                </flux:field>
-
-                                <flux:field>
-                                    <flux:label>Phone</flux:label>
-                                    <flux:input type="tel" wire:model="phone" />
-                                    <flux:error name="phone" />
-                                </flux:field>
-                            </div>
-
-                            <div class="flex">
-                                <flux:spacer />
-                                <flux:button type="submit" variant="primary" class="w-fit">
-                                    {{ $isEditing ? 'Update' : 'Create' }}
-                                </flux:button>
-                            </div>
-
-                        </div>
-                    </flux:fieldset>
-                </form>
+            <div class="flex">
+                <flux:spacer />
+                <flux:button type="button" variant="danger" wire:click="deleteClient">Delete</flux:button>
             </div>
-        </flux:modal>
-
-        <flux:modal name="delete" class="min-w-sm" x-on:hidden="$wire.closeModal()">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Delete {{ $clientToDelete }}?</flux:heading>
-
-                    <flux:text class="mt-2">
-                        <p>Are you sure you want to delete this client?</p>
-                        <p>This action can be reversed from the trash.</p>
-                    </flux:text>
-                </div>
-
-                <div class="flex">
-                    <flux:spacer />
-                    <flux:button variant="danger" wire:click="delete">Delete</flux:button>
-                </div>
-            </div>
-        </flux:modal>
-    </flux:card>
+        </div>
+    </flux:modal>
 </flux:container>
