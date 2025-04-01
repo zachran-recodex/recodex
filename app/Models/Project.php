@@ -32,7 +32,7 @@ class Project extends Model
     protected $casts = [
         'start_date' => 'date',
         'end_date' => 'date',
-        'cost' => 'decimal:2',
+        'cost' => 'decimal:0',
     ];
 
     const STATUS_PENDING = 'pending';
@@ -88,7 +88,7 @@ class Project extends Model
      */
     public function getFormattedCostAttribute()
     {
-        return 'Rp ' . number_format($this->cost, 2, ',', '.');
+        return 'Rp ' . number_format($this->cost, 0, ',', '.');
     }
 
     /**
