@@ -20,7 +20,6 @@ class ManageProjects extends Component
 
     // Form Properties
     public $project_id;
-    public $client_id;
     public $title;
     public $category;
     public $description;
@@ -31,11 +30,14 @@ class ManageProjects extends Component
     public $cost;
     public $status;
 
-    // Track active modal
-    public $activeModal = null;
+    // Client Form Properties
+    public $client_id;
     public $client_type = 'existing';
     public $new_client_name;
     public $new_client_company;
+
+    // Track active modal
+    public $activeModal = null;
 
     /**
      * Define validation rules for client form
