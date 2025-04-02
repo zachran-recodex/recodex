@@ -5,7 +5,6 @@ namespace App\Livewire\CMS;
 use App\Models\About;
 use Livewire\Component;
 use App\WithNotification;
-use Illuminate\Support\Facades\DB;
 
 class ManageAbout extends Component
 {
