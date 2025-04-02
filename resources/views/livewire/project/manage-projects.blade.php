@@ -1,4 +1,4 @@
-<flux:container class="space-y-6">
+<flux:container class="space-y-4 sm:space-y-6">
     <div class="flex flex-col space-y-4 sm:space-y-6 md:space-y-0 md:flex-row md:items-center md:justify-between">
         <div class="w-full md:w-auto">
             <flux:heading size="xl" class="font-bold! text-center md:text-left">Manage Projects</flux:heading>
@@ -32,7 +32,7 @@
 
         <flux:card.body :padding="false">
             <div class="overflow-x-auto">
-                <flux:table hover striped responsive>
+                <flux:table hover striped>
                     <flux:table.columns>
                         <flux:table.column class="min-w-[200px] md:w-auto">Title</flux:table.column>
                         <flux:table.column class="min-w-[120px] md:w-auto">Start Date</flux:table.column>
@@ -95,7 +95,7 @@
                             <flux:table.row>
                                 <flux:table.cell colspan="7" class="text-center py-6 md:py-8">
                                     <flux:heading size="lg" class="text-base md:text-lg">No data found.</flux:heading>
-                                    <flux:subheading class="text-sm md:text-base">Start by creating new project.</flux:subheading>
+                                    <flux:subheading class="text-sm md:text-base">Start by creating a new project.</flux:subheading>
                                 </flux:table.cell>
                             </flux:table.row>
                         @endforelse
@@ -110,7 +110,7 @@
     </flux:card>
 
     <flux:modal name="show" variant="flyout">
-        <div class="space-y-6">
+        <div class="space-y-4 sm:space-y-6">
             <flux:heading size="lg" class="font-semibold">
                 Details Project
             </flux:heading>
@@ -123,7 +123,7 @@
 
             <flux:separator />
 
-            <div class="space-y-6">
+            <div class="space-y-4 sm:space-y-6">
                 @if ($existing_image)
                     <div class="flex justify-center">
                         <img
@@ -189,7 +189,7 @@
     </flux:modal>
 
     <flux:modal name="form" class="min-w-sm md:min-w-2xl lg:min-w-4xl">
-        <div class="space-y-6">
+        <div class="space-y-4 sm:space-y-6">
             <flux:heading size="lg" class="font-semibold">
                 {{ $project_id ? 'Edit Project' : 'Add New Project' }}
             </flux:heading>
@@ -198,7 +198,7 @@
 
             <form wire:submit.prevent="store">
                 <flux:fieldset>
-                    <div class="space-y-6">
+                    <div class="space-y-4 sm:space-y-6">
                         @if (!$project_id)
                             <flux:radio.group wire:model="client_type" label="Client Type" variant="segmented">
                                 <flux:radio value="existing" label="Existing Client" />
