@@ -103,7 +103,6 @@ class ManageBlogs extends Component
         $this->toggleModal('form');
     }
 
-
     /**
      * Show delete confirmation modal
      * Sets the blog ID for deletion and opens confirmation modal
