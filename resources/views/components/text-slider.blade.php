@@ -4,7 +4,7 @@
             <!-- Text Slider Item Text-->
             <div
                 class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                Let's create new experiences
+                Mari Wujudkan Pengalaman Digital Terbaik
             </div>
             <!-- Text Slider Item Text -->
             <!-- Text Slider Separator Icon -->
@@ -16,7 +16,7 @@
             <!-- Text Slider Item Text-->
             <div
                 class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                Let's create new experiences
+                Mari Wujudkan Pengalaman Digital Terbaik
             </div>
             <!-- Text Slider Item Text -->
             <!-- Text Slider Separator Icon -->
@@ -28,7 +28,7 @@
             <!-- Text Slider Item Text-->
             <div
                 class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                Let's create new experiences
+                Mari Wujudkan Pengalaman Digital Terbaik
             </div>
             <!-- Text Slider Item Text -->
             <!-- Text Slider Separator Icon -->
@@ -40,7 +40,7 @@
             <!-- Text Slider Item Text-->
             <div
                 class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                Let's create new experiences
+                Mari Wujudkan Pengalaman Digital Terbaik
             </div>
             <!-- Text Slider Item Text -->
             <!-- Text Slider Separator Icon -->
@@ -52,7 +52,7 @@
             <!-- Text Slider Item Text-->
             <div
                 class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                Let's create new experiences
+                Mari Wujudkan Pengalaman Digital Terbaik
             </div>
             <!-- Text Slider Item Text -->
             <!-- Text Slider Separator Icon -->
@@ -64,7 +64,7 @@
             <!-- Text Slider Item Text-->
             <div
                 class="whitespace-nowrap font-syne text-[35px] font-bold leading-none tracking-[1px] text-colorLightLime">
-                Let's create new experiences
+                Mari Wujudkan Pengalaman Digital Terbaik
             </div>
             <!-- Text Slider Item Text -->
             <!-- Text Slider Separator Icon -->

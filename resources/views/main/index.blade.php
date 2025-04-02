@@ -88,72 +88,8 @@
     <!-- ...::: Hero Section End :::... -->
 
     <!-- ...::: Service Section Start :::... -->
-    <section class="section-service">
-        <!-- Section Background -->
-        <div class="bg-colorIvory">
-            <!-- Section Space -->
-            <div class="section-space">
-                <!-- Section Container -->
-                <div class="container">
-                    <!-- Section Block -->
-                    <div
-                        class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
-                        <h2 class="jos">
-                            We provide effective business solutions
-                        </h2>
-                    </div>
-                    <!-- Section Block -->
-
-                    <!-- Service List -->
-                    <ul class="grid grid-cols-1 gap-[30px] lg:grid-cols-2">
-                        @forelse ($services as $service)
-                            <!-- Service Item -->
-                            <li class="jos" data-jos_delay="0.9">
-                                <div class="shadow-bg group h-full">
-                                    <div
-                                        class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                        <flux:icon :icon="$service->icon" class="h-[70px] w-auto" />
-
-                                        <h4 class="mb-[15px] mt-[30px]">{{ $service->title }}</h4>
-                                        <p class="mb-7">
-                                            {{ $service->description }}
-                                        </p>
-                                        <a href=" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
-                                            <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Service Item -->
-                        @empty
-                            <!-- Service Item -->
-                            <li class="jos" data-jos_delay="0.3">
-                                <div class="shadow-bg group h-full">
-                                    <div class="flex h-full flex-col items-start overflow-hidden rounded-[20px] border-2 border-black bg-colorIvory p-[30px] transition duration-300 group-hover:bg-colorLightLime">
-                                        <img src="{{ asset('img/icons/th-1-service-icon-2.svg') }}" alt="th-1-service-icon-2" width="77" height="70" class="h-[70px] w-auto" />
-
-                                        <h4 class="mb-[15px] mt-[30px]">No Data</h4>
-                                        <p class="mb-7">
-                                            No Data Available
-                                        </p>
-                                        <a href="/login" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
-                                            <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <!-- Service Item -->
-                        @endforelse
-                    </ul>
-                    <!-- Service List -->
-                </div>
-                <!-- Section Container -->
-            </div>
-            <!-- Section Space -->
-        </div>
-        <!-- Section Background -->
-    </section>
-    <!-- ...::: Service Section end :::... -->
+    <x-service-section :services="$services" />
+    <!-- ...::: Service Section End :::... -->
 
     <!-- Horizontal Line -->
     <div class="horizontal-line bg-[#e6e6e6]"></div>
@@ -170,12 +106,10 @@
                     <div
                         class="grid items-center gap-x-6 gap-y-10 text-center lg:grid-cols-[1fr_minmax(0,0.55fr)] lg:text-start xl:gap-x-[134px]">
                         <h2 class="jos">
-                            We make your business stand out
+                            Buat Bisnis Anda Makin Menarik!
                         </h2>
                         <p class="jos section-para">
-                            We work closely with our clients to know their objectives,
-                            target audience, unique needs, and practical business
-                            solutions.
+                            Kami berkolaborasi penuh dengan Anda untuk memahami tujuan bisnis, audiens target, dan kebutuhan unik—lalu menciptakan website yang tidak hanya menarik, tapi juga mendongkrak performa bisnis.
                         </p>
                     </div>
                 </div>
@@ -235,7 +169,7 @@
                     <div
                         class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
                         <h2 class="jos text-colorButteryWhite">
-                            Have a wide range of creative projects
+                            Portfolio Proyek Kami
                         </h2>
                     </div>
                     <!-- Section Block -->
@@ -341,98 +275,7 @@
     <!-- ...::: Project Section End :::... -->
 
     <!-- ...::: Process Section Start :::... -->
-    <section class="section-process">
-        <!-- Section Space -->
-        <div class="section-space">
-            <!-- Section Container -->
-            <div class="container">
-                <!-- Process Area -->
-                <div class="grid grid-cols-1 items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 xl:grid-cols-[1fr_minmax(0,0.67fr)] xxl:gap-x-[72px]">
-                    <!-- Process Area Left Block - Section Block -->
-                    <div class="section-block text-center lg:text-start">
-                        <h2 class="jos">
-                            Our high-quality working processes
-                        </h2>
-                        <div class="jos mt-6">
-                            <p class="section-para">
-                                We focus at every stage on effective communication and
-                                collaboration between the client and ensuring that the
-                                final design meets the client's objectives and
-                                expectations.
-                            </p>
-
-                            <p class="section-para">
-                                It is important to note that these are simplified steps,
-                                and the actual work process may vary depending on the
-                                complexity of the project.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Process Area Left Block - Section Block -->
-
-                    <!-- Process Area Right Block - Accordion -->
-                    <!-- Accordion List -->
-                    <ul class="jos flex flex-col gap-y-6">
-                        @forelse ($workProcesses as $workProcess)
-                            <!-- Accordion Item -->
-                            <li class="accordion-item-style-1 accordion-item {{ $loop->first ? 'active' : '' }}">                                <!-- Accordion Header -->
-                                <div
-                                    class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                                    <button
-                                        class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                        0{{ $loop->iteration }}/ {{ $workProcess->title }}
-                                    </button>
-                                    <div class="accordion-icon">
-                                        <img src="{{ asset('img/icons/icon-black-arrow-less-down.svg') }}"
-                                            alt="icon-black-arrow-less-down" />
-                                    </div>
-                                </div>
-                                <!-- Accordion Header -->
-                                <!-- Accordion Body -->
-                                <div class="accordion-body max-w-[826px] opacity-80">
-                                    <p class="pt-5">
-                                        {{ $workProcess->description  }}
-                                    </p>
-                                </div>
-                                <!-- Accordion Body -->
-                            </li>
-                            <!-- Accordion Item -->
-                        @empty
-                            <!-- Accordion Item -->
-                            <li class="accordion-item-style-1 accordion-item active">
-                                <!-- Accordion Header -->
-                                <div
-                                    class="accordion-header text-ColorBlack flex items-center justify-between gap-6 text-xl font-semibold">
-                                    <button
-                                        class="flex-1 text-left font-syne text-2xl font-bold leading-[1.4] md:text-3xl">
-                                        00/ No Data
-                                    </button>
-                                    <div class="accordion-icon">
-                                        <img src="{{ asset('img/icons/icon-black-arrow-less-down.svg') }}"
-                                            alt="icon-black-arrow-less-down" />
-                                    </div>
-                                </div>
-                                <!-- Accordion Header -->
-                                <!-- Accordion Body -->
-                                <div class="accordion-body max-w-[826px] opacity-80">
-                                    <p class="pt-5">
-                                        No Data
-                                    </p>
-                                </div>
-                                <!-- Accordion Body -->
-                            </li>
-                            <!-- Accordion Item -->
-                        @endforelse
-                    </ul>
-                    <!-- Accordion List -->
-                    <!-- Process Area Right Block - Accordion -->
-                </div>
-                <!-- Process Area -->
-            </div>
-            <!-- Section Container -->
-        </div>
-        <!-- Section Space -->
-    </section>
+    <x-process-section :workProcesses="$workProcesses" />
     <!-- ...::: Process Section End :::... -->
 
     <!-- Horizontal Line -->

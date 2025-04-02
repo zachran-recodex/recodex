@@ -72,11 +72,11 @@
                                 <ul class="site-menu-main">
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('about') }}" class="nav-link-item">About Us</a>
+                                        <a href="{{ route('about') }}" class="nav-link-item">Tentang Kami</a>
                                     </li>
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('service') }}" class="nav-link-item">Service</a>
+                                        <a href="{{ route('service') }}" class="nav-link-item">Layanan</a>
                                     </li>
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
@@ -84,7 +84,7 @@
                                     </li>
                                     <li
                                         class="nav-link-item drop-trigger text-colorDark rounded-none border border-transparent lg:text-white">
-                                        <a href="{{ route('project') }}" class="nav-link-item">Project</a>
+                                        <a href="{{ route('project') }}" class="nav-link-item">Portfolio</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -96,7 +96,7 @@
                     <!-- Header Right Block -->
                     <div class="flex items-center gap-x-6">
                         <a href="{{ route('contact') }}"
-                            class="btn-primary relative hidden px-[30px] py-[10px] sm:inline-flex">Contact Us</a>
+                            class="btn-primary relative hidden px-[30px] py-[10px] sm:inline-flex">Konsultasi</a>
 
                         <!-- Responsive Offcanvas Menu Button -->
                         <div class="block lg:hidden">
@@ -133,20 +133,17 @@
                                 <!-- Section Block -->
                                 <div class="section-block text-colorButteryWhite">
                                     <h2 class="mb-6">
-                                        Let's start a
+                                        Yuk mulai
                                         <span>
                                             <img src="{{ asset('img/elemnts/shape-light-lime-5-arms-star.svg') }}"
-                                                alt="shape-light-lime-5-arms-star" width="74" height="70"
+                                                alt="bintang" width="74" height="70"
                                                 class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
                                         </span>
-                                        project together
+                                        proyek bersama!
                                     </h2>
 
                                     <p class="section-para">
-                                        We work closely with our clients to understand their
-                                        objectives, target audience, and unique needs. We use our
-                                        creative skills to translate these requirements and
-                                        practical design solutions.
+                                        Kami akan berkolaborasi penuh dengan Anda untuk memahami tujuan bisnis, target audience, dan kebutuhan khusus. Kemampuan kreatif kami akan mentransformasi semua itu menjadi solusi website yang powerful dan efektif.
                                     </p>
                                 </div>
                                 <!-- Section Block -->
@@ -156,20 +153,20 @@
                                         <!-- Footer Info -->
                                         <ul class="mt-12 flex flex-col gap-y-3">
                                             <li>
-                                                <span
-                                                    class="block font-syne text-[21px] font-bold leading-[1.42] text-colorLightLime">Give
-                                                    us a call:</span>
-                                                <a href="tel:+6282298141940"
-                                                    class="text-[21px] leading-[1.42] text-colorButteryWhite">(62)
-                                                    822 9814 1940</a>
+                                                <span class="block font-syne text-[21px] font-bold leading-[1.42] text-colorLightLime">
+                                                    Hubungi Kami:
+                                                </span>
+                                                <a href="tel:+6282298141940" class="text-[21px] leading-[1.42] text-colorButteryWhite">
+                                                    +62 822-9814-1940
+                                                </a>
                                             </li>
                                             <li>
-                                                <span
-                                                    class="block font-syne text-[21px] font-bold leading-[1.42] text-colorLightLime">Send
-                                                    us an email:
+                                                <span class="block font-syne text-[21px] font-bold leading-[1.42] text-colorLightLime">
+                                                    Email Kami:
                                                 </span>
-                                                <a href="mailto:info@recodex.id"
-                                                    class="text-[21px] leading-[1.42] text-colorButteryWhite">info@recodex.id</a>
+                                                <a href="mailto:info@recodex.id" class="text-[21px] leading-[1.42] text-colorButteryWhite">
+                                                    info@recodex.id
+                                                </a>
                                             </li>
                                         </ul>
                                         <!-- Footer Info -->
@@ -224,7 +221,7 @@
                                         <!-- Social Link -->
                                     </div>
                                     <div class="hidden lg:inline-block">
-                                        <img src="{{ asset('') }}img/elemnts/element-light-lime-curve-arrow.svg"
+                                        <img src="{{ asset('img/elemnts/element-light-lime-curve-arrow.svg') }}"
                                             alt="element-light-lime-curve-arrow" width="284" height="153"
                                             class="h-auto max-w-52 lg:inline-block xl:max-w-full" />
                                     </div>
