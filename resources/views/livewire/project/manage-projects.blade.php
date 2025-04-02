@@ -239,7 +239,13 @@
 
                         <flux:field>
                             <flux:label badge="516x390">Image</flux:label>
-                            @if ($existing_image)
+                            @if ($image)
+                                <img
+                                    src="{{ $image->temporaryUrl() }}"
+                                    alt="Image Preview"
+                                    class="h-32 w-auto"
+                                >
+                            @elseif ($existing_image)
                                 <div class="flex flex-col sm:flex-row gap-4 items-start">
                                     <img
                                         src="{{ Storage::url($existing_image) }}"
@@ -312,7 +318,7 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <flux:button type="submit" variant="primary" class="w-full md:w-fit">
+                            <flux:button type="submit" variant="primary" class="w-full md:w-fit" wire:loading.attr="disabled">
                                 {{ $project_id ? 'Update' : 'Create' }}
                             </flux:button>
                         </div>
