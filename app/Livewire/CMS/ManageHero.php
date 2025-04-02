@@ -34,7 +34,7 @@ class ManageHero extends Component
             'subtitle' => 'required|string|max:255',
             'motto' => 'required|string',
             'button_text' => 'required|string|max:255',
-            'image' => 'required|image|mimes:png|max:2048',
+            'image' => 'required|image|max:2048',
         ];
     }
 
