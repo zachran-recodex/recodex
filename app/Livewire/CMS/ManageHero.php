@@ -6,21 +6,27 @@ use App\Models\Hero;
 use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ManageHero extends Component
 {
-    use WithNotification, WithFileUploads;
+    use WithNotification;
+    use WithFileUploads;
 
-    public $heroId;
+    // Form Properties
+    public $hero_id;
     public $title;
     public $subtitle;
     public $motto;
     public $button_text;
     public $image;
-    public $temp_image;
+    public $existing_image;
 
+    /**
+     * Define validation rules for hero form
+     *
+     * @return array Validation rules array
+     */
     protected function rules()
     {
         return [
@@ -28,35 +34,42 @@ class ManageHero extends Component
             'subtitle' => 'required|string|max:255',
             'motto' => 'required|string',
             'button_text' => 'required|string|max:255',
-            'temp_image' => $this->heroId ? 'nullable|image|max:2048' : 'required|image|max:2048',
+            'image' => 'required|image|mimes:png|max:2048',
         ];
     }
 
+    /**
+     * Initialize component state
+     * Loads existing hero data if available
+     *
+     * @return void
+     */
     public function mount()
     {
+        // Load existing hero data if available
         $hero = Hero::first();
+
         if ($hero) {
-            $this->heroId = $hero->id;
+            $this->hero_id = $hero->id;
             $this->title = $hero->title;
             $this->subtitle = $hero->subtitle;
             $this->motto = $hero->motto;
             $this->button_text = $hero->button_text;
-            $this->image = $hero->image;
+            $this->existing_image = $hero->image;
         }
     }
 
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-
+    /**
+     * Store or update hero page data
+     * Validates input and saves information to database
+     *
+     * @return void
+     */
     public function save()
     {
         $this->validate();
 
         try {
-            DB::beginTransaction();
-
             $data = [
                 'title' => $this->title,
                 'subtitle' => $this->subtitle,
@@ -64,31 +77,43 @@ class ManageHero extends Component
                 'button_text' => $this->button_text,
             ];
 
-            if ($this->temp_image) {
-                if ($this->image && Storage::exists($this->image)) {
-                    Storage::delete($this->image);
+            // Handle file upload if present
+            if ($this->image) {
+                try {
+                    // Delete old file if editing
+                    if ($this->hero_id && $this->existing_image) {
+                        Storage::delete('public/' . $this->existing_image);
+                    }
+
+                    $imagePath = $this->image->store('heroes', 'public');
+                    $data['image'] = str_replace('public/', '', $imagePath);
+                } catch (\Exception $e) {
+                    $this->notifyError('Error uploading image: ' . $e->getMessage());
+                    return;
                 }
-                $data['image'] = $this->temp_image->store('hero', 'public');
             }
 
-            if ($this->heroId) {
-                Hero::findOrFail($this->heroId)->update($data);
-                $this->notifySuccess('Hero section updated successfully.');
+            if ($this->hero_id) {
+                // Update existing hero
+                $hero = Hero::find($this->hero_id);
+                $hero->update($data);
+                $this->notifySuccess('Hero updated successfully.');
             } else {
-                $hero = Hero::create($data);
-                $this->heroId = $hero->id;
-                $this->notifySuccess('Hero section created successfully.');
+                // Create new hero
+                Hero::create($data);
+                $this->notifySuccess('Hero created successfully.');
             }
-
-            DB::commit();
-            $this->temp_image = null;
-
         } catch (\Exception $e) {
-            DB::rollBack();
-            $this->notifyError('Something went wrong: ' . $e->getMessage());
+            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Render component view
+     * Renders the about page management template
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.cms.manage-hero');
