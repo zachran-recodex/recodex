@@ -15,7 +15,9 @@ class Overview extends Component
 
     public function render()
     {
-        $projects = Project::with('client')->paginate(10);
+        $projects = Project::with('client')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         // Get statistics
         $totalRevenue = Project::sum('cost');

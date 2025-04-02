@@ -201,7 +201,7 @@
                                     </flux:table.cell>
 
                                     <flux:table.cell>
-                                        {{ $project->end_date->format('d M Y') }}
+                                        {{ $project->end_date ? $project->end_date->format('d F Y') : '-' }}
                                     </flux:table.cell>
 
                                     <flux:table.cell>
