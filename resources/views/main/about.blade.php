@@ -134,43 +134,6 @@
                 </div>
                 <!-- Section Block -->
 
-                <!-- About Gallery Image List -->
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <!-- About Galley Image Item -->
-                    <a href="{{ asset('img/images/th-1/about-gallery-img-1.jpg') }}" data-fslightbox="gallery"
-                        class="group block cursor-pointer overflow-hidden rounded-[25px] border-2 border-black md:col-span-1 lg:col-span-2">
-                        <img src="{{ asset('img/images/th-1/about-gallery-img-1.jpg') }}" alt="about-gallery-img-1"
-                            width="846" height="392"
-                            class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
-                    </a>
-                    <!-- About Galley Image Item -->
-                    <!-- About Galley Image Item -->
-                    <a href="{{ asset('img/images/th-1/about-gallery-img-2.jpg') }}" data-fslightbox="gallery"
-                        class="group col-span-1 block cursor-pointer overflow-hidden rounded-[25px] border-2 border-black">
-                        <img src="{{ asset('img/images/th-1/about-gallery-img-2.jpg') }}" alt="about-gallery-img-2"
-                            width="408" height="392"
-                            class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
-                    </a>
-                    <!-- About Galley Image Item -->
-                    <!-- About Galley Image Item -->
-                    <a href="{{ asset('img/images/th-1/about-gallery-img-3.jpg') }}" data-fslightbox="gallery"
-                        class="group col-span-1 block cursor-pointer overflow-hidden rounded-[25px] border-2 border-black">
-                        <img src="{{ asset('img/images/th-1/about-gallery-img-3.jpg') }}" alt="about-gallery-img-3"
-                            width="408" height="392"
-                            class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
-                    </a>
-                    <!-- About Galley Image Item -->
-                    <!-- About Galley Image Item -->
-                    <a href="{{ asset('img/images/th-1/about-gallery-img-4.jpg') }}" data-fslightbox="gallery"
-                        class="group block cursor-pointer overflow-hidden rounded-[25px] border-2 border-black md:col-span-1 lg:col-span-2">
-                        <img src="{{ asset('img/images/th-1/about-gallery-img-4.jpg') }}" alt="about-gallery-img-4"
-                            width="846" height="392"
-                            class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
-                    </a>
-                    <!-- About Galley Image Item -->
-                </div>
-                <!-- About Gallery Image List -->
-
                 <div class="mt-10 grid grid-cols-1 gap-x-5 gap-y-10 lg:grid-cols-2">
                     <div class="rich-text">
                         <h4 class="mb-4">Our core vision</h4>
