@@ -11,12 +11,21 @@ class ManageAbout extends Component
 {
     use WithNotification;
 
-    public $aboutId;
+    // Form Properties
+    public $about_id;
     public $title;
     public $description;
     public $vision;
     public $mission = [];
 
+    // For mission items management
+    public $missionItem = '';
+
+    /**
+     * Define validation rules for about form
+     *
+     * @return array Validation rules array
+     */
     protected function rules()
     {
         return [
@@ -24,15 +33,22 @@ class ManageAbout extends Component
             'description' => 'required|string',
             'vision' => 'required|string',
             'mission' => 'required|array|min:1',
-            'mission.*' => 'required|string',
         ];
     }
 
+    /**
+     * Initialize component state
+     * Loads existing about data if available
+     *
+     * @return void
+     */
     public function mount()
     {
+        // Load existing about data if available
         $about = About::first();
+
         if ($about) {
-            $this->aboutId = $about->id;
+            $this->about_id = $about->id;
             $this->title = $about->title;
             $this->description = $about->description;
             $this->vision = $about->vision;
@@ -40,53 +56,75 @@ class ManageAbout extends Component
         }
     }
 
-    public function updated($propertyName)
+    /**
+     * Add new mission item to the mission array
+     * Validates that mission item is not empty
+     *
+     * @return void
+     */
+    public function addMissionItem()
     {
-        $this->validateOnly($propertyName);
+        if (empty($this->missionItem)) {
+            $this->addError('missionItem', 'Mission item cannot be empty.');
+            return;
+        }
+
+        $this->mission[] = $this->missionItem;
+        $this->missionItem = '';
     }
 
-    public function addMission()
-    {
-        $this->mission[] = '';
-    }
-
-    public function removeMission($index)
+    /**
+     * Remove mission item from specified index
+     * Re-indexes the array after removal
+     *
+     * @param int $index Index of mission item to remove
+     * @return void
+     */
+    public function removeMissionItem($index)
     {
         unset($this->mission[$index]);
-        $this->mission = array_values($this->mission);
+        $this->mission = array_values($this->mission); // Re-index array
     }
 
+    /**
+     * Store or update about page data
+     * Validates input and saves information to database
+     *
+     * @return void
+     */
     public function save()
     {
         $this->validate();
 
         try {
-            DB::beginTransaction();
-
             $data = [
                 'title' => $this->title,
                 'description' => $this->description,
                 'vision' => $this->vision,
-                'mission' => array_values($this->mission),
+                'mission' => $this->mission,
             ];
 
-            if ($this->aboutId) {
-                About::findOrFail($this->aboutId)->update($data);
+            if ($this->about_id) {
+                // Update existing about
+                $about = About::find($this->about_id);
+                $about->update($data);
                 $this->notifySuccess('About page updated successfully.');
             } else {
+                // Create new about
                 $about = About::create($data);
-                $this->aboutId = $about->id;
                 $this->notifySuccess('About page created successfully.');
             }
-
-            DB::commit();
-
         } catch (\Exception $e) {
-            DB::rollBack();
-            $this->notifyError('Something went wrong: ' . $e->getMessage());
+            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Render component view
+     * Renders the about page management template
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.cms.manage-about');

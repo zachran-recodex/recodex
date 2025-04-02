@@ -1,76 +1,82 @@
-<flux:container class="space-y-6">
-    <!-- Page Header -->
-    <div class="sm:flex sm:items-center sm:justify-between">
-        <flux:heading size="xl" class="font-bold!">Manage About</flux:heading>
+<flux:container class="space-y-4 sm:space-y-6">
+    <div class="flex flex-col space-y-4 sm:space-y-6 md:space-y-0 md:flex-row md:items-center md:justify-between">
+        <div class="w-full md:w-auto">
+            <flux:heading size="xl" class="font-bold! text-center md:text-left">Manage About</flux:heading>
+        </div>
 
-        <flux:breadcrumbs>
-            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">Dashboard</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item href="{{ route('dashboard') }}" separator="slash">CMS</flux:breadcrumbs.item>
-            <flux:breadcrumbs.item separator="slash">Manage About</flux:breadcrumbs.item>
-        </flux:breadcrumbs>
+        <div class="w-full md:w-auto">
+            <flux:breadcrumbs class="justify-center md:justify-start">
+                <flux:breadcrumbs.item href="{{ route('dashboard') }}">Dashboard</flux:breadcrumbs.item>
+                <flux:breadcrumbs.item href="{{ route('dashboard') }}">CMS</flux:breadcrumbs.item>
+                <flux:breadcrumbs.item>Manage About</flux:breadcrumbs.item>
+            </flux:breadcrumbs>
+        </div>
     </div>
+
+    @if (session()->has('error'))
+        <flux:callout variant="danger" icon="x-circle" heading="{{ session('error') }}" />
+    @endif
 
     <flux:card>
         <flux:card.header>
-            <flux:heading size="lg" class="font-semibold">
-                About Page Content
-            </flux:heading>
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-0 items-center justify-between">
+                <flux:heading size="lg" class="font-semibold! text-center sm:text-left">About Content</flux:heading>
+            </div>
         </flux:card.header>
+
         <flux:card.body>
-            <div class="space-y-6">
+            <div class="space-y-4 sm:space-y-6">
 
-                <form wire:submit.prevent="save" class="flex flex-col space-y-6">
+                <form wire:submit.prevent="save">
                     <flux:fieldset>
-                        <div class="space-y-6">
-                            <flux:input
-                                label="Title"
-                                wire:model="title"
-                                placeholder="Enter title"
-                            />
+                        <div class="space-y-4 sm:space-y-6">
 
-                            <flux:textarea
-                                label="Description"
-                                wire:model="description"
-                                placeholder="Enter description"
-                                rows="4"
-                            />
+                            <flux:field>
+                                <flux:label>Title</flux:label>
+                                <flux:input wire:model="title" placeholder="Enter title" />
+                                <flux:error name="name" />
+                            </flux:field>
 
-                            <flux:textarea
-                                label="Vision"
-                                wire:model="vision"
-                                placeholder="Enter vision"
-                                rows="4"
-                            />
+                            <flux:field>
+                                <flux:label>Description</flux:label>
+                                <flux:textarea wire:model="description" rows="4" placeholder="Enter description"></flux:textarea>
+                                <flux:error name="description" />
+                            </flux:field>
 
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <flux:label>Mission Points</flux:label>
-                                    <flux:button type="button" variant="primary" wire:click="addMission" icon="plus">
-                                        Add Mission
-                                    </flux:button>
-                                </div>
+                            <flux:field>
+                                <flux:label>Vision</flux:label>
+                                <flux:textarea wire:model="vision" rows="3" placeholder="Enter vision"></flux:textarea>
+                                <flux:error name="description" />
+                            </flux:field>
 
-                                @foreach($mission as $index => $point)
-                                    <div class="flex gap-2">
-                                        <flux:textarea
-                                            wire:model="mission.{{ $index }}"
-                                            placeholder="Enter mission point"
-                                            rows="2"
-                                        />
-                                        <flux:button type="button" variant="danger" wire:click="removeMission({{ $index }})" icon="trash">
-                                        </flux:button>
-                                    </div>
+                            <flux:field>
+                                <flux:label>Mission</flux:label>
+                                <flux:input.group>
+                                    <flux:input placeholder="Add mission item" wire:model="missionItem" wire:keydown.enter.prevent="addMissionItem" />
+
+                                    <flux:button type="button" variant="primary" wire:click="addMissionItem" icon="plus" class="w-fit">Add</flux:button>
+                                </flux:input.group>
+                                <flux:error name="missionItem" />
+                            </flux:field>
+
+                            <flux:field>
+                                <flux:label>Mission Item</flux:label>
+                                @foreach($mission as $index => $item)
+                                    <flux:input.group>
+                                        <flux:input placeholder="{{ $item }}" readonly />
+
+                                        <flux:button type="button" variant="danger" wire:click="removeMissionItem({{ $index }})" icon="trash"></flux:button>
+                                    </flux:input.group>
                                 @endforeach
+                            </flux:field>
+
+                            <div class="flex justify-end">
+                                <flux:button type="submit" variant="primary" class="w-full md:w-fit">
+                                    {{ $about_id ? 'Update' : 'Create' }}
+                                </flux:button>
                             </div>
                         </div>
                     </flux:fieldset>
-
-                    <div class="flex">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary" class="w-fit">
-                            {{ $aboutId ? 'Update' : 'Create' }}
-                        </flux:button>
-                    </div>
                 </form>
             </div>
         </flux:card.body>
