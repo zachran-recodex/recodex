@@ -7,132 +7,209 @@ use Livewire\Component;
 use App\WithNotification;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ManageBlogs extends Component
 {
-    use WithPagination, WithNotification, WithFileUploads;
+    use WithPagination;
+    use WithNotification;
+    use WithFileUploads;
 
-    public $blogId;
+    // Form Properties
+    public $blog_id;
     public $title;
     public $description;
     public $image;
-    public $newImage;
+    public $existing_image;
 
-    public $isEditing = false;
-    public $searchTerm = '';
+    // Track active modal
+    public $activeModal = null;
 
+    /**
+     * Define validation rules for blog form
+     *
+     * @return array Validation rules array
+     */
     protected function rules()
     {
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => $this->isEditing ? 'nullable|string' : 'required|string',
-            'newImage' => $this->isEditing ? 'nullable|image|max:1024' : 'required|image|max:1024',
+            'image' => 'required|image|max:2048',
         ];
     }
 
-    public function updated($propertyName)
+    /**
+     * Reset all form input fields and validation state
+     *
+     * @return void
+     */
+    public function resetInputFields()
     {
-        $this->validateOnly($propertyName);
-    }
-
-    public function create()
-    {
-        $this->resetForm();
-        $this->isEditing = false;
-        $this->modal('form')->show();
-    }
-
-    public function edit($id)
-    {
-        $blog = Blog::findOrFail($id);
-
-        if ($blog) {
-            $this->isEditing = true;
-            $this->blogId = $id;
-            $this->title = $blog->title;
-            $this->description = $blog->description;
-            $this->image = $blog->image;
-
-            $this->modal('form')->show();
-        }
-    }
-
-    public function confirmDelete($id)
-    {
-        $this->blogId = $id;
-        $this->modal('delete')->show();
-    }
-
-    public function delete()
-    {
-        $blog = Blog::findOrFail($this->blogId);
-
-        if ($blog) {
-            $blog->delete();
-            $this->notifySuccess('Blog deleted successfully');
-            $this->modal('delete')->close();
-        }
-    }
-
-    public function resetForm()
-    {
-        $this->reset(['blogId', 'title', 'description', 'image', 'newImage']);
+        $this->blog_id = null;
+        $this->title = '';
+        $this->description = '';
+        $this->image = null;
+        $this->existing_image = null;
         $this->resetValidation();
     }
 
-    public function save()
+    /**
+     * Unified modal control method
+     *
+     * @param string $modalName The name of the modal to show
+     * @param bool $show Whether to show or hide the modal
+     * @return void
+     */
+    public function toggleModal(string $modalName, bool $show = true)
+    {
+        if ($show) {
+            $this->activeModal = $modalName;
+            $this->modal($modalName)->show();
+        } else {
+            $this->activeModal = null;
+            $this->modal($modalName)->close();
+        }
+    }
+
+    /**
+     * Initialize create blog form
+     * Resets form fields and opens the form modal
+     *
+     * @return void
+     */
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->toggleModal('form');
+    }
+
+    /**
+     * Load blog data for editing
+     * Populates form fields with existing blog data
+     *
+     * @param int $id Blog ID to edit
+     * @return void
+     */
+    public function edit($id)
+    {
+        $blog = Blog::findOrFail($id);
+        $this->blog_id = $id;
+        $this->title = $blog->title;
+        $this->description = $blog->description;
+        $this->existing_image = $blog->image;
+
+        $this->toggleModal('form');
+    }
+
+
+    /**
+     * Show delete confirmation modal
+     * Sets the blog ID for deletion and opens confirmation modal
+     *
+     * @param int $id Blog ID to delete
+     * @return void
+     */
+    public function confirmDelete($id)
+    {
+        $this->blog_id = $id;
+        $this->toggleModal('delete');
+    }
+
+    /**
+     * Store or update blog data
+     * Validates input and saves blog information to database
+     *
+     * @return void
+     */
+    public function store()
     {
         $this->validate();
 
         try {
-            DB::beginTransaction();
+            $data = [
+                'title' => $this->title,
+                'description' => $this->description,
+            ];
 
-            if ($this->newImage) {
-                $imagePath = $this->newImage->store('blogs', 'public');
+            if ($this->image) {
+                try {
+                    // Delete old file if editing
+                    if ($this->blog_id && $this->existing_image) {
+                        Storage::delete('public/' . $this->existing_image);
+                    }
+
+                    $imagePath = $this->image->store('blogs', 'public');
+                    $data['image'] = str_replace('public/', '', $imagePath);
+                } catch (\Exception $e) {
+                    $this->notifyError('Error uploading image: ' . $e->getMessage());
+                    return;
+                }
             }
 
-            if ($this->isEditing) {
-                $blog = Blog::findOrFail($this->blogId);
-                $blog->update([
-                    'title' => $this->title,
-                    'description' => $this->description,
-                    'image' => $this->newImage ? $imagePath : $this->image,
-                ]);
-
+            if ($this->blog_id) {
+                // Update existing blog
+                $blog = Blog::find($this->blog_id);
+                $blog->update($data);
                 $this->notifySuccess('Blog updated successfully.');
             } else {
-                Blog::create([
-                    'title' => $this->title,
-                    'description' => $this->description,
-                    'image' => $imagePath,
-                ]);
-
+                // Create new blog
+                Blog::create($data);
                 $this->notifySuccess('Blog created successfully.');
             }
 
-            DB::commit();
-            $this->resetForm();
-            $this->modal('form')->close();
-
+            $this->toggleModal('form', false);
+            $this->resetInputFields();
         } catch (\Exception $e) {
-            DB::rollBack();
-            $this->notifyError('Something went wrong: ' . $e->getMessage());
+            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Delete blog record
+     * Removes blog and associated image file from storage
+     *
+     * @return void
+     */
+    public function deleteBlog()
+    {
+        try {
+            $blog = Blog::find($this->blog_id);
+
+            if ($blog) {
+                // Delete image file if exists
+                if ($blog->image) {
+                    try {
+                        Storage::delete('public/' . $blog->image);
+                    } catch (\Exception $e) {
+                        // Log error but continue with deletion
+                        Log::error('Failed to delete blog image: ' . $e->getMessage());
+                    }
+                }
+
+                $blog->delete();
+                $this->notifySuccess('Blog deleted successfully.');
+            }
+
+            $this->toggleModal('delete', false);
+            $this->resetInputFields();
+        } catch (\Exception $e) {
+            $this->notifyError('Delete operation failed: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Render component view
+     * Fetches paginated blogs and renders the component template
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
-        $blogs = Blog::when($this->searchTerm, function($query) {
-                $query->where('title', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('description', 'like', '%' . $this->searchTerm . '%');
-            })
-            ->orderBy('created_at', 'desc')
+        $blogs = Blog::orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.cms.manage-blogs', [
-            'blogs' => $blogs
-        ]);
+        return view('livewire.cms.manage-blogs', compact('blogs'));
     }
 }
