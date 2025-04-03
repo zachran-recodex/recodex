@@ -8,12 +8,11 @@ use App\Http\Controllers\ResetPasswordEmailController;
 Route::controller(MainController::class)->group(function () {
 
     Route::get('/', 'index')->name('home');
-    Route::get('about', 'about')->name('about');
-    Route::get('service', 'service')->name('service');
+    Route::get('tentang-kami', 'about')->name('about');
+    Route::get('layanan', 'service')->name('service');
     Route::get('faq', 'faq')->name('faq');
-    Route::get('project', 'project')->name('project');
-    Route::get('testimonial', 'testimonial')->name('testimonial');
-    Route::get('contact', 'contact')->name('contact');
+    Route::get('portfolio', 'project')->name('project');
+    Route::get('konsultasi', 'contact')->name('contact');
 
 });
 
@@ -66,7 +65,7 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
             });
         });
-        
+
         Route::prefix('project')->name('project.')->group(function (){
 
             Route::get('/', App\Livewire\Project\Overview::class)

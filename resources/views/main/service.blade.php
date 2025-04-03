@@ -18,7 +18,7 @@
 
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <title>Service - Jasa Pembuatan Website Recodex ID</title>
+    <title>Layanan - Jasa Pembuatan Website Recodex ID</title>
 @endsection
 
 <x-layouts.main>
@@ -31,13 +31,13 @@
                 <!-- Section Container -->
                 <div class="container">
                     <div class="breadcrumb-block">
-                        <h1>Our Services</h1>
+                        <h1>Layanan</h1>
                         <!-- Breadcrumb Nav -->
                         <ul class="breadcrumb-nav">
                             <li>
-                                <a href="{{ route('home') }}">Home</a>
+                                <a href="{{ route('home') }}">Beranda</a>
                             </li>
-                            <li>Our Services</li>
+                            <li>Layanan</li>
                         </ul>
                         <!-- Breadcrumb Nav -->
                     </div>

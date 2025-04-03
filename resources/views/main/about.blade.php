@@ -32,13 +32,13 @@
                 <!-- Section Container -->
                 <div class="container">
                     <div class="breadcrumb-block">
-                        <h1>About Us</h1>
+                        <h1>Tentang Kami</h1>
                         <!-- Breadcrumb Nav -->
                         <ul class="breadcrumb-nav">
                             <li>
-                                <a href="#">Home</a>
+                                <a href="{{ route('home') }}">Beranda</a>
                             </li>
-                            <li>About Us</li>
+                            <li>Tentang Kami</li>
                         </ul>
                         <!-- Breadcrumb Nav -->
                     </div>
@@ -76,13 +76,13 @@
 
                 <div class="mt-10 grid grid-cols-1 gap-x-5 gap-y-10 lg:grid-cols-2">
                     <div class="rich-text">
-                        <h4 class="mb-4">Our core vision</h4>
+                        <h4 class="mb-4">Visi</h4>
                         <p>
                             {{ $about->vision }}
                         </p>
                     </div>
                     <div class="rich-text">
-                        <h4 class="mb-4">Our main mission</h4>
+                        <h4 class="mb-4">Misi</h4>
                         <ul>
                             @foreach ($about->mission as $item)
                                 <li>{{ $item }}</li>
