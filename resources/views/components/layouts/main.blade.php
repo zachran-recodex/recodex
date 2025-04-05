@@ -35,9 +35,6 @@
 
     <!-- Production CSS -->
     <!-- <link rel="stylesheet" href="{{ asset('css/style.min.css') }}" /> -->
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @fluxAppearance
 </head>
 
 <body class="bg-colorIvory">
@@ -305,8 +302,6 @@
 
     <!-- Main JS -->
     <script src="{{ asset('js/main.js') }}"></script>
-
-    @fluxScripts
 </body>
 
 </html>

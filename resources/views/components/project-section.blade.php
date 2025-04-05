@@ -78,12 +78,10 @@
 
                 <div class="static xl:absolute w-full mt-16 xl:mt-0 z-20 flex justify-center xl:justify-between top-1/2 -translate-y-1/2 gap-x-10 px-10">
                     <div class="project-button-prev inline-flex h-14 w-14 rounded-[50%] items-center justify-center border-b-2 border-white bg-colorLightLime xl:opacity-0 group-hover/nav:opacity-100 xl:invisible group-hover/nav:visible xl:translate-x-10 group-hover/nav:translate-x-0 transition-all duration-300">
-                        <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}"
-                            alt="icon-black-arrow-right" width="34" height="28" class="rotate-180" />
+                        <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" class="rotate-180" />
                     </div>
                     <div class="project-button-next inline-flex h-14 w-14 rounded-[50%] items-center justify-center border-b-2 border-white bg-colorLightLime xl:opacity-0 group-hover/nav:opacity-100 xl:invisible group-hover/nav:visible xl:-translate-x-10 group-hover/nav:translate-x-0 transition-all duration-300">
-                        <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}"
-                            alt="icon-black-arrow-right" width="34" height="28" />
+                        <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
                     </div>
                 </div>
             </div>
