@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ServiceSeeder extends Seeder
 {
@@ -52,7 +53,12 @@ class ServiceSeeder extends Seeder
         ];
 
         foreach ($services as $service) {
+            // Generate slug from title
+            $slug = Str::slug($service['title']);
+
+            // Insert with generated slug
             DB::table('services')->insert(array_merge($service, [
+                'slug' => $slug,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]));

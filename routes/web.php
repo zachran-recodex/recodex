@@ -10,6 +10,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('tentang-kami', 'about')->name('about');
     Route::get('layanan', 'service')->name('service');
+    Route::get('layanan/{service:slug}', 'serviceDetail')->name('service.detail');
     Route::get('faq', 'faq')->name('faq');
     Route::get('portfolio', 'project')->name('project');
     Route::get('konsultasi', 'contact')->name('contact');

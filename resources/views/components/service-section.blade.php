@@ -28,7 +28,7 @@
                                     <p class="mb-7">
                                         {{ $service->description }}
                                     </p>
-                                    <a href=" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
+                                    <a href="{{ route('service.detail', $service->slug) }}" class="mt-auto inline-block translate-x-0 transition-all duration-300 group-hover:translate-x-5">
                                         <img src="{{ asset('img/icons/icon-black-arrow-right.svg') }}" alt="icon-black-arrow-right" width="34" height="28" />
                                     </a>
                                 </div>

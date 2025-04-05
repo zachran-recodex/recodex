@@ -39,6 +39,16 @@ class MainController extends Controller
         return view('main.service', compact('services', 'workProcesses', 'faqs'));
     }
 
+    public function serviceDetail(Service $service)
+    {
+        $relatedServices = Service::where('id', '!=', $service->id)
+                                ->inRandomOrder()
+                                ->limit(3)
+                                ->get();
+
+        return view('main.service-detail', compact('service', 'relatedServices'));
+    }
+
     public function faq()
     {
         $faqs = Faq::all();

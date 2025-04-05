@@ -8,6 +8,7 @@ use App\WithNotification;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class ManageServices extends Component
@@ -22,6 +23,7 @@ class ManageServices extends Component
     public $image;
     public $existing_image;
     public $title;
+    public $slug;
     public $description;
 
     // Track active modal
@@ -34,10 +36,18 @@ class ManageServices extends Component
      */
     protected function rules()
     {
+        $slugRule = 'required|string|max:255|unique:services,slug';
+
+        // Modify slug validation rule for updates
+        if ($this->service_id) {
+            $slugRule .= ',' . $this->service_id;
+        }
+
         return [
             'icon' => 'nullable|string|max:255',
             'image' => 'nullable|image|max:2048',
             'title' => 'required|string|max:255',
+            'slug' => $slugRule,
             'description' => 'required|string',
         ];
     }
@@ -54,6 +64,7 @@ class ManageServices extends Component
         $this->image = null;
         $this->existing_image = null;
         $this->title = '';
+        $this->slug = '';
         $this->description = '';
         $this->resetValidation();
     }
@@ -102,9 +113,21 @@ class ManageServices extends Component
         $this->icon = $service->icon;
         $this->existing_image = $service->image;
         $this->title = $service->title;
+        $this->slug = $service->slug;
         $this->description = $service->description;
 
         $this->toggleModal('form');
+    }
+
+    /**
+     * Generate a slug from the title
+     * Automatically creates a URL-friendly slug when title changes
+     *
+     * @return void
+     */
+    public function updatedTitle()
+    {
+        $this->slug = Str::slug($this->title);
     }
 
     /**
@@ -121,6 +144,7 @@ class ManageServices extends Component
             $data = [
                 'icon' => $this->icon,
                 'title' => $this->title,
+                'slug' => $this->slug,
                 'description' => $this->description,
             ];
 

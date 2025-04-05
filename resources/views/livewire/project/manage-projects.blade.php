@@ -35,10 +35,10 @@
                 <flux:table hover striped>
                     <flux:table.columns>
                         <flux:table.column class="min-w-[200px] md:w-auto">Title</flux:table.column>
-                        <flux:table.column class="min-w-[120px] md:w-auto">Start Date</flux:table.column>
+                        <flux:table.column class="min-w-[200px] md:w-auto">Start Date</flux:table.column>
                         <flux:table.column class="min-w-[100px] md:w-auto">Duration</flux:table.column>
                         <flux:table.column class="min-w-[120px] md:w-auto">Category</flux:table.column>
-                        <flux:table.column class="min-w-[120px] md:w-auto">Cost</flux:table.column>
+                        <flux:table.column class="min-w-[150px] md:w-auto">Cost</flux:table.column>
                         <flux:table.column class="min-w-[120px] md:w-auto">Status</flux:table.column>
                         <flux:table.column class="min-w-[100px] md:w-auto">Actions</flux:table.column>
                     </flux:table.columns>

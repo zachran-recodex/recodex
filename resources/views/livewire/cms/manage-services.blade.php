@@ -102,7 +102,7 @@
                 <flux:fieldset>
                     <div class="space-y-4 sm:space-y-6">
                         <flux:field>
-                            <flux:label>Image</flux:label>
+                            <flux:label badge="1286x590">Image</flux:label>
                             @if ($image)
                                 <img
                                     src="{{ $image->temporaryUrl() }}"
