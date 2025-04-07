@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('components.layouts.partials.head')
-        <link href="{{ asset('vendor/quill/quill.snow.css') }}" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">
 
@@ -19,6 +19,6 @@
         <livewire:notification />
 
         @fluxScripts
-        <script src="{{ asset('vendor/quill/quill.js') }}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     </body>
 </html>
