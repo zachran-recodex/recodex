@@ -112,7 +112,7 @@
     <flux:modal name="show" variant="flyout">
         <div class="space-y-4 sm:space-y-6">
             <flux:heading size="lg" class="font-semibold">
-                Details Project
+                Project Details
             </flux:heading>
 
             <flux:separator />
@@ -182,7 +182,7 @@
 
                 <flux:field>
                     <flux:label>Description</flux:label>
-                    <flux:text>{{ $description ?? '-' }}</flux:text>
+                    <flux:text>{!! $description ?? '-' !!}</flux:text>
                 </flux:field>
             </div>
         </div>
@@ -200,7 +200,7 @@
                 <flux:fieldset>
                     <div class="space-y-4 sm:space-y-6">
                         @if (!$project_id)
-                            <flux:radio.group wire:model="client_type" label="Client Type" variant="segmented">
+                            <flux:radio.group wire:model.live="client_type" label="Client Type" variant="segmented">
                                 <flux:radio value="existing" label="Existing Client" />
                                 <flux:radio value="new" label="New Client" />
                             </flux:radio.group>
@@ -243,23 +243,23 @@
                                 <img
                                     src="{{ $image->temporaryUrl() }}"
                                     alt="Image Preview"
-                                    class="h-32 w-auto"
+                                    class="h-32 w-auto object-contain"
                                 >
                             @elseif ($existing_image)
                                 <div class="flex flex-col sm:flex-row gap-4 items-start">
                                     <img
                                         src="{{ Storage::url($existing_image) }}"
                                         alt="Current Image"
-                                        class="h-32 w-auto"
+                                        class="h-32 w-auto object-contain"
                                     >
                                     <flux:button type="button" variant="danger" wire:click="$set('existing_image', null)" class="w-fit">
-                                        Hapus
+                                        Remove
                                     </flux:button>
                                 </div>
                             @endif
                             <flux:input
                                 type="file"
-                                wire:model="image"
+                                wire:model.live="image"
                                 accept="image/jpeg,image/png,image/jpg"
                             />
                             <flux:description>Max size: 2MB. Formats: JPG, JPEG, PNG</flux:description>
@@ -282,11 +282,77 @@
 
                         <flux:field>
                             <flux:label>Description</flux:label>
-                            <flux:textarea wire:model="description" rows="4"></flux:textarea>
+                            <div wire:ignore class="h-48">
+                                <div id="editor">
+                                    {!! $description ?? '-' !!}
+                                </div>
+                            </div>
+                            @script
+                                <script>
+                                    let quill = null;
+
+                                    // Initialize Quill editor
+                                    function initQuill() {
+                                        if (quill) {
+                                            quill.destroy();
+                                        }
+
+                                        quill = new Quill('#editor', {
+                                            theme: 'snow',
+                                            placeholder: 'Write your description here...',
+                                            modules: {
+                                                toolbar: [
+                                                    ['bold', 'italic', 'underline', 'strike'],
+                                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                                    ['link'],
+                                                    ['clean']
+                                                ]
+                                            }
+                                        });
+
+                                        // Set initial content if editing
+                                        if (@this.description) {
+                                            quill.root.innerHTML = @this.description;
+                                        }
+
+                                        // Update Livewire state on content change
+                                        quill.on('text-change', function() {
+                                            @this.set('description', quill.root.innerHTML);
+                                        });
+                                    }
+
+                                    // Initialize editor when modal opens
+                                    document.addEventListener('livewire:initialized', () => {
+                                        if (document.querySelector('#editor')) {
+                                            setTimeout(() => {
+                                                initQuill();
+                                            }, 100);
+                                        }
+                                    });
+
+                                    // Set up Livewire event listeners for modal events
+                                    document.addEventListener('livewire:init', () => {
+                                        Livewire.on('openModal', (modalName) => {
+                                            if (modalName === 'form') {
+                                                setTimeout(() => {
+                                                    initQuill();
+                                                }, 100);
+                                            }
+                                        });
+
+                                        Livewire.on('closeModal', (modalName) => {
+                                            if (modalName === 'form' && quill) {
+                                                quill.destroy();
+                                                quill = null;
+                                            }
+                                        });
+                                    });
+                                </script>
+                            @endscript
                             <flux:error name="description" />
                         </flux:field>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pt-6 md:pt-12">
                             <flux:field>
                                 <flux:label>Start Date</flux:label>
                                 <flux:input type="date" wire:model="start_date" />
@@ -318,8 +384,9 @@
                         </div>
 
                         <div class="flex justify-end">
-                            <flux:button type="submit" variant="primary" class="w-full md:w-fit" wire:loading.attr="disabled">
+                            <flux:button type="submit" variant="primary" class="w-full md:w-fit" wire:loading.attr="disabled" wire:target="store">
                                 {{ $project_id ? 'Update' : 'Create' }}
+                                <span wire:loading wire:target="store">...</span>
                             </flux:button>
                         </div>
                     </div>
@@ -340,8 +407,9 @@
             </div>
 
             <div class="flex justify-end">
-                <flux:button type="button" variant="danger" wire:click="deleteProject" class="w-full sm:w-fit">
+                <flux:button type="button" variant="danger" wire:click="deleteProject" wire:loading.attr="disabled" wire:target="deleteProject" class="w-full sm:w-fit">
                     Delete
+                    <span wire:loading wire:target="deleteProject">...</span>
                 </flux:button>
             </div>
         </div>
