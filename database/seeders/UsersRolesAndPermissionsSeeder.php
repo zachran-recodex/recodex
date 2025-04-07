@@ -24,7 +24,6 @@ class UsersRolesAndPermissionsSeeder extends Seeder
             'manage users',
             'manage roles',
             'manage cms',
-            'manage hosting',
         ];
 
         // Create permissions in the database

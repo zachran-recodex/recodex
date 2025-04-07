@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('category');
-            $table->text('description');
+            $table->longText('description');
             $table->string('image')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
