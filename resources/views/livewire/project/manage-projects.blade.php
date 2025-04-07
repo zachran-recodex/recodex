@@ -297,6 +297,12 @@
                                             quill.destroy();
                                         }
 
+                                        // Wait for Quill to be available
+                                        if (typeof Quill === 'undefined') {
+                                            console.error('Quill is not loaded');
+                                            return;
+                                        }
+
                                         quill = new Quill('#editor', {
                                             theme: 'snow',
                                             placeholder: 'Write your description here...',
@@ -322,11 +328,20 @@
                                     }
 
                                     // Initialize editor when modal opens
-                                    document.addEventListener('livewire:initialized', () => {
+                                    document.addEventListener('DOMContentLoaded', () => {
                                         if (document.querySelector('#editor')) {
-                                            setTimeout(() => {
+                                            // Check if Quill is loaded
+                                            if (typeof Quill !== 'undefined') {
                                                 initQuill();
-                                            }, 100);
+                                            } else {
+                                                // If not loaded, wait for it
+                                                const checkQuill = setInterval(() => {
+                                                    if (typeof Quill !== 'undefined') {
+                                                        initQuill();
+                                                        clearInterval(checkQuill);
+                                                    }
+                                                }, 100);
+                                            }
                                         }
                                     });
 
@@ -334,9 +349,12 @@
                                     document.addEventListener('livewire:init', () => {
                                         Livewire.on('openModal', (modalName) => {
                                             if (modalName === 'form') {
+                                                // Wait for modal to be fully rendered
                                                 setTimeout(() => {
-                                                    initQuill();
-                                                }, 100);
+                                                    if (typeof Quill !== 'undefined') {
+                                                        initQuill();
+                                                    }
+                                                }, 300);
                                             }
                                         });
 
