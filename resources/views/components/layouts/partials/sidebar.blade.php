@@ -24,6 +24,8 @@
                 @can('manage roles')
                     <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.role')" :current="request()->routeIs('dashboard.admin.role')" wire:navigate>Role</flux:navlist.item>
                 @endcan
+
+                <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.sitemap')" :current="request()->routeIs('dashboard.admin.sitemap')" wire:navigate>Generate Sitemap</flux:navlist.item>
             </flux:navlist.group>
         @endif
 

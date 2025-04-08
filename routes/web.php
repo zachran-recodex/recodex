@@ -48,6 +48,9 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
             Route::get('manage-roles', App\Livewire\Admin\ManageRoles::class)
                 ->name('role')
                 ->middleware('can:manage roles');
+
+            Route::get('manage-sitemap', App\Livewire\Admin\ManageSitemap::class)
+                ->name('sitemap');
         });
 
         Route::middleware(['can:manage cms'])->group(function (){
