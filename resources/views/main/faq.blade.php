@@ -1,20 +1,22 @@
 @section('meta_tag')
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Temukan jawaban untuk pertanyaan umum seputar layanan pembuatan website Recodex ID. Panduan lengkap untuk memahami proses dan layanan kami.">
+    <meta name="keywords" content="FAQ recodex, pertanyaan umum website, bantuan website, panduan pembuatan website, layanan web development">
     <meta name="author" content="RECODEX ID">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
+    <meta property="og:title" content="FAQ - Panduan Lengkap Layanan Website Recodex ID">
+    <meta property="og:description" content="Temukan jawaban untuk pertanyaan umum seputar layanan pembuatan website Recodex ID. Panduan lengkap untuk memahami proses dan layanan kami.">
+    <meta property="og:image" content="{{ asset('images/hero.jpg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
+    <meta name="twitter:title" content="FAQ - Panduan Lengkap Layanan Website Recodex ID">
+    <meta name="twitter:description" content="Temukan jawaban untuk pertanyaan umum seputar layanan pembuatan website Recodex ID. Panduan lengkap untuk memahami proses dan layanan kami.">
+    <meta name="twitter:image" content="{{ asset('images/hero.jpg') }}">
 
     <link rel="canonical" href="{{ url()->current() }}">
 
@@ -122,7 +124,7 @@
                         Still, have any questions? Contact us
                         <span
                             class="absolute right-[5px] inline-flex h-[50px] w-[50px] items-center justify-center rounded-[50%] bg-colorLightLime"><img
-                                src="{{ asset('') }}img/icons/icon-black-arrow-right.svg"
+                                src="{{ asset('img/icons/icon-black-arrow-right.svg') }}"
                                 alt="icon-black-arrow-right" width="34" height="28" /></span></a>
                 </div>
             </div>

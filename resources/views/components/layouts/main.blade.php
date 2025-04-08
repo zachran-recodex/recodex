@@ -4,13 +4,6 @@
 <head>
     @yield('meta_tag')
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <meta name="theme-color" class="bg-background-primary border-b bg-white/20" content="#171717">
-
-    <title>{{ config('app.name') }}</title>
-
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">

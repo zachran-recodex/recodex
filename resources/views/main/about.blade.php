@@ -1,20 +1,22 @@
 @section('meta_tag')
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pelajari lebih lanjut tentang Recodex ID - Perusahaan jasa pembuatan website profesional dengan visi dan misi yang jelas untuk membantu digitalisasi bisnis Anda.">
+    <meta name="keywords" content="tentang recodex, profil perusahaan, visi misi, jasa pembuatan website, web developer profesional, digitalisasi bisnis">
     <meta name="author" content="RECODEX ID">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
+    <meta property="og:title" content="Tentang Recodex ID - Jasa Pembuatan Website Profesional">
+    <meta property="og:description" content="Pelajari lebih lanjut tentang Recodex ID - Perusahaan jasa pembuatan website profesional yang berkomitmen untuk membantu digitalisasi bisnis Anda.">
+    <meta property="og:image" content="{{ asset('images/hero.jpg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
+    <meta name="twitter:title" content="Tentang Recodex ID - Jasa Pembuatan Website Profesional">
+    <meta name="twitter:description" content="Pelajari lebih lanjut tentang Recodex ID - Perusahaan jasa pembuatan website profesional yang berkomitmen untuk membantu digitalisasi bisnis Anda.">
+    <meta name="twitter:image" content="{{ asset('images/hero.jpg') }}">
 
     <link rel="canonical" href="{{ url()->current() }}">
 

@@ -1,29 +1,31 @@
 @section('meta_tag')
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Recodex ID - Jasa pembuatan website profesional dengan teknologi terkini. Kami menyediakan layanan pengembangan web yang responsif, SEO-friendly, dan disesuaikan dengan kebutuhan bisnis Anda.">
+    <meta name="keywords" content="jasa pembuatan website, web development, website profesional, website bisnis, website company profile, website toko online, web developer Indonesia">
     <meta name="author" content="RECODEX ID">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="">
-    <meta property="og:description" content="">
-    <meta property="og:image" content="">
+    <meta property="og:title" content="Recodex ID - Jasa Pembuatan Website Profesional">
+    <meta property="og:description" content="Solusi digital terbaik untuk bisnis Anda dengan layanan pembuatan website profesional yang responsif dan SEO-friendly.">
+    <meta property="og:image" content="{{ asset('images/hero.jpg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="">
-    <meta name="twitter:description" content="">
-    <meta name="twitter:image" content="">
+    <meta name="twitter:title" content="Recodex ID - Jasa Pembuatan Website Profesional">
+    <meta name="twitter:description" content="Solusi digital terbaik untuk bisnis Anda dengan layanan pembuatan website profesional yang responsif dan SEO-friendly.">
+    <meta name="twitter:image" content="{{ asset('images/hero.jpg') }}">
 
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <title>Recodex ID - Jasa Pembuatan Website</title>
+    <title>Recodex ID - Jasa Pembuatan Website Profesional | Web Development Indonesia</title>
 @endsection
 
 <x-layouts.main>
     <!-- ...::: Hero Section Start :::... -->
-    <section class="section-hero">
+    <section class="section-hero" role="banner" aria-label="Hero Section">
         <div class="bg-black">
             <!-- Hero Space -->
             <div class="pb-20 pt-[150px] lg:pb-[100px] lg:pt-[196px] xl:pb-[130px]">
@@ -31,9 +33,9 @@
                 <div class="container">
                     <!-- Hero Area -->
                     <div
-                        class="relative z-10 grid grid-cols-1 items-center justify-center gap-x-[90px] gap-y-16 lg:grid-cols-[1fr_minmax(0,0.6fr)]">
+                        class="relative z-10 grid grid-cols-1 items-center justify-center gap-x-[90px] gap-y-16 lg:grid-cols-[1fr_minmax(0,0.6fr)]" role="region" aria-label="Main Content">
                         <!-- Hero Left Block -->
-                        <div class="text-center text-colorButteryWhite lg:text-start">
+                        <div class="text-center text-colorButteryWhite lg:text-start" role="contentinfo">
                             <h1>
                                 {{ $hero->title }}
                             </h1>
