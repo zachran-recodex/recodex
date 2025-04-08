@@ -5,19 +5,7 @@
     
             </url>
     <url>
-        <loc>http://recodex.test/faq</loc>
-    
-            </url>
-    <url>
-        <loc>http://recodex.test/layanan/mobile-app-development</loc>
-    
-            </url>
-    <url>
-        <loc>http://recodex.test/layanan/hosting</loc>
-    
-            </url>
-    <url>
-        <loc>http://recodex.test/layanan/maintenance-support</loc>
+        <loc>http://recodex.test</loc>
     
             </url>
     <url>
@@ -25,11 +13,11 @@
     
             </url>
     <url>
-        <loc>http://recodex.test/layanan/web-development</loc>
+        <loc>http://recodex.test/layanan</loc>
     
             </url>
     <url>
-        <loc>http://recodex.test</loc>
+        <loc>http://recodex.test/faq</loc>
     
             </url>
     <url>
@@ -37,11 +25,19 @@
     
             </url>
     <url>
+        <loc>http://recodex.test/layanan/hosting</loc>
+    
+            </url>
+    <url>
         <loc>http://recodex.test/konsultasi</loc>
     
             </url>
     <url>
-        <loc>http://recodex.test/layanan</loc>
+        <loc>http://recodex.test/layanan/web-development</loc>
+    
+            </url>
+    <url>
+        <loc>http://recodex.test/layanan/mobile-app-development</loc>
     
             </url>
     <url>
@@ -50,6 +46,10 @@
             </url>
     <url>
         <loc>http://recodex.test/layanan/domain-registration</loc>
+    
+            </url>
+    <url>
+        <loc>http://recodex.test/layanan/maintenance-support</loc>
     
             </url>
     <url>
