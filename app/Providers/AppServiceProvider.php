@@ -28,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
             return $user->hasRole('super-admin') ? true : null;
         });
 
+        Gate::define('viewPulse', function ($user) {
+            return $user->hasRole('super-admin');
+        });
+
         if ($this->app->environment('production')) {
             Schedule::command('telescope:prune --hours=48')->daily();
         }

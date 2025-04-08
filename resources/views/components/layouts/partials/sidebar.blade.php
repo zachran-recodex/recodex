@@ -53,6 +53,12 @@
             <flux:navlist.item :href="route('dashboard.project.emails')" :current="request()->routeIs('dashboard.project.emails')" wire:navigate>Emails</flux:navlist.item>
         </flux:navlist.group>
 
-        <flux:navlist.item href="/dashboard/telescope" wire:navigate>Laravel Telescope</flux:navlist.item>
     </flux:navlist>
+    <flux:spacer />
+
+    <flux:navlist>
+        <flux:navlist.item href="/dashboard/telescope" wire:navigate>Laravel Telescope</flux:navlist.item>
+        <flux:navlist.item href="/dashboard/pulse" wire:navigate>Laravel Pulse</flux:navlist.item>
+    </flux:navlist>
+
 </flux:sidebar>
