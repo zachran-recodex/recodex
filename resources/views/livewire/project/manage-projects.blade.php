@@ -287,169 +287,6 @@
                                     {!! $description ?? '-' !!}
                                 </div>
                             </div>
-                            @script
-                                <script>
-                                    let quill = null;
-
-                                    // Initialize Quill editor
-                                    function initQuill() {
-                                        if (quill) {
-                                            quill.destroy();
-                                        }
-
-                                        quill = new Quill('#editor', {
-                                            theme: 'snow',
-                                            placeholder: 'Write your description here...',
-                                            modules: {
-                                                toolbar: [
-                                                    ['bold', 'italic', 'underline', 'strike'],
-                                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                                                    ['link'],
-                                                    ['clean']
-                                                ]
-                                            }
-                                        });
-
-                                        // Add custom styles
-                                        const style = document.createElement('style');
-                                        style.textContent = `
-                                            .ql-editor {
-                                                min-height: 150px;
-                                                font-size: 14px;
-                                                line-height: 1.6;
-                                                color: #374151;
-                                                padding: 0.5rem 0.75rem;
-                                            }
-                                            .ql-toolbar {
-                                                border-radius: 0.375rem 0.375rem 0 0;
-                                                background-color: #f9fafb;
-                                                border: 1px solid #e5e7eb;
-                                                padding: 0.5rem;
-                                            }
-                                            .ql-container {
-                                                border-radius: 0 0 0.375rem 0.375rem;
-                                                border: 1px solid #e5e7eb;
-                                                background-color: white;
-                                            }
-                                            .ql-editor.ql-blank::before {
-                                                color: #9ca3af;
-                                                font-style: normal;
-                                            }
-                                            .ql-snow .ql-picker {
-                                                color: #374151;
-                                            }
-                                            .ql-snow .ql-stroke {
-                                                stroke: #374151;
-                                            }
-                                            .ql-snow .ql-fill {
-                                                fill: #374151;
-                                            }
-                                            .ql-snow .ql-picker-options {
-                                                background-color: white;
-                                                border: 1px solid #e5e7eb;
-                                                border-radius: 0.375rem;
-                                            }
-                                            .ql-snow .ql-picker.ql-expanded .ql-picker-label {
-                                                border-color: #e5e7eb;
-                                            }
-                                            .ql-snow .ql-tooltip {
-                                                background-color: white;
-                                                border: 1px solid #e5e7eb;
-                                                border-radius: 0.375rem;
-                                                box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-                                            }
-                                            .ql-snow .ql-tooltip input[type=text] {
-                                                border: 1px solid #e5e7eb;
-                                                border-radius: 0.375rem;
-                                            }
-
-                                            /* Dark mode styles */
-                                            .dark .ql-editor {
-                                                color: #e5e7eb;
-                                            }
-                                            .dark .ql-toolbar {
-                                                background-color: rgba(255, 255, 255, 0.1);
-                                                border-color: rgba(255, 255, 255, 0.1);
-                                            }
-                                            .dark .ql-container {
-                                                background-color: rgba(255, 255, 255, 0.1);
-                                                border-color: rgba(255, 255, 255, 0.1);
-                                            }
-                                            .dark .ql-editor.ql-blank::before {
-                                                color: rgba(255, 255, 255, 0.4);
-                                            }
-                                            .dark .ql-snow .ql-picker {
-                                                color: #e5e7eb;
-                                            }
-                                            .dark .ql-snow .ql-stroke {
-                                                stroke: #e5e7eb;
-                                            }
-                                            .dark .ql-snow .ql-fill {
-                                                fill: #e5e7eb;
-                                            }
-                                            .dark .ql-snow .ql-picker-options {
-                                                background-color: #1f2937;
-                                                border-color: rgba(255, 255, 255, 0.1);
-                                                color: #e5e7eb;
-                                            }
-                                            .dark .ql-snow .ql-picker.ql-expanded .ql-picker-label {
-                                                border-color: rgba(255, 255, 255, 0.1);
-                                            }
-                                            .dark .ql-snow .ql-tooltip {
-                                                background-color: #1f2937;
-                                                border-color: rgba(255, 255, 255, 0.1);
-                                                color: #e5e7eb;
-                                            }
-                                            .dark .ql-snow .ql-tooltip input[type=text] {
-                                                background-color: #1f2937;
-                                                border-color: rgba(255, 255, 255, 0.1);
-                                                color: #e5e7eb;
-                                            }
-                                            .dark .ql-snow .ql-tooltip input[type=text]::placeholder {
-                                                color: rgba(255, 255, 255, 0.4);
-                                            }
-                                        `;
-                                        document.head.appendChild(style);
-
-                                        // Set initial content if editing
-                                        if (@this.description) {
-                                            quill.root.innerHTML = @this.description;
-                                        }
-
-                                        // Update Livewire state on content change
-                                        quill.on('text-change', function() {
-                                            @this.set('description', quill.root.innerHTML);
-                                        });
-                                    }
-
-                                    // Initialize editor when modal opens
-                                    document.addEventListener('livewire:initialized', () => {
-                                        if (document.querySelector('#editor')) {
-                                            setTimeout(() => {
-                                                initQuill();
-                                            }, 100);
-                                        }
-                                    });
-
-                                    // Set up Livewire event listeners for modal events
-                                    document.addEventListener('livewire:init', () => {
-                                        Livewire.on('openModal', (modalName) => {
-                                            if (modalName === 'form') {
-                                                setTimeout(() => {
-                                                    initQuill();
-                                                }, 100);
-                                            }
-                                        });
-
-                                        Livewire.on('closeModal', (modalName) => {
-                                            if (modalName === 'form' && quill) {
-                                                quill.destroy();
-                                                quill = null;
-                                            }
-                                        });
-                                    });
-                                </script>
-                            @endscript
                             <flux:error name="description" />
                         </flux:field>
 
@@ -515,4 +352,169 @@
             </div>
         </div>
     </flux:modal>
+
+
+    @script
+        <script>
+            let quill = null;
+
+            // Initialize Quill editor
+            function initQuill() {
+                if (quill) {
+                    quill.destroy();
+                }
+
+                quill = new Quill('#editor', {
+                    theme: 'snow',
+                    placeholder: 'Write your description here...',
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['link'],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                // Add custom styles
+                const style = document.createElement('style');
+                style.textContent = `
+                    .ql-editor {
+                        min-height: 150px;
+                        font-size: 14px;
+                        line-height: 1.6;
+                        color: #374151;
+                        padding: 0.5rem 0.75rem;
+                    }
+                    .ql-toolbar {
+                        border-radius: 0.375rem 0.375rem 0 0;
+                        background-color: #f9fafb;
+                        border: 1px solid #e5e7eb;
+                        padding: 0.5rem;
+                    }
+                    .ql-container {
+                        border-radius: 0 0 0.375rem 0.375rem;
+                        border: 1px solid #e5e7eb;
+                        background-color: white;
+                    }
+                    .ql-editor.ql-blank::before {
+                        color: #9ca3af;
+                        font-style: normal;
+                    }
+                    .ql-snow .ql-picker {
+                        color: #374151;
+                    }
+                    .ql-snow .ql-stroke {
+                        stroke: #374151;
+                    }
+                    .ql-snow .ql-fill {
+                        fill: #374151;
+                    }
+                    .ql-snow .ql-picker-options {
+                        background-color: white;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.375rem;
+                    }
+                    .ql-snow .ql-picker.ql-expanded .ql-picker-label {
+                        border-color: #e5e7eb;
+                    }
+                    .ql-snow .ql-tooltip {
+                        background-color: white;
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.375rem;
+                        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+                    }
+                    .ql-snow .ql-tooltip input[type=text] {
+                        border: 1px solid #e5e7eb;
+                        border-radius: 0.375rem;
+                    }
+
+                    /* Dark mode styles */
+                    .dark .ql-editor {
+                        color: #e5e7eb;
+                    }
+                    .dark .ql-toolbar {
+                        background-color: rgba(255, 255, 255, 0.1);
+                        border-color: rgba(255, 255, 255, 0.1);
+                    }
+                    .dark .ql-container {
+                        background-color: rgba(255, 255, 255, 0.1);
+                        border-color: rgba(255, 255, 255, 0.1);
+                    }
+                    .dark .ql-editor.ql-blank::before {
+                        color: rgba(255, 255, 255, 0.4);
+                    }
+                    .dark .ql-snow .ql-picker {
+                        color: #e5e7eb;
+                    }
+                    .dark .ql-snow .ql-stroke {
+                        stroke: #e5e7eb;
+                    }
+                    .dark .ql-snow .ql-fill {
+                        fill: #e5e7eb;
+                    }
+                    .dark .ql-snow .ql-picker-options {
+                        background-color: #1f2937;
+                        border-color: rgba(255, 255, 255, 0.1);
+                        color: #e5e7eb;
+                    }
+                    .dark .ql-snow .ql-picker.ql-expanded .ql-picker-label {
+                        border-color: rgba(255, 255, 255, 0.1);
+                    }
+                    .dark .ql-snow .ql-tooltip {
+                        background-color: #1f2937;
+                        border-color: rgba(255, 255, 255, 0.1);
+                        color: #e5e7eb;
+                    }
+                    .dark .ql-snow .ql-tooltip input[type=text] {
+                        background-color: #1f2937;
+                        border-color: rgba(255, 255, 255, 0.1);
+                        color: #e5e7eb;
+                    }
+                    .dark .ql-snow .ql-tooltip input[type=text]::placeholder {
+                        color: rgba(255, 255, 255, 0.4);
+                    }
+                `;
+                document.head.appendChild(style);
+
+                // Set initial content if editing
+                if (@this.description) {
+                    quill.root.innerHTML = @this.description;
+                }
+
+                // Update Livewire state on content change
+                quill.on('text-change', function() {
+                    @this.set('description', quill.root.innerHTML);
+                });
+            }
+
+            // Initialize editor when modal opens
+            document.addEventListener('livewire:initialized', () => {
+                if (document.querySelector('#editor')) {
+                    setTimeout(() => {
+                        initQuill();
+                    }, 100);
+                }
+            });
+
+            // Set up Livewire event listeners for modal events
+            document.addEventListener('livewire:init', () => {
+                Livewire.on('openModal', (modalName) => {
+                    if (modalName === 'form') {
+                        setTimeout(() => {
+                            initQuill();
+                        }, 100);
+                    }
+                });
+
+                Livewire.on('closeModal', (modalName) => {
+                    if (modalName === 'form' && quill) {
+                        quill.destroy();
+                        quill = null;
+                    }
+                });
+            });
+        </script>
+    @endscript
 </flux:container>
