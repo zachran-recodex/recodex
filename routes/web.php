@@ -2,8 +2,19 @@
 
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ResetPasswordEmailController;
+
+Route::get('sitemap.xml', function() {
+    if (file_exists(public_path('sitemap.xml'))) {
+        return response()->file(public_path('sitemap.xml'));
+    }
+
+    // Generate sitemap if it doesn't exist
+    Artisan::call('sitemap:generate');
+    return response()->file(public_path('sitemap.xml'));
+});
 
 Route::controller(MainController::class)->group(function () {
 
