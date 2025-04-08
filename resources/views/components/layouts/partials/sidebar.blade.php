@@ -54,11 +54,4 @@
         </flux:navlist.group>
 
     </flux:navlist>
-    <flux:spacer />
-
-    <flux:navlist>
-        <flux:navlist.item href="/dashboard/telescope" wire:navigate>Laravel Telescope</flux:navlist.item>
-        <flux:navlist.item href="/dashboard/pulse" wire:navigate>Laravel Pulse</flux:navlist.item>
-    </flux:navlist>
-
 </flux:sidebar>

@@ -11,12 +11,9 @@
     "require": {
         "php": "^8.3",
         "laravel/framework": "^12.0",
-        "laravel/pulse": "^1.4",
-        "laravel/telescope": "^5.7",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.0",
         "livewire/volt": "^1.6.7",
-        "sentry/sentry-laravel": "^4.13",
         "spatie/laravel-permission": "^6.16"
     },
     "require-dev": {
@@ -64,9 +61,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-                "laravel/telescope"
-            ]
+            "dont-discover": []
         }
     },
     "config": {
