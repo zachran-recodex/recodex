@@ -4,6 +4,10 @@ use GuzzleHttp\RequestOptions;
 use Spatie\Sitemap\Crawler\Profile;
 
 return [
+    /*
+     * The path where the sitemap should be stored.
+     */
+    'path' => public_path('sitemap.xml'),
 
     /*
      * These options will be passed to GuzzleHttp\Client when it is created.
