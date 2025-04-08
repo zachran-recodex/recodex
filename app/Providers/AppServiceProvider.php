@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('viewPulse', function ($user) {
-            return $user->hasRole('super-admin');
+            return $user->hasRole(['super-admin', 'admin']);
         });
 
         if ($this->app->environment('production')) {
