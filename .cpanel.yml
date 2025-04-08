@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/example/public_html/
+    - export DEPLOYPATH=/home/recodexi/public_html/
     # Deploy public assets
     - /bin/cp -R public/build $DEPLOYPATH
     - /bin/cp -R public/css $DEPLOYPATH
@@ -18,7 +18,7 @@ deployment:
     - /bin/cp public/index.php $DEPLOYPATH
 
     # Deploy application files
-    - export APPPATH=/home/example/
+    - export APPPATH=/home/recodexi/
     - /bin/cp -R app $APPPATH
     - /bin/cp -R bootstrap $APPPATH
     - /bin/cp -R config $APPPATH
