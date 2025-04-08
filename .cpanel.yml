@@ -1,24 +1,24 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/recodexi/public_html/
+    - export DEPLOYPATH=/home/recodexi/public_html/public
     # Deploy public assets
-    - /bin/cp -R public/build $DEPLOYPATH
-    - /bin/cp -R public/css $DEPLOYPATH
-    - /bin/cp -R public/fonts $DEPLOYPATH
-    - /bin/cp -R public/images $DEPLOYPATH
-    - /bin/cp -R public/js $DEPLOYPATH
-    - /bin/cp -R public/vendor $DEPLOYPATH
-    - /bin/cp public/.htaccess $DEPLOYPATH
-    - /bin/cp public/favicon* $DEPLOYPATH
-    - /bin/cp public/android-chrome* $DEPLOYPATH
-    - /bin/cp public/apple-touch-icon.png $DEPLOYPATH
-    - /bin/cp public/robots.txt $DEPLOYPATH
-    - /bin/cp public/site.webmanifest $DEPLOYPATH
-    - /bin/cp public/index.php $DEPLOYPATH
+    - /bin/cp -R build $DEPLOYPATH
+    - /bin/cp -R css $DEPLOYPATH
+    - /bin/cp -R fonts $DEPLOYPATH
+    - /bin/cp -R images $DEPLOYPATH
+    - /bin/cp -R js $DEPLOYPATH
+    - /bin/cp -R vendor $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp favicon* $DEPLOYPATH
+    - /bin/cp android-chrome* $DEPLOYPATH
+    - /bin/cp apple-touch-icon.png $DEPLOYPATH
+    - /bin/cp robots.txt $DEPLOYPATH
+    - /bin/cp site.webmanifest $DEPLOYPATH
+    - /bin/cp index.php $DEPLOYPATH
 
     # Deploy application files
-    - export APPPATH=/home/recodexi/
+    - export APPPATH=/home/recodexi/public_html/
     - /bin/cp -R app $APPPATH
     - /bin/cp -R bootstrap $APPPATH
     - /bin/cp -R config $APPPATH
