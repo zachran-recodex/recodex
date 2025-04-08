@@ -24,7 +24,7 @@ class ManageSitemap extends Component
         $sitemapPath = public_path('sitemap.xml');
         if (File::exists($sitemapPath)) {
             $this->lastGenerated = File::lastModified($sitemapPath);
-            $this->sitemapUrl = url('sitemap.xml');
+            $this->sitemapUrl = public_path('sitemap.xml');
         }
     }
 
