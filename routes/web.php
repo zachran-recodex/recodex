@@ -25,6 +25,7 @@ Route::controller(MainController::class)->group(function () {
     Route::get('faq', 'faq')->name('faq');
     Route::get('portfolio', 'project')->name('project');
     Route::get('konsultasi', 'contact')->name('contact');
+    Route::post('konsultasi', 'storeContact')->name('contact.store');
 
 });
 
@@ -48,6 +49,9 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
             Route::get('manage-roles', App\Livewire\Admin\ManageRoles::class)
                 ->name('role')
                 ->middleware('can:manage roles');
+
+            Route::get('manage-contacts', App\Livewire\Admin\ManageContacts::class)
+                ->name('contact');
 
             Route::get('manage-sitemap', App\Livewire\Admin\ManageSitemap::class)
                 ->name('sitemap');

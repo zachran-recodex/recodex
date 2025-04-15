@@ -71,8 +71,9 @@
                         <!-- Section Block -->
 
                         <!-- Contact Form -->
-                        <form action="" method="post"
+                        <form action="{{ route('contact.store') }}" method="post"
                             class="flex flex-col gap-y-6 rounded-[30px] border border-black p-[30px]">
+                            @csrf
                             <!-- Form Group -->
                             <div>
                                 <label for="contact-name" class="mb-3 block pl-6 text-base font-bold">Your name</label>
@@ -121,7 +122,7 @@
                     <!-- Contact Form Right Block - Image-->
                     <div class="jos hidden overflow-hidden rounded-[20px] border-2 border-black lg:block lg:border-[5px]"
                         data-jos_animation="fade-right">
-                        <img src="{{ asset('img/images/th-1/contact-img.jpg') }}" alt="contact-img" width="456"
+                        <img src="{{ asset('images/konsultasi.png') }}" alt="contact-img" width="456"
                             height="731" class="h-full w-full object-cover" />
                     </div>
                     <!-- Contact Form Right Block - Image-->

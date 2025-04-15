@@ -26,6 +26,9 @@
                 @endcan
 
                 <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.sitemap')" :current="request()->routeIs('dashboard.admin.sitemap')" wire:navigate>Generate Sitemap</flux:navlist.item>
+
+                <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.contact')" :current="request()->routeIs('dashboard.admin.contact')" wire:navigate>Contact</flux:navlist.item>
+
             </flux:navlist.group>
         @endif
 

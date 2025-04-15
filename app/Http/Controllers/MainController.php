@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Faq;
 use App\Models\Hero;
 use App\Models\About;
+use App\Models\Contact;
 use App\Models\Counter;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\WorkProcess;
+use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
@@ -68,5 +70,24 @@ class MainController extends Controller
         $faqs = Faq::all();
 
         return view('main.contact', compact('faqs'));
+    }
+
+    public function storeContact(Request $request)
+    {
+        $validated = $request->validate([
+            'contact-name' => 'required|string|max:255',
+            'contact-email' => 'required|email|max:255',
+            'contact-phone' => 'required|string|max:20',
+            'contact-massage' => 'required|string'
+        ]);
+
+        Contact::create([
+            'name' => $validated['contact-name'],
+            'email' => $validated['contact-email'],
+            'phone' => $validated['contact-phone'],
+            'message' => $validated['contact-massage']
+        ]);
+
+        return back()->with('success', 'Pesan Anda telah terkirim!');
     }
 }
