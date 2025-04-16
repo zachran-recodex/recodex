@@ -13,8 +13,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.3'
-        extensions: mbstring, bcmath, pdo, pdo_mysql
-        coverage: none
+        extensions: mbstring, bcmath, pdo, pdo_mysql, intl, zip, gd
 
     - name: 🔧 Prepare Laravel Environment
       run: |
@@ -36,8 +35,11 @@ jobs:
         echo "MAIL_FROM_ADDRESS=\"admin@recodex.id\"" >> .env
         echo "MAIL_FROM_NAME=\"${APP_NAME}\"" >> .env
 
+    - name: Clear Composer Cache
+      run: composer clear-cache
+
     - name: 📦 Install Composer Dependencies
-      run: composer install --no-interaction --no-progress --prefer-dist
+      run: composer install --no-interaction --no-progress --prefer-dist --verbose
       env:
         COMPOSER_PROCESS_TIMEOUT: 0
         COMPOSER_NO_INTERACTION: 1
@@ -50,7 +52,7 @@ jobs:
         php artisan route:cache
         php artisan view:cache
         php artisan optimize
-        php artisan permission:cache-reset
+        # Skip permission:cache-reset as it requires database connection
         # Skip database migrations during CI/CD as we can't connect to the production database
 
     - name: 📂 Sync files
