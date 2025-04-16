@@ -16,16 +16,9 @@ jobs:
         extensions: mbstring, bcmath, pdo, pdo_mysql
         coverage: none
 
-    - name: 📦 Install Composer Dependencies
-      run: composer install --no-interaction --no-progress --prefer-dist
-      env:
-        COMPOSER_PROCESS_TIMEOUT: 0
-        COMPOSER_NO_INTERACTION: 1
-        COMPOSER_NO_AUDIT: 1
-
-    - name: 🔧 Prepare Laravel Application
+    - name: 🔧 Prepare Laravel Environment
       run: |
-        echo "APP_NAME=\"Recodex ID\"" >> .env
+        echo "APP_NAME=\"Recodex ID\"" > .env
         echo "APP_ENV=production" >> .env
         echo "APP_DEBUG=false" >> .env
         echo "APP_URL=https://recodex.id" >> .env
@@ -42,6 +35,16 @@ jobs:
         echo "MAIL_PASSWORD=\"qgQ{pFs#;*wn\"" >> .env
         echo "MAIL_FROM_ADDRESS=\"admin@recodex.id\"" >> .env
         echo "MAIL_FROM_NAME=\"${APP_NAME}\"" >> .env
+
+    - name: 📦 Install Composer Dependencies
+      run: composer install --no-interaction --no-progress --prefer-dist
+      env:
+        COMPOSER_PROCESS_TIMEOUT: 0
+        COMPOSER_NO_INTERACTION: 1
+        COMPOSER_NO_AUDIT: 1
+
+    - name: 🔧 Prepare Laravel Application
+      run: |
         php artisan migrate --force
         php artisan config:cache
         php artisan route:cache
