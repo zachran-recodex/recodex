@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
     <url>
-        <loc>http://recodex.test/</loc>
-    
+        <loc>https://recodex.id/</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test</loc>
-    
+        <loc>https://recodex.id</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/tentang-kami</loc>
-    
+        <loc>https://recodex.id/tentang-kami</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan</loc>
-    
+        <loc>https://recodex.id/layanan</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/faq</loc>
-    
+        <loc>https://recodex.id/faq</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/portfolio</loc>
-    
+        <loc>https://recodex.id/portfolio</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan/hosting</loc>
-    
+        <loc>https://recodex.id/layanan/hosting</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/konsultasi</loc>
-    
+        <loc>https://recodex.id/konsultasi</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan/web-development</loc>
-    
+        <loc>https://recodex.id/layanan/web-development</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan/mobile-app-development</loc>
-    
+        <loc>https://recodex.id/layanan/mobile-app-development</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan/seo-optimization</loc>
-    
+        <loc>https://recodex.id/layanan/seo-optimization</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan/domain-registration</loc>
-    
+        <loc>https://recodex.id/layanan/domain-registration</loc>
+
             </url>
     <url>
-        <loc>http://recodex.test/layanan/maintenance-support</loc>
-    
+        <loc>https://recodex.id/layanan/maintenance-support</loc>
+
             </url>
     <url>
         <loc>http://127.0.0.1:8000/layanan/web-development</loc>

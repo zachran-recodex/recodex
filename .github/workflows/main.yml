@@ -25,11 +25,29 @@ jobs:
 
     - name: 🔧 Prepare Laravel Application
       run: |
+        echo "APP_NAME=\"Recodex ID\"" >> .env
+        echo "APP_ENV=production" >> .env
+        echo "APP_DEBUG=false" >> .env
+        echo "APP_URL=https://recodex.id" >> .env
+        echo "DB_CONNECTION=mysql" >> .env
+        echo "DB_HOST=localhost" >> .env
+        echo "DB_PORT=3306" >> .env
+        echo "DB_DATABASE=recodexi_main" >> .env
+        echo "DB_USERNAME=recodexi_admin" >> .env
+        echo "DB_PASSWORD=\"y)xOaeV72AZ4\"" >> .env
+        echo "MAIL_MAILER=smtp" >> .env
+        echo "MAIL_HOST=\"mail.recodex.id\"" >> .env
+        echo "MAIL_PORT=465" >> .env
+        echo "MAIL_USERNAME=\"admin@recodex.id\"" >> .env
+        echo "MAIL_PASSWORD=\"qgQ{pFs#;*wn\"" >> .env
+        echo "MAIL_FROM_ADDRESS=\"admin@recodex.id\"" >> .env
+        echo "MAIL_FROM_NAME=\"${APP_NAME}\"" >> .env
         php artisan migrate --force
         php artisan config:cache
         php artisan route:cache
         php artisan view:cache
         php artisan optimize
+        php artisan permission:cache-reset
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
