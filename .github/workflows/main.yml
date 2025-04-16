@@ -45,12 +45,13 @@ jobs:
 
     - name: 🔧 Prepare Laravel Application
       run: |
-        php artisan migrate --force
+        php artisan storage:link
         php artisan config:cache
         php artisan route:cache
         php artisan view:cache
         php artisan optimize
         php artisan permission:cache-reset
+        # Skip database migrations during CI/CD as we can't connect to the production database
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5

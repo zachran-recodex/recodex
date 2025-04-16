@@ -30,3 +30,7 @@ deployment:
     - /bin/cp artisan $APPPATH
     - /bin/cp composer.json $APPPATH
     - /bin/cp composer.lock $APPPATH
+    - /bin/cp post-deploy.php $APPPATH
+
+    # Run post-deployment script to execute migrations on the server
+    - cd $APPPATH && php post-deploy.php
