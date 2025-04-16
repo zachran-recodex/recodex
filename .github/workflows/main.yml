@@ -74,6 +74,7 @@ jobs:
 
     - name: 🔧 Prepare Laravel Application
       run: |
+        php artisan optimize:clear
         php artisan storage:link
         php artisan config:cache
         php artisan route:cache
