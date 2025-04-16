@@ -59,7 +59,12 @@ try {
     // Only run permission cache reset if database is connected
     if ($dbConnected) {
         echo "Resetting permission cache...\n";
-        $kernel->call('permission:cache-reset');
+        try {
+            $kernel->call('permission:cache-reset');
+        } catch (\Exception $e) {
+            echo "Permission cache reset failed: " . $e->getMessage() . "\n";
+            echo "Continuing with other tasks...\n";
+        }
     } else {
         echo "Skipping permission cache reset due to database connection issues.\n";
     }
