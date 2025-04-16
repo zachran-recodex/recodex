@@ -55,6 +55,16 @@ jobs:
         # Skip permission:cache-reset as it requires database connection
         # Skip database migrations during CI/CD as we can't connect to the production database
 
+    - name: 🔧 Prepare Storage Directories
+      run: |
+        mkdir -p storage/app/public
+        mkdir -p storage/framework/cache
+        mkdir -p storage/framework/sessions
+        mkdir -p storage/framework/views
+        mkdir -p storage/logs
+        touch storage/logs/.gitignore
+        chmod -R 775 storage
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
@@ -68,6 +78,4 @@ jobs:
           **/node_modules/**
           **/vendor/**
           **/.env*
-          **/storage/logs/**
-          **/storage/framework/cache/**
-          **/storage/framework/sessions/**
+        dangerous-clean-slate: false
