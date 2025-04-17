@@ -89,7 +89,7 @@ jobs:
           **/storage/logs/**
           **/storage/framework/cache/**
           **/storage/framework/sessions/**
-          .env.example
+          **/vendor/**
           .env
         state-name: .ftp-deploy-sync-state.json
         log-level: minimal
