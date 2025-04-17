@@ -44,12 +44,22 @@ jobs:
         fi
         cp .env.production .env
         php artisan key:generate --force
-        # Tambahkan konfigurasi database yang lengkap
-        echo "DB_DRIVER=mysql" >> .env
+        # Pastikan konfigurasi database lengkap dengan driver yang benar
+        if ! grep -q "DB_CONNECTION" .env; then
+          echo "DB_CONNECTION=mysql" >> .env
+        fi
+        # Laravel menggunakan DB_CONNECTION, bukan DB_DRIVER
+        sed -i 's/DB_DRIVER/DB_CONNECTION/g' .env 2>/dev/null || true
         # Pastikan variabel lingkungan yang diperlukan sudah ada
-        echo "CACHE_STORE=database" >> .env
-        echo "SESSION_DRIVER=database" >> .env
-        echo "MAIL_MAILER=log" >> .env
+        if ! grep -q "CACHE_STORE" .env; then
+          echo "CACHE_STORE=database" >> .env
+        fi
+        if ! grep -q "SESSION_DRIVER" .env; then
+          echo "SESSION_DRIVER=database" >> .env
+        fi
+        if ! grep -q "MAIL_MAILER" .env; then
+          echo "MAIL_MAILER=log" >> .env
+        fi
 
     - name: 🔍 Debug .env File
       run: |
