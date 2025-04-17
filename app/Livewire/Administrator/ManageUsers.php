@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Administrator;
 
 use App\Models\User;
 use Livewire\Component;
@@ -182,7 +182,7 @@ class ManageUsers extends Component
         $users = $users->paginate(10);
         $roles = Role::all();
 
-        return view('livewire.admin.manage-users', [
+        return view('livewire.administrator.manage-users', [
             'users' => $users,
             'roles' => $roles
         ]);

@@ -1,0 +1,115 @@
+name: 🚀 Deploy website on push
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      deploy_type:
+        description: 'Tipe deployment'
+        required: true
+        default: 'incremental'
+        type: choice
+        options:
+          - incremental
+          - full
+
+jobs:
+  laravel-tests:
+    name: 🧪 Laravel Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 🐘 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, dom, fileinfo, mysql
+        coverage: xdebug
+
+    - name: 📦 Get Composer Cache Directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: 💾 Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: 🔧 Install Composer dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
+    - name: 🔑 Prepare Laravel Application
+      run: |
+        cp .env.example .env
+        php artisan key:generate
+        touch database/database.sqlite
+
+    - name: 🧪 Run Tests
+      run: vendor/bin/pest
+
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    needs: laravel-tests
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 🐘 Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, dom, fileinfo
+
+    - name: 📦 Install Composer dependencies
+      run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+    - name: 🔧 Optimize Laravel
+      run: |
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+
+    - name: 🔄 Prepare Database Migrations
+      run: |
+        php artisan migrate:status
+        echo "Migrations ready for deployment"
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        dangerous-clean-slate: false
+        dry-run: ${{ github.event_name == 'pull_request' }}
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/tests/**
+          **/storage/logs/**
+          **/storage/framework/cache/**
+          **/storage/framework/sessions/**
+          .env.example
+          .env
+        state-name: .ftp-deploy-sync-state.json
+        log-level: minimal
+
+    - name: 🔄 Run Post-Deployment Commands
+      if: github.event_name != 'pull_request'
+      run: |
+        echo "Running post-deployment commands..."
+        php artisan migrate --force
+        php artisan cache:clear
+        php artisan queue:restart

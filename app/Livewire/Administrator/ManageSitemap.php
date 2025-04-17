@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Administrator;
 
 use Livewire\Component;
 use App\WithNotification;
@@ -41,6 +41,6 @@ class ManageSitemap extends Component
 
     public function render()
     {
-        return view('livewire.admin.manage-sitemap');
+        return view('livewire.administrator.manage-sitemap');
     }
 }

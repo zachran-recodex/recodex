@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Administrator;
 
 use Livewire\Component;
 use App\WithNotification;
@@ -90,8 +90,8 @@ class ManageRoles extends Component
             if ($this->isEditing) {
                 $role = Role::findOrFail($this->roleId);
 
-                // Prevent name changes for admin and super-admin roles
-                if (!in_array($role->name, ['admin', 'super-admin'])) {
+                // Prevent name changes for administrator and super-administrator roles
+                if (!in_array($role->name, ['administrator', 'super-administrator'])) {
                     $role->update([
                         'name' => $this->name,
                     ]);
@@ -133,7 +133,7 @@ class ManageRoles extends Component
 
         $permissions = Permission::all();
 
-        return view('livewire.admin.manage-roles', [
+        return view('livewire.administrator.manage-roles', [
             'roles' => $roles,
             'permissions' => $permissions,
         ]);

@@ -40,20 +40,20 @@ Route::middleware(['auth', 'can:access dashboard'])->group(function () {
 
     Route::prefix('dashboard')->name('dashboard.')->group(function (){
 
-        Route::prefix('admin')->name('admin.')->group(function (){
+        Route::prefix('administrator')->name('administrator.')->group(function (){
 
-            Route::get('manage-users', App\Livewire\Admin\ManageUsers::class)
+            Route::get('manage-users', App\Livewire\Administrator\ManageUsers::class)
                 ->name('user')
                 ->middleware('can:manage users');
 
-            Route::get('manage-roles', App\Livewire\Admin\ManageRoles::class)
+            Route::get('manage-roles', App\Livewire\Administrator\ManageRoles::class)
                 ->name('role')
                 ->middleware('can:manage roles');
 
-            Route::get('manage-contacts', App\Livewire\Admin\ManageContacts::class)
+            Route::get('manage-contacts', App\Livewire\Administrator\ManageContacts::class)
                 ->name('contact');
 
-            Route::get('manage-sitemap', App\Livewire\Admin\ManageSitemap::class)
+            Route::get('manage-sitemap', App\Livewire\Administrator\ManageSitemap::class)
                 ->name('sitemap');
         });
 

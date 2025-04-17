@@ -55,8 +55,8 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
                             @foreach ($user->roles as $role)
                                 <flux:badge color="{{ match($role->name) {
-                                    'super-admin' => 'blue',
-                                    'admin' => 'green',
+                                    'super-administrator' => 'blue',
+                                    'administrator' => 'green',
                                     default => 'zinc'
                                 } }}" class="mr-1">
                                     {{ Str::title(str_replace('-', ' ', $role->name)) }}

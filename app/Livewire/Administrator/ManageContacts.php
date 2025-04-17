@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire\Administrator;
 
 use Livewire\Component;
 use App\Models\Contact;
@@ -102,7 +102,7 @@ class ManageContacts extends Component
      */
     public function render()
     {
-        return view('livewire.admin.manage-contacts', [
+        return view('livewire.administrator.manage-contacts', [
             'contacts' => Contact::latest()
                 ->paginate(10)
         ]);

@@ -16,18 +16,18 @@
         <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
 
         @if(auth()->user()->hasRole(['admin', 'super-admin']))
-            <flux:navlist.group expandable heading="Admin">
+            <flux:navlist.group expandable heading="Administrator">
                 @can('manage users')
-                    <flux:navlist.item icon="users" :href="route('dashboard.admin.user')" :current="request()->routeIs('dashboard.admin.user')" wire:navigate>User</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('dashboard.administrator.user')" :current="request()->routeIs('dashboard.administrator.user')" wire:navigate>User</flux:navlist.item>
                 @endcan
 
                 @can('manage roles')
-                    <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.role')" :current="request()->routeIs('dashboard.admin.role')" wire:navigate>Role</flux:navlist.item>
+                    <flux:navlist.item icon="shield-check" :href="route('dashboard.administrator.role')" :current="request()->routeIs('dashboard.administrator.role')" wire:navigate>Role</flux:navlist.item>
                 @endcan
 
-                <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.sitemap')" :current="request()->routeIs('dashboard.admin.sitemap')" wire:navigate>Generate Sitemap</flux:navlist.item>
+                <flux:navlist.item icon="shield-check" :href="route('dashboard.administrator.sitemap')" :current="request()->routeIs('dashboard.administrator.sitemap')" wire:navigate>Generate Sitemap</flux:navlist.item>
 
-                <flux:navlist.item icon="shield-check" :href="route('dashboard.admin.contact')" :current="request()->routeIs('dashboard.admin.contact')" wire:navigate>Contact</flux:navlist.item>
+                <flux:navlist.item icon="shield-check" :href="route('dashboard.administrator.contact')" :current="request()->routeIs('dashboard.administrator.contact')" wire:navigate>Contact</flux:navlist.item>
 
             </flux:navlist.group>
         @endif
