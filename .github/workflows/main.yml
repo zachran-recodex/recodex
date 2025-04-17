@@ -93,11 +93,3 @@ jobs:
           .env
         state-name: .ftp-deploy-sync-state.json
         log-level: minimal
-
-    - name: 🔄 Run Post-Deployment Commands
-      if: github.event_name != 'pull_request'
-      run: |
-        echo "Running post-deployment commands..."
-        php artisan migrate --force
-        php artisan cache:clear
-        php artisan queue:restart
