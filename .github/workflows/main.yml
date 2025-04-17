@@ -73,11 +73,6 @@ jobs:
       run: |
         php artisan package:discover --ansi
 
-    - name: 🔄 Prepare Database Migrations
-      run: |
-        php artisan migrate:status
-        echo "Migrations ready for deployment"
-
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
