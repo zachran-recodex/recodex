@@ -38,14 +38,23 @@ jobs:
 
     - name: 🔧 Setup Environment
       run: |
+        if [ ! -f .env.production ]; then
+          echo "Error: .env.production file is missing."
+          exit 1
+        fi
         cp .env.production .env
         php artisan key:generate --force
-        # Tidak perlu menambahkan DB_CONNECTION karena sudah ada di .env.production
-        # Tambahkan driver secara eksplisit untuk menghindari error undefined array key
+        # Tambahkan konfigurasi database yang lengkap
         echo "DB_DRIVER=mysql" >> .env
+        # Pastikan variabel lingkungan yang diperlukan sudah ada
         echo "CACHE_STORE=database" >> .env
         echo "SESSION_DRIVER=database" >> .env
         echo "MAIL_MAILER=log" >> .env
+
+    - name: 🔍 Debug .env File
+      run: |
+        echo "Checking .env file contents:"
+        cat .env | grep -v -e '^APP_KEY=' -e '^DB_PASSWORD='
 
     - name: 🔧 Optimize Laravel
       run: |
