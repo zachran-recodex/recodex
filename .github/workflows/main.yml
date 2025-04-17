@@ -38,11 +38,13 @@ jobs:
 
     - name: 🔧 Setup Environment
       run: |
-        cp .env.example .env
+        cp .env.production .env
         php artisan key:generate --force
-        echo "DB_CONNECTION=sqlite" >> .env
-        echo "CACHE_STORE=array" >> .env
-        echo "SESSION_DRIVER=array" >> .env
+        # Tidak perlu menambahkan DB_CONNECTION karena sudah ada di .env.production
+        # Tambahkan driver secara eksplisit untuk menghindari error undefined array key
+        echo "DB_DRIVER=mysql" >> .env
+        echo "CACHE_STORE=database" >> .env
+        echo "SESSION_DRIVER=database" >> .env
         echo "MAIL_MAILER=log" >> .env
 
     - name: 🔧 Optimize Laravel
