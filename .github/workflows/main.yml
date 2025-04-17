@@ -1,77 +1,12 @@
+on: push
 name: 🚀 Deploy website on push
-
-on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  workflow_dispatch:
-    inputs:
-      deploy_type:
-        description: 'Tipe deployment'
-        required: true
-        default: 'incremental'
-        type: choice
-        options:
-          - incremental
-          - full
-
 jobs:
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: 🐘 Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
-        extensions: mbstring, dom, fileinfo
-
-    - name: 📦 Install Composer dependencies
-      run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts
-
-    - name: 🔧 Setup Environment
-      run: |
-        if [ ! -f .env.production ]; then
-          echo "Error: .env.production file is missing."
-          exit 1
-        fi
-        cp .env.production .env
-        php artisan key:generate --force
-        # Pastikan konfigurasi database lengkap dengan driver yang benar
-        if ! grep -q "DB_CONNECTION" .env; then
-          echo "DB_CONNECTION=mysql" >> .env
-        fi
-        # Laravel menggunakan DB_CONNECTION, bukan DB_DRIVER
-        sed -i 's/DB_DRIVER/DB_CONNECTION/g' .env 2>/dev/null || true
-        # Pastikan variabel lingkungan yang diperlukan sudah ada
-        if ! grep -q "CACHE_STORE" .env; then
-          echo "CACHE_STORE=database" >> .env
-        fi
-        if ! grep -q "SESSION_DRIVER" .env; then
-          echo "SESSION_DRIVER=database" >> .env
-        fi
-        if ! grep -q "MAIL_MAILER" .env; then
-          echo "MAIL_MAILER=log" >> .env
-        fi
-
-        # Jalankan package:discover secara manual setelah environment siap
-        php artisan package:discover --ansi
-
-    - name: 🔍 Debug .env File
-      run: |
-        echo "Checking .env file contents:"
-        cat .env | grep -v -e '^APP_KEY=' -e '^DB_PASSWORD='
-
-    - name: 🔧 Optimize Laravel
-      run: |
-        php artisan package:discover --ansi
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -79,8 +14,6 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        dangerous-clean-slate: false
-        dry-run: ${{ github.event_name == 'pull_request' }}
         exclude: |
           **/.git*
           **/.git*/**
@@ -91,5 +24,3 @@ jobs:
           **/storage/framework/sessions/**
           **/vendor/**
           .env
-        state-name: .ftp-deploy-sync-state.json
-        log-level: minimal
