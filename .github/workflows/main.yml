@@ -72,8 +72,6 @@ jobs:
     - name: 🔧 Optimize Laravel
       run: |
         php artisan package:discover --ansi
-        php artisan optimize:clear
-        php artisan optimize
 
     - name: 🔄 Prepare Database Migrations
       run: |
