@@ -73,9 +73,7 @@ jobs:
       run: |
         php artisan package:discover --ansi
         php artisan optimize:clear
-        php artisan config:cache
-        php artisan route:cache
-        php artisan view:cache
+        php artisan optimize
 
     - name: 🔄 Prepare Database Migrations
       run: |
