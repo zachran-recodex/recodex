@@ -24,3 +24,4 @@ jobs:
           **/storage/framework/sessions/**
           **/vendor/**
           .env
+        server-dir: public_html/
