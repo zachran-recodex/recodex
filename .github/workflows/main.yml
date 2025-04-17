@@ -1,5 +1,10 @@
-on: push
+on:
+  push:
+    branches:
+      - main
+
 name: 🚀 Deploy website on push
+
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -7,6 +12,21 @@ jobs:
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, bcmath, intl, pdo, pdo_mysql, openssl
+        ini-values: post_max_size=256M, upload_max_filesize=256M
+
+    - name: Install Composer dependencies
+      run: composer install --no-dev --optimize-autoloader
+
+    - name: Build frontend
+      run: |
+        npm install
+        npm run build
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -16,12 +36,9 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         exclude: |
           **/.git*
-          **/.git*/**
           **/node_modules/**
-          **/tests/**
-          **/storage/logs/**
-          **/storage/framework/cache/**
-          **/storage/framework/sessions/**
           **/vendor/**
+          **/tests/**
           .env
+          .github/**
         server-dir: public_html/
