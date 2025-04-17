@@ -34,7 +34,7 @@ jobs:
         extensions: mbstring, dom, fileinfo
 
     - name: 📦 Install Composer dependencies
-      run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+      run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts
 
     - name: 🔧 Setup Environment
       run: |
@@ -60,6 +60,9 @@ jobs:
         if ! grep -q "MAIL_MAILER" .env; then
           echo "MAIL_MAILER=log" >> .env
         fi
+
+        # Jalankan package:discover secara manual setelah environment siap
+        php artisan package:discover --ansi
 
     - name: 🔍 Debug .env File
       run: |
