@@ -25,13 +25,11 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 
-        @if (App::environment('local'))
-            <!-- Development css -->
-            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
-        @elseif (App::environment('production'))
-            <!-- Production css -->
-            <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}" />
-        @endif
+        <!-- Development css -->
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+
+        <!-- Production css -->
+        <!-- <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}" /> -->
     </head>
     <body class="bg-colorIvory">
         <div class="page-wrapper">
