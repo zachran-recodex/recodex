@@ -3,6 +3,8 @@
     <head>
         @include('partials.head')
 
+        @yield('meta_tag')
+
         <title>{{ $title ?? config('app.name') }}</title>
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-800">

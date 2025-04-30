@@ -1,3 +1,38 @@
+@section('meta_tag')
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Recodex ID - Jasa pembuatan website profesional dengan teknologi terkini. Kami menyediakan layanan pengembangan web yang responsif, SEO-friendly, dan disesuaikan dengan kebutuhan bisnis Anda.">
+    <meta name="keywords" content="jasa pembuatan website, web development, website profesional, website bisnis, website company profile, website toko online, web developer Indonesia">
+    <meta name="author" content="RECODEX ID">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Recodex ID - Jasa Pembuatan Website Profesional">
+    <meta property="og:description" content="Solusi digital terbaik untuk bisnis Anda dengan layanan pembuatan website profesional yang responsif dan SEO-friendly.">
+    <meta property="og:image" content="{{ asset('images/hero.jpg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Recodex ID - Jasa Pembuatan Website Profesional">
+    <meta name="twitter:description" content="Solusi digital terbaik untuk bisnis Anda dengan layanan pembuatan website profesional yang responsif dan SEO-friendly.">
+    <meta name="twitter:image" content="{{ asset('images/hero.jpg') }}">
+
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4D32DGGKGQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-4D32DGGKGQ');
+    </script>
+
+    <title>Manage Projects | Content Management System</title>
+@endsection
+
 <div>
     <header class="mb-6">
         <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Projects</flux:heading>
