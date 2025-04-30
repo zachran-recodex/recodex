@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('dashboard')->group(function () {
 
+        Route::get('/analytics', App\Livewire\AnalyticsDashboard::class)->name('analytics');
+
         // CMS Routes
         Route::prefix('content-management-system')->name('cms.')->group(function () {
             Route::get('/', App\Livewire\CMS\Overview::class)->name('overview');
