@@ -20,7 +20,7 @@
 
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <title>Recodex ID - Jasa Pembuatan Website Profesional | Web Development Indonesia</title>
+    <title>Konsultasi | Recodex ID - Jasa Pembuatan Website</title>
 @endsection
 
 <x-layouts.main>
