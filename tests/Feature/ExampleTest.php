@@ -1,15 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Database\Seeders\HeroSeeder;
 
-beforeEach(function () {
-    Route::get('/', function () {
-        return response()->json(['status' => 'success']);
-    });
-});
+uses(RefreshDatabase::class);
 
 it('returns a successful response', function () {
+    $this->seed(HeroSeeder::class);
+
     $response = $this->get('/');
 
-    $response->assertOk();
+    $response->assertStatus(200);
 });

@@ -4,173 +4,163 @@ namespace App\Livewire\CMS;
 
 use App\Models\WorkProcess;
 use Livewire\Component;
-use App\WithNotification;
 use Livewire\WithPagination;
 
 class ManageWorkProcesses extends Component
 {
     use WithPagination;
-    use WithNotification;
 
-    // Form Properties
-    public $process_id;
+    // Form properties
+    public $processId;
     public $title;
     public $description;
+    public $is_active = true;
+    public $sort_order = 0;
 
-    // Track active modal
-    public $activeModal = null;
+    // UI state
+    public $isOpen = false;
+    public $confirmingProcessDeletion = false;
+    public $processIdBeingDeleted;
 
-    /**
-     * Define validation rules for process form
-     *
-     * @return array Validation rules array
-     */
-    protected function rules()
+    // Search and filter
+    public $search = '';
+    public $sortField = 'sort_order';
+    public $sortDirection = 'asc';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'sortField' => ['except' => 'sort_order'],
+        'sortDirection' => ['except' => 'asc'],
+    ];
+
+    protected $rules = [
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'is_active' => 'boolean',
+        'sort_order' => 'integer|min:0',
+    ];
+
+    public function mount()
     {
-        return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-        ];
+        $this->resetInputFields();
     }
 
-    /**
-     * Reset all form input fields and validation state
-     *
-     * @return void
-     */
-    public function resetInputFields()
+    private function resetInputFields()
     {
-        $this->process_id = null;
-        $this->title = '';
-        $this->description = '';
+        $this->reset([
+            'processId',
+            'title',
+            'description',
+        ]);
+
+        $this->is_active = true;
+        $this->sort_order = WorkProcess::max('sort_order') + 1 ?? 0;
+
+        $this->resetErrorBag();
         $this->resetValidation();
     }
 
-    /**
-     * Unified modal control method
-     *
-     * @param string $modalName The name of the modal to show
-     * @param bool $show Whether to show or hide the modal
-     * @return void
-     */
-    public function toggleModal(string $modalName, bool $show = true)
-    {
-        if ($show) {
-            $this->activeModal = $modalName;
-            $this->modal($modalName)->show();
-        } else {
-            $this->activeModal = null;
-            $this->modal($modalName)->close();
-        }
-    }
-
-    /**
-     * Initialize create process form
-     * Resets form fields and opens the form modal
-     *
-     * @return void
-     */
     public function create()
     {
         $this->resetInputFields();
-        $this->toggleModal('form');
+        $this->openModal();
     }
 
-    /**
-     * Load process data for editing
-     * Populates form fields with existing process data
-     *
-     * @param int $id Work Process ID to edit
-     * @return void
-     */
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
     public function edit($id)
     {
         $process = WorkProcess::findOrFail($id);
-        $this->process_id = $id;
+        $this->processId = $id;
         $this->title = $process->title;
         $this->description = $process->description;
+        $this->is_active = $process->is_active;
+        $this->sort_order = $process->sort_order;
 
-        $this->toggleModal('form');
+        $this->openModal();
     }
 
-    /**
-     * Show delete confirmation modal
-     * Sets the process ID for deletion and opens confirmation modal
-     *
-     * @param int $id Work Process ID to delete
-     * @return void
-     */
-    public function confirmDelete($id)
-    {
-        $this->process_id = $id;
-        $this->toggleModal('delete');
-    }
-
-    /**
-     * Store or update process data
-     * Validates input and saves process information to database
-     *
-     * @return void
-     */
     public function store()
     {
         $this->validate();
 
-        try {
-            $data = [
-                'title' => $this->title,
-                'description' => $this->description,
-            ];
+        $data = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'is_active' => $this->is_active,
+            'sort_order' => $this->sort_order,
+        ];
 
-            if ($this->process_id) {
-                // Update existing process
-                $process = WorkProcess::find($this->process_id);
-                $process->update($data);
-                $this->notifySuccess('Work Process updated successfully.');
-            } else {
-                // Create new process
-                WorkProcess::create($data);
-                $this->notifySuccess('Work Process created successfully.');
-            }
-
-            $this->toggleModal('form', false);
-            $this->resetInputFields();
-        } catch (\Exception $e) {
-            $this->notifyError('Operation failed: ' . $e->getMessage());
+        // Create or update process
+        if ($this->processId) {
+            $process = WorkProcess::findOrFail($this->processId);
+            $process->update($data);
+            session()->flash('message', 'Work Process updated successfully.');
+        } else {
+            WorkProcess::create($data);
+            session()->flash('message', 'Work Process created successfully.');
         }
+
+        $this->closeModal();
+        $this->resetInputFields();
     }
 
-    /**
-     * Delete process record
-     *
-     * @return void
-     */
+    public function confirmProcessDeletion($id)
+    {
+        $this->confirmingProcessDeletion = true;
+        $this->processIdBeingDeleted = $id;
+    }
+
     public function deleteProcess()
     {
-        try {
-            $process = WorkProcess::find($this->process_id);
+        $process = WorkProcess::findOrFail($this->processIdBeingDeleted);
 
-            $process->delete();
-            $this->notifySuccess('Work Process deleted successfully.');
+        $process->delete();
+        $this->confirmingProcessDeletion = false;
+        session()->flash('message', 'Work Process deleted successfully.');
+    }
 
-            $this->toggleModal('delete', false);
-            $this->resetInputFields();
-        } catch (\Exception $e) {
-            $this->notifyError('Delete operation failed: ' . $e->getMessage());
+    public function cancelDelete()
+    {
+        $this->confirmingProcessDeletion = false;
+        $this->processIdBeingDeleted = null;
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
         }
     }
 
-    /**
-     * Render component view
-     * Fetches paginated processs and renders the component template
-     *
-     * @return \Illuminate\View\View
-     */
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $processes = WorkProcess::orderBy('created_at', 'desc')
+        $processes = WorkProcess::query()
+            ->when($this->search, function($query) {
+                return $query->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
-        return view('livewire.cms.manage-work-processes', compact('processes'));
+        return view('livewire.cms.manage-work-processes', [
+            'processes' => $processes
+        ]);
     }
 }

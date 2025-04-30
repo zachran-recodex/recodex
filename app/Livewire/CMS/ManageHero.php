@@ -3,117 +3,90 @@
 namespace App\Livewire\CMS;
 
 use App\Models\Hero;
-use Livewire\Component;
-use App\WithNotification;
-use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ManageHero extends Component
 {
-    use WithNotification;
     use WithFileUploads;
 
-    // Form Properties
-    public $hero_id;
+    // Form properties
+    public $heroId;
     public $title;
     public $subtitle;
     public $motto;
     public $button_text;
     public $image;
-    public $existing_image;
+    public $current_image;
 
-    /**
-     * Define validation rules for hero form
-     *
-     * @return array Validation rules array
-     */
-    protected function rules()
-    {
-        return [
-            'title' => 'required|string|max:255',
-            'subtitle' => 'required|string|max:255',
-            'motto' => 'required|string',
-            'button_text' => 'required|string|max:255',
-            'image' => 'required|image|max:2048',
-        ];
-    }
+    // UI state
+    public $isOpen = false;
 
-    /**
-     * Initialize component state
-     * Loads existing hero data if available
-     *
-     * @return void
-     */
+    protected $rules = [
+        'title' => 'required|string|max:255',
+        'subtitle' => 'required|string',
+        'motto' => 'required|string|max:255',
+        'button_text' => 'required|string|max:255',
+        'image' => 'nullable|image|max:1024',
+    ];
+
     public function mount()
     {
-        // Load existing hero data if available
+        $this->loadHeroData();
+    }
+
+    private function loadHeroData()
+    {
         $hero = Hero::first();
 
         if ($hero) {
-            $this->hero_id = $hero->id;
+            $this->heroId = $hero->id;
             $this->title = $hero->title;
             $this->subtitle = $hero->subtitle;
             $this->motto = $hero->motto;
             $this->button_text = $hero->button_text;
-            $this->existing_image = $hero->image;
+            $this->current_image = $hero->image_path;
         }
     }
 
-    /**
-     * Store or update hero page data
-     * Validates input and saves information to database
-     *
-     * @return void
-     */
-    public function save()
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    public function update()
     {
         $this->validate();
 
-        try {
-            $data = [
-                'title' => $this->title,
-                'subtitle' => $this->subtitle,
-                'motto' => $this->motto,
-                'button_text' => $this->button_text,
-            ];
+        $hero = Hero::firstOrNew();
+        $hero->title = $this->title;
+        $hero->subtitle = $this->subtitle;
+        $hero->motto = $this->motto;
+        $hero->button_text = $this->button_text;
 
-            // Handle file upload if present
-            if ($this->image) {
-                try {
-                    // Delete old file if editing
-                    if ($this->hero_id && $this->existing_image) {
-                        Storage::delete('public/' . $this->existing_image);
-                    }
+        // Handle image upload
+        if ($this->image) {
+            $imagePath = $this->image->store('heroes', 'public');
+            $hero->image_path = $imagePath;
 
-                    $imagePath = $this->image->store('heroes', 'public');
-                    $data['image'] = str_replace('public/', '', $imagePath);
-                } catch (\Exception $e) {
-                    $this->notifyError('Error uploading image: ' . $e->getMessage());
-                    return;
-                }
+            // Remove old image if exists
+            if ($this->current_image) {
+                Storage::delete('public/' . $this->current_image);
             }
-
-            if ($this->hero_id) {
-                // Update existing hero
-                $hero = Hero::find($this->hero_id);
-                $hero->update($data);
-                $this->notifySuccess('Hero updated successfully.');
-            } else {
-                // Create new hero
-                Hero::create($data);
-                $this->notifySuccess('Hero created successfully.');
-            }
-        } catch (\Exception $e) {
-            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
+
+        $hero->save();
+
+        session()->flash('message', 'Hero information updated successfully.');
+        $this->closeModal();
     }
 
-    /**
-     * Render component view
-     * Renders the about page management template
-     *
-     * @return \Illuminate\View\View
-     */
     public function render()
     {
         return view('livewire.cms.manage-hero');

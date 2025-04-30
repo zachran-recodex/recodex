@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Faq;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class FAQSeeder extends Seeder
+class FaqSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,33 +13,70 @@ class FAQSeeder extends Seeder
     public function run(): void
     {
         $faqs = [
-            ['question' => 'Apa itu layanan kami?', 'answer' => 'Layanan kami menyediakan solusi digital terbaik untuk bisnis Anda.'],
-            ['question' => 'Bagaimana cara mendaftar?', 'answer' => 'Anda dapat mendaftar melalui halaman pendaftaran di website kami.'],
-            ['question' => 'Apakah layanan ini gratis?', 'answer' => 'Kami menyediakan paket gratis dan berbayar sesuai kebutuhan Anda.'],
-            ['question' => 'Bagaimana cara menghubungi customer support?', 'answer' => 'Anda bisa menghubungi kami melalui email atau live chat.'],
-            ['question' => 'Apakah ada garansi?', 'answer' => 'Kami memberikan garansi 30 hari untuk semua layanan kami.'],
-            ['question' => 'Berapa lama proses aktivasi akun?', 'answer' => 'Akun akan aktif dalam waktu maksimal 24 jam setelah pendaftaran.'],
-            ['question' => 'Bisakah saya membatalkan langganan?', 'answer' => 'Ya, Anda dapat membatalkan langganan kapan saja melalui dashboard.'],
-            ['question' => 'Apakah data saya aman?', 'answer' => 'Kami menggunakan enkripsi canggih untuk menjaga keamanan data Anda.'],
-            ['question' => 'Bagaimana cara melakukan pembayaran?', 'answer' => 'Pembayaran dapat dilakukan melalui transfer bank atau kartu kredit.'],
-            ['question' => 'Apakah layanan ini mendukung mobile?', 'answer' => 'Ya, layanan kami dapat diakses melalui perangkat mobile.'],
-            ['question' => 'Bagaimana cara reset password?', 'answer' => 'Anda bisa reset password melalui halaman "Lupa Password" di website.'],
-            ['question' => 'Apakah saya bisa meng-upgrade paket?', 'answer' => 'Ya, Anda dapat meng-upgrade paket kapan saja melalui dashboard.'],
-            ['question' => 'Apakah ada fitur API?', 'answer' => 'Ya, kami menyediakan API untuk integrasi dengan sistem lain.'],
-            ['question' => 'Bisakah saya meminta fitur khusus?', 'answer' => 'Kami menerima permintaan fitur khusus sesuai kebutuhan pengguna.'],
-            ['question' => 'Apakah ada layanan pelatihan?', 'answer' => 'Kami menyediakan pelatihan online dan onsite untuk pengguna.'],
-            ['question' => 'Bagaimana cara melaporkan bug?', 'answer' => 'Silakan laporkan bug melalui email support kami.'],
-            ['question' => 'Apakah saya bisa mengakses data saya?', 'answer' => 'Ya, Anda dapat mengunduh data Anda kapan saja melalui dashboard.'],
-            ['question' => 'Bagaimana cara mengetahui update terbaru?', 'answer' => 'Kami selalu mengirimkan email dan update melalui website.'],
-            ['question' => 'Apakah ada komunitas pengguna?', 'answer' => 'Ya, kami memiliki komunitas pengguna di forum resmi kami.'],
-            ['question' => 'Bisakah saya mencoba layanan sebelum membeli?', 'answer' => 'Kami menyediakan uji coba gratis selama 7 hari.'],
+            [
+                'question' => 'Apa layanan utama yang ditawarkan Recodex ID?',
+                'answer' => 'Recodex ID menyediakan layanan pembuatan website, pengembangan aplikasi mobile, SEO optimization, registrasi domain, hosting, maintenance & support, IT consultant, dan UI/UX design.',
+                'is_active' => true,
+                'sort_order' => 1
+            ],
+            [
+                'question' => 'Apa keunggulan layanan website Recodex ID?',
+                'answer' => 'Kami mengembangkan website yang responsif, fungsional, estetik, serta mengutamakan user experience dan optimasi SEO.',
+                'is_active' => true,
+                'sort_order' => 2
+            ],
+            [
+                'question' => 'Bagaimana proses kerja di Recodex ID?',
+                'answer' => 'Proses kerja kami meliputi konsultasi & perencanaan, desain & pengembangan, pengujian & optimasi, peluncuran, serta dukungan berkelanjutan.',
+                'is_active' => true,
+                'sort_order' => 3
+            ],
+            [
+                'question' => 'Apakah Recodex ID menyediakan layanan maintenance website?',
+                'answer' => 'Ya, kami menyediakan layanan maintenance termasuk update sistem, perbaikan bug, dan dukungan teknis jangka panjang.',
+                'is_active' => true,
+                'sort_order' => 4
+            ],
+            [
+                'question' => 'Apakah Recodex ID membantu dalam SEO website?',
+                'answer' => 'Ya, kami menyediakan layanan SEO untuk meningkatkan visibilitas website di Google dan mesin pencari lainnya.',
+                'is_active' => true,
+                'sort_order' => 5
+            ],
+            [
+                'question' => 'Apakah Recodex ID menyediakan domain dan hosting?',
+                'answer' => 'Kami menyediakan layanan registrasi domain berbagai ekstensi dan layanan hosting yang aman, cepat, dan stabil.',
+                'is_active' => true,
+                'sort_order' => 6
+            ],
+            [
+                'question' => 'Apakah bisa berkonsultasi sebelum mulai proyek?',
+                'answer' => 'Tentu saja! Kami menyediakan layanan konsultasi IT untuk membantu menentukan solusi digital yang tepat dan efisien.',
+                'is_active' => true,
+                'sort_order' => 7
+            ],
+            [
+                'question' => 'Bagaimana cara menghubungi Recodex ID?',
+                'answer' => 'Anda dapat menghubungi kami melalui email di info@recodex.id atau WhatsApp di +62 822-9814-1940.',
+                'is_active' => true,
+                'sort_order' => 8
+            ],
+            [
+                'question' => 'Apa visi dari Recodex ID?',
+                'answer' => 'Menjadi mitra teknologi digital terpercaya dalam menghadirkan solusi website inovatif yang mendorong pertumbuhan bisnis di era revolusi industri.',
+                'is_active' => true,
+                'sort_order' => 9
+            ],
+            [
+                'question' => 'Apa misi utama Recodex ID?',
+                'answer' => 'Misi kami meliputi penyediaan website responsif, fokus pada user experience, meningkatkan visibilitas online, layanan profesional, serta inovasi berkelanjutan.',
+                'is_active' => true,
+                'sort_order' => 10
+            ],
         ];
 
-        foreach ($faqs as &$faq) {
-            $faq['created_at'] = now();
-            $faq['updated_at'] = now();
+        foreach ($faqs as $faq) {
+            Faq::create($faq);
         }
-
-        DB::table('faqs')->insert($faqs);
     }
 }

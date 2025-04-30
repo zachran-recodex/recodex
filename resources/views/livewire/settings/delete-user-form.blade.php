@@ -44,9 +44,9 @@ new class extends Component {
                 </flux:subheading>
             </div>
 
-            <flux:input wire:model="password" id="password" label="Password" type="password" name="password" />
+            <flux:input wire:model="password" label="Password" type="password" />
 
-            <div class="flex justify-end space-x-2">
+            <div class="flex justify-end space-x-2 rtl:space-x-reverse">
                 <flux:modal.close>
                     <flux:button variant="filled">Cancel</flux:button>
                 </flux:modal.close>

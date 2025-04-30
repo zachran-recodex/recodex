@@ -22,7 +22,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'password' => $this->password,
         ])) {
             throw ValidationException::withMessages([
-                'password' => __('auth.password'),
+                'password' => 'auth.password',
             ]);
         }
 
@@ -45,15 +45,13 @@ new #[Layout('components.layouts.auth')] class extends Component {
         <!-- Password -->
         <flux:input
             wire:model="password"
-            id="password"
-            :label="__('Password')"
+            label="Password"
             type="password"
-            name="password"
             required
             autocomplete="new-password"
             placeholder="Password"
         />
 
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Confirm') }}</flux:button>
+        <flux:button variant="primary" type="submit" class="w-full">Confirm</flux:button>
     </form>
 </div>

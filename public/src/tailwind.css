@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body,
+  .page-wrapper {
+    @apply min-h-screen font-body text-lg leading-[1.66] text-black;
+  }
+
+  .main-wrapper {
+    @apply overflow-clip;
+  }
+
+  /* Default Heading */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .display-heading {
+    @apply font-syne font-bold;
+  }
+
+  h1,
+  .display-heading-1 {
+    @apply text-5xl leading-none -tracking-[1px] md:text-7xl xxl:text-[104px];
+  }
+
+  h2,
+  .display-heading-2 {
+    @apply text-4xl leading-[1.07] -tracking-[1px] md:text-5xl xl:text-[70px];
+  }
+
+  h3,
+  .display-heading-3 {
+    @apply text-3xl leading-[1.4] lg:text-[35px];
+  }
+
+  h4,
+  .display-heading-4 {
+    @apply text-2xl leading-[1.4] lg:text-[30px];
+  }
+
+  h5,
+  .display-heading-5 {
+    @apply text-2xl leading-[1.33] tracking-normal;
+  }
+  h6,
+  .display-heading-6 {
+    @apply text-xl leading-[1.4]  tracking-normal;
+  }
+
+  .para-lg {
+    @apply text-lg leading-[1.43] lg:text-[21px];
+  }
+
+  a,
+  button {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+
+@layer components {
+  /* Button Type */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-[50px] border-2 border-black bg-colorLightLime px-8 py-[18px] text-base font-bold leading-[1.5] text-black shadow-[0_4px_0_0] shadow-white hover:shadow-[0_0_0_0] md:px-[42px];
+  }
+
+  .btn-black {
+    @apply inline-flex items-center justify-center rounded-[50px] border-2 border-black bg-black px-8 py-[18px] text-base font-bold leading-[1.5] text-white hover:bg-white hover:text-black md:px-[42px];
+  }
+  .btn-outline-black {
+    @apply inline-flex items-center justify-center rounded-[50px] border-2 border-black bg-transparent px-8 py-[18px] text-base font-bold leading-[1.5] text-black  hover:bg-colorLightLime md:px-[42px];
+  }
+
+  .btn-orange {
+    @apply inline-flex items-center justify-center rounded-[3px] border-2 border-colorRedOrange bg-colorRedOrange px-7 py-4 text-base font-bold leading-[1.5] text-white shadow-[0_0_0_0] shadow-black hover:bg-white hover:text-colorRedOrange hover:shadow-[4px_4px_0_0] md:px-[42px];
+  }
+  .btn-outline-black-2 {
+    @apply inline-flex items-center justify-center rounded-[3px] border-2 border-colorGondola bg-colorIvory px-7 py-4 text-base font-bold leading-[1.5] text-colorGondola shadow-[0_0_0_0] shadow-black hover:text-colorGondola hover:shadow-[4px_4px_0_0] md:px-[42px];
+  }
+}
+
+/* Header */
+.section-header.is-black {
+  @apply bg-black;
+}
+.section-header.is-black.scrolling {
+  @apply bg-black/80;
+}
+
+.section-header.is-white {
+  @apply bg-[#F6F5EF];
+}
+.section-header.is-white.scrolling {
+  @apply bg-[#F6F5EF]/80;
+}
+.section-header.is-transparent.scrolling {
+  @apply bg-[#F6F5EF]/80;
+}
+
+/* Section Space */
+.section-space {
+  @apply py-20 lg:py-[100px] xl:py-[130px];
+}
+.section-space-top {
+  @apply pt-20 lg:pt-[100px] xl:pt-[130px];
+}
+.section-space-bottom {
+  @apply pb-20 lg:pb-[100px] xl:pb-[130px];
+}
+
+.breadcrumb-space {
+  @apply pb-20 pt-[150px] lg:pb-[100px] lg:pt-[196px] xl:pb-[130px];
+}
+
+/* Section Text */
+.section-para {
+  @apply mt-8 text-lg leading-[1.42] first-of-type:mt-0 lg:text-[21px];
+}
+
+/* Container Size */
+.container {
+  @apply mx-auto max-w-full px-5 sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px]  xxl:max-w-[1330px];
+}
+
+/* Element Dark Shadow */
+.shadow-bg {
+  @apply rounded-[20px] shadow-none shadow-black transition-all duration-300 ease-in-out hover:shadow-[5px_5px_0_0];
+}
+
+/* Horizontal Line Separator */
+.horizontal-line {
+  @apply mx-auto h-[1px] w-full max-w-[1300px];
+}
+
+/* Breadcrumb */
+.breadcrumb-block {
+  @apply flex flex-col items-center justify-center text-center text-colorButteryWhite;
+}
+
+.breadcrumb-nav {
+  @apply mt-12 inline-flex items-center gap-11 capitalize;
+}
+
+.breadcrumb-nav li {
+  @apply relative font-bold  text-colorLightLime after:absolute after:left-[calc(100%+8px)] after:top-1/2 after:h-6 after:w-6 after:-translate-y-1/2 after:bg-[url(../img/icons/icon-buttery-white-chevron-right.svg)] last:font-normal last:after:hidden;
+}
+
+.breadcrumb-nav li a {
+  @apply font-normal text-colorButteryWhite;
+}
+
+/* SLider CSS */
+.slider-center-inline {
+  @apply px-5 md:mx-[calc(-6.25%+24px)] md:px-0;
+}
+
+.swiper-pagination-progressbar.progressbar-green {
+  @apply relative h-[3px] overflow-hidden rounded-[3px] bg-[#333333];
+}
+.swiper-pagination-progressbar.progressbar-green
+  .swiper-pagination-progressbar-fill {
+  @apply rounded-[3px] bg-colorLightLime;
+}
+
+/* Accordion */
+.accordion-body {
+  @apply h-0 translate-y-5 overflow-clip opacity-0 transition-all duration-300;
+}
+
+.accordion-item.active .accordion-body {
+  @apply h-auto translate-y-0 opacity-100;
+}
+
+/* Accordion 1 */
+.accordion-item-style-1 {
+  @apply overflow-hidden rounded-[20px] border-2 border-black px-6 py-5;
+}
+.accordion-item-style-1.active {
+  @apply bg-colorLightLime shadow-[3px_3px_0_0] shadow-black;
+}
+
+.accordion-item-style-1.active .accordion-icon {
+  @apply rotate-180 transition-all duration-300;
+}
+
+/* Accordion 2 */
+.accordion-item-style-2.active .accordion-icon span:last-of-type {
+  @apply rotate-90 transition-all duration-300;
+}
+
+/* Accordion 3 */
+.accordion-item-style-3.active .accordion-icon {
+  @apply border-[#FFE757] bg-[#FFE757];
+}
+
+/* Accordion 4 */
+.accordion-item-style-4.active .accordion-icon {
+  @apply rotate-180 transition-all duration-300;
+}
+
+/* Accordion 5 */
+.accordion-item-style-5.active {
+  @apply bg-[#EBDECE];
+}
+.accordion-item-style-5.active .accordion-icon {
+  @apply bg-[#073D30];
+}
+.accordion-item-style-5.active .accordion-icon span {
+  @apply bg-[#FBD718];
+}
+.accordion-item-style-5.active .accordion-icon span:last-of-type {
+  @apply rotate-90;
+}
+
+/* Accordion 6 */
+.accordion-item-style-6.active .accordion-icon {
+  @apply bg-[#3256D2];
+}
+.accordion-item-style-6.active .accordion-icon span {
+  @apply bg-[#FEF6E0];
+}
+.accordion-item-style-6.active .accordion-icon span:last-of-type {
+  @apply rotate-90;
+}
+
+/* Rich Text */
+.rich-text p {
+  @apply mb-[30px] last:mb-0;
+}
+.rich-text h3 {
+  @apply my-[10px];
+}
+
+.rich-text ul {
+  @apply mb-14 ml-5 flex list-disc flex-col gap-y-5 last:mb-0;
+}
+
+.rich-text blockquote {
+  @apply my-6 rounded-[10px] bg-black px-7 py-5 font-syne text-2xl font-bold leading-[1.4] text-colorButteryWhite lg:text-[30px];
+}

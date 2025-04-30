@@ -1,137 +1,173 @@
-<flux:container class="space-y-4 sm:space-y-6">
-    <div class="flex flex-col space-y-4 sm:space-y-6 md:space-y-0 md:flex-row md:items-center md:justify-between">
-        <div class="w-full md:w-auto">
-            <flux:heading size="xl" class="font-bold! text-center md:text-left">Manage Work Process</flux:heading>
-        </div>
-
-        <div class="w-full md:w-auto">
-            <flux:breadcrumbs class="justify-center md:justify-start">
-                <flux:breadcrumbs.item href="{{ route('dashboard') }}">Dashboard</flux:breadcrumbs.item>
-                <flux:breadcrumbs.item href="{{ route('dashboard') }}">CMS</flux:breadcrumbs.item>
-                <flux:breadcrumbs.item>Manage Work Process</flux:breadcrumbs.item>
-            </flux:breadcrumbs>
-        </div>
-    </div>
-
-    @if (session()->has('error'))
-        <flux:callout variant="danger" icon="x-circle" heading="{{ session('error') }}" />
-    @endif
-
-    <flux:card>
-        <flux:card.header>
-            <div class="flex flex-col sm:flex-row gap-4 sm:gap-0 items-center justify-between">
-                <flux:heading size="lg" class="font-semibold! text-center sm:text-left">List Work Process</flux:heading>
-
-                <flux:modal.trigger name="form">
-                    <flux:button type="button" variant="primary" class="w-full sm:w-fit" icon="plus" wire:click="create">
-                        Add New
-                    </flux:button>
-                </flux:modal.trigger>
+<div>
+    <header class="mb-6">
+        <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Work Processes</flux:heading>
+        <div class="flex items-center justify-between gap-4">
+            <div class="w-72">
+                <flux:input class="w-full" wire:model.live.debounce.300ms="search" placeholder="Search work processes..." icon="magnifying-glass" />
             </div>
-        </flux:card.header>
 
-        <flux:card.body :padding="false">
+            <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Session Messages -->
+        @if (session()->has('message'))
+            <flux:callout variant="success" icon="check-circle" heading="{{ session('message') }}" class="mb-4" />
+        @endif
+
+        <!-- Work Processes Table -->
+        <div class="rounded-2xl overflow-hidden border border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <div class="overflow-x-auto">
-                <flux:table hover striped>
+                <flux:table>
                     <flux:table.columns>
-                        <flux:table.column class="min-w-[300px] md:w-auto">Title</flux:table.column>
-                        <flux:table.column class="min-w-[300px] md:w-auto">Description</flux:table.column>
-                        <flux:table.column class="min-w-[100px] md:w-auto">Actions</flux:table.column>
+                        <flux:table.column>
+                            Title
+                        </flux:table.column>
+                        <flux:table.column>
+                            Description
+                        </flux:table.column>
+                        <flux:table.column>
+                            Status
+                        </flux:table.column>
+                        <flux:table.column>
+                            Order
+                        </flux:table.column>
+                        <flux:table.column>
+                            Actions
+                        </flux:table.column>
                     </flux:table.columns>
-
                     <flux:table.rows>
                         @forelse ($processes as $process)
                             <flux:table.row>
                                 <flux:table.cell>
-                                    <flux:heading class="font-semibold text-sm md:text-base">{{ $process->title }}</flux:heading>
+                                    {{ $process->title }}
                                 </flux:table.cell>
-
-                                <flux:table.cell class="text-sm md:text-base">
-                                    {{ Str::limit($process->description, 100) }}
-                                </flux:table.cell>
-
                                 <flux:table.cell>
-                                    <div class="flex gap-2">
-                                        <flux:modal.trigger name="form">
-                                            <flux:button variant="warning" wire:click="edit({{ $process->id }})"
-                                                icon="pencil" class="!p-1.5 md:!p-2"></flux:button>
-                                        </flux:modal.trigger>
-
-                                        <flux:modal.trigger name="delete">
-                                            <flux:button variant="danger" wire:click="confirmDelete({{ $process->id }})"
-                                                icon="trash" class="!p-1.5 md:!p-2"></flux:button>
-                                        </flux:modal.trigger>
+                                    {{ Str::limit($process->description, 50) }}
+                                </flux:table.cell>
+                                <flux:table.cell>
+                                    <flux:badge :color="$process->is_active ? 'green' : 'red'">
+                                        {{ $process->is_active ? 'Active' : 'Inactive' }}
+                                    </flux:badge>
+                                </flux:table.cell>
+                                <flux:table.cell>
+                                    {{ $process->sort_order }}
+                                </flux:table.cell>
+                                <flux:table.cell>
+                                    <div class="flex items-center space-x-2">
+                                        <flux:button wire:click="edit({{ $process->id }})" size="sm" variant="outline" icon="pencil-square" />
+                                        <flux:button wire:click="confirmProcessDeletion({{ $process->id }})" size="sm" variant="danger" icon="trash" />
+                                    </div>
                                 </flux:table.cell>
                             </flux:table.row>
                         @empty
                             <flux:table.row>
-                                <flux:table.cell colspan="3" class="text-center py-6 md:py-8">
-                                    <flux:heading size="lg" class="text-base md:text-lg">No data found.</flux:heading>
-                                    <flux:subheading class="text-sm md:text-base">Start by creating new work process.</flux:subheading>
+                                <flux:table.cell colspan="5" class="text-center py-8">
+                                    <div class="flex flex-col items-center justify-center space-y-2">
+                                        <flux:icon.inbox class="w-10 h-10 text-zinc-400" />
+                                        <p class="text-zinc-500 dark:text-zinc-400">No work processes found</p>
+                                        @if ($search)
+                                            <p class="text-sm text-zinc-500 dark:text-zinc-400">Try adjusting your search criteria</p>
+                                        @else
+                                            <flux:button wire:click="create" size="sm" variant="primary">
+                                                Add Your First Work Process
+                                            </flux:button>
+                                        @endif
+                                    </div>
                                 </flux:table.cell>
                             </flux:table.row>
                         @endforelse
                     </flux:table.rows>
+                    <flux:table.columns class="border-none">
+                        <flux:table.column colspan="5">
+                            {{ $processes->links() }}
+                        </flux:table.column>
+                    </flux:table.columns>
                 </flux:table>
             </div>
-        </flux:card.body>
+        </div>
+    </main>
 
-        <flux:card.footer>
-            {{ $processes->links() }}
-        </flux:card.footer>
-    </flux:card>
-
-    <flux:modal name="form" class="min-w-sm md:min-w-lg lg:min-w-xl">
-        <div class="space-y-4 sm:space-y-6">
-            <flux:heading size="lg" class="font-semibold">
-                {{ $process_id ? 'Edit Work Process' : 'Add New Work Process' }}
-            </flux:heading>
+    <!-- Modal Form -->
+    <flux:modal wire:model="isOpen" class="max-w-3xl">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">{{ $processId ? 'Edit Work Process' : 'Create New Work Process' }}</flux:heading>
+                <flux:text class="mt-2">Manage work processes easily and efficiently.</flux:text>
+            </div>
 
             <flux:separator />
 
-            <form wire:submit.prevent="store">
-                <flux:fieldset>
-                    <div class="space-y-4 sm:space-y-6">
+            <form wire:submit="store" class="space-y-4">
+                <!-- Title -->
+                <flux:field>
+                    <flux:label>Title</flux:label>
 
-                        <flux:field>
-                            <flux:label>Title</flux:label>
-                            <flux:input wire:model="title" />
-                            <flux:error name="title" />
-                        </flux:field>
+                    <flux:input wire:model="title" placeholder="Enter title" />
 
-                        <flux:field>
-                            <flux:label>Description</flux:label>
-                            <flux:textarea wire:model="description" rows="4" />
-                            <flux:error name="description" />
-                        </flux:field>
+                    <flux:error name="title" />
+                </flux:field>
 
-                        <div class="flex justify-end">
-                            <flux:button type="submit" variant="primary" class="w-full md:w-fit">
-                                {{ $process_id ? 'Update' : 'Create' }}
-                            </flux:button>
-                        </div>
-                    </div>
-                </flux:fieldset>
+                <!-- Description -->
+                <flux:field>
+                    <flux:label>Description</flux:label>
+
+                    <flux:textarea wire:model="description" placeholder="Enter description" />
+
+                    <flux:error name="description" />
+                </flux:field>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Order -->
+                    <flux:field>
+                        <flux:label>Display Order</flux:label>
+
+                        <flux:input wire:model="sort_order" type="number" min="0" />
+
+                        <flux:error name="sort_order" />
+                    </flux:field>
+
+                    <!-- Status -->
+                    <flux:field>
+                        <flux:label>Status</flux:label>
+
+                        <flux:switch wire:model.live="is_active" align="left" label="{{ $is_active ? 'Active' : 'Inactive' }}" />
+
+                        <flux:error name="is_active" />
+                    </flux:field>
+                </div>
+
+                <flux:separator />
+
+                <div class="flex gap-2">
+                    <flux:spacer />
+                    <flux:modal.close>
+                        <flux:button wire:click="closeModal" variant="ghost">Cancel</flux:button>
+                    </flux:modal.close>
+                    <flux:button type="submit" variant="primary">{{ $processId ? 'Update' : 'Create' }}</flux:button>
+                </div>
             </form>
         </div>
     </flux:modal>
 
-    <flux:modal name="delete" class="min-w-[280px] sm:min-w-sm">
-        <div class="space-y-4 sm:space-y-6">
-            <div class="text-center sm:text-left">
-                <flux:heading size="lg" class="font-semibold">Delete work process?</flux:heading>
-
+    <!-- Confirmation Modal -->
+    <flux:modal wire:model="confirmingProcessDeletion" class="min-w-[22rem]">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Delete Work Process?</flux:heading>
                 <flux:text class="mt-2">
-                    <p>Are you sure you want to delete this work process?</p>
-                    <p>This action cannot be undone.</p>
+                    <p>You're about to delete this work process.</p>
+                    <p>This action cannot be reversed.</p>
                 </flux:text>
             </div>
-
-            <div class="flex justify-end">
-                <flux:button type="button" variant="danger" wire:click="deleteProcess" class="w-full sm:w-fit">
-                    Delete
-                </flux:button>
+            <div class="flex gap-2">
+                <flux:spacer />
+                <flux:modal.close>
+                    <flux:button wire:click="cancelDelete" variant="ghost">Cancel</flux:button>
+                </flux:modal.close>
+                <flux:button wire:click="deleteProcess" type="submit" variant="danger">Delete</flux:button>
             </div>
         </div>
     </flux:modal>
-</flux:container>
+</div>

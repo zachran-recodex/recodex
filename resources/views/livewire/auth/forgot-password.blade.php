@@ -18,7 +18,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         Password::sendResetLink($this->only('email'));
 
-        session()->flash('status', __('A reset link will be sent if the account exists.'));
+        session()->flash('status', 'A reset link will be sent if the account exists.');
     }
 }; ?>
 
@@ -32,18 +32,17 @@ new #[Layout('components.layouts.auth')] class extends Component {
         <!-- Email Address -->
         <flux:input
             wire:model="email"
-            :label="__('Email Address')"
+            label="Email Address"
             type="email"
-            name="email"
             required
             autofocus
             placeholder="email@example.com"
         />
 
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Email password reset link') }}</flux:button>
+        <flux:button variant="primary" type="submit" class="w-full">Email password reset link</flux:button>
     </form>
 
-    <div class="space-x-1 text-center text-sm text-zinc-400">
+    <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-400">
         Or, return to
         <flux:link :href="route('login')" wire:navigate>log in</flux:link>
     </div>

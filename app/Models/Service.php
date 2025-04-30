@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
@@ -13,28 +13,52 @@ class Service extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'icon',
-        'image',
         'title',
         'slug',
-        'description'
+        'subtitle',
+        'description',
+        'content',
+        'icon',
+        'image_path',
+        'content_image_path',
+        'feature_list',
+        'is_active',
+        'sort_order',
     ];
 
     /**
-     * Set the service's title and automatically generate slug.
+     * The attributes that should be cast.
      *
-     * @param string $value
-     * @return void
+     * @var array<string, string>
      */
-    public function setTitleAttribute($value)
+    protected $casts = [
+        'feature_list' => 'array',
+    ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
     {
-        $this->attributes['title'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
+        parent::boot();
+
+        // Auto-generate slug before saving
+        static::creating(function ($service) {
+            if (empty($service->slug)) {
+                $service->slug = Str::slug($service->title);
+            }
+        });
+
+        // Update slug when title changes
+        static::updating(function ($service) {
+            if ($service->isDirty('title') && !$service->isDirty('slug')) {
+                $service->slug = Str::slug($service->title);
+            }
+        });
     }
 
     /**
      * Get the route key for the model.
-     * This method specifies 'slug' as the default route key instead of 'id'.
      *
      * @return string
      */

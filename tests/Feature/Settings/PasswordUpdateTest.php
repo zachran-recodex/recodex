@@ -9,7 +9,6 @@ uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 test('password can be updated', function () {
     $user = User::factory()->create([
         'password' => Hash::make('password'),
-        'email_verified_at' => now(),
     ]);
 
     $this->actingAs($user);
@@ -22,14 +21,12 @@ test('password can be updated', function () {
 
     $response->assertHasNoErrors();
 
-    $user->refresh();
-    expect(Hash::check('new-password', $user->password))->toBeTrue();
+    expect(Hash::check('new-password', $user->refresh()->password))->toBeTrue();
 });
 
 test('correct password must be provided to update password', function () {
     $user = User::factory()->create([
         'password' => Hash::make('password'),
-        'email_verified_at' => now(),
     ]);
 
     $this->actingAs($user);

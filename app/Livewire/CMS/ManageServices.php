@@ -3,287 +3,315 @@
 namespace App\Livewire\CMS;
 
 use App\Models\Service;
-use Livewire\Component;
-use App\WithNotification;
-use Livewire\WithPagination;
-use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 class ManageServices extends Component
 {
     use WithPagination;
     use WithFileUploads;
-    use WithNotification;
 
-    // Form Properties
-    public $service_id;
-    public $icon;
-    public $image;
-    public $existing_image;
+    // Form properties
+    public $serviceId;
     public $title;
     public $slug;
+    public $subtitle;
     public $description;
+    public $content;
+    public $icon;
+    public $image;
+    public $content_image;
+    public $current_image;
+    public $current_content_image;
+    public $feature_list = [];
+    public $is_active = true;
+    public $sort_order = 0;
 
-    // Track active modal
-    public $activeModal = null;
+    // UI state
+    public $isOpen = false;
+    public $confirmingServiceDeletion = false;
+    public $serviceIdBeingDeleted;
 
-    /**
-     * Define validation rules for service form
-     *
-     * @return array Validation rules array
-     */
-    protected function rules()
-    {
-        $slugRule = 'required|string|max:255|unique:services,slug';
+    // Feature list management
+    public $feature_categories = [];
+    public $new_category_title = '';
+    public $new_point = '';
+    public $selected_category_index = null;
 
-        // Modify slug validation rule for updates
-        if ($this->service_id) {
-            $slugRule .= ',' . $this->service_id;
-        }
+    // Search and filter
+    public $search = '';
+    public $sortField = 'sort_order';
+    public $sortDirection = 'asc';
 
-        return [
-            'icon' => 'nullable|string|max:255',
-            'image' => 'nullable|image|max:2048',
-            'title' => 'required|string|max:255',
-            'slug' => $slugRule,
-            'description' => 'required|string',
-        ];
-    }
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'sortField' => ['except' => 'sort_order'],
+        'sortDirection' => ['except' => 'asc'],
+    ];
 
-    /**
-     * Reset all form input fields and validation state
-     *
-     * @return void
-     */
-    public function resetInputFields()
-    {
-        $this->service_id = null;
-        $this->icon = '';
-        $this->image = null;
-        $this->existing_image = null;
-        $this->title = '';
-        $this->slug = '';
-        $this->description = '';
-        $this->resetValidation();
-    }
+    protected $rules = [
+        'title' => 'required|min:3|max:255',
+        'slug' => 'nullable|max:255',
+        'subtitle' => 'nullable|max:255',
+        'description' => 'required',
+        'content' => 'nullable',
+        'icon' => 'nullable|max:255',
+        'image' => 'nullable|image|max:1024',
+        'content_image' => 'nullable|image|max:1024',
+        'is_active' => 'boolean',
+        'sort_order' => 'integer|min:0',
+    ];
 
-    /**
-     * Unified modal control method
-     *
-     * @param string $modalName The name of the modal to show
-     * @param bool $show Whether to show or hide the modal
-     * @return void
-     */
-    public function toggleModal(string $modalName, bool $show = true)
-    {
-        if ($show) {
-            $this->activeModal = $modalName;
-            $this->modal($modalName)->show();
-        } else {
-            $this->activeModal = null;
-            $this->modal($modalName)->close();
-        }
-    }
-
-    /**
-     * Initialize create service form
-     * Resets form fields and opens the form modal
-     *
-     * @return void
-     */
-    public function create()
+    public function mount()
     {
         $this->resetInputFields();
-        $this->toggleModal('form');
     }
 
-    /**
-     * Load service data for editing
-     * Populates form fields with existing service data
-     *
-     * @param int $id Service ID to edit
-     * @return void
-     */
-    public function edit($id)
-    {
-        $service = Service::findOrFail($id);
-        $this->service_id = $id;
-        $this->icon = $service->icon;
-        $this->existing_image = $service->image;
-        $this->title = $service->title;
-        $this->slug = $service->slug;
-        $this->description = $service->description;
-
-        $this->toggleModal('form');
-    }
-
-    /**
-     * Generate a slug from the title
-     * Automatically creates a URL-friendly slug when title changes
-     *
-     * @return void
-     */
     public function updatedTitle()
     {
         $this->slug = Str::slug($this->title);
     }
 
-    /**
-     * Store or update service data
-     * Validates input and saves service information to database
-     *
-     * @return void
-     */
+    public function resetInputFields()
+    {
+        $this->reset([
+            'serviceId',
+            'title',
+            'slug',
+            'subtitle',
+            'description',
+            'content',
+            'icon',
+            'image',
+            'current_image',
+            'content_image',
+            'current_content_image',
+            'feature_list',
+            'is_active',
+            'sort_order',
+            'feature_categories',
+            'new_category_title',
+            'new_point',
+            'selected_category_index'
+        ]);
+
+        $this->is_active = true;
+        $this->sort_order = Service::max('sort_order') + 1 ?? 0;
+        $this->feature_categories = [];
+
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->openModal();
+    }
+
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    public function edit($id)
+    {
+        $service = Service::findOrFail($id);
+        $this->serviceId = $id;
+        $this->title = $service->title;
+        $this->slug = $service->slug;
+        $this->subtitle = $service->subtitle;
+        $this->description = $service->description;
+        $this->content = $service->content;
+        $this->icon = $service->icon;
+        $this->current_image = $service->image_path;
+        $this->current_content_image = $service->content_image_path;
+        $this->is_active = $service->is_active;
+        $this->sort_order = $service->sort_order;
+
+        // Handle feature list
+        if (is_array($service->feature_list)) {
+            $this->feature_categories = $service->feature_list;
+        } else {
+            $this->feature_categories = [];
+        }
+
+        $this->openModal();
+    }
+
     public function store()
     {
         $this->validate();
 
-        try {
-            $data = [
-                'icon' => $this->icon,
-                'title' => $this->title,
-                'slug' => $this->slug,
-                'description' => $this->description,
-            ];
+        $data = [
+            'title' => $this->title,
+            'slug' => $this->slug ?: Str::slug($this->title),
+            'subtitle' => $this->subtitle,
+            'description' => $this->description,
+            'content' => $this->content,
+            'icon' => $this->icon,
+            'is_active' => $this->is_active,
+            'sort_order' => $this->sort_order,
+        ];
 
-            // Handle file upload if present
-            if ($this->image) {
-                try {
-                    // Delete old file if editing
-                    if ($this->service_id && $this->existing_image) {
-                        Storage::delete('public/' . $this->existing_image);
-                    }
+        // Handle image upload
+        if ($this->image) {
+            $imagePath = $this->image->store('services', 'public');
+            $data['image_path'] = str_replace('public/', '', $imagePath);
 
-                    $imagePath = $this->image->store('services', 'public');
-                    $data['image'] = str_replace('public/', '', $imagePath);
-                } catch (\Exception $e) {
-                    $this->notifyError('Error uploading image: ' . $e->getMessage());
-                    return;
-                }
+            // Remove old image if exists
+            if ($this->serviceId && $this->current_image) {
+                Storage::delete('public/' . $this->current_image);
             }
-
-            if ($this->service_id) {
-                // Update existing service
-                $service = Service::find($this->service_id);
-                $service->update($data);
-                $this->notifySuccess('Service updated successfully.');
-            } else {
-                // Create new service
-                Service::create($data);
-                $this->notifySuccess('Service created successfully.');
-            }
-
-            $this->toggleModal('form', false);
-            $this->resetInputFields();
-        } catch (\Exception $e) {
-            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
+
+        // Handle content image upload
+        if ($this->content_image) {
+            $contentImagePath = $this->content_image->store('services', 'public');
+            $data['content_image_path'] = str_replace('public/', '', $contentImagePath);
+
+            // Remove old content image if exists
+            if ($this->serviceId && $this->current_content_image) {
+                Storage::delete('public/' . $this->current_content_image);
+            }
+        }
+
+        // Process feature list
+        if (!empty($this->feature_categories)) {
+            $data['feature_list'] = $this->feature_categories;
+        } else {
+            $data['feature_list'] = null;
+        }
+
+        // Create or update service
+        if ($this->serviceId) {
+            $service = Service::findOrFail($this->serviceId);
+            $service->update($data);
+            session()->flash('message', 'Service updated successfully.');
+        } else {
+            Service::create($data);
+            session()->flash('message', 'Service created successfully.');
+        }
+
+        $this->closeModal();
+        $this->resetInputFields();
     }
 
-    /**
-     * Show delete confirmation modal
-     * Sets the service ID for deletion and opens confirmation modal
-     *
-     * @param int $id Service ID to delete
-     * @return void
-     */
-    public function confirmDelete($id)
+    public function confirmServiceDeletion($id)
     {
-        $this->service_id = $id;
-        $this->toggleModal('delete');
+        $this->confirmingServiceDeletion = true;
+        $this->serviceIdBeingDeleted = $id;
     }
 
-    /**
-     * Delete service record
-     * Removes service and associated logo file from storage
-     *
-     * @return void
-     */
     public function deleteService()
     {
-        try{
-            $service = Service::find($this->service_id);
+        $service = Service::findOrFail($this->serviceIdBeingDeleted);
 
-            if ($service) {
-                // Delete image file if exists
-                if ($service->image) {
-                    try {
-                        Storage::delete('public/' . $service->image);
-                    } catch (\Exception $e) {
-                        // Log error but continue with deletion
-                        Log::error('Failed to delete service image: ' . $e->getMessage());
-                    }
-                }
-
-                $service->delete();
-                $this->notifySuccess('Service deleted successfully.');
-            }
-
-            $this->toggleModal('delete', false);
-            $this->resetInputFields();
-        } catch (\Exception $e) {
-            $this->notifyError('Delete operation failed: ' . $e->getMessage());
+        // Delete associated image if exists
+        if ($service->image_path) {
+            Storage::delete('public/' . $service->image_path);
         }
+
+        // Delete associated content image if exists
+        if ($service->content_image_path) {
+            Storage::delete('public/' . $service->content_image_path);
+        }
+
+        $service->delete();
+        $this->confirmingServiceDeletion = false;
+        session()->flash('message', 'Service deleted successfully.');
     }
 
-    /**
-     * Get available icon options from blade components
-     * Scans the flux/icon directory for blade components and returns their names
-     * Falls back to default icons if directory is inaccessible or on error
-     *
-     * @return array List of available icon names
-     */
-    public function getIconOptions()
+    public function cancelDelete()
     {
-        try {
-            // Define path to icon blade components
-            $iconPath = resource_path('views/flux/icon/*.blade.php');
-            $iconFiles = glob($iconPath);
+        $this->confirmingServiceDeletion = false;
+        $this->serviceIdBeingDeleted = null;
+    }
 
-            // If directory is not found or inaccessible
-            if ($iconFiles === false) {
-                return [
-                    'user', 'home', 'settings', 'mail', 'bell',
-                    'calendar', 'chart', 'document', 'folder', 'image'
-                ]; // Default icons as fallback
-            }
+    // Feature list management
+    public function addCategory()
+    {
+        if (empty($this->new_category_title)) {
+            return;
+        }
 
-            // Process icon files:
-            // 1. Map: Extract filename without extension
-            // 2. Filter: Remove 'index' from the list
-            // 3. Values: Reset array keys
-            return collect($iconFiles)->map(function ($file) {
-                return basename($file, '.blade.php');
-            })->filter(function ($icon) {
-                return $icon !== 'index';
-            })->values()->all();
-        } catch (\Exception $e) {
-            // Log error for debugging purposes
-            Log::error('Error loading icon options: ' . $e->getMessage());
+        $this->feature_categories[] = [
+            'title' => $this->new_category_title,
+            'points' => []
+        ];
 
-            // Return default icons as fallback
-            return [
-                'user', 'home', 'settings', 'mail', 'bell',
-                'calendar', 'chart', 'document', 'folder', 'image'
-            ];
+        $this->new_category_title = '';
+        $this->selected_category_index = count($this->feature_categories) - 1;
+    }
+
+    public function selectCategory($index)
+    {
+        $this->selected_category_index = $index;
+    }
+
+    public function removeCategory($index)
+    {
+        unset($this->feature_categories[$index]);
+        $this->feature_categories = array_values($this->feature_categories);
+
+        if ($this->selected_category_index === $index) {
+            $this->selected_category_index = null;
+        } elseif ($this->selected_category_index > $index) {
+            $this->selected_category_index--;
         }
     }
 
-    /**
-     * Render component view
-     * Fetches paginated projects and renders the component template
-     *
-     * @return \Illuminate\View\View
-     */
+    public function addPoint()
+    {
+        if ($this->selected_category_index === null || empty($this->new_point)) {
+            return;
+        }
+
+        $this->feature_categories[$this->selected_category_index]['points'][] = $this->new_point;
+        $this->new_point = '';
+    }
+
+    public function removePoint($categoryIndex, $pointIndex)
+    {
+        unset($this->feature_categories[$categoryIndex]['points'][$pointIndex]);
+        $this->feature_categories[$categoryIndex]['points'] = array_values($this->feature_categories[$categoryIndex]['points']);
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $services = Service::orderBy('created_at', 'desc')
+        $services = Service::query()
+            ->when($this->search, function ($query) {
+                return $query->where('title', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
-        $iconOptions = $this->getIconOptions();
-
-        return view('livewire.cms.manage-services', compact('services','iconOptions'));
+        return view('livewire.cms.manage-services', [
+            'services' => $services
+        ]);
     }
 }

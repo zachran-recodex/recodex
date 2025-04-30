@@ -1,115 +1,54 @@
 <?php
 
-use Livewire\Volt\Volt;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\MainController;
-use App\Http\Controllers\ResetPasswordEmailController;
-
-Route::get('sitemap.xml', function() {
-    if (file_exists(public_path('sitemap.xml'))) {
-        return response()->file(public_path('sitemap.xml'));
-    }
-
-    // Generate sitemap if it doesn't exist
-    Artisan::call('sitemap:generate');
-    return response()->file(public_path('sitemap.xml'));
-});
+use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::controller(MainController::class)->group(function () {
 
-    Route::get('', 'index')->name('home');
-    Route::get('tentang-kami', 'about')->name('about');
-    Route::get('layanan', 'service')->name('service');
-    Route::get('layanan/{service:slug}', 'serviceDetail')->name('service.detail');
-    Route::get('faq', 'faq')->name('faq');
-    Route::get('portfolio', 'project')->name('project');
-    Route::get('konsultasi', 'contact')->name('contact');
-    Route::post('konsultasi', 'storeContact')->name('contact.store');
+    Route::get('/', 'index')->name('home');
+
+    Route::get('/tentang-kami', 'about')->name('about');
+
+    Route::get('/layanan', 'service')->name('services');
+
+    Route::get('/layanan/{service}', 'showService')->name('services.show');
+
+    Route::get('/portfolio', 'project')->name('projects');
+
+    Route::get('/portfolio/{slug}/{client_slug}', 'showProject')->name('projects.show');
+
+    Route::get('/konsultasi', 'contact')->name('contact');
 
 });
 
-Route::get('project/reset-password/{token}', [ResetPasswordEmailController::class, 'reset'])
-    ->name('project.reset-password');
-Route::post('project/reset-password/{token}', [ResetPasswordEmailController::class, 'update'])
-    ->name('project.update-password');
+Route::view('dashboard', 'dashboard.index')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
-Route::middleware(['auth', 'can:access dashboard'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
-    Route::view('/dashboard', 'dashboard.index')->name('dashboard');
+    Route::prefix('dashboard')->group(function () {
 
-    Route::prefix('dashboard')->name('dashboard.')->group(function (){
-
-        Route::prefix('administrator')->name('administrator.')->group(function (){
-
-            Route::get('manage-users', App\Livewire\Administrator\ManageUsers::class)
-                ->name('user')
-                ->middleware('can:manage users');
-
-            Route::get('manage-roles', App\Livewire\Administrator\ManageRoles::class)
-                ->name('role')
-                ->middleware('can:manage roles');
-
-            Route::get('manage-contacts', App\Livewire\Administrator\ManageContacts::class)
-                ->name('contact');
-
-            Route::get('manage-sitemap', App\Livewire\Administrator\ManageSitemap::class)
-                ->name('sitemap');
+        // CMS Routes
+        Route::prefix('content-management-system')->name('cms.')->group(function () {
+            Route::get('/', App\Livewire\CMS\Overview::class)->name('overview');
+            Route::get('/faqs', App\Livewire\CMS\ManageFaqs::class)->name('faqs');
+            Route::get('/services', App\Livewire\CMS\ManageServices::class)->name('services');
+            Route::get('/members', App\Livewire\CMS\ManageMembers::class)->name('members');
+            Route::get('/pricings', App\Livewire\CMS\ManagePricings::class)->name('pricings');
+            Route::get('/projects', App\Livewire\CMS\ManageProjects::class)->name('projects');
+            Route::get('/work-processes', App\Livewire\CMS\ManageWorkProcesses::class)->name('work-processes');
+            Route::get('/about', App\Livewire\CMS\ManageAbout::class)->name('about');
+            Route::get('/hero', App\Livewire\CMS\ManageHero::class)->name('hero');
         });
 
-        Route::middleware(['can:manage cms'])->group(function (){
-
-            Route::prefix('cms')->name('cms.')->group(function (){
-
-                Route::get('manage-services', App\Livewire\CMS\ManageServices::class)
-                    ->name('services');
-
-                Route::get('manage-blogs', App\Livewire\CMS\ManageBlogs::class)
-                    ->name('blogs');
-
-                Route::get('manage-counters', App\Livewire\CMS\ManageCounters::class)
-                    ->name('counters');
-
-                Route::get('manage-faqs', App\Livewire\CMS\ManageFaqs::class)
-                    ->name('faqs');
-
-                Route::get('manage-work-processes', App\Livewire\CMS\ManageWorkProcesses::class)
-                    ->name('work-processes');
-
-                Route::get('manage-about', App\Livewire\CMS\ManageAbout::class)
-                    ->name('about');
-
-                Route::get('manage-hero', App\Livewire\CMS\ManageHero::class)
-                    ->name('hero');
-
-            });
-        });
-
-        Route::prefix('project')->name('project.')->group(function (){
-
-            Route::get('/', App\Livewire\Project\Overview::class)
-                ->name('overview');
-
-            Route::get('manage-projects', App\Livewire\Project\ManageProjects::class)
-                ->name('projects');
-
-            Route::get('manage-clients', App\Livewire\Project\ManageClients::class)
-                ->name('clients');
-
-            Route::get('manage-domains', App\Livewire\Project\ManageDomains::class)
-                ->name('domains');
-
-            Route::get('manage-emails', App\Livewire\Project\ManageEmails::class)
-                ->name('emails');
-        });
-
+        // Settings Route
+        Route::redirect('settings', 'settings/profile');
+        Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
+        Volt::route('settings/password', 'settings.password')->name('settings.password');
+        Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
     });
-
-    Route::redirect('settings', 'settings/profile');
-
-    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-    Volt::route('settings/password', 'settings.password')->name('settings.password');
-    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
 require __DIR__.'/auth.php';

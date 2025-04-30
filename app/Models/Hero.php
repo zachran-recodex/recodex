@@ -16,6 +16,6 @@ class Hero extends Model
         'subtitle',
         'motto',
         'button_text',
-        'image',
+        'image_path',
     ];
 }

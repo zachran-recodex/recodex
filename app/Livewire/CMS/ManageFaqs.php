@@ -4,173 +4,184 @@ namespace App\Livewire\CMS;
 
 use App\Models\Faq;
 use Livewire\Component;
-use App\WithNotification;
 use Livewire\WithPagination;
 
 class ManageFaqs extends Component
 {
     use WithPagination;
-    use WithNotification;
 
-    // Form Properties
-    public $faq_id;
+    // Form properties
+    public $faqId;
     public $question;
     public $answer;
+    public $is_active = true;
+    public $sort_order = 0;
 
-    // Track active modal
-    public $activeModal = null;
+    // UI state
+    public $isOpen = false;
+    public $confirmingFaqDeletion = false;
+    public $faqIdBeingDeleted;
 
-    /**
-     * Define validation rules for faq form
-     *
-     * @return array Validation rules array
-     */
-    protected function rules()
+    // Search and filter
+    public $search = '';
+    public $sortField = 'sort_order';
+    public $sortDirection = 'asc';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'sortField' => ['except' => 'sort_order'],
+        'sortDirection' => ['except' => 'asc'],
+    ];
+
+    protected $rules = [
+        'question' => 'required|string',
+        'answer' => 'required|string',
+        'is_active' => 'boolean',
+        'sort_order' => 'integer',
+    ];
+
+    public function mount()
     {
-        return [
-            'question' => 'required|string|max:255',
-            'answer' => 'required|string',
-        ];
+        $this->resetInputFields();
     }
 
-    /**
-     * Reset all form input fields and validation state
-     *
-     * @return void
-     */
-    public function resetInputFields()
+    private function resetInputFields()
     {
-        $this->faq_id = null;
-        $this->question = '';
-        $this->answer = '';
+        $this->reset([
+            'faqId',
+            'question',
+            'answer',
+        ]);
+
+        $this->is_active = true;
+        $this->sort_order = Faq::max('sort_order') + 1 ?? 0;
+
+        $this->resetErrorBag();
         $this->resetValidation();
     }
 
-    /**
-     * Unified modal control method
-     *
-     * @param string $modalName The name of the modal to show
-     * @param bool $show Whether to show or hide the modal
-     * @return void
-     */
-    public function toggleModal(string $modalName, bool $show = true)
-    {
-        if ($show) {
-            $this->activeModal = $modalName;
-            $this->modal($modalName)->show();
-        } else {
-            $this->activeModal = null;
-            $this->modal($modalName)->close();
-        }
-    }
-
-    /**
-     * Initialize create faq form
-     * Resets form fields and opens the form modal
-     *
-     * @return void
-     */
     public function create()
     {
         $this->resetInputFields();
-        $this->toggleModal('form');
+        $this->openModal();
     }
 
-    /**
-     * Load faq data for editing
-     * Populates form fields with existing faq data
-     *
-     * @param int $id Faq ID to edit
-     * @return void
-     */
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
     public function edit($id)
     {
         $faq = Faq::findOrFail($id);
-        $this->faq_id = $id;
+        $this->faqId = $id;
         $this->question = $faq->question;
         $this->answer = $faq->answer;
+        $this->is_active = $faq->is_active;
+        $this->sort_order = $faq->sort_order;
 
-        $this->toggleModal('form');
+        $this->openModal();
     }
 
-    /**
-     * Show delete confirmation modal
-     * Sets the faq ID for deletion and opens confirmation modal
-     *
-     * @param int $id Faq ID to delete
-     * @return void
-     */
-    public function confirmDelete($id)
-    {
-        $this->faq_id = $id;
-        $this->toggleModal('delete');
-    }
 
-    /**
-     * Store or update faq data
-     * Validates input and saves faq information to database
-     *
-     * @return void
-     */
     public function store()
     {
         $this->validate();
 
-        try {
-            $data = [
+        $data = [
+            'question' => $this->question,
+            'answer' => $this->answer,
+            'is_active' => $this->is_active,
+            'sort_order' => $this->sort_order,
+        ];
+
+        // Create or update faq
+        if ($this->faqId) {
+            $faq = Faq::findOrFail($this->faqId);
+            $faq->update($data);
+            session()->flash('message', 'FAQ updated successfully.');
+        } else {
+            Faq::create($data);
+            session()->flash('message', 'FAQ created successfully.');
+        }
+
+        $this->closeModal();
+        $this->resetInputFields();
+    }
+
+    public function update()
+    {
+        $this->validate();
+
+        if ($this->faqId) {
+            $faq = Faq::findOrFail($this->faqId);
+            $faq->update([
                 'question' => $this->question,
                 'answer' => $this->answer,
-            ];
+                'is_active' => $this->is_active,
+                'sort_order' => $this->sort_order,
+            ]);
 
-            if ($this->faq_id) {
-                // Update existing faq
-                $faq = Faq::find($this->faq_id);
-                $faq->update($data);
-                $this->notifySuccess('Faq updated successfully.');
-            } else {
-                // Create new faq
-                Faq::create($data);
-                $this->notifySuccess('Faq created successfully.');
-            }
+            session()->flash('message', 'FAQ successfully updated.');
 
-            $this->toggleModal('form', false);
+            $this->closeFormModal();
             $this->resetInputFields();
-        } catch (\Exception $e) {
-            $this->notifyError('Operation failed: ' . $e->getMessage());
         }
     }
 
-    /**
-     * Delete faq record
-     *
-     * @return void
-     */
+    public function confirmFaqDeletion($id)
+    {
+        $this->confirmingFaqDeletion = true;
+        $this->faqIdBeingDeleted = $id;
+    }
+
     public function deleteFaq()
     {
-        try {
-            $faq = Faq::find($this->faq_id);
+        $faq = Faq::findOrFail($this->faqIdBeingDeleted);
 
-            $faq->delete();
-            $this->notifySuccess('Faq deleted successfully.');
+        $faq->delete();
+        $this->confirmingFaqDeletion = false;
+        session()->flash('message', 'FAQ deleted successfully.');
+    }
 
-            $this->toggleModal('delete', false);
-            $this->resetInputFields();
-        } catch (\Exception $e) {
-            $this->notifyError('Delete operation failed: ' . $e->getMessage());
+    public function cancelDelete()
+    {
+        $this->confirmingFaqDeletion = false;
+        $this->faqIdBeingDeleted = null;
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
         }
     }
 
-    /**
-     * Render component view
-     * Fetches paginated faqs and renders the component template
-     *
-     * @return \Illuminate\View\View
-     */
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $faqs = Faq::orderBy('created_at', 'desc')
+        $faqs = Faq::query()
+            ->when($this->search, function($query) {
+                return $query->where('question', 'like', '%' . $this->search . '%')
+                    ->orWhere('answer', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
-        return view('livewire.cms.manage-faqs', compact('faqs'));
+        return view('livewire.cms.manage-faqs', [
+            'faqs' => $faqs
+        ]);
     }
 }

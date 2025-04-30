@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
@@ -13,15 +13,20 @@ class Project extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'client_id',
         'title',
+        'slug',
+        'client',
+        'client_slug',
         'category',
-        'description',
-        'image',
-        'start_date',
-        'end_date',
+        'date',
+        'duration',
         'cost',
-        'status',
+        'image_path',
+        'description',
+        'steps',
+        'content_image_path',
+        'is_active',
+        'sort_order',
     ];
 
     /**
@@ -30,78 +35,47 @@ class Project extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-        'cost' => 'decimal:0',
+        'steps' => 'array',
+        'date' => 'date',
     ];
 
-    const STATUS_PENDING = 'pending';
-
-    const STATUS_IN_PROGRESS = 'in_progress';
-
-    const STATUS_COMPLETED = 'completed';
-
-    const STATUS_CANCELLED = 'cancelled';
-
-    const STATUS_ON_HOLD = 'on_hold';
-
     /**
-     * Get all available project status options with display labels.
-     *
-     * @return array<string, string> Array of status codes mapped to their display labels
+     * Boot the model.
      */
-    public static function getStatusOptions()
+    protected static function boot()
     {
-        return [
-            self::STATUS_PENDING => 'Pending',
-            self::STATUS_IN_PROGRESS => 'In Progress',
-            self::STATUS_COMPLETED => 'Completed',
-            self::STATUS_CANCELLED => 'Cancelled',
-            self::STATUS_ON_HOLD => 'On Hold',
-        ];
+        parent::boot();
+
+        // Auto-generate slug before saving
+        static::creating(function ($project) {
+            if (empty($project->slug)) {
+                $project->slug = Str::slug($project->title);
+            }
+
+            if (empty($project->client_slug)) {
+                $project->client_slug = Str::slug($project->client);
+            }
+        });
+
+        // Update slug when title changes
+        static::updating(function ($project) {
+            if ($project->isDirty('title') && !$project->isDirty('slug')) {
+                $project->slug = Str::slug($project->title);
+            }
+
+            if ($project->isDirty('client') && !$project->isDirty('client_slug')) {
+                $project->client_slug = Str::slug($project->client);
+            }
+        });
     }
 
     /**
-     * Get the client that owns this project.
+     * Get the route key for the model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return string
      */
-    public function client(): BelongsTo
+    public function getRouteKeyName()
     {
-        return $this->belongsTo(Client::class);
-    }
-
-    /**
-     * Get the human-readable status label based on current status code.
-     *
-     * @return string Formatted status label
-     */
-    public function getStatusLabelAttribute()
-    {
-        return self::getStatusOptions()[$this->status] ?? $this->status;
-    }
-
-    /**
-     * Get the cost formatted with Indonesian currency format.
-     *
-     * @return string Formatted cost with Rupiah symbol
-     */
-    public function getFormattedCostAttribute()
-    {
-        return 'Rp ' . number_format($this->cost, 0, ',', '.');
-    }
-
-    /**
-     * Calculate project duration in days between start and end dates.
-     *
-     * @return int|null Number of days between start and end dates, or null if end date not set
-     */
-    public function getDurationAttribute()
-    {
-        if (!$this->end_date) {
-            return null;
-        }
-
-        return $this->start_date->diffInDays($this->end_date);
+        return 'slug';
     }
 }

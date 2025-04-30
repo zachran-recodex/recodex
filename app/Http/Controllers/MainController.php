@@ -2,92 +2,173 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
 use App\Models\Faq;
 use App\Models\Hero;
-use App\Models\About;
-use App\Models\Contact;
-use App\Models\Counter;
+use App\Models\Member;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\WorkProcess;
-use Illuminate\Http\Request;
 
+/**
+ * MainController handles the primary pages of the application.
+ *
+ * This controller is responsible for rendering the main pages of the website,
+ * including the homepage, about page, services pages, project pages, and contact page.
+ * It fetches the necessary data from the database and passes it to the views.
+ *
+ * @package App\Http\Controllers
+ */
 class MainController extends Controller
 {
+    /**
+     * Display the homepage.
+     *
+     * Retrieves the hero section, active services, projects, work processes, and team members
+     * to be displayed on the homepage.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         $hero = Hero::first();
-        $services = Service::all();
-        $counters = Counter::all();
-        $projects = Project::all();
-        $workProcesses = WorkProcess::all();
 
-        return view('main.index', compact('hero', 'services', 'counters', 'projects', 'workProcesses'));
+        $services = Service::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $projects = Project::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $works = WorkProcess::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $members = Member::where('is_active', true)
+            ->orderBy('sort_order')
+            ->limit(4)
+            ->get();
+
+        return view('main.index', compact('hero', 'services', 'projects', 'works', 'members'));
     }
 
+    /**
+     * Display the about page.
+     *
+     * Retrieves the about section data and all active team members to display on the about page.
+     *
+     * @return \Illuminate\View\View
+     */
     public function about()
     {
         $about = About::first();
-        $counters = Counter::all();
 
-        return view('main.about', compact('about', 'counters'));
+        $members = Member::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('main.about', compact('about', 'members'));
     }
+
+    /**
+     * Display the services page.
+     *
+     * Retrieves all active services, work processes, and FAQs to display on the services page.
+     *
+     * @return \Illuminate\View\View
+     */
     public function service()
     {
-        $services = Service::all();
-        $workProcesses = WorkProcess::all();
-        $faqs = Faq::all();
+        $services = Service::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
 
-        return view('main.service', compact('services', 'workProcesses', 'faqs'));
+        $works = WorkProcess::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        $faqs = Faq::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('main.service', compact('services', 'works', 'faqs'));
     }
 
-    public function serviceDetail(Service $service)
+    /**
+     * Display a specific service details page.
+     *
+     * Shows details for a specific service and includes related services for cross-navigation.
+     * Returns 404 if the service is not active.
+     *
+     * @param \App\Models\Service $service The service model instance via route model binding
+     * @return \Illuminate\View\View
+     */
+    public function showService(Service $service)
     {
+        if (!$service->is_active) {
+            abort(404);
+        }
+
         $relatedServices = Service::where('id', '!=', $service->id)
-                                ->inRandomOrder()
-                                ->limit(3)
-                                ->get();
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->limit(3)
+            ->get();
 
-        return view('main.service-detail', compact('service', 'relatedServices'));
+        return view('main.service-details', compact('service', 'relatedServices'));
     }
 
-    public function faq()
-    {
-        $faqs = Faq::all();
-
-        return view('main.faq', compact('faqs'));
-    }
-
+    /**
+     * Display the projects page.
+     *
+     * Retrieves all active projects to display on the projects page.
+     *
+     * @return \Illuminate\View\View
+     */
     public function project()
     {
-        $projects = Project::all();
+        $projects = Project::where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
 
         return view('main.project', compact('projects'));
     }
 
-    public function contact()
+    /**
+     * Display a specific project details page.
+     *
+     * Shows details for a specific project identified by slug and client_slug,
+     * and includes related projects for cross-navigation.
+     *
+     * @param string $slug The project's slug
+     * @param string $client_slug The client's slug
+     * @return \Illuminate\View\View
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If no active project is found with the given slugs
+     */
+    public function showProject($slug, $client_slug)
     {
-        $faqs = Faq::all();
+        $project = Project::where('slug', $slug)
+            ->where('client_slug', $client_slug)
+            ->where('is_active', true)
+            ->firstOrFail();
 
-        return view('main.contact', compact('faqs'));
+        $relatedProjects = Project::where('id', '!=', $project->id)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->limit(6)
+            ->get();
+
+        return view('main.project-details', compact('project', 'relatedProjects'));
     }
 
-    public function storeContact(Request $request)
+    /**
+     * Display the contact page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function contact()
     {
-        $validated = $request->validate([
-            'contact-name' => 'required|string|max:255',
-            'contact-email' => 'required|email|max:255',
-            'contact-phone' => 'required|string|max:20',
-            'contact-massage' => 'required|string'
-        ]);
-
-        Contact::create([
-            'name' => $validated['contact-name'],
-            'email' => $validated['contact-email'],
-            'phone' => $validated['contact-phone'],
-            'message' => $validated['contact-massage']
-        ]);
-
-        return back()->with('success', 'Pesan Anda telah terkirim!');
+        return view('main.contact');
     }
 }

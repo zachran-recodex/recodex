@@ -6,7 +6,7 @@ new class extends Component {
     //
 }; ?>
 
-<div class="flex flex-col items-start">
+<section class="w-full">
     @include('partials.settings-heading')
 
     <x-settings.layout heading="Appearance" subheading="Update the appearance settings for your account">
@@ -16,4 +16,4 @@ new class extends Component {
             <flux:radio value="system" icon="computer-desktop">System</flux:radio>
         </flux:radio.group>
     </x-settings.layout>
-</div>
+</section>
