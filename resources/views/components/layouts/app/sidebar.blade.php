@@ -15,9 +15,10 @@
                 <x-app-logo />
             </a>
 
-            <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
-
-            <flux:navlist.item icon="chart-bar" :href="route('analytics')" :current="request()->routeIs('analytics')" wire:navigate>Analytics</flux:navlist.item>
+            <flux:navlist.group class="grid">
+                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
+                <flux:navlist.item icon="chart-bar" :href="route('analytics')" :current="request()->routeIs('analytics')" wire:navigate>Google Analytics</flux:navlist.item>
+            </flux:navlist.group>
 
             <flux:navlist variant="outline">
                 <flux:navlist.group expandable heading="Content Management" class="grid">

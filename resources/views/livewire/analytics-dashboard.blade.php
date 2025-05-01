@@ -34,8 +34,11 @@
 @endsection
 
 <div>
-    <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-        <flux:heading level="2" class="text-2xl! font-semibold!">Analytics</flux:heading>
+    <header class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+        <div>
+            <flux:heading level="2" class="text-2xl! font-semibold!">Google Analytics</flux:heading>
+            <flux:subheading>Fetch data from Google Analytics</flux:subheading>
+        </div>
 
         <div class="w-full md:w-64">
             <flux:select wire:model.live="period" label="Periode">
@@ -44,7 +47,7 @@
                 @endforeach
             </flux:select>
         </div>
-    </div>
+    </header>
 
     @if (session()->has('error'))
         <flux:callout variant="danger" icon="x-circle" heading="{!! session('error') !!}" class="mb-4" />
