@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Services\AnalyticsService;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
-use Spatie\Analytics\Facades\Analytics;
-use Spatie\Analytics\Period;
 
 class AnalyticsDashboard extends Component
 {
@@ -20,6 +20,15 @@ class AnalyticsDashboard extends Component
     public $visitorsAndPageViews = [];
     public $topCountries = [];
     public $topOperatingSystems = [];
+    public $topBrowsers = [];
+    public $mostVisitedPages = [];
+
+    protected $analyticsService;
+
+    public function boot(AnalyticsService $analyticsService)
+    {
+        $this->analyticsService = $analyticsService;
+    }
 
     public function mount()
     {
@@ -29,18 +38,23 @@ class AnalyticsDashboard extends Component
     public function loadAnalyticsData()
     {
         try {
-            $period = Period::days($this->period);
-
             // Fetch visitors and page views
-            $this->visitorsAndPageViews = Analytics::fetchVisitorsAndPageViews($period);
+            $this->visitorsAndPageViews = $this->analyticsService->getVisitorsAndPageViews(intval($this->period));
 
             // Fetch top countries
-            $this->topCountries = Analytics::fetchTopCountries($period);
+            $this->topCountries = $this->analyticsService->getTopCountries(intval($this->period));
 
             // Fetch top operating systems
-            $this->topOperatingSystems = Analytics::fetchTopOperatingSystems($period);
+            $this->topOperatingSystems = $this->analyticsService->getTopOperatingSystems(intval($this->period));
+
+            // Fetch top browsers
+            $this->topBrowsers = $this->analyticsService->getTopBrowsers(intval($this->period));
+
+            // Fetch most visited pages
+            $this->mostVisitedPages = $this->analyticsService->getMostVisitedPages(intval($this->period));
 
         } catch (\Exception $e) {
+            Log::error('Analytics error: ' . $e->getMessage());
             session()->flash('error', 'Failed to load Analytics data: ' . $e->getMessage());
         }
     }
