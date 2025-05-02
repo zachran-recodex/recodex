@@ -36,6 +36,10 @@
 
             <flux:spacer />
 
+            <flux:navlist.group class="grid">
+                <flux:navlist.item icon="home" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>Manage Users</flux:navlist.item>
+            </flux:navlist.group>
+
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/zachran-recodex/recodex.git" target="_blank">
                     Repository

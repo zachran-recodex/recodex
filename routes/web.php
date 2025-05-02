@@ -32,6 +32,11 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/analytics', App\Livewire\AnalyticsDashboard::class)->name('analytics');
 
+        // Administrator Routes
+        Route::prefix('administrator')->name('admin.')->group(function () {
+            Route::get('/users', App\Livewire\Administrator\ManageUsers::class)->name('users');
+        });
+
         // CMS Routes
         Route::prefix('content-management-system')->name('cms.')->group(function () {
             Route::get('/', App\Livewire\CMS\Overview::class)->name('overview');
