@@ -17,7 +17,7 @@
 
             <flux:navlist.group class="grid">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
-                <flux:navlist.item icon="chart-bar" :href="route('analytics')" :current="request()->routeIs('analytics')" wire:navigate>Google Analytics</flux:navlist.item>
+                <flux:navlist.item icon="chart-bar" :href="route('analytics')" :current="request()->routeIs('analytics')" badge="fix" wire:navigate>Google Analytics</flux:navlist.item>
             </flux:navlist.group>
 
             <flux:navlist variant="outline">
@@ -37,7 +37,7 @@
             <flux:spacer />
 
             <flux:navlist.group class="grid">
-                <flux:navlist.item icon="home" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>Manage Users</flux:navlist.item>
+                <flux:navlist.item icon="home" :href="route('admin.users')" :current="request()->routeIs('admin.users')" badge="fix" wire:navigate>Manage Users</flux:navlist.item>
             </flux:navlist.group>
 
             <flux:navlist variant="outline">
