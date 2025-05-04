@@ -15,6 +15,7 @@ class ProjectSeeder extends Seeder
         Project::create([
             'title' => 'Product Design',
             'client' => 'Alfado Company, UK',
+            'category' => 'Company Profile',
             'date' => '2024-06-16',
             'duration' => 'Two Months',
             'cost' => '50k USD',
