@@ -33,6 +33,12 @@
                         <flux:navlist.item icon="flag" :href="route('cms.hero')" :current="request()->routeIs('cms.hero')" wire:navigate>Hero</flux:navlist.item>
                     </flux:navlist.group>
                 </flux:navlist>
+
+                <flux:navlist variant="outline">
+                    <flux:navlist.group expandable heading="Project Management" class="grid">
+                        <flux:navlist.item icon="document-text" :href="route('project.invoices')" :current="request()->routeIs('project.invoices')" wire:navigate>Invoices</flux:navlist.item>
+                    </flux:navlist.group>
+                </flux:navlist>
             </flux:navlist.group>
 
             <flux:spacer />

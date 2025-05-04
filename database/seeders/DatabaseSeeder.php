@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PricingSeeder::class,
             MemberSeeder::class,
             UserSeeder::class,
+            InvoiceSeeder::class,
         ]);
     }
 }

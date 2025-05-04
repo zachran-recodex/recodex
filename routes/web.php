@@ -50,6 +50,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/hero', App\Livewire\CMS\ManageHero::class)->name('hero');
         });
 
+        // Project Management Routes
+        Route::prefix('project-management')->name('project.')->group(function () {
+            Route::get('/invoices', App\Livewire\ProjectManagement\ManageInvoices::class)->name('invoices');
+        });
+
         // Settings Route
         Route::redirect('settings', 'settings/profile');
         Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
