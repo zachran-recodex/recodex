@@ -53,6 +53,7 @@
                                 <a href="{{ route('projects') }}">Portfolio</a>
                             </li>
                             <li>{{ $project->title }}</li>
+                            <li>{{ $project->client }}</li>
                         </ul>
                         <!-- Breadcrumb Nav -->
                     </div>
