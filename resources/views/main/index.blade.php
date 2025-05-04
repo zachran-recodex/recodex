@@ -253,7 +253,7 @@
                                 <!-- Single Slide Item -->
                                 <div class="swiper-slide">
                                     <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                        <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client }}" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                        <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client }}" width="516" height="390" class="h-[390px] w-[516px] object-cover transition-all duration-300 group-hover:scale-110" />
 
                                         <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                             <div class="max-w-[380px] flex-1 text-colorButteryWhite">
