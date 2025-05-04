@@ -18,27 +18,24 @@
             <flux:navlist.group class="grid">
                 <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
                 <flux:navlist.item icon="chart-bar" :href="route('analytics')" :current="request()->routeIs('analytics')" badge="fix" wire:navigate>Google Analytics</flux:navlist.item>
-            </flux:navlist.group>
+                <flux:navlist.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" badge="fix" wire:navigate>Manage Users</flux:navlist.item>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group expandable heading="Content Management" class="grid">
-                    <flux:navlist.item icon="squares-plus" :href="route('cms.overview')" :current="request()->routeIs('cms.overview')" wire:navigate>Overview</flux:navlist.item>
-                    <flux:navlist.item icon="document-text" :href="route('cms.faqs')" :current="request()->routeIs('cms.faqs')" wire:navigate>FAQs</flux:navlist.item>
-                    <flux:navlist.item icon="briefcase" :href="route('cms.services')" :current="request()->routeIs('cms.services')" wire:navigate>Services</flux:navlist.item>
-                    <flux:navlist.item icon="users" :href="route('cms.members')" :current="request()->routeIs('cms.members')" wire:navigate>Team Members</flux:navlist.item>
-                    <flux:navlist.item icon="currency-dollar" :href="route('cms.pricings')" :current="request()->routeIs('cms.pricings')" wire:navigate>Pricing Packages</flux:navlist.item>
-                    <flux:navlist.item icon="squares-2x2" :href="route('cms.projects')" :current="request()->routeIs('cms.projects')" wire:navigate>Projects</flux:navlist.item>
-                    <flux:navlist.item icon="arrow-path" :href="route('cms.work-processes')" :current="request()->routeIs('cms.work-processes')" wire:navigate>Work Processes</flux:navlist.item>
-                    <flux:navlist.item icon="information-circle" :href="route('cms.about')" :current="request()->routeIs('cms.about')" wire:navigate>About</flux:navlist.item>
-                    <flux:navlist.item icon="flag" :href="route('cms.hero')" :current="request()->routeIs('cms.hero')" wire:navigate>Hero</flux:navlist.item>
-                </flux:navlist.group>
-            </flux:navlist>
+                <flux:navlist variant="outline">
+                    <flux:navlist.group expandable heading="Content Management" class="grid">
+                        <flux:navlist.item icon="squares-plus" :href="route('cms.overview')" :current="request()->routeIs('cms.overview')" wire:navigate>Overview</flux:navlist.item>
+                        <flux:navlist.item icon="document-text" :href="route('cms.faqs')" :current="request()->routeIs('cms.faqs')" wire:navigate>FAQs</flux:navlist.item>
+                        <flux:navlist.item icon="briefcase" :href="route('cms.services')" :current="request()->routeIs('cms.services')" wire:navigate>Services</flux:navlist.item>
+                        <flux:navlist.item icon="users" :href="route('cms.members')" :current="request()->routeIs('cms.members')" wire:navigate>Team Members</flux:navlist.item>
+                        <flux:navlist.item icon="currency-dollar" :href="route('cms.pricings')" :current="request()->routeIs('cms.pricings')" wire:navigate>Pricing Packages</flux:navlist.item>
+                        <flux:navlist.item icon="squares-2x2" :href="route('cms.projects')" :current="request()->routeIs('cms.projects')" wire:navigate>Projects</flux:navlist.item>
+                        <flux:navlist.item icon="arrow-path" :href="route('cms.work-processes')" :current="request()->routeIs('cms.work-processes')" wire:navigate>Work Processes</flux:navlist.item>
+                        <flux:navlist.item icon="information-circle" :href="route('cms.about')" :current="request()->routeIs('cms.about')" wire:navigate>About</flux:navlist.item>
+                        <flux:navlist.item icon="flag" :href="route('cms.hero')" :current="request()->routeIs('cms.hero')" wire:navigate>Hero</flux:navlist.item>
+                    </flux:navlist.group>
+                </flux:navlist>
+            </flux:navlist.group>
 
             <flux:spacer />
-
-            <flux:navlist.group class="grid">
-                <flux:navlist.item icon="home" :href="route('admin.users')" :current="request()->routeIs('admin.users')" badge="fix" wire:navigate>Manage Users</flux:navlist.item>
-            </flux:navlist.group>
 
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/zachran-recodex/recodex.git" target="_blank">
