@@ -30,8 +30,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('dashboard')->group(function () {
 
-        Route::get('/analytics', App\Livewire\AnalyticsDashboard::class)->name('analytics');
-
         // Administrator Routes
         Route::prefix('administrator')->name('admin.')->group(function () {
             Route::get('/users', App\Livewire\Administrator\ManageUsers::class)->name('users');
