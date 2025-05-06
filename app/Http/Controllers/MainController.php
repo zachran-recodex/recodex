@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\About;
 use App\Models\Faq;
 use App\Models\Hero;
+use App\Models\About;
+use App\Models\Client;
 use App\Models\Member;
 use App\Models\Project;
 use App\Models\Service;
@@ -21,14 +22,6 @@ use App\Models\WorkProcess;
  */
 class MainController extends Controller
 {
-    /**
-     * Display the homepage.
-     *
-     * Retrieves the hero section, active services, projects, work processes, and team members
-     * to be displayed on the homepage.
-     *
-     * @return \Illuminate\View\View
-     */
     public function index()
     {
         $hero = Hero::first();
@@ -53,13 +46,6 @@ class MainController extends Controller
         return view('main.index', compact('hero', 'services', 'projects', 'works', 'members'));
     }
 
-    /**
-     * Display the about page.
-     *
-     * Retrieves the about section data and all active team members to display on the about page.
-     *
-     * @return \Illuminate\View\View
-     */
     public function about()
     {
         $about = About::first();
@@ -71,13 +57,6 @@ class MainController extends Controller
         return view('main.about', compact('about', 'members'));
     }
 
-    /**
-     * Display the services page.
-     *
-     * Retrieves all active services, work processes, and FAQs to display on the services page.
-     *
-     * @return \Illuminate\View\View
-     */
     public function service()
     {
         $services = Service::where('is_active', true)
@@ -95,15 +74,6 @@ class MainController extends Controller
         return view('main.service', compact('services', 'works', 'faqs'));
     }
 
-    /**
-     * Display a specific service details page.
-     *
-     * Shows details for a specific service and includes related services for cross-navigation.
-     * Returns 404 if the service is not active.
-     *
-     * @param \App\Models\Service $service The service model instance via route model binding
-     * @return \Illuminate\View\View
-     */
     public function showService(Service $service)
     {
         if (!$service->is_active) {
@@ -119,13 +89,6 @@ class MainController extends Controller
         return view('main.service-details', compact('service', 'relatedServices'));
     }
 
-    /**
-     * Display the projects page.
-     *
-     * Retrieves all active projects to display on the projects page.
-     *
-     * @return \Illuminate\View\View
-     */
     public function project()
     {
         $projects = Project::where('is_active', true)
@@ -135,40 +98,37 @@ class MainController extends Controller
         return view('main.project', compact('projects'));
     }
 
-    /**
-     * Display a specific project details page.
-     *
-     * Shows details for a specific project identified by slug and client_slug,
-     * and includes related projects for cross-navigation.
-     *
-     * @param string $slug The project's slug
-     * @param string $client_slug The client's slug
-     * @return \Illuminate\View\View
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If no active project is found with the given slugs
-     */
-    public function showProject($slug, $client_slug)
+    public function showProject($service_slug, $slug, $client_slug)
     {
+        // Find service with necessary relationships
+        $service = Service::where('slug', $service_slug)->firstOrFail();
+
+        // Find project with all needed relationships
         $project = Project::where('slug', $slug)
-            ->where('is_active', true)
-            ->whereHas('client', function ($query) use ($client_slug) {
-                $query->where('slug', $client_slug);
-            })
-            ->firstOrFail();
+                        ->where('service_id', $service->id)
+                        ->firstOrFail();
 
-        $relatedProjects = Project::where('id', '!=', $project->id)
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->limit(6)
-            ->get();
+        // Verify client relationship
+        $client = Client::where('slug', $client_slug)
+                    ->whereHas('projects', function($query) use ($project) {
+                        $query->where('id', $project->id);
+                    })
+                    ->firstOrFail();
 
-        return view('main.project-details', compact('project', 'relatedProjects'));
+        // Load related projects with their relationships
+        $relatedProjects = Project::with(['client'])
+                                ->where('id', '!=', $project->id)
+                                ->take(6)
+                                ->get();
+
+        return view('main.project-details', compact(
+            'project',
+            'service',
+            'client',
+            'relatedProjects'
+        ));
     }
 
-    /**
-     * Display the contact page.
-     *
-     * @return \Illuminate\View\View
-     */
     public function contact()
     {
         return view('main.contact');
