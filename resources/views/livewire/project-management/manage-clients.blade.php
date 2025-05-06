@@ -98,10 +98,10 @@
                                 </flux:table.cell>
                                 <flux:table.cell>
                                     <flux:heading>{{ $client->name }}</flux:heading>
-                                    <flux:text>{{ $client->email ?: 'No Email' }} | {{ $client->phone ?: 'No Phone' }}</flux:text>
+                                    <flux:text>{{ $client->email ?? 'No Email' }} | {{ $client->phone ?? 'No Phone' }}</flux:text>
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    {{ Str::limit($client->address, 50) ?: 'No Address' }}
+                                    {{ Str::limit($client->address ?? '', 50) ?: 'No Address' }}
                                 </flux:table.cell>
                                 <flux:table.cell>
                                     {{ $client->projects->count() }}
