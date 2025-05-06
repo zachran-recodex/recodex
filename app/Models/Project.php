@@ -18,7 +18,6 @@ class Project extends Model
     protected $fillable = [
         'title',
         'slug',
-        'category',
         'date',
         'duration',
         'cost',
@@ -29,6 +28,7 @@ class Project extends Model
         'is_active',
         'sort_order',
         'client_id',
+        'service_id',
     ];
 
     /**
@@ -61,9 +61,13 @@ class Project extends Model
         return 'slug';
     }
 
-
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }
