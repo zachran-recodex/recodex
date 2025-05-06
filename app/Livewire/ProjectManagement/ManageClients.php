@@ -1,0 +1,178 @@
+<?php
+
+namespace App\Livewire\ProjectManagement;
+
+use App\Models\Client;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class ManageClients extends Component
+{
+    use WithPagination;
+
+    // Form properties
+    public $clientId;
+    public $company;
+    public $name;
+    public $email;
+    public $phone;
+    public $address;
+
+    // UI state
+    public $isOpen = false;
+    public $confirmingClientDeletion = false;
+    public $clientIdBeingDeleted;
+
+    // Search and filter
+    public $search = '';
+    public $sortField = 'created_at';
+    public $sortDirection = 'asc';
+
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'sortField' => ['except' => 'created_at'],
+        'sortDirection' => ['except' => 'asc'],
+    ];
+
+    protected $rules = [
+        'company' => 'required|min:3|max:255',
+        'name' => 'required|min:3|max:255',
+        'email' => 'nullable|email|max:255',
+        'phone' => 'nullable|max:20',
+        'address' => 'nullable',
+    ];
+
+    public function mount()
+    {
+        $this->resetInputFields();
+    }
+
+    private function resetInputFields()
+    {
+        $this->reset([
+            'clientId',
+            'company',
+            'name',
+            'email',
+            'phone',
+            'address',
+        ]);
+
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->openModal();
+    }
+
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    public function edit($id)
+    {
+        $client = Client::findOrFail($id);
+        $this->clientId = $id;
+        $this->company = $client->company;
+        $this->name = $client->name;
+        $this->email = $client->email;
+        $this->phone = $client->phone;
+        $this->address = $client->address;
+
+        $this->openModal();
+    }
+
+    public function store()
+    {
+        $this->validate();
+
+        $data = [
+            'company' => $this->company,
+            'name' => $this->name,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'address' => $this->address,
+        ];
+
+        // Create or update client
+        if ($this->clientId) {
+            $client = Client::findOrFail($this->clientId);
+            $client->update($data);
+            session()->flash('message', 'Client updated successfully.');
+        } else {
+            Client::create($data);
+            session()->flash('message', 'Client created successfully.');
+        }
+
+        $this->closeModal();
+        $this->resetInputFields();
+    }
+
+    public function confirmClientDeletion($id)
+    {
+        $this->confirmingClientDeletion = true;
+        $this->clientIdBeingDeleted = $id;
+    }
+
+    public function deleteClient()
+    {
+        $client = Client::findOrFail($this->clientIdBeingDeleted);
+
+        // Check if client has related projects
+        if ($client->projects()->count() > 0) {
+            session()->flash('error', 'Client cannot be deleted because it has associated projects.');
+            $this->confirmingClientDeletion = false;
+            return;
+        }
+
+        $client->delete();
+        $this->confirmingClientDeletion = false;
+        session()->flash('message', 'Client deleted successfully.');
+    }
+
+    public function cancelDelete()
+    {
+        $this->confirmingClientDeletion = false;
+        $this->clientIdBeingDeleted = null;
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function render()
+    {
+        $clients = Client::query()
+            ->when($this->search, function ($query) {
+                return $query->where('company', 'like', '%' . $this->search . '%')
+                    ->orWhere('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy($this->sortField, $this->sortDirection)
+            ->paginate(10);
+
+        return view('livewire.project-management.manage-clients', [
+            'clients' => $clients
+        ]);
+    }
+}

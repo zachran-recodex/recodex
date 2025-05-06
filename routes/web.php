@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
         // Project Management Routes
         Route::prefix('project-management')->name('project.')->group(function () {
+            Route::get('/clients', App\Livewire\ProjectManagement\ManageClients::class)->name('clients');
             Route::get('/invoices', App\Livewire\ProjectManagement\ManageInvoices::class)->name('invoices');
         });
 

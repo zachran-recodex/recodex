@@ -35,6 +35,7 @@
 
                 <flux:navlist variant="outline">
                     <flux:navlist.group expandable heading="Project Management" class="grid">
+                        <flux:navlist.item icon="document-check" :href="route('project.clients')" :current="request()->routeIs('project.clients')" wire:navigate>Clients</flux:navlist.item>
                         <flux:navlist.item icon="document-text" :href="route('project.invoices')" :current="request()->routeIs('project.invoices')" wire:navigate>Invoices</flux:navlist.item>
                     </flux:navlist.group>
                 </flux:navlist>
