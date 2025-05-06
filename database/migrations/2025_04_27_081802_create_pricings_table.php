@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('annually_price', 10, 2)->default(0);
             $table->json('features')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->integer('sort_order')->default(0);
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }

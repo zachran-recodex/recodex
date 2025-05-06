@@ -25,7 +25,7 @@ return new class extends Migration
             $table->json('steps')->nullable();
             $table->string('content_image_path')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->integer('sort_order')->default(0);
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }

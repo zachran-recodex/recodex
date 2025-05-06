@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->json('social_links')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->integer('sort_order')->default(0);
+            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
