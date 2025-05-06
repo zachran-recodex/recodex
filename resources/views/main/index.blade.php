@@ -253,18 +253,17 @@
                                 <!-- Single Slide Item -->
                                 <div class="swiper-slide">
                                     <div class="group relative overflow-hidden rounded-[20px] border-[5px] border-colorButteryWhite">
-                                        <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client->company }}" width="516" height="390" class="h-[390px] w-[516px] object-cover transition-all duration-300 group-hover:scale-110" />
-
+                                        <img src="{{ app(App\Services\ImageService::class)->getImageUrl($project->image_path, 'home') }}" alt="{{ $project->title }} - {{ $project->client->company }}" width="516" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
                                         <div class="w-[calc(100%-48px) absolute bottom-0 flex flex-col items-start gap-x-10 gap-y-8 p-6 sm:flex-row sm:items-center">
                                             <div class="max-w-[380px] flex-1 text-colorButteryWhite">
-                                                <a href="{{ route('projects.show', [$project->slug, optional($project->client)->slug]) }}" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">
+                                                <a href="{{ route('projects.show', [ 'service_slug' => $project->service->slug, 'slug' => $project->slug, 'client_slug' => $project->client->slug ]) }}" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] group-hover:text-colorLightLime md:text-3xl">
                                                     {{ $project->title }}
                                                 </a>
                                                 <p class="line-clamp-2">
                                                     {{ $project->client->company }}
                                                 </p>
                                             </div>
-                                            <a href="{{ route('projects.show', [$project->slug, optional($project->client)->slug]) }}" class="relative inline-flex items-start justify-center overflow-hidden">
+                                            <a href="{{ route('projects.show', [ 'service_slug' => $project->service->slug, 'slug' => $project->slug, 'client_slug' => $project->client->slug ]) }}" class="relative inline-flex items-start justify-center overflow-hidden">
                                                 <img src="{{ asset('assets/img/icons/icon-buttery-white-arrow-right.svg') }}" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                                 <img src="{{ asset('assets/img/icons/icon-light-lime-arrow-right.svg') }}" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                             </a>
