@@ -52,8 +52,7 @@
                             <li>
                                 <a href="{{ route('projects') }}">Portfolio</a>
                             </li>
-                            <li>{{ $project->title }}</li>
-                            <li>{{ $project->client }}</li>
+                            <li>{{ $project->title }} - {{ $project->client->company }}</li>
                         </ul>
                         <!-- Breadcrumb Nav -->
                     </div>
@@ -74,7 +73,7 @@
             <div class="container">
                 <!-- Portfolio Hero Image Block -->
                 <div class="overflow-hidden rounded-[31px] border-[5px] border-black">
-                    <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client }}" class="h-auto w-full" />
+                    <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client->company }}" class="h-auto w-full" />
                 </div>
                 <!-- Portfolio Hero Image Block -->
 
@@ -82,7 +81,7 @@
                 <ul class="mb-10 mt-10 flex flex-wrap justify-between gap-x-5 gap-y-2 md:mb-[60px] lg:mb-20">
                     <li class="flex items-center gap-x-4">
                         <h4>Klien:</h4>
-                        <span>{{ $project->client }}</span>
+                        <span>{{ $project->client->company }}</span>
                     </li>
                     <li class="flex items-center gap-x-4">
                         <h4>Tanggal:</h4>
@@ -138,7 +137,7 @@
                     <!-- Content Left Block -->
                     <!-- Content Right Block -->
                     <div class="mx-auto max-w-[450px] overflow-hidden rounded-[23px] border-[5px] border-black lg:mx-0 lg:max-w-full">
-                        <img src="{{ Storage::url($project->content_image_path) }}" alt="{{ $project->title }} - {{ $project->client }}" width="456" height="736" class="h-auto w-full object-cover lg:h-full" />
+                        <img src="{{ Storage::url($project->content_image_path) }}" alt="{{ $project->title }} - {{ $project->client->company }}" width="456" height="736" class="h-auto w-full object-cover lg:h-full" />
                     </div>
                     <!-- Content Right Block -->
                 </div>
@@ -180,20 +179,20 @@
                         <div class="swiper-slide">
                             <div class="group relative overflow-hidden rounded-[25px] border-2 border-black lg:border-[5px]">
                                 <!-- Thumbnail -->
-                                <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client }}" width="613" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
+                                <img src="{{ Storage::url($project->image_path) }}" alt="{{ $project->title }} - {{ $project->client->company }}" width="613" height="390" class="h-full w-full object-cover transition-all duration-300 group-hover:scale-110" />
                                 <!-- Thumbnail -->
 
                                 <!-- Content -->
                                 <div class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                     <div class="max-w-[400px] flex-1 text-colorButteryWhite">
-                                        <a href="{{ route('projects.show', [$project->slug, $project->client_slug]) }}" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">
+                                        <a href="{{ route('projects.show', [$project->slug, optional($project->client)->slug]) }}" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">
                                             {{ $project->title }}
                                         </a>
                                         <p class="line-clamp-2">
                                             {{ Str::limit($project->description, 50) }}
                                         </p>
                                     </div>
-                                    <a href="{{ route('projects.show', [$project->slug, $project->client_slug]) }}" class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
+                                    <a href="{{ route('projects.show', [$project->slug, optional($project->client)->slug]) }}" class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                         <img src="{{ asset('assets/img/icons/icon-buttery-white-arrow-right.svg') }}" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                         <img src="{{ asset('assets/img/icons/icon-light-lime-arrow-right.svg') }}" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                     </a>

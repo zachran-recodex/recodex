@@ -149,8 +149,10 @@ class MainController extends Controller
     public function showProject($slug, $client_slug)
     {
         $project = Project::where('slug', $slug)
-            ->where('client_slug', $client_slug)
             ->where('is_active', true)
+            ->whereHas('client', function ($query) use ($client_slug) {
+                $query->where('slug', $client_slug);
+            })
             ->firstOrFail();
 
         $relatedProjects = Project::where('id', '!=', $project->id)

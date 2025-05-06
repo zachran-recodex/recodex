@@ -92,14 +92,14 @@
                                 <!-- Content -->
                                 <div class="absolute bottom-0 z-10 flex w-full flex-col items-start justify-between gap-x-7 gap-y-8 p-6 transition-all duration-300 sm:flex-row sm:items-center lg:translate-y-full lg:group-hover:translate-y-0">
                                     <div class="max-w-[520px] flex-1 text-colorButteryWhite">
-                                        <a href="{{ route('projects.show', [$project->slug, $project->client_slug]) }}" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">
+                                        <a href="{{ route('projects.show', [$project->slug, optional($project->client)->slug]) }}" class="mb-[10px] block font-syne text-2xl font-bold leading-[1.4] hover:text-colorLightLime md:text-3xl">
                                             {{ $project->title }}
                                         </a>
                                         <p class="line-clamp-2">
                                             {{ $project->client }}
                                         </p>
                                     </div>
-                                    <a href="{{ route('projects.show', [$project->slug, $project->client_slug]) }}" class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
+                                    <a href="{{ route('projects.show', [$project->slug, optional($project->client)->slug]) }}" class="relative hidden items-start justify-center overflow-hidden sm:inline-flex">
                                         <img src="{{ asset('assets/img/icons/icon-buttery-white-arrow-right.svg') }}" alt="icon-buttery-white-arrow-right" width="34" height="28" class="translate-x-0 opacity-100 transition-all duration-300 group-hover:translate-x-full group-hover:opacity-0" />
                                         <img src="{{ asset('assets/img/icons/icon-light-lime-arrow-right.svg') }}" alt="light-lime-arrow-right" width="34" height="28" class="absolute -translate-x-full opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
                                     </a>
