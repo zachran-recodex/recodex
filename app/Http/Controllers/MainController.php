@@ -11,15 +11,6 @@ use App\Models\Project;
 use App\Models\Service;
 use App\Models\WorkProcess;
 
-/**
- * MainController handles the primary pages of the application.
- *
- * This controller is responsible for rendering the main pages of the website,
- * including the homepage, about page, services pages, project pages, and contact page.
- * It fetches the necessary data from the database and passes it to the views.
- *
- * @package App\Http\Controllers
- */
 class MainController extends Controller
 {
     public function index()
@@ -105,8 +96,11 @@ class MainController extends Controller
 
         // Find project with all needed relationships
         $project = Project::where('slug', $slug)
-                        ->where('service_id', $service->id)
-                        ->firstOrFail();
+                    ->where('service_id', $service->id)
+                    ->whereHas('client', function($query) use ($client_slug) {
+                        $query->where('slug', $client_slug);
+                    })
+                    ->firstOrFail();
 
         // Verify client relationship
         $client = Client::where('slug', $client_slug)
