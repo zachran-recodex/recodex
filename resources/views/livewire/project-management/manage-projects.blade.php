@@ -49,7 +49,7 @@
                         <flux:menu.radio.group>
                             <flux:menu.radio wire:click="sortBy('sort_order')" :checked="$sortField === 'sort_order'">Default</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('title')" :checked="$sortField === 'title'">Title</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('category')" :checked="$sortField === 'category'">Category</flux:menu.radio>
+                            <flux:menu.radio>Service</flux:menu.radio>
                             <flux:menu.radio>Client</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('created_at')" :checked="$sortField === 'created_at'">Created At</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('is_active')" :checked="$sortField === 'is_active'">Status</flux:menu.radio>
@@ -76,7 +76,7 @@
                             Title
                         </flux:table.column>
                         <flux:table.column>
-                            Category
+                            Service
                         </flux:table.column>
                         <flux:table.column>
                             Client
@@ -101,7 +101,7 @@
                                     {{ $project->title }}
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    {{ $project->category }}
+                                    {{ $project->service->title ?? '-' }}
                                 </flux:table.cell>
                                 <flux:table.cell>
                                     {{ $project->client->company ?? '-' }}
@@ -169,13 +169,18 @@
                         <flux:error name="title" />
                     </flux:field>
 
-                    <!-- Category -->
+                    <!-- Service -->
                     <flux:field>
-                        <flux:label>Category</flux:label>
+                        <flux:label>Service</flux:label>
 
-                        <flux:input wire:model="category" placeholder="Enter project category" />
+                        <flux:select wire:model="service_id">
+                            <flux:select.option>Choose service...</flux:select.option>
+                            @foreach($services as $service)
+                                <flux:select.option value="{{ $service->id }}">{{ $service->title }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
 
-                        <flux:error name="category" />
+                        <flux:error name="service_id" />
                     </flux:field>
 
                     <!-- Image -->

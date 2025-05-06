@@ -4,10 +4,11 @@ namespace App\Livewire\ProjectManagement;
 
 use App\Models\Client;
 use App\Models\Project;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Service;
+use App\Services\ImageService;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class ManageProjects extends Component
 {
@@ -17,7 +18,6 @@ class ManageProjects extends Component
     // Form properties
     public $projectId;
     public $title;
-    public $category;
     public $date;
     public $duration;
     public $cost;
@@ -30,6 +30,7 @@ class ManageProjects extends Component
     public $is_active = true;
     public $sort_order = 0;
     public $client_id;
+    public $service_id;
 
     // UI state
     public $isOpen = false;
@@ -53,7 +54,6 @@ class ManageProjects extends Component
 
     protected $rules = [
         'title' => 'required|min:3|max:255',
-        'category' => 'required|min:3|max:255',
         'date' => 'nullable|date',
         'duration' => 'nullable|max:255',
         'cost' => 'nullable|max:255',
@@ -63,7 +63,15 @@ class ManageProjects extends Component
         'is_active' => 'boolean',
         'sort_order' => 'integer|min:0',
         'client_id' => 'required|exists:clients,id',
+        'service_id' => 'required|exists:services,id',
     ];
+
+    protected $imageService;
+
+    public function boot(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
 
     public function mount()
     {
@@ -75,7 +83,6 @@ class ManageProjects extends Component
         $this->reset([
             'projectId',
             'title',
-            'category',
             'date',
             'duration',
             'cost',
@@ -88,6 +95,7 @@ class ManageProjects extends Component
             'is_active',
             'sort_order',
             'client_id',
+            'service_id',
             'new_step_title',
             'new_step_description'
         ]);
@@ -121,7 +129,6 @@ class ManageProjects extends Component
         $project = Project::findOrFail($id);
         $this->projectId = $id;
         $this->title = $project->title;
-        $this->category = $project->category;
         $this->date = $project->date ? $project->date->format('Y-m-d') : null;
         $this->duration = $project->duration;
         $this->cost = $project->cost;
@@ -131,6 +138,7 @@ class ManageProjects extends Component
         $this->is_active = $project->is_active;
         $this->sort_order = $project->sort_order;
         $this->client_id = $project->client_id;
+        $this->service_id = $project->service_id;
 
         // Handle steps
         if (is_array($project->steps)) {
@@ -148,7 +156,6 @@ class ManageProjects extends Component
 
         $data = [
             'title' => $this->title,
-            'category' => $this->category,
             'date' => $this->date,
             'duration' => $this->duration,
             'cost' => $this->cost,
@@ -156,27 +163,28 @@ class ManageProjects extends Component
             'is_active' => $this->is_active,
             'sort_order' => $this->sort_order,
             'client_id' => $this->client_id,
+            'service_id' => $this->service_id,
         ];
 
-        // Handle image upload
+        // Handle image upload using the ImageService
         if ($this->image) {
-            $imagePath = $this->image->store('projects', 'public');
+            $imagePath = $this->imageService->storeProjectImage($this->image);
             $data['image_path'] = $imagePath;
 
             // Remove old image if exists
             if ($this->projectId && $this->current_image) {
-                Storage::delete('public/' . $this->current_image);
+                $this->imageService->deleteImage($this->current_image);
             }
         }
 
         // Handle content image upload
         if ($this->content_image) {
-            $contentImagePath = $this->content_image->store('projects', 'public');
+            $contentImagePath = $this->imageService->storeProjectImage($this->content_image);
             $data['content_image_path'] = $contentImagePath;
 
             // Remove old content image if exists
             if ($this->projectId && $this->current_content_image) {
-                Storage::delete('public/' . $this->current_content_image);
+                $this->imageService->deleteImage($this->current_content_image);
             }
         }
 
@@ -211,19 +219,18 @@ class ManageProjects extends Component
     {
         $project = Project::findOrFail($this->projectIdBeingDeleted);
 
-        // Delete associated image if exists
+        // Delete associated images using the ImageService
         if ($project->image_path) {
-            Storage::delete('public/' . $project->image_path);
+            $this->imageService->deleteImage($project->image_path);
         }
 
-        // Delete associated content image if exists
         if ($project->content_image_path) {
-            Storage::delete('public/' . $project->content_image_path);
+            $this->imageService->deleteImage($project->content_image_path);
         }
 
         $project->delete();
         $this->confirmingProjectDeletion = false;
-        session()->flash('message', '');
+        session()->flash('message', 'Project deleted successfully.');
     }
 
     public function cancelDelete()
@@ -272,20 +279,21 @@ class ManageProjects extends Component
     public function render()
     {
         $projects = Project::query()
-            ->with('client')
+            ->with(['client', 'service'])
             ->when($this->search, function ($query) {
                 return $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('category', 'like', '%' . $this->search . '%')
                     ->orWhere('description', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
         $clients = Client::orderBy('created_at')->get();
+        $services = Service::orderBy('created_at')->get();
 
         return view('livewire.project-management.manage-projects', [
             'projects' => $projects,
-            'clients' => $clients
+            'clients' => $clients,
+            'services' => $services,
         ]);
     }
 }
