@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Member extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -33,25 +36,13 @@ class Member extends Model
     ];
 
     /**
-     * Boot the model.
+     * Get the options for generating the slug.
      */
-    protected static function boot()
+    public function getSlugOptions() : SlugOptions
     {
-        parent::boot();
-
-        // Auto-generate slug before saving
-        static::creating(function ($member) {
-            if (empty($member->slug)) {
-                $member->slug = Str::slug($member->name);
-            }
-        });
-
-        // Update slug when name changes
-        static::updating(function ($member) {
-            if ($member->isDirty('name') && !$member->isDirty('slug')) {
-                $member->slug = Str::slug($member->name);
-            }
-        });
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     /**

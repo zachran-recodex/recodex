@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Service extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,25 +39,13 @@ class Service extends Model
     ];
 
     /**
-     * Boot the model.
+     * Get the options for generating the slug.
      */
-    protected static function boot()
+    public function getSlugOptions() : SlugOptions
     {
-        parent::boot();
-
-        // Auto-generate slug before saving
-        static::creating(function ($service) {
-            if (empty($service->slug)) {
-                $service->slug = Str::slug($service->title);
-            }
-        });
-
-        // Update slug when title changes
-        static::updating(function ($service) {
-            if ($service->isDirty('title') && !$service->isDirty('slug')) {
-                $service->slug = Str::slug($service->title);
-            }
-        });
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
 
     /**
