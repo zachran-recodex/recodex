@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\CMS;
+namespace App\Livewire\ProjectManagement;
 
 use App\Models\Client;
 use App\Models\Project;
@@ -282,7 +282,7 @@ class ManageProjects extends Component
 
         $clients = Client::orderBy('company')->get();
 
-        return view('livewire.cms.manage-projects', [
+        return view('livewire.project-management.manage-projects', [
             'projects' => $projects,
             'clients' => $clients
         ]);

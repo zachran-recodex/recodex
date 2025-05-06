@@ -26,7 +26,6 @@
                         <flux:navlist.item icon="briefcase" :href="route('cms.services')" :current="request()->routeIs('cms.services')" wire:navigate>Services</flux:navlist.item>
                         <flux:navlist.item icon="users" :href="route('cms.members')" :current="request()->routeIs('cms.members')" wire:navigate>Team Members</flux:navlist.item>
                         <flux:navlist.item icon="currency-dollar" :href="route('cms.pricings')" :current="request()->routeIs('cms.pricings')" wire:navigate>Pricing Packages</flux:navlist.item>
-                        <flux:navlist.item icon="squares-2x2" :href="route('cms.projects')" :current="request()->routeIs('cms.projects')" wire:navigate>Projects</flux:navlist.item>
                         <flux:navlist.item icon="arrow-path" :href="route('cms.work-processes')" :current="request()->routeIs('cms.work-processes')" wire:navigate>Work Processes</flux:navlist.item>
                         <flux:navlist.item icon="information-circle" :href="route('cms.about')" :current="request()->routeIs('cms.about')" wire:navigate>About</flux:navlist.item>
                         <flux:navlist.item icon="flag" :href="route('cms.hero')" :current="request()->routeIs('cms.hero')" wire:navigate>Hero</flux:navlist.item>
@@ -35,8 +34,9 @@
 
                 <flux:navlist variant="outline">
                     <flux:navlist.group expandable heading="Project Management" class="grid">
-                        <flux:navlist.item icon="document-check" :href="route('project.clients')" :current="request()->routeIs('project.clients')" wire:navigate>Clients</flux:navlist.item>
-                        <flux:navlist.item icon="document-text" :href="route('project.invoices')" :current="request()->routeIs('project.invoices')" wire:navigate>Invoices</flux:navlist.item>
+                        <flux:navlist.item icon="squares-2x2" :href="route('pm.projects')" :current="request()->routeIs('pm.projects')" wire:navigate>Projects</flux:navlist.item>
+                        <flux:navlist.item icon="document-check" :href="route('pm.clients')" :current="request()->routeIs('pm.clients')" wire:navigate>Clients</flux:navlist.item>
+                        <flux:navlist.item icon="document-text" :href="route('pm.invoices')" :current="request()->routeIs('pm.invoices')" wire:navigate>Invoices</flux:navlist.item>
                     </flux:navlist.group>
                 </flux:navlist>
             </flux:navlist.group>
