@@ -13,8 +13,9 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         Project::create([
+            'client_id' => 1,
             'title' => 'Product Design',
-            'client' => 'Alfado Company, UK',
+            'slug' => 'product_design',
             'category' => 'Company Profile',
             'date' => '2024-06-16',
             'duration' => 'Two Months',

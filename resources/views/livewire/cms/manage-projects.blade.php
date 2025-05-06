@@ -50,7 +50,7 @@
                             <flux:menu.radio wire:click="sortBy('sort_order')" :checked="$sortField === 'sort_order'">Default</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('title')" :checked="$sortField === 'title'">Title</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('category')" :checked="$sortField === 'category'">Category</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('client')" :checked="$sortField === 'client'">Client</flux:menu.radio>
+                            <flux:menu.radio>Client</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('created_at')" :checked="$sortField === 'created_at'">Created At</flux:menu.radio>
                             <flux:menu.radio wire:click="sortBy('is_active')" :checked="$sortField === 'is_active'">Status</flux:menu.radio>
                         </flux:menu.radio.group>
@@ -104,7 +104,7 @@
                                     {{ $project->category }}
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    {{ $project->client }}
+                                    {{ $project->client->company }}
                                 </flux:table.cell>
                                 <flux:table.cell>
                                     {{ $project->date ? $project->date->format('d F Y') : '—' }}
@@ -203,9 +203,13 @@
                     <flux:field>
                         <flux:label>Client</flux:label>
 
-                        <flux:input wire:model="client" placeholder="Enter client name" />
+                        <flux:select wire:model="client_id" placeholder="Choose client...">
+                            @foreach($clients as $client)
+                                <flux:select.option value="{{ $client->id }}">{{ $client->company }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
 
-                        <flux:error name="client" />
+                        <flux:error name="client_id" />
                     </flux:field>
 
                     <!-- Date -->

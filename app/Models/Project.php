@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+    use HasSlug;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,8 +18,6 @@ class Project extends Model
     protected $fillable = [
         'title',
         'slug',
-        'client',
-        'client_slug',
         'category',
         'date',
         'duration',
@@ -27,6 +28,7 @@ class Project extends Model
         'content_image_path',
         'is_active',
         'sort_order',
+        'client_id',
     ];
 
     /**
@@ -40,33 +42,13 @@ class Project extends Model
     ];
 
     /**
-     * Boot the model.
+     * Get the options for generating the slug.
      */
-    protected static function boot()
+    public function getSlugOptions() : SlugOptions
     {
-        parent::boot();
-
-        // Auto-generate slug before saving
-        static::creating(function ($project) {
-            if (empty($project->slug)) {
-                $project->slug = Str::slug($project->title);
-            }
-
-            if (empty($project->client_slug)) {
-                $project->client_slug = Str::slug($project->client);
-            }
-        });
-
-        // Update slug when title changes
-        static::updating(function ($project) {
-            if ($project->isDirty('title') && !$project->isDirty('slug')) {
-                $project->slug = Str::slug($project->title);
-            }
-
-            if ($project->isDirty('client') && !$project->isDirty('client_slug')) {
-                $project->client_slug = Str::slug($project->client);
-            }
-        });
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
     }
 
     /**
@@ -77,5 +59,11 @@ class Project extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }

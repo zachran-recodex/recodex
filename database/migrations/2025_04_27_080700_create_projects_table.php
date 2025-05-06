@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('client_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->string('slug');
-            $table->string('client');
-            $table->string('client_slug');
             $table->string('category');
             $table->date('date')->nullable();
             $table->string('duration')->nullable();

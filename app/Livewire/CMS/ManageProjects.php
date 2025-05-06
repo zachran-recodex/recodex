@@ -2,6 +2,7 @@
 
 namespace App\Livewire\CMS;
 
+use App\Models\Client;
 use App\Models\Project;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -16,7 +17,6 @@ class ManageProjects extends Component
     // Form properties
     public $projectId;
     public $title;
-    public $client;
     public $category;
     public $date;
     public $duration;
@@ -29,6 +29,7 @@ class ManageProjects extends Component
     public $steps = [];
     public $is_active = true;
     public $sort_order = 0;
+    public $client_id;
 
     // UI state
     public $isOpen = false;
@@ -52,7 +53,6 @@ class ManageProjects extends Component
 
     protected $rules = [
         'title' => 'required|min:3|max:255',
-        'client' => 'required|min:3|max:255',
         'category' => 'required|min:3|max:255',
         'date' => 'nullable|date',
         'duration' => 'nullable|max:255',
@@ -62,6 +62,7 @@ class ManageProjects extends Component
         'content_image' => 'nullable|image|max:1024',
         'is_active' => 'boolean',
         'sort_order' => 'integer|min:0',
+        'client_id' => 'required|exists:clients,id',
     ];
 
     public function mount()
@@ -74,7 +75,6 @@ class ManageProjects extends Component
         $this->reset([
             'projectId',
             'title',
-            'client',
             'category',
             'date',
             'duration',
@@ -87,6 +87,7 @@ class ManageProjects extends Component
             'steps',
             'is_active',
             'sort_order',
+            'client_id',
             'new_step_title',
             'new_step_description'
         ]);
@@ -120,7 +121,6 @@ class ManageProjects extends Component
         $project = Project::findOrFail($id);
         $this->projectId = $id;
         $this->title = $project->title;
-        $this->client = $project->client;
         $this->category = $project->category;
         $this->date = $project->date ? $project->date->format('Y-m-d') : null;
         $this->duration = $project->duration;
@@ -130,6 +130,7 @@ class ManageProjects extends Component
         $this->current_content_image = $project->content_image_path;
         $this->is_active = $project->is_active;
         $this->sort_order = $project->sort_order;
+        $this->client_id = $project->client_id;
 
         // Handle steps
         if (is_array($project->steps)) {
@@ -147,7 +148,6 @@ class ManageProjects extends Component
 
         $data = [
             'title' => $this->title,
-            'client' => $this->client,
             'category' => $this->category,
             'date' => $this->date,
             'duration' => $this->duration,
@@ -155,6 +155,7 @@ class ManageProjects extends Component
             'description' => $this->description,
             'is_active' => $this->is_active,
             'sort_order' => $this->sort_order,
+            'client_id' => $this->client_id,
         ];
 
         // Handle image upload
@@ -222,7 +223,7 @@ class ManageProjects extends Component
 
         $project->delete();
         $this->confirmingProjectDeletion = false;
-        session()->flash('message', 'Project deleted successfully.');
+        session()->flash('message', '');
     }
 
     public function cancelDelete()
@@ -273,15 +274,17 @@ class ManageProjects extends Component
         $projects = Project::query()
             ->when($this->search, function ($query) {
                 return $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('client', 'like', '%' . $this->search . '%')
                     ->orWhere('category', 'like', '%' . $this->search . '%')
                     ->orWhere('description', 'like', '%' . $this->search . '%');
             })
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
+        $clients = Client::orderBy('company')->get();
+
         return view('livewire.cms.manage-projects', [
-            'projects' => $projects
+            'projects' => $projects,
+            'clients' => $clients
         ]);
     }
 }
