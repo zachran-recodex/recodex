@@ -104,7 +104,7 @@
                                     {{ $project->category }}
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    {{ $project->client->company }}
+                                    {{ $project->client->company ?? '-' }}
                                 </flux:table.cell>
                                 <flux:table.cell>
                                     {{ $project->date ? $project->date->format('d F Y') : '—' }}
@@ -203,7 +203,8 @@
                     <flux:field>
                         <flux:label>Client</flux:label>
 
-                        <flux:select wire:model="client_id" placeholder="Choose client...">
+                        <flux:select wire:model="client_id">
+                            <flux:select.option>Choose client...</flux:select.option>
                             @foreach($clients as $client)
                                 <flux:select.option value="{{ $client->id }}">{{ $client->company }}</flux:select.option>
                             @endforeach

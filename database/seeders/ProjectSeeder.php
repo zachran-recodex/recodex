@@ -13,7 +13,7 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         Project::create([
-            'client_id' => 1,
+            'client_id' => null,
             'title' => 'Product Design',
             'slug' => 'product_design',
             'category' => 'Company Profile',

@@ -272,6 +272,7 @@ class ManageProjects extends Component
     public function render()
     {
         $projects = Project::query()
+            ->with('client')
             ->when($this->search, function ($query) {
                 return $query->where('title', 'like', '%' . $this->search . '%')
                     ->orWhere('category', 'like', '%' . $this->search . '%')
@@ -280,7 +281,7 @@ class ManageProjects extends Component
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(10);
 
-        $clients = Client::orderBy('company')->get();
+        $clients = Client::orderBy('created_at')->get();
 
         return view('livewire.project-management.manage-projects', [
             'projects' => $projects,
