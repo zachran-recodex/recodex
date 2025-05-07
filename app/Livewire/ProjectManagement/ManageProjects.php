@@ -154,6 +154,11 @@ class ManageProjects extends Component
     {
         $this->validate();
 
+        // Jika status inactive, set sort_order ke 0
+        if (!$this->is_active) {
+            $this->sort_order = 0;
+        }
+
         $data = [
             'title' => $this->title,
             'date' => $this->date,
@@ -198,7 +203,16 @@ class ManageProjects extends Component
         // Create or update project
         if ($this->projectId) {
             $project = Project::findOrFail($this->projectId);
+            $oldIsActive = $project->is_active;
+            $oldSortOrder = $project->sort_order;
+
             $project->update($data);
+
+            // Jika status berubah dari active ke inactive, sesuaikan sort_order proyek lain
+            if ($oldIsActive && !$this->is_active) {
+                $this->adjustProjectOrders($oldSortOrder);
+            }
+
             session()->flash('message', 'Project updated successfully.');
         } else {
             Project::create($data);
@@ -259,6 +273,28 @@ class ManageProjects extends Component
     {
         unset($this->steps[$index]);
         $this->steps = array_values($this->steps);
+    }
+
+    /**
+     * Menyesuaikan urutan proyek ketika sebuah proyek dinonaktifkan
+     *
+     * @param int $oldSortOrder Sort order lama dari proyek yang dinonaktifkan
+     * @return void
+     */
+    private function adjustProjectOrders($oldSortOrder)
+    {
+        // Dapatkan semua proyek aktif dengan sort_order lebih besar dari proyek yang dinonaktifkan
+        $projectsToUpdate = Project::where('is_active', true)
+            ->where('sort_order', '>', $oldSortOrder)
+            ->orderBy('sort_order')
+            ->get();
+
+        // Kurangi sort_order masing-masing proyek sebanyak 1
+        foreach ($projectsToUpdate as $projectToUpdate) {
+            $projectToUpdate->update([
+                'sort_order' => $projectToUpdate->sort_order - 1
+            ]);
+        }
     }
 
     public function sortBy($field)
