@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PortalController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -25,6 +26,15 @@ Route::controller(MainController::class)->group(function () {
 Route::view('dashboard', 'dashboard.index')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+// Routing untuk subdomain portal
+Route::domain('portal.' . env('APP_DOMAIN'))->group(function () {
+    Route::controller(PortalController::class)->group(function () {
+        Route::get('/', 'index')->name('portal.index');
+        Route::get('/login', 'login')->name('portal.login');
+        Route::get('/register', 'register')->name('portal.register');
+    });
+});
 
 Route::middleware(['auth'])->group(function () {
 
