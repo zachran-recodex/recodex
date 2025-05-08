@@ -51,7 +51,7 @@ Dokumentasi ini menjelaskan implementasi landing page untuk subdomain portal (`p
    - Mengatur konfigurasi aplikasi sesuai dengan subdomain yang terdeteksi
 
 3. **Konfigurasi .htaccess**:
-   - File `.htaccess` di root dan di folder `public/portal` dikonfigurasi untuk mengarahkan request dengan benar
+   - File `.htaccess` di root dan di folder `portal` dikonfigurasi untuk mengarahkan request dengan benar
    - Mendukung shared hosting cPanel dengan struktur folder yang sesuai
 
 ## Deployment di Shared Hosting cPanel
