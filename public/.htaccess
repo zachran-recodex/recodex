@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # Determine if the request is for the portal subdomain
+    RewriteCond %{HTTP_HOST} ^portal\.recodex\.id$ [NC]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

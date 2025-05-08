@@ -61,13 +61,5 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::domain('portal.' . env('APP_URL'))->group(function () {
-
-    Route::controller(App\Http\Controllers\Portal\MainController::class)->group(function () {
-
-        Route::get('/', 'index')->name('home');
-
-    });
-});
-
 require __DIR__.'/auth.php';
+require __DIR__.'/portal.php';
