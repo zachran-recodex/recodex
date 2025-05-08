@@ -51,6 +51,7 @@
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/zachran-recodex/recodex.git" target="_blank">
                     Repository
                 </flux:navlist.item>
+                <flux:navlist.item icon="document-text" href="https://portal.recodex.id" target="_blank">Portal</flux:navlist.item>
             </flux:navlist>
 
             <!-- Desktop User Menu -->
