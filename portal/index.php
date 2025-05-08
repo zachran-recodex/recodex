@@ -14,4 +14,4 @@ if ($uri !== '/' && file_exists(__DIR__.'/'.$uri)) {
 }
 
 // Jika tidak ada file yang ditemukan, lanjutkan dengan memuat aplikasi Laravel
-require_once __DIR__.'/../../public/index.php';
+require_once __DIR__.'/../public/index.php';
