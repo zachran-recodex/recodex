@@ -10,11 +10,6 @@ class Member extends Model
 {
     use HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'slug',
@@ -26,18 +21,10 @@ class Member extends Model
         'sort_order',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'social_links' => 'array',
     ];
 
-    /**
-     * Get the options for generating the slug.
-     */
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
@@ -45,11 +32,6 @@ class Member extends Model
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
     public function getRouteKeyName()
     {
         return 'slug';

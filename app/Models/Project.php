@@ -10,11 +10,6 @@ class Project extends Model
 {
     use HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'title',
         'slug',
@@ -31,19 +26,11 @@ class Project extends Model
         'service_id',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'steps' => 'array',
         'date' => 'date',
     ];
 
-    /**
-     * Get the options for generating the slug.
-     */
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
@@ -52,11 +39,6 @@ class Project extends Model
             ->allowDuplicateSlugs();
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
     public function getRouteKeyName()
     {
         return 'slug';

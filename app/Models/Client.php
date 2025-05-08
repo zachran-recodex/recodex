@@ -10,11 +10,6 @@ class Client extends Model
 {
     use HasSlug;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'company',
         'slug',
@@ -24,9 +19,6 @@ class Client extends Model
         'address',
     ];
 
-    /**
-     * Get the options for generating the slug.
-     */
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
@@ -34,11 +26,6 @@ class Client extends Model
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
     public function getRouteKeyName()
     {
         return 'slug';

@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'invoice_number',
         'invoice_date',
@@ -28,11 +23,6 @@ class Invoice extends Model
         'is_paid',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'invoice_date' => 'date',
         'services' => 'array',
