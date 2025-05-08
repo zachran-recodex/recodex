@@ -22,17 +22,6 @@ class ManageFaqs extends Component
     public $confirmingFaqDeletion = false;
     public $faqIdBeingDeleted;
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'sort_order';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'sort_order'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'question' => 'required|string',
         'answer' => 'required|string',
@@ -87,7 +76,6 @@ class ManageFaqs extends Component
 
         $this->openModal();
     }
-
 
     public function store()
     {
@@ -155,29 +143,9 @@ class ManageFaqs extends Component
         $this->faqIdBeingDeleted = null;
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $faqs = Faq::query()
-            ->when($this->search, function($query) {
-                return $query->where('question', 'like', '%' . $this->search . '%')
-                    ->orWhere('answer', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $faqs = Faq::orderBy('sort_order', 'asc')
             ->paginate(10);
 
         return view('livewire.cms.manage-faqs', [

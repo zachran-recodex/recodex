@@ -30,17 +30,6 @@ class ManagePricings extends Component
     // Feature management
     public $new_feature = '';
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'sort_order';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'sort_order'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'title' => 'required|string|max:255',
         'description' => 'nullable|string',
@@ -194,29 +183,9 @@ class ManagePricings extends Component
         $this->features = array_values($this->features);
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $pricings = Pricing::query()
-            ->when($this->search, function ($query) {
-                return $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $pricings = Pricing::orderBy('sort_order', 'asc')
             ->paginate(10);
 
         return view('livewire.cms.manage-pricings', [

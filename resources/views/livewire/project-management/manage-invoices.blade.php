@@ -34,42 +34,9 @@
 @endsection
 
 <div>
-    <header class="mb-6">
-        <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Invoices</flux:heading>
-        <div class="flex items-center justify-between gap-4">
-            <div class="w-72">
-                <flux:input class="w-full" wire:model.live.debounce.300ms="search" placeholder="Search invoices..." icon="magnifying-glass" />
-            </div>
-
-            <div class="flex items-center gap-4">
-                <flux:dropdown>
-                    <flux:button icon:trailing="chevron-down">Filter Status</flux:button>
-
-                    <flux:menu>
-                        <flux:menu.radio.group>
-                            <flux:menu.radio wire:click="$set('filter_status', '')" :checked="$filter_status === ''">All</flux:menu.radio>
-                            <flux:menu.radio wire:click="$set('filter_status', 'paid')" :checked="$filter_status === 'paid'">Paid</flux:menu.radio>
-                            <flux:menu.radio wire:click="$set('filter_status', 'unpaid')" :checked="$filter_status === 'unpaid'">Unpaid</flux:menu.radio>
-                        </flux:menu.radio.group>
-                    </flux:menu>
-                </flux:dropdown>
-
-                <flux:dropdown>
-                    <flux:button icon:trailing="chevron-down">Sort by</flux:button>
-
-                    <flux:menu>
-                        <flux:menu.radio.group>
-                            <flux:menu.radio wire:click="sortBy('invoice_date')" :checked="$sortField === 'invoice_date'">Date</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('invoice_number')" :checked="$sortField === 'invoice_number'">Invoice Number</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('client_name')" :checked="$sortField === 'client_name'">Client Name</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('total_amount')" :checked="$sortField === 'total_amount'">Amount</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('is_paid')" :checked="$sortField === 'is_paid'">Payment Status</flux:menu.radio>
-                        </flux:menu.radio.group>
-                    </flux:menu>
-                </flux:dropdown>
-                <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
-            </div>
-        </div>
+    <header class="mb-6 flex items-center justify-between">
+        <flux:heading level="2" class="text-2xl! font-semibold!">Manage Invoices</flux:heading>
+        <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
     </header>
 
     <main>

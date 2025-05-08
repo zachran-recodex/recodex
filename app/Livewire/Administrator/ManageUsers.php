@@ -3,7 +3,6 @@
 namespace App\Livewire\Administrator;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,13 +22,6 @@ class ManageUsers extends Component
     public $isOpen = false;
     public $confirmingUserDeletion = false;
     public $userIdBeingDeleted;
-
-    // Search and filter
-    public $search = '';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-    ];
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -125,19 +117,10 @@ class ManageUsers extends Component
         $this->confirmingUserDeletion = false;
         $this->userIdBeingDeleted = null;
     }
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
 
     public function render()
     {
-        $users = User::query()
-            ->when($this->search, function($query) {
-                return $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('created_at', 'asc')
+        $users = User::orderBy('created_at', 'asc')
             ->paginate(10);
 
         return view('livewire.administrator.manage-users', [

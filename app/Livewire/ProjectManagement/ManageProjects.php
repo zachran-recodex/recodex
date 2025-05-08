@@ -41,17 +41,6 @@ class ManageProjects extends Component
     public $new_step_title = '';
     public $new_step_description = '';
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'sort_order';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'sort_order'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'title' => 'required|min:3|max:255',
         'date' => 'nullable|date',
@@ -297,30 +286,10 @@ class ManageProjects extends Component
         }
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $projects = Project::query()
-            ->with(['client', 'service'])
-            ->when($this->search, function ($query) {
-                return $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $projects = Project::with(['client', 'service'])
+            ->orderBy('sort_order', 'asc')
             ->paginate(10);
 
         $clients = Client::orderBy('created_at')->get();

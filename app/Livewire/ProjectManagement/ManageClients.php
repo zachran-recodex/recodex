@@ -23,17 +23,6 @@ class ManageClients extends Component
     public $confirmingClientDeletion = false;
     public $clientIdBeingDeleted;
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'created_at';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'created_at'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'company' => 'required|min:3|max:255',
         'name' => 'required|min:3|max:255',
@@ -145,30 +134,9 @@ class ManageClients extends Component
         $this->clientIdBeingDeleted = null;
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $clients = Client::query()
-            ->when($this->search, function ($query) {
-                return $query->where('company', 'like', '%' . $this->search . '%')
-                    ->orWhere('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $clients = Client::orderBy('created_at', 'asc')
             ->paginate(10);
 
         return view('livewire.project-management.manage-clients', [

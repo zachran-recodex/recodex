@@ -4,7 +4,6 @@ namespace App\Livewire\CMS;
 
 use App\Models\Member;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -17,7 +16,6 @@ class ManageMembers extends Component
     // Form properties
     public $memberId;
     public $name;
-    public $slug;
     public $position;
     public $description;
     public $photo;
@@ -36,20 +34,8 @@ class ManageMembers extends Component
     public $confirmingMemberDeletion = false;
     public $memberIdBeingDeleted;
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'sort_order';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'sort_order'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'name' => 'required|string|max:255',
-        'slug' => 'nullable|max:255',
         'position' => 'nullable|string|max:255',
         'description' => 'nullable|string',
         'photo' => 'nullable|image|max:1024',
@@ -66,17 +52,11 @@ class ManageMembers extends Component
         $this->resetInputFields();
     }
 
-    public function updatedName()
-    {
-        $this->slug = Str::slug($this->name);
-    }
-
     private function resetInputFields()
     {
         $this->reset([
             'memberId',
             'name',
-            'slug',
             'position',
             'description',
             'photo',
@@ -120,7 +100,6 @@ class ManageMembers extends Component
         $member = Member::findOrFail($id);
         $this->memberId = $id;
         $this->name = $member->name;
-        $this->slug = $member->slug;
         $this->position = $member->position;
         $this->description = $member->description;
         $this->current_photo = $member->photo_path;
@@ -142,7 +121,6 @@ class ManageMembers extends Component
 
         $data = [
             'name' => $this->name,
-            'slug' => $this->slug ?: Str::slug($this->name),
             'position' => $this->position,
             'description' => $this->description,
             'social_links' => $this->social_links,
@@ -201,30 +179,9 @@ class ManageMembers extends Component
         $this->memberIdBeingDeleted = null;
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $members = Member::query()
-            ->when($this->search, function($query) {
-                return $query->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('position', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $members = Member::orderBy('sort_order', 'asc')
             ->paginate(10);
 
         return view('livewire.cms.manage-members', [

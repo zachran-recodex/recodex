@@ -36,19 +36,6 @@ class ManageInvoices extends Component
     public $confirmingInvoiceDeletion = false;
     public $invoiceIdBeingDeleted;
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'invoice_date';
-    public $sortDirection = 'desc';
-    public $filter_status = '';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'invoice_date'],
-        'sortDirection' => ['except' => 'desc'],
-        'filter_status' => ['except' => ''],
-    ];
-
     protected $rules = [
         'invoice_number' => 'required|string|max:255',
         'invoice_date' => 'required|date',
@@ -246,39 +233,9 @@ class ManageInvoices extends Component
         }
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingFilterStatus()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $invoices = Invoice::query()
-            ->when($this->search, function ($query) {
-                return $query->where(function ($q) {
-                    $q->where('invoice_number', 'like', '%' . $this->search . '%')
-                      ->orWhere('client_name', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->when($this->filter_status !== '', function ($query) {
-                return $query->where('is_paid', $this->filter_status === 'paid');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $invoices = Invoice::orderBy('invoice_date', 'desc')
             ->paginate(10);
 
         return view('livewire.project-management.manage-invoices', [

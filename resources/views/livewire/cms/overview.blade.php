@@ -141,7 +141,7 @@
             <div class="p-5">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-semibold text-zinc-800 dark:text-white">Projects</h3>
-                    <a href="{{ route('cms.projects') }}" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">Manage</a>
+                    <a href="{{ route('pm.projects') }}" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">Manage</a>
                 </div>
                 <div class="mt-4 grid grid-cols-3 gap-4 text-center">
                     <div class="bg-zinc-100 dark:bg-zinc-700 p-3 rounded-lg">

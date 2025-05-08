@@ -22,17 +22,6 @@ class ManageWorkProcesses extends Component
     public $confirmingProcessDeletion = false;
     public $processIdBeingDeleted;
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'sort_order';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'sort_order'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'title' => 'required|string|max:255',
         'description' => 'required|string',
@@ -134,16 +123,6 @@ class ManageWorkProcesses extends Component
         $this->processIdBeingDeleted = null;
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
     public function updatingSearch()
     {
         $this->resetPage();
@@ -151,12 +130,7 @@ class ManageWorkProcesses extends Component
 
     public function render()
     {
-        $processes = WorkProcess::query()
-            ->when($this->search, function($query) {
-                return $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $processes = WorkProcess::orderBy('sort_order', 'asc')
             ->paginate(10);
 
         return view('livewire.cms.manage-work-processes', [

@@ -34,31 +34,9 @@
 @endsection
 
 <div>
-    <header class="mb-6">
-        <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Projects</flux:heading>
-        <div class="flex items-center justify-between gap-4">
-            <div class="w-72">
-                <flux:input class="w-full" wire:model.live.debounce.300ms="search" placeholder="Search projects..." icon="magnifying-glass" />
-            </div>
-
-            <div class="flex items-center gap-4">
-                <flux:dropdown>
-                    <flux:button icon:trailing="chevron-down">Sort by</flux:button>
-
-                    <flux:menu>
-                        <flux:menu.radio.group>
-                            <flux:menu.radio wire:click="sortBy('sort_order')" :checked="$sortField === 'sort_order'">Default</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('title')" :checked="$sortField === 'title'">Title</flux:menu.radio>
-                            <flux:menu.radio>Service</flux:menu.radio>
-                            <flux:menu.radio>Client</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('created_at')" :checked="$sortField === 'created_at'">Created At</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('is_active')" :checked="$sortField === 'is_active'">Status</flux:menu.radio>
-                        </flux:menu.radio.group>
-                    </flux:menu>
-                </flux:dropdown>
-                <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
-            </div>
-        </div>
+    <header class="mb-6 flex items-center justify-between">
+        <flux:heading level="2" class="text-2xl! font-semibold!">Manage Projects</flux:heading>
+        <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
     </header>
 
     <main>

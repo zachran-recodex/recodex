@@ -34,15 +34,9 @@
 @endsection
 
 <div>
-    <header class="mb-6">
-        <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Users</flux:heading>
-        <div class="flex items-center justify-between gap-4">
-            <div class="w-72">
-                <flux:input class="w-full" wire:model.live.debounce.300ms="search" placeholder="Search users..." icon="magnifying-glass" />
-            </div>
-
-            <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
-        </div>
+    <header class="mb-6 flex items-center justify-between">
+        <flux:heading level="2" class="text-2xl! font-semibold!">Manage Users</flux:heading>
+        <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
     </header>
 
     <main>
@@ -103,13 +97,9 @@
                                     <div class="flex flex-col items-center justify-center space-y-2">
                                         <flux:icon.inbox class="w-10 h-10 text-zinc-400" />
                                         <p class="text-zinc-500 dark:text-zinc-400">No users found</p>
-                                        @if ($search)
-                                            <p class="text-sm text-zinc-500 dark:text-zinc-400">Try adjusting your search criteria</p>
-                                        @else
-                                            <flux:button wire:click="create" size="sm" variant="primary">
-                                                Add Your First User
-                                            </flux:button>
-                                        @endif
+                                        <flux:button wire:click="create" size="sm" variant="primary">
+                                            Add Your First User
+                                        </flux:button>
                                     </div>
                                 </flux:table.cell>
                             </flux:table.row>

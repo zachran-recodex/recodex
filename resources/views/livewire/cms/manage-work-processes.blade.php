@@ -34,15 +34,9 @@
 @endsection
 
 <div>
-    <header class="mb-6">
-        <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Work Processes</flux:heading>
-        <div class="flex items-center justify-between gap-4">
-            <div class="w-72">
-                <flux:input class="w-full" wire:model.live.debounce.300ms="search" placeholder="Search work processes..." icon="magnifying-glass" />
-            </div>
-
-            <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
-        </div>
+    <header class="mb-6 flex items-center justify-between">
+        <flux:heading level="2" class="text-2xl! font-semibold!">Manage Work Processes</flux:heading>
+        <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
     </header>
 
     <main>

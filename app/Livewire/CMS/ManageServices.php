@@ -17,7 +17,6 @@ class ManageServices extends Component
     // Form properties
     public $serviceId;
     public $title;
-    public $slug;
     public $subtitle;
     public $description;
     public $content;
@@ -41,20 +40,8 @@ class ManageServices extends Component
     public $new_point = '';
     public $selected_category_index = null;
 
-    // Search and filter
-    public $search = '';
-    public $sortField = 'sort_order';
-    public $sortDirection = 'asc';
-
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'sortField' => ['except' => 'sort_order'],
-        'sortDirection' => ['except' => 'asc'],
-    ];
-
     protected $rules = [
         'title' => 'required|min:3|max:255',
-        'slug' => 'nullable|max:255',
         'subtitle' => 'nullable|max:255',
         'description' => 'required',
         'content' => 'nullable',
@@ -70,17 +57,11 @@ class ManageServices extends Component
         $this->resetInputFields();
     }
 
-    public function updatedTitle()
-    {
-        $this->slug = Str::slug($this->title);
-    }
-
     public function resetInputFields()
     {
         $this->reset([
             'serviceId',
             'title',
-            'slug',
             'subtitle',
             'description',
             'content',
@@ -127,7 +108,6 @@ class ManageServices extends Component
         $service = Service::findOrFail($id);
         $this->serviceId = $id;
         $this->title = $service->title;
-        $this->slug = $service->slug;
         $this->subtitle = $service->subtitle;
         $this->description = $service->description;
         $this->content = $service->content;
@@ -153,7 +133,6 @@ class ManageServices extends Component
 
         $data = [
             'title' => $this->title,
-            'slug' => $this->slug ?: Str::slug($this->title),
             'subtitle' => $this->subtitle,
             'description' => $this->description,
             'content' => $this->content,
@@ -285,29 +264,9 @@ class ManageServices extends Component
         $this->feature_categories[$categoryIndex]['points'] = array_values($this->feature_categories[$categoryIndex]['points']);
     }
 
-    public function sortBy($field)
-    {
-        if ($this->sortField === $field) {
-            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortDirection = 'asc';
-        }
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
     public function render()
     {
-        $services = Service::query()
-            ->when($this->search, function ($query) {
-                return $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy($this->sortField, $this->sortDirection)
+        $services = Service::orderBy('sort_order', 'asc')
             ->paginate(10);
 
         return view('livewire.cms.manage-services', [

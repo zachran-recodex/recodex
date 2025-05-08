@@ -34,29 +34,9 @@
 @endsection
 
 <div>
-    <header class="mb-6">
-        <flux:heading level="2" class="text-2xl! font-semibold! mb-4">Manage Clients</flux:heading>
-        <div class="flex items-center justify-between gap-4">
-            <div class="w-72">
-                <flux:input class="w-full" wire:model.live.debounce.300ms="search" placeholder="Search clients..." icon="magnifying-glass" />
-            </div>
-
-            <div class="flex items-center gap-4">
-                <flux:dropdown>
-                    <flux:button icon:trailing="chevron-down">Sort by</flux:button>
-
-                    <flux:menu>
-                        <flux:menu.radio.group>
-                            <flux:menu.radio wire:click="sortBy('name')" :checked="$sortField === 'name'">Name</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('email')" :checked="$sortField === 'email'">Email</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('phone')" :checked="$sortField === 'phone'">Phone</flux:menu.radio>
-                            <flux:menu.radio wire:click="sortBy('created_at')" :checked="$sortField === 'created_at'">Created At</flux:menu.radio>
-                        </flux:menu.radio.group>
-                    </flux:menu>
-                </flux:dropdown>
-                <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
-            </div>
-        </div>
+    <header class="mb-6 flex items-center justify-between">
+        <flux:heading level="2" class="text-2xl! font-semibold!">Manage Clients</flux:heading>
+        <flux:button variant="primary" icon="plus" wire:click="create">Create</flux:button>
     </header>
 
     <main>
@@ -119,9 +99,9 @@
                                     <div class="flex flex-col items-center justify-center space-y-2">
                                         <flux:icon.inbox class="w-10 h-10 text-zinc-400" />
                                         <p class="text-zinc-500 dark:text-zinc-400">No clients found</p>
-                                        @if ($search)
-                                            <p class="text-sm text-zinc-500 dark:text-zinc-400">Try adjusting your search criteria</p>
-                                        @endif
+                                        <flux:button wire:click="create" size="sm" variant="primary">
+                                            Add Your First Client
+                                        </flux:button>
                                     </div>
                                 </flux:table.cell>
                             </flux:table.row>
