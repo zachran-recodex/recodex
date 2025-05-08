@@ -7,7 +7,7 @@ new class extends Component {
 }; ?>
 
 <section class="w-full">
-    @include('partials.settings-heading')
+    @include('components.partials.settings-heading')
 
     <x-settings.layout heading="Appearance" subheading="Update the appearance settings for your account">
         <flux:radio.group x-data variant="segmented" x-model="$flux.appearance">
