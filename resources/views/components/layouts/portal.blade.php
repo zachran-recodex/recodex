@@ -98,7 +98,7 @@
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
-                    :initials="T"
+                    initials="T"
                     icon-trailing="chevron-down"
                 />
 
