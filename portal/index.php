@@ -7,6 +7,20 @@
  * It maps requests to the Laravel application's public directory.
  */
 
+// Periksa apakah request adalah untuk asset Vite di folder build
+if (strpos($_SERVER['REQUEST_URI'], '/build/') === 0) {
+    // Jika folder build ada di portal, gunakan itu
+    $buildPath = __DIR__ . '/build';
+    if (!file_exists($buildPath)) {
+        // Jika tidak ada, coba buat symlink atau salin dari public
+        $sourcePath = __DIR__ . '/../public/build';
+        if (file_exists($sourcePath)) {
+            // Coba buat symlink jika memungkinkan
+            @symlink($sourcePath, $buildPath);
+        }
+    }
+}
+
 // Define the parent application path (relative to this file)
 $laravelPublicPath = __DIR__ . '/../public';
 
