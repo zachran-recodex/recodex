@@ -1,8 +1,13 @@
 <?php
 
-use App\Http\Controllers\MainController;
-use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\PortalController;
+
+Route::domain('portal.recodex.id')->group(function () {
+    Route::get('/', [PortalController::class, 'index'])->name('portal.home');
+});
 
 Route::controller(MainController::class)->group(function () {
 
