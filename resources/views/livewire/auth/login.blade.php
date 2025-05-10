@@ -37,6 +37,17 @@ new #[Layout('components.layouts.auth')] class extends Component {
             ]);
         }
 
+        // Check if user is active
+        if (!Auth::user()->is_active) {
+            Auth::logout();
+
+            Session::invalidate();
+            Session::regenerateToken();
+
+            $this->redirect(route('inactive.account', absolute: false), navigate: true);
+            return;
+        }
+
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 

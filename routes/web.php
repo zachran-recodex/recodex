@@ -23,10 +23,10 @@ Route::controller(MainController::class)->group(function () {
 });
 
 Route::view('dashboard', 'dashboard.index')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'active.user'])
     ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'active.user'])->group(function () {
 
     Route::prefix('dashboard')->group(function () {
 
