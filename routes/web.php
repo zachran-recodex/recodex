@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
         // Administrator Routes
         Route::middleware(['can:manage admin'])->prefix('administrator')->name('admin.')->group(function () {
             Route::get('/users', App\Livewire\Administrator\ManageUsers::class)->name('users');
+            Route::get('/roles', App\Livewire\Administrator\ManageRoles::class)->name('roles');
         });
 
         // CMS Routes
