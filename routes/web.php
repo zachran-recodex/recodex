@@ -31,12 +31,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->group(function () {
 
         // Administrator Routes
-        Route::prefix('administrator')->name('admin.')->group(function () {
+        Route::middleware(['can:manage admin'])->prefix('administrator')->name('admin.')->group(function () {
             Route::get('/users', App\Livewire\Administrator\ManageUsers::class)->name('users');
         });
 
         // CMS Routes
-        Route::prefix('content-management-system')->name('cms.')->group(function () {
+        Route::middleware(['can:manage cms'])->prefix('content-management-system')->name('cms.')->group(function () {
             Route::get('/faqs', App\Livewire\CMS\ManageFaqs::class)->name('faqs');
             Route::get('/services', App\Livewire\CMS\ManageServices::class)->name('services');
             Route::get('/members', App\Livewire\CMS\ManageMembers::class)->name('members');
@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // Project Management Routes
-        Route::prefix('project-management')->name('pm.')->group(function () {
+        Route::middleware(['can:manage pm'])->prefix('project-management')->name('pm.')->group(function () {
             Route::get('/projects', App\Livewire\ProjectManagement\ManageProjects::class)->name('projects');
             Route::get('/clients', App\Livewire\ProjectManagement\ManageClients::class)->name('clients');
             Route::get('/invoices', App\Livewire\ProjectManagement\ManageInvoices::class)->name('invoices');
