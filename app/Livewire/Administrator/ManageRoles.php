@@ -76,22 +76,26 @@ class ManageRoles extends Component
 
         $data = [
             'name' => $this->name,
+            'guard_name' => 'web', // Pastikan guard_name diatur dengan benar
         ];
+
+        // Ambil objek Permission berdasarkan ID yang dipilih
+        $permissions = Permission::whereIn('id', $this->selectedPermissions)->get();
 
         // Create or update role
         if ($this->roleId) {
             $role = Role::findOrFail($this->roleId);
             $role->update($data);
 
-            // Sync permissions
-            $role->syncPermissions($this->selectedPermissions);
+            // Sync permissions menggunakan objek Permission
+            $role->syncPermissions($permissions);
 
             session()->flash('message', 'Role updated successfully.');
         } else {
             $role = Role::create($data);
 
-            // Assign permissions
-            $role->syncPermissions($this->selectedPermissions);
+            // Assign permissions menggunakan objek Permission
+            $role->syncPermissions($permissions);
 
             session()->flash('message', 'Role created successfully.');
         }
