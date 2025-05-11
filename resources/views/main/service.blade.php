@@ -20,15 +20,9 @@
 
     <link rel="canonical" href="{{ url()->current() }}">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4D32DGGKGQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-4D32DGGKGQ');
-    </script>
+    @production
+        <x-google-analytics />
+    @endproduction
 
     <title>Layanan | Recodex ID - Jasa Pembuatan Website</title>
 @endsection
