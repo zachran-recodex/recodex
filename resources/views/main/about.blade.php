@@ -213,70 +213,72 @@
     ]" />
     <!-- ...::: Text Slider Section End :::... -->
 
-    <!-- ...::: Team Section Start :::... -->
-    <section class="section-team">
-        <!-- Section Space -->
-        <div class="section-space">
-            <!-- Section Container -->
-            <div class="container">
-                <!-- Section Block -->
-                <div class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
-                    <h2 class="jos">
-                        Kami Memiliki Tim yang Profesional
-                        <span>
-                            <img src="{{ asset('assets/img/elemnts/shape-light-lime-5-arms-star.svg') }}" alt="shape-light-lime-5-arms-star" width="74" height="70" class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
-                        </span>
-                    </h2>
+    @if(false)
+        <!-- ...::: Team Section Start :::... -->
+        <section class="section-team">
+            <!-- Section Space -->
+            <div class="section-space">
+                <!-- Section Container -->
+                <div class="container">
+                    <!-- Section Block -->
+                    <div class="section-block mx-auto mb-10 max-w-[650px] text-center md:mb-[60px] xl:mb-20 xl:max-w-[856px]">
+                        <h2 class="jos">
+                            Kami Memiliki Tim yang Profesional
+                            <span>
+                                <img src="{{ asset('assets/img/elemnts/shape-light-lime-5-arms-star.svg') }}" alt="shape-light-lime-5-arms-star" width="74" height="70" class="relative inline-block h-auto w-8 after:bg-black md:w-10 lg:w-[57px]" />
+                            </span>
+                        </h2>
+                    </div>
+                    <!-- Section Block -->
+
+                    <!-- Team List -->
+                    <ul class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        @foreach($users as $user)
+                            <!-- Team Item -->
+                            <li class="jos group/team-item" data-jos_delay="0" data-jos_animation="flip-left">
+                                <div class="relative overflow-hidden rounded-[20px] border-[5px] border-black">
+                                    <img src="{{ $user->photo_path ? Storage::url($user->photo_path) : asset('assets/img/images/th-1/team-img-1.jpg') }}" alt="{{ $user->name }}" width="296" height="300" loading="lazy" class="h-full w-full object-cover transition-all duration-300 group-hover/team-item:scale-110" />
+
+                                    <!-- Social Link -->
+                                    @if (!empty($user->social_links))
+                                        <div class="absolute top-full flex w-full justify-center gap-3 transition-all duration-300 group-hover/team-item:-translate-y-14">
+                                            @foreach ($user->social_links as $platform => $url)
+                                                @php
+                                                    // Mapping icon file names
+                                                    $icons = [
+                                                        'twitter' => ['buttery' => 'icon-logo-buttery-white-twitter.svg', 'black' => 'icon-logo-black-twitter.svg'],
+                                                        'facebook' => ['buttery' => 'icon-logo-buttery-white-facebook.svg', 'black' => 'icon-logo-black-facebook.svg'],
+                                                        'instagram' => ['buttery' => 'icon-logo-buttery-white-instagram.svg', 'black' => 'icon-logo-black-instagram.svg'],
+                                                        'linkedin' => ['buttery' => 'icon-logo-buttery-white-linkedin.svg', 'black' => 'icon-logo-black-linkedin.svg'],
+                                                    ];
+                                                @endphp
+
+                                                @if (isset($icons[$platform]))
+                                                    <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
+                                                        <img src="{{ asset('assets/img/icons/' . $icons[$platform]['buttery']) }}" alt="icon-{{ $platform }}-buttery" width="19" height="19" class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
+                                                        <img src="{{ asset('assets/img/icons/' . $icons[$platform]['black']) }}" alt="icon-{{ $platform }}-black" width="19" height="19" class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
+                                                    </a>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    <!-- Social Link -->
+                                </div>
+
+                                <div class="mt-5 text-center">
+                                    <a href="#" class="display-heading display-heading-4 mb-4 block">{{ $user->name }}</a>
+                                    <span class="text-lg md:text-[21px]">{{ $user->position }}</span>
+                                </div>
+                            </li>
+                            <!-- Team Item -->
+                        @endforeach
+                    </ul>
+                    <!-- Team List -->
                 </div>
-                <!-- Section Block -->
-
-                <!-- Team List -->
-                <ul class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @foreach($users as $user)
-                        <!-- Team Item -->
-                        <li class="jos group/team-item" data-jos_delay="0" data-jos_animation="flip-left">
-                            <div class="relative overflow-hidden rounded-[20px] border-[5px] border-black">
-                                <img src="{{ $user->photo_path ? Storage::url($user->photo_path) : asset('assets/img/images/th-1/team-img-1.jpg') }}" alt="{{ $user->name }}" width="296" height="300" loading="lazy" class="h-full w-full object-cover transition-all duration-300 group-hover/team-item:scale-110" />
-
-                                <!-- Social Link -->
-                                @if (!empty($user->social_links))
-                                    <div class="absolute top-full flex w-full justify-center gap-3 transition-all duration-300 group-hover/team-item:-translate-y-14">
-                                        @foreach ($user->social_links as $platform => $url)
-                                            @php
-                                                // Mapping icon file names
-                                                $icons = [
-                                                    'twitter' => ['buttery' => 'icon-logo-buttery-white-twitter.svg', 'black' => 'icon-logo-black-twitter.svg'],
-                                                    'facebook' => ['buttery' => 'icon-logo-buttery-white-facebook.svg', 'black' => 'icon-logo-black-facebook.svg'],
-                                                    'instagram' => ['buttery' => 'icon-logo-buttery-white-instagram.svg', 'black' => 'icon-logo-black-instagram.svg'],
-                                                    'linkedin' => ['buttery' => 'icon-logo-buttery-white-linkedin.svg', 'black' => 'icon-logo-black-linkedin.svg'],
-                                                ];
-                                            @endphp
-
-                                            @if (isset($icons[$platform]))
-                                                <a href="{{ $url }}" target="_blank" rel="noopener noreferrer" class="group/link relative inline-flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border border-colorButteryWhite bg-black transition-all duration-300 hover:border-black hover:bg-colorLightLime hover:shadow-[0_1.5px_0_0] hover:shadow-colorButteryWhite">
-                                                    <img src="{{ asset('assets/img/icons/' . $icons[$platform]['buttery']) }}" alt="icon-{{ $platform }}-buttery" width="19" height="19" class="opacity-100 transition-all duration-300 group-hover/link:opacity-0" />
-                                                    <img src="{{ asset('assets/img/icons/' . $icons[$platform]['black']) }}" alt="icon-{{ $platform }}-black" width="19" height="19" class="absolute opacity-0 transition-all duration-300 group-hover/link:opacity-100" />
-                                                </a>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                @endif
-                                <!-- Social Link -->
-                            </div>
-
-                            <div class="mt-5 text-center">
-                                <a href="#" class="display-heading display-heading-4 mb-4 block">{{ $user->name }}</a>
-                                <span class="text-lg md:text-[21px]">{{ $user->position }}</span>
-                            </div>
-                        </li>
-                        <!-- Team Item -->
-                    @endforeach
-                </ul>
-                <!-- Team List -->
+                <!-- Section Container -->
             </div>
-            <!-- Section Container -->
-        </div>
-        <!-- Section Space -->
-    </section>
-    <!-- ...::: Team Section End :::... -->
+            <!-- Section Space -->
+        </section>
+        <!-- ...::: Team Section End :::... -->
+    @endif
 </x-layouts.main>
