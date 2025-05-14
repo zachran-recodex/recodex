@@ -34,7 +34,6 @@
                             <flux:navlist.group expandable heading="Content Management" class="grid">
                                 <flux:navlist.item icon="document-text" :href="route('cms.faqs')" :current="request()->routeIs('cms.faqs')" wire:navigate>FAQs</flux:navlist.item>
                                 <flux:navlist.item icon="briefcase" :href="route('cms.services')" :current="request()->routeIs('cms.services')" wire:navigate>Services</flux:navlist.item>
-                                <flux:navlist.item icon="users" :href="route('cms.members')" :current="request()->routeIs('cms.members')" wire:navigate>Team Members</flux:navlist.item>
                                 <flux:navlist.item icon="currency-dollar" :href="route('cms.pricings')" :current="request()->routeIs('cms.pricings')" wire:navigate>Pricing Packages</flux:navlist.item>
                                 <flux:navlist.item icon="arrow-path" :href="route('cms.work-processes')" :current="request()->routeIs('cms.work-processes')" wire:navigate>Work Processes</flux:navlist.item>
                                 <flux:navlist.item icon="information-circle" :href="route('cms.about')" :current="request()->routeIs('cms.about')" wire:navigate>About</flux:navlist.item>
@@ -62,7 +61,7 @@
             <flux:dropdown position="bottom" align="start">
                 <flux:profile
                     :name="auth()->user()->name"
-                    :initials="auth()->user()->initials()"
+                    :avatar="Storage::url(auth()->user()->photo_path)"
                     icon-trailing="chevrons-up-down"
                 />
 
@@ -71,11 +70,19 @@
                         <div class="p-0 text-sm font-normal">
                             <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
                                 <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    <span
-                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                    >
-                                        {{ auth()->user()->initials() }}
-                                    </span>
+                                    @if(auth()->user()->photo_path && Storage::disk('public')->exists(auth()->user()->photo_path))
+                                        <img
+                                            src="{{ Storage::url(auth()->user()->photo_path) }}"
+                                            alt="{{ auth()->user()->name }}"
+                                            class="h-full w-full object-cover"
+                                        />
+                                    @else
+                                        <span
+                                            class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+                                        >
+                                            {{ auth()->user()->initials() }}
+                                        </span>
+                                    @endif
                                 </span>
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
@@ -112,7 +119,7 @@
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
-                    :initials="auth()->user()->initials()"
+                    :avatar="Storage::url(auth()->user()->photo_path)"
                     icon-trailing="chevron-down"
                 />
 
@@ -121,11 +128,19 @@
                         <div class="p-0 text-sm font-normal">
                             <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
                                 <span class="relative flex h-8 w-8 shrink-0 overflow-hidden rounded-lg">
-                                    <span
-                                        class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
-                                    >
-                                        {{ auth()->user()->initials() }}
-                                    </span>
+                                    @if(auth()->user()->photo_path && Storage::disk('public')->exists(auth()->user()->photo_path))
+                                        <img
+                                            src="{{ Storage::url(auth()->user()->photo_path) }}"
+                                            alt="{{ auth()->user()->name }}"
+                                            class="h-full w-full object-cover"
+                                        />
+                                    @else
+                                        <span
+                                            class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
+                                        >
+                                            {{ auth()->user()->initials() }}
+                                        </span>
+                                    @endif
                                 </span>
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">

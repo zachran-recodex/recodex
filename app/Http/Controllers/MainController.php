@@ -6,7 +6,7 @@ use App\Models\Faq;
 use App\Models\Hero;
 use App\Models\About;
 use App\Models\Client;
-use App\Models\Member;
+use App\Models\User;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\WorkProcess;
@@ -29,23 +29,23 @@ class MainController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $members = Member::where('is_active', true)
+        $users = User::where('is_team', true)
             ->orderBy('sort_order')
             ->limit(4)
             ->get();
 
-        return view('main.index', compact('hero', 'services', 'projects', 'works', 'members'));
+        return view('main.index', compact('hero', 'services', 'projects', 'works', 'users'));
     }
 
     public function about()
     {
         $about = About::first();
 
-        $members = Member::where('is_active', true)
+        $users = User::where('is_team', true)
             ->orderBy('sort_order')
             ->get();
 
-        return view('main.about', compact('about', 'members'));
+        return view('main.about', compact('about', 'users'));
     }
 
     public function service()

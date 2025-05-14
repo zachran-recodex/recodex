@@ -232,16 +232,16 @@
 
                 <!-- Team List -->
                 <ul class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    @foreach($members as $member)
+                    @foreach($users as $user)
                         <!-- Team Item -->
                         <li class="jos group/team-item" data-jos_delay="0" data-jos_animation="flip-left">
                             <div class="relative overflow-hidden rounded-[20px] border-[5px] border-black">
-                                <img src="{{ $member->photo_path ? Storage::url($member->photo_path) : asset('assets/img/images/th-1/team-img-1.jpg') }}" alt="{{ $member->name }}" width="296" height="300" loading="lazy" class="h-full w-full object-cover transition-all duration-300 group-hover/team-item:scale-110" />
+                                <img src="{{ $user->photo_path ? Storage::url($user->photo_path) : asset('assets/img/images/th-1/team-img-1.jpg') }}" alt="{{ $user->name }}" width="296" height="300" loading="lazy" class="h-full w-full object-cover transition-all duration-300 group-hover/team-item:scale-110" />
 
                                 <!-- Social Link -->
-                                @if (!empty($member->social_links))
+                                @if (!empty($user->social_links))
                                     <div class="absolute top-full flex w-full justify-center gap-3 transition-all duration-300 group-hover/team-item:-translate-y-14">
-                                        @foreach ($member->social_links as $platform => $url)
+                                        @foreach ($user->social_links as $platform => $url)
                                             @php
                                                 // Mapping icon file names
                                                 $icons = [
@@ -265,8 +265,8 @@
                             </div>
 
                             <div class="mt-5 text-center">
-                                <a href="#" class="display-heading display-heading-4 mb-4 block">{{ $member->name }}</a>
-                                <span class="text-lg md:text-[21px]">{{ $member->position }}</span>
+                                <a href="#" class="display-heading display-heading-4 mb-4 block">{{ $user->name }}</a>
+                                <span class="text-lg md:text-[21px]">{{ $user->position }}</span>
                             </div>
                         </li>
                         <!-- Team Item -->

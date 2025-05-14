@@ -34,11 +34,6 @@
     </header>
 
     <main class="space-y-6">
-        <!-- Session Messages -->
-        @if (session()->has('message'))
-            <flux:callout variant="success" icon="check-circle" heading="{{ session('message') }}" />
-        @endif
-
         <!-- Teams Table -->
         <div>
             <flux:heading level="3" class="text-xl! font-semibold! mb-4">Recodex ID Team</flux:heading>
@@ -47,7 +42,10 @@
                     <flux:table>
                         <flux:table.columns>
                             <flux:table.column>
-                                User
+                                Profile
+                            </flux:table.column>
+                            <flux:table.column>
+                                Username
                             </flux:table.column>
                             <flux:table.column>
                                 Email
@@ -78,6 +76,9 @@
                                         </div>
                                     </flux:table.cell>
                                     <flux:table.cell>
+                                        {{ $team->username }}
+                                    </flux:table.cell>
+                                    <flux:table.cell>
                                         {{ $team->email }}
                                     </flux:table.cell>
                                     <flux:table.cell>
@@ -94,7 +95,7 @@
                                 </flux:table.row>
                             @empty
                                 <flux:table.row>
-                                    <flux:table.cell colspan="4" class="text-center py-8">
+                                    <flux:table.cell colspan="5" class="text-center py-8">
                                         <div class="flex flex-col items-center justify-center space-y-2">
                                             <flux:icon.inbox class="w-10 h-10 text-zinc-400" />
                                             <p class="text-zinc-500 dark:text-zinc-400">No teams found</p>
@@ -104,7 +105,7 @@
                             @endforelse
                         </flux:table.rows>
                         <flux:table.columns class="border-none">
-                            <flux:table.column colspan="4">
+                            <flux:table.column colspan="5">
                                 {{ $teams->links() }}
                             </flux:table.column>
                         </flux:table.columns>
@@ -121,7 +122,10 @@
                     <flux:table>
                         <flux:table.columns>
                             <flux:table.column>
-                                User
+                                Profile
+                            </flux:table.column>
+                            <flux:table.column>
+                                Username
                             </flux:table.column>
                             <flux:table.column>
                                 Email
@@ -151,6 +155,9 @@
                                         </div>
                                     </flux:table.cell>
                                     <flux:table.cell>
+                                        {{ $user->username }}
+                                    </flux:table.cell>
+                                    <flux:table.cell>
                                         {{ $user->email }}
                                     </flux:table.cell>
                                     <flux:table.cell>
@@ -167,7 +174,7 @@
                                 </flux:table.row>
                             @empty
                                 <flux:table.row>
-                                    <flux:table.cell colspan="4" class="text-center py-8">
+                                    <flux:table.cell colspan="5" class="text-center py-8">
                                         <div class="flex flex-col items-center justify-center space-y-2">
                                             <flux:icon.inbox class="w-10 h-10 text-zinc-400" />
                                             <p class="text-zinc-500 dark:text-zinc-400">No users found</p>
@@ -177,7 +184,7 @@
                             @endforelse
                         </flux:table.rows>
                         <flux:table.columns class="border-none">
-                            <flux:table.column colspan="4">
+                            <flux:table.column colspan="5">
                                 {{ $users->links() }}
                             </flux:table.column>
                         </flux:table.columns>

@@ -21,15 +21,20 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'position',
         'photo_path',
+        'about',
+        'social_links',
         'is_team',
         'is_active',
+        'sort_order'
     ];
 
     protected $casts = [
+        'social_links' => 'array',
         'is_team' => 'boolean',
         'is_active' => 'boolean',
     ];
@@ -66,5 +71,10 @@ class User extends Authenticatable
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'username';
     }
 }
