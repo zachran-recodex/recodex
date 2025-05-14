@@ -40,7 +40,6 @@ Route::middleware(['auth', 'active.user'])->group(function () {
         Route::middleware(['can:manage cms'])->prefix('content-management-system')->name('cms.')->group(function () {
             Route::get('/faqs', App\Livewire\CMS\ManageFaqs::class)->name('faqs');
             Route::get('/services', App\Livewire\CMS\ManageServices::class)->name('services');
-            Route::get('/members', App\Livewire\CMS\ManageMembers::class)->name('members');
             Route::get('/pricings', App\Livewire\CMS\ManagePricings::class)->name('pricings');
             Route::get('/work-processes', App\Livewire\CMS\ManageWorkProcesses::class)->name('work-processes');
             Route::get('/about', App\Livewire\CMS\ManageAbout::class)->name('about');
