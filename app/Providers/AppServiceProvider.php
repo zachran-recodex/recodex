@@ -6,6 +6,7 @@ use App\Models\Service;
 use App\Observers\ServiceObserver;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Flasher\Prime\Container\FlasherContainer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,5 +31,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->hasRole('Super Admin') ? true : null;
         });
+
+        // Initialize Flasher Container with Laravel's container
+        FlasherContainer::from($this->app);
     }
 }

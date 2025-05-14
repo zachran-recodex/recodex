@@ -5,4 +5,5 @@ return [
     App\Providers\ImageServiceProvider::class,
     App\Providers\ViewServiceProvider::class,
     App\Providers\VoltServiceProvider::class,
+    Flasher\Laravel\FlasherServiceProvider::class,
 ];
