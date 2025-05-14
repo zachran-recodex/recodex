@@ -174,10 +174,10 @@ class ManageServices extends Component
         if ($this->serviceId) {
             $service = Service::findOrFail($this->serviceId);
             $service->update($data);
-            session()->flash('message', 'Service updated successfully.');
+            flash()->success('Service updated successfully.');
         } else {
             Service::create($data);
-            session()->flash('message', 'Service created successfully.');
+            flash()->success('Service created successfully.');
         }
 
         $this->closeModal();
@@ -206,7 +206,7 @@ class ManageServices extends Component
 
         $service->delete();
         $this->confirmingServiceDeletion = false;
-        session()->flash('message', 'Service deleted successfully.');
+        flash()->success('Service deleted successfully.');
     }
 
     public function cancelDelete()

@@ -90,14 +90,14 @@ class ManageRoles extends Component
             // Sync permissions menggunakan objek Permission
             $role->syncPermissions($permissions);
 
-            session()->flash('message', 'Role updated successfully.');
+            flash()->success('Role updated successfully.');
         } else {
             $role = Role::create($data);
 
             // Assign permissions menggunakan objek Permission
             $role->syncPermissions($permissions);
 
-            session()->flash('message', 'Role created successfully.');
+            flash()->success('Role created successfully.');
         }
 
         $this->closeModal();
@@ -123,7 +123,7 @@ class ManageRoles extends Component
 
         $role->delete();
         $this->confirmingRoleDeletion = false;
-        session()->flash('message', 'Role deleted successfully.');
+        flash()->success('Role deleted successfully.');
     }
 
     public function cancelDelete()

@@ -16,7 +16,7 @@ class ManageUsers extends Component
         $user->is_active = !$user->is_active;
         $user->save();
 
-        session()->flash('message', 'User status updated successfully.');
+        flash()->success('User status updated successfully.');
     }
 
     public function render()

@@ -171,10 +171,10 @@ class ManageInvoices extends Component
         if ($this->invoiceId) {
             $invoice = Invoice::findOrFail($this->invoiceId);
             $invoice->update($data);
-            session()->flash('message', 'Invoice updated successfully.');
+            flash()->success('Invoice updated successfully.');
         } else {
             Invoice::create($data);
-            session()->flash('message', 'Invoice created successfully.');
+            flash()->success('Invoice created successfully.');
         }
 
         $this->closeModal();
@@ -192,7 +192,7 @@ class ManageInvoices extends Component
         $invoice = Invoice::findOrFail($this->invoiceIdBeingDeleted);
         $invoice->delete();
         $this->confirmingInvoiceDeletion = false;
-        session()->flash('message', 'Invoice deleted successfully.');
+        flash()->success('Invoice deleted successfully.');
     }
 
     public function cancelDelete()

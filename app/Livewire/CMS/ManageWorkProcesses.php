@@ -92,10 +92,10 @@ class ManageWorkProcesses extends Component
         if ($this->processId) {
             $process = WorkProcess::findOrFail($this->processId);
             $process->update($data);
-            session()->flash('message', 'Work Process updated successfully.');
+            flash()->success('Work Process updated successfully.');
         } else {
             WorkProcess::create($data);
-            session()->flash('message', 'Work Process created successfully.');
+            flash()->success('Work Process created successfully.');
         }
 
         $this->closeModal();
@@ -114,7 +114,7 @@ class ManageWorkProcesses extends Component
 
         $process->delete();
         $this->confirmingProcessDeletion = false;
-        session()->flash('message', 'Work Process deleted successfully.');
+        flash()->success('Work Process deleted successfully.');
     }
 
     public function cancelDelete()

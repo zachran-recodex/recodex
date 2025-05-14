@@ -96,10 +96,10 @@ class ManageClients extends Component
         if ($this->clientId) {
             $client = Client::findOrFail($this->clientId);
             $client->update($data);
-            session()->flash('message', 'Client updated successfully.');
+            flash()->success('Client updated successfully.');
         } else {
             Client::create($data);
-            session()->flash('message', 'Client created successfully.');
+            flash()->success('Client created successfully.');
         }
 
         $this->closeModal();
@@ -125,7 +125,7 @@ class ManageClients extends Component
 
         $client->delete();
         $this->confirmingClientDeletion = false;
-        session()->flash('message', 'Client deleted successfully.');
+        flash()->success('Client deleted successfully.');
     }
 
     public function cancelDelete()

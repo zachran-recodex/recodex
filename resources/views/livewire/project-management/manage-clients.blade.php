@@ -35,11 +35,6 @@
     </header>
 
     <main>
-        <!-- Session Messages -->
-        @if (session()->has('message'))
-            <flux:callout variant="success" icon="check-circle" heading="{{ session('message') }}" class="mb-4" />
-        @endif
-
         @if (session()->has('error'))
             <flux:callout variant="danger" icon="exclamation-circle" heading="{{ session('error') }}" class="mb-4" />
         @endif

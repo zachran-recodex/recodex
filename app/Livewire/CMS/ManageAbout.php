@@ -81,7 +81,7 @@ class ManageAbout extends Component
         $about->mission = $this->mission;
         $about->save();
 
-        session()->flash('message', 'About information updated successfully.');
+        flash()->success('About information updated successfully.');
         $this->closeModal();
     }
 

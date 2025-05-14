@@ -136,10 +136,10 @@ class ManagePricings extends Component
         if ($this->pricingId) {
             $pricing = Pricing::findOrFail($this->pricingId);
             $pricing->update($data);
-            session()->flash('message', 'Paket harga berhasil diperbarui.');
+            flash()->success('Paket harga berhasil diperbarui.');
         } else {
             Pricing::create($data);
-            session()->flash('message', 'Paket harga berhasil dibuat.');
+            flash()->success('Paket harga berhasil dibuat.');
         }
 
         $this->closeModal();
@@ -157,7 +157,7 @@ class ManagePricings extends Component
         $pricing = Pricing::findOrFail($this->pricingIdBeingDeleted);
         $pricing->delete();
         $this->confirmingPricingDeletion = false;
-        session()->flash('message', 'Paket harga berhasil dihapus.');
+        flash()->success('Paket harga berhasil dihapus.');
     }
 
     public function cancelDelete()

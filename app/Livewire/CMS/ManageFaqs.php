@@ -92,10 +92,10 @@ class ManageFaqs extends Component
         if ($this->faqId) {
             $faq = Faq::findOrFail($this->faqId);
             $faq->update($data);
-            session()->flash('message', 'FAQ updated successfully.');
+            flash()->success('FAQ updated successfully.');
         } else {
             Faq::create($data);
-            session()->flash('message', 'FAQ created successfully.');
+            flash()->success('FAQ created successfully.');
         }
 
         $this->closeModal();
@@ -115,7 +115,7 @@ class ManageFaqs extends Component
                 'sort_order' => $this->sort_order,
             ]);
 
-            session()->flash('message', 'FAQ successfully updated.');
+            flash()->success('FAQ successfully updated.');
 
             $this->closeFormModal();
             $this->resetInputFields();
@@ -134,7 +134,7 @@ class ManageFaqs extends Component
 
         $faq->delete();
         $this->confirmingFaqDeletion = false;
-        session()->flash('message', 'FAQ deleted successfully.');
+        flash()->success('FAQ deleted successfully.');
     }
 
     public function cancelDelete()

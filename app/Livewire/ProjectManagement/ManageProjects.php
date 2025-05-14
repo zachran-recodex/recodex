@@ -202,10 +202,10 @@ class ManageProjects extends Component
                 $this->adjustProjectOrders($oldSortOrder);
             }
 
-            session()->flash('message', 'Project updated successfully.');
+            flash()->success('Project updated successfully.');
         } else {
             Project::create($data);
-            session()->flash('message', 'Project created successfully.');
+            flash()->success('Project created successfully.');
         }
 
         $this->closeModal();
@@ -233,7 +233,7 @@ class ManageProjects extends Component
 
         $project->delete();
         $this->confirmingProjectDeletion = false;
-        session()->flash('message', 'Project deleted successfully.');
+        flash()->success('Project deleted successfully.');
     }
 
     public function cancelDelete()

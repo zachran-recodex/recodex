@@ -83,7 +83,7 @@ class ManageHero extends Component
 
         $hero->save();
 
-        session()->flash('message', 'Hero information updated successfully.');
+        flash()->success('Hero information updated successfully.');
         $this->closeModal();
     }
 

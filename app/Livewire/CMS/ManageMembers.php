@@ -143,10 +143,10 @@ class ManageMembers extends Component
         if ($this->memberId) {
             $member = Member::findOrFail($this->memberId);
             $member->update($data);
-            session()->flash('message', 'Team member updated successfully.');
+            flash()->success('Team member updated successfully.');
         } else {
             Member::create($data);
-            session()->flash('message', 'Team member created successfully.');
+            flash()->success('Team member created successfully.');
         }
 
         $this->closeModal();
@@ -170,7 +170,7 @@ class ManageMembers extends Component
 
         $member->delete();
         $this->confirmingMemberDeletion = false;
-        session()->flash('message', 'Team member deleted successfully.');
+        flash()->success('Team member deleted successfully.');
     }
 
     public function cancelDelete()
